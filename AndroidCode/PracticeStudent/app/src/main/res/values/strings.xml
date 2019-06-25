@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">PracticeStudent</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">打卡</string>
+    <string name="title_dashboard">日志</string>
+    <string name="title_notifications">我的</string>
+    <string name="string_checkin">点击签到</string>
+    <string name="string_clicklogin">点击登录</string>
+    <string name="string_writediary">写日志</string>
+    <string name="string_readdiary">查看日志</string>
+    <string name="string_writeteamdiary">写小组日志</string>
+    <string name="string_readteamdiary">查看小组日志</string>
 </resources>
