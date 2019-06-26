@@ -7,9 +7,17 @@
         <servlet-name>Demo</servlet-name>
         <servlet-class>Demo</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>Demo</servlet-name>
         <url-pattern>/Demo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CompanySignupServlet</servlet-name>
+        <servlet-class>com.servlet.CompanySignupServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CompanySignupServlet</servlet-name>
+        <url-pattern>/CompanySignupServlet</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/CompanySignupServlet",
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "telephone":"000",
+                "password":"12345687",
+                "name":"ccgs",
+                "head":"sda"
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        }
+    });
+    console.log("fail");
+</script>
+</html>
