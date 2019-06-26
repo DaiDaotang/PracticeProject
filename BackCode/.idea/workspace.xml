@@ -7,28 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af97b1ed-9b6e-48a5-aaba-33dfb57e332f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/classes12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_8_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/servlet_api.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Demo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bean/CompanyBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/dao/LoginDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/servlet/LoginServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/out/artifacts/project_war_exploded/WEB-INF/classes/com/servlet/test/LoginTest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/out/artifacts/project_war_exploded/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/out/artifacts/project_war_exploded/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/out/production/project/com/servlet/test/LoginTest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/project.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/com/dao/LoginDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/com/servlet/LoginServlet.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/com/servlet/test/LoginTest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/testDemo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/web/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/web/index.jsp" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/DBConn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackCode.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BackCode.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -75,11 +56,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/servlet/LoginServlet.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="125">
               <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/DBConn.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -101,6 +94,7 @@
       <list>
         <option value="$PROJECT_DIR$/src/Demo.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/com/DBConn.java" />
       </list>
     </option>
   </component>
@@ -111,7 +105,7 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="950" />
     <option name="width" value="980" />
     <option name="height" value="1090" />
@@ -169,11 +163,11 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561452379328" />
-    <property name="last_opened_file_path" value="C:/Program Files/Apache Software Foundation/Tomcat 9.0/lib/servlet-api.jar!/" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561468356611" />
+    <property name="last_opened_file_path" value="C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-java-8.0.13.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2724138" />
   </component>
@@ -273,12 +267,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1561451467600</updated>
-      <workItem from="1561451471210" duration="904000" />
+      <workItem from="1561451471210" duration="6348000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="904000" />
+    <option name="totallyTimeSpent" value="6348000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -302,7 +296,7 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25735295" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25735295" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -368,6 +362,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DBConn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
