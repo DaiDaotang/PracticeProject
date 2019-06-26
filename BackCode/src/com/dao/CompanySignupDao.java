@@ -41,8 +41,8 @@ public class CompanySignupDao {
     {
         Connection conn = DBConn.getConnection();
         PreparedStatement state;
-        CompanyBean bean = companyBean.getReqParam();
         try{
+            CompanyBean bean = companyBean.getReqParam();
             conn.setAutoCommit(false);
             String sql ="INSERT INTO company VALUES (?,?,?,?,?)";
             state = conn.prepareStatement(sql);

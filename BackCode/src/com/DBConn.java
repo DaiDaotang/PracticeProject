@@ -16,10 +16,10 @@ public class DBConn {
         Connection con;
         //jdbc驱动
         dbDriver="com.mysql.cj.jdbc.Driver";
-        url="jdbc:mysql://localhost:3306/database?serverTimezone=GMT";
+        url="jdbc:mysql://localhost:3306/database?&useSSL=false&serverTimezone=UTC";
         user="root";
         password="";
-        //注册JDBC驱动程序
+
         try {
             //注册JDBC驱动程序
             Class.forName(dbDriver);

@@ -31,7 +31,7 @@ public class CompanySignupServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new Gson();
-        Type requestType = new TypeToken<RequestBean>(){}.getType();
+        Type requestType = new TypeToken<RequestBean<CompanyBean>>(){}.getType();
         RequestBean<CompanyBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean resBean = new ResponseBean<>();
         try{
