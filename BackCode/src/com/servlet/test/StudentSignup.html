@@ -1,6 +1,7 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>$Title$</title>
     <script src="jquery-3.3.1.min.js"></script>
 </head>
@@ -10,14 +11,18 @@ $END$
 <script>
     $.ajax({
         type:"POST",
-        url:"http://localhost:8080/CompanySignupServlet",
+        url:"http://localhost:8080/StudentSignupServlet",
         async:true,
         data:JSON.stringify({
             "reqId":"",
             "reqParam":{
                 "telephone":"789789789",
                 "password":"12345687",
-                "name":"好公司"
+                "name":"好学生",
+                "school":1,
+                "major":"计算机学院",
+                "number":"2017302584444",
+                "sex":"女"
             }
         }),
         dataType:"json",

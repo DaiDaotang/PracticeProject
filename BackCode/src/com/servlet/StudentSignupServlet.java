@@ -1,10 +1,9 @@
 package com.servlet;
 
-
-import com.bean.CompanyBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.dao.CompanySignupDao;
+import com.bean.StudentBean;
+import com.dao.StudentSignupDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,8 +17,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 
-@WebServlet(name = "CompanySignupServlet")
-public class CompanySignupServlet extends HttpServlet {
+@WebServlet(name = "StudentSignupServlet")
+public class StudentSignupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -31,22 +30,16 @@ public class CompanySignupServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new Gson();
-        Type requestType = new TypeToken<RequestBean<CompanyBean>>(){}.getType();
-        RequestBean<CompanyBean> reqBean = gson.fromJson(content,requestType);
+        Type requestType = new TypeToken<RequestBean<StudentBean>>(){}.getType();
+        RequestBean<StudentBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean resBean = new ResponseBean<>();
         try{
-            CompanySignupDao dao = new CompanySignupDao();
-            int res = dao.signup(reqBean);
-            if (res == -1){
-                resBean.setReqId(reqBean.getReqId());
-                resBean.setSuccess(false);
-            }
-            else {
-                resBean.setReqId(reqBean.getReqId());
-                resBean.setSuccess(true);
-            }
+            StudentSignupDao dao = new StudentSignupDao();
+            dao.signup(reqBean);
+            resBean.setReqId(reqBean.getReqId());
+            resBean.setSuccess(true);
             //识别ResponseBean<LoginBean>类的结构
-            Type respType = new TypeToken<ResponseBean<CompanyBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<StudentBean>>(){}.getType();
             //通过toJson方法将对象转化为json格式的字符串
             out.print(gson.toJson(resBean,respType));
         }catch (Exception e){
