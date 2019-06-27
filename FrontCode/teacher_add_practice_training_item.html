@@ -58,6 +58,7 @@
 
     <script src="layui/layui.js" charset="utf-8"></script>
     <script type="text/html" id="bar_change_delete">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">详情</a>
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
@@ -90,7 +91,6 @@
             , contentType: 'application/json'
             , method: "POST"
             , width: 1100
-            , height: 1000
             , where: {
                 "reqId": teacher_id
             }
@@ -104,15 +104,15 @@
             }
             , cols: [[
                 { type: 'numbers' }
-                , { field: 'projectId', width: 100, title: '项目ID', hide: true }
-                , { field: 'projectName', width: 100, title: '项目名称' }
-                , { field: 'projectType', width: 100, title: '项目类型' }
-                , { field: 'projectDifficulty', width: 100, title: '项目难度', sort: true }
+                , { field: 'projectId', width: 150, title: '项目ID', hide: true }
+                , { field: 'projectName', width: 150, title: '项目名称' }
+                , { field: 'projectType', width: 150, title: '项目类型' }
+                , { field: 'projectDifficulty', width: 150, title: '项目难度', sort: true }
                 , { field: 'projectIntroduce', title: '项目概述'}
-                , { field: 'projectBaseContent', title: '基本功能' }
-                , { field: 'projectExtendContent', title: '扩展功能' }
-                , { field: 'projectAdvanceContent', title: '高级功能' }
-                , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 150 }
+                , { field: 'projectBaseContent', title: '基本功能', hide: true  }
+                , { field: 'projectExtendContent', title: '扩展功能', hide: true  }
+                , { field: 'projectAdvanceContent', title: '高级功能', hide: true  }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 110 }
             ]]
         }
 
@@ -142,31 +142,6 @@
             var table = layui.table;
 
             table.render(param_item_existed);
-            table.on('toolbar(item_table)', function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id);
-                console.log(checkStatus)
-                switch (obj.event) {
-                    case 'getCheckData':
-                        var data = checkStatus.data;
-                        var num = 0;
-                        var contents = new Array(data.length);
-                        while (num < data.length) {
-                            contents[num] = data[num].id
-                            console.log(data[num].id)
-                            num++;
-                        }
-                        console.log("共" + num + "人")
-                        console.log(contents)
-                        layer.alert(JSON.stringify(contents), {
-                            title: '选中运动员'
-                        });
-                        break;
-                    case 'getCheckLength':
-                        var data = checkStatus.data;
-                        layer.msg('选中了：' + data.length + ' 个');
-                        break;
-                };
-            });
         })
 
         //基础区
