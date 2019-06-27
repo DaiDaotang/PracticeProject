@@ -34,7 +34,6 @@ public class LoginDao {
                 if(resultSet.next()){
                     if(password.equals(resultSet.getString(1))){
                         int id = resultSet.getInt(2);
-                        conn.commit();
                         newbean.setAuthority(authority);
                         newbean.setPassword(password);
                         newbean.setTelephone(telephone);
@@ -49,7 +48,6 @@ public class LoginDao {
                 if(resultSet.next()){
                     if(password.equals(resultSet.getString(1))){
                         int id = resultSet.getInt(2);
-                        conn.commit();
                         newbean.setAuthority(authority);
                         newbean.setPassword(password);
                         newbean.setTelephone(telephone);
@@ -64,7 +62,6 @@ public class LoginDao {
                 if(resultSet.next()){
                     if(password.equals(resultSet.getString(1))){
                         int id = resultSet.getInt(2);
-                        conn.commit();
                         newbean.setAuthority(authority);
                         newbean.setPassword(password);
                         newbean.setTelephone(telephone);
@@ -79,7 +76,6 @@ public class LoginDao {
                 if(resultSet.next()){
                     if(password.equals(resultSet.getString(1))){
                         int id = resultSet.getInt(2);
-                        conn.commit();
                         newbean.setAuthority(authority);
                         newbean.setPassword(password);
                         newbean.setTelephone(telephone);

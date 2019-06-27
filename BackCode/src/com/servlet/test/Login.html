@@ -11,18 +11,14 @@ $END$
 <script>
     $.ajax({
         type:"POST",
-        url:"http://localhost:8080/StudentSignupServlet",
+        url:"http://localhost:8080/LoginServlet",
         async:true,
         data:JSON.stringify({
-            "reqId":"",
+            "reqId":"111",
             "reqParam":{
-                "telephone":"789789789",
-                "password":"12345687",
-                "name":"好学生",
-                "school":1,
-                "major":"计算机学院",
-                "number":"2017302584444",
-                "sex":"女"
+                "telephone":"123",
+                "password":"123",
+                "authority":"Company"
             }
         }),
         dataType:"json",
