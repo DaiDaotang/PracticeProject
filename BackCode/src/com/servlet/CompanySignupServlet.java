@@ -38,11 +38,11 @@ public class CompanySignupServlet extends HttpServlet {
             CompanySignupDao dao = new CompanySignupDao();
             int res = dao.signup(reqBean);
             if (res == -1){
-                resBean.setReqId(reqBean.getReqId());
+                resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
             else {
-                resBean.setReqId(reqBean.getReqId());
+                resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
             }
             //识别ResponseBean<LoginBean>类的结构

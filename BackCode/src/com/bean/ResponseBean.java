@@ -1,17 +1,17 @@
 package com.bean;
 
 public class ResponseBean<T> {
-    private String reqId = null;
+    private String resId = null;
     private T resData = null;
     private String message = null;
     private boolean isSuccess;
 
-    public void setReqId(String id){
-        reqId = id;
+    public void setResId(String id){
+        resId = id;
     }
 
-    public String getReqId(){
-        return reqId;
+    public String getResId(){
+        return resId;
     }
 
     public void setResData(T resData){
