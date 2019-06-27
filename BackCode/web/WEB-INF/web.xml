@@ -38,4 +38,13 @@
         <servlet-name>CompanyTeacherSignupServlet</servlet-name>
         <url-pattern>/CompanyTeacherSignupServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SchoolTeacherSignupServlet</servlet-name>
+        <servlet-class>com.servlet.SchoolTeacherSignupServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SchoolTeacherSignupServlet</servlet-name>
+        <url-pattern>/SchoolTeacherSignupServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
