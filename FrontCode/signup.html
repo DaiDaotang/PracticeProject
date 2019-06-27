@@ -247,7 +247,12 @@
                             }),
                             dataType: "json",
                             success: function (res) {
-                                layer.msg("注册成功")
+                                if (res.isSuccess) {
+                                    layer.msg("注册成功")
+                                }
+                                else {
+                                    layer.msg("手机号已被注册")
+                                }
                                 console.log(res);
                             }
                         });
