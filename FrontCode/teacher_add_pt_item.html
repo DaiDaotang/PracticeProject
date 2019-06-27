@@ -77,7 +77,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -133,8 +132,8 @@
             , ItemDetailURL = "login.html"
             , TeacherHomePageURL = "login.html"
             , AddItemURL = "login.html"
-            , AddCompanyTeacherURL = "teacher_add_pt_teacher.html?authority='CompanyTeacher'"
-            , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority='SchoolTeacher'";
+            , AddCompanyTeacherURL = "teacher_add_pt_teacher.html?authority=CompanyTeacher&companyId=" + pt_company_id
+            , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority=SchoolTeacher&schoolId=" + pt_school_id;
 
         //表格
         var param_item_existed = {
@@ -161,7 +160,19 @@
                 , { field: 'projectId', width: 150, title: '项目ID', hide: true }
                 , { field: 'projectName', width: 150, title: '项目名称' }
                 , { field: 'projectType', width: 150, title: '项目类型' }
-                , { field: 'projectDifficulty', width: 150, title: '项目难度', sort: true }
+                , {
+                    field: 'projectDifficulty', width: 150, title: '项目难度', sort: true, templet: function (d) {
+                        layui.use('rate', function (d) {
+                            rate.render({
+                                elem: self
+                                , value: d
+                                , half: true
+                                , theme: '#FE0000'
+                                , text: false
+                            })
+                        })
+                    }
+                }
                 , { field: 'projectIntroduce', title: '项目概述' }
                 , { field: 'projectBaseContent', title: '基本功能', hide: true }
                 , { field: 'projectExtendContent', title: '扩展功能', hide: true }
@@ -273,7 +284,10 @@
                             title: '添加学校老师',
                             type: 2,
                             area: ["500px", "500px"],
-                            content: AddSchoolTeacherURL
+                            content: AddSchoolTeacherURL,
+                            end: function () {
+                                table.render(param_item_existed);
+                            }
                         });
                         break;
                 };

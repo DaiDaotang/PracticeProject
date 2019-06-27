@@ -17,60 +17,108 @@
 </head>
 <body id="body_whole">
 
-    <ul class="layui-nav" style="position:fixed; width:100%; right:0px;">
-        <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
-            <a href="javascript:;" style="font-size:28px; color:#000; "><img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
-            <dl class="layui-nav-child">
-                <dd><a id="change_info_a" href="">修改信息</a></dd>
-                <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
-                <dd><a id="quit_a" href="login.html">退出登录</a></dd>
-            </dl>
-        </li>
-    </ul>
+    <table class="layui-hide" id="teacher_table" lay-filter="teacher_table" style="margin:50px;"></table>
+    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="upload" style="position:fixed; left:185px; font-size:26px; width:130px; border-radius: 20px; margin-top:50px;">Upload</button>
 
-    <ins class="adsbygoogle" style="display:inline-block;width:970px; height: 0;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-
-    <div style="width: auto; height: 100%; margin: 50px 150px 50px 150px;">
-    </div>
-
+    <script type="text/html" id="toolbar_teacher">
+        <div>老师列表</div>
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        </div>
+    </script>
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
-        //变量
-        var hd_img = "./img/defaultHead.jpg"
-            , id = "0";
+        var GetSchoolTeacherListURL = "./json/school_teacher_local.json";
 
-        var QuitURL = "login.html"
-            , ChangeInfoURL = "login.html"
-            , SafetyURL = "safety_info.html";
+        var param_teacher = {
+            elem: '#teacher_table'
+            , url: GetSchoolTeacherListURL
+            , title: '老师列表'
+            , toolbar: "#toolbar_teacher"
+            , contentType: 'application/json'
+            , method: "POST"
+            , width: 500
+            , where: {
+                "reqId": ""
+            }
+            , deal: function (res) {
+                return {
+                    code: 0
+                    , msg: ""
+                    , count: 1000
+                    , data: res.resData
+                }
+            }
+            , cols: [[
+                { type: 'checkbox' }
+                , { field: 'schoolTeacherId', title: 'ID', hide: true, sort: true }
+                , { field: 'schoolTeacherName',title: '名称' }
+                , { field: 'sex', width: 150, title: '性别' }
+            ]]
+        }
 
-        //测试变量
-        var test_style = "1px solid #000";
+        //获取传参
+        var t_param = function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
 
-        //form区 + 大区
-        layui.use(['form', 'jquery', 'layer'], function () {
+        layui.use(['form', 'jquery', 'layer', 'table'], function () {
             var form = layui.form
                 , $ = layui.jquery
-                , layer = layui.layer;
-        });
+                , layer = layui.layer
+                , table = layui.table;
 
-        //element区
-        layui.use('element', function () {
-            var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+            table.render(param_teacher)
 
-            //监听导航点击
-            element.on('nav(me)', function (elem) {
-                console.log(elem)
-                layer.msg(elem.text());
+            //头工具栏事件
+            table.on('toolbar(teacher_table)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    case 'getCheckLength':
+                        var data = checkStatus.data;
+                        layer.msg('选中了：' + data.length + '名老师');
+                        break;
+                };
             });
+
+            //监听添加按钮
+            form.on('submit(upload)', function (obj) {
+                console.log('upload')
+
+                layer.msg('添加成功', { time: 1000 })
+                setTimeout(function sign_up_fun() {
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭   
+                }, 1000);
+
+                return false;
+            });
+
+            //success回调函数
+            function sign_up_btn_success(res) {
+                if (res.isSuccess) {
+                    layer.msg('添加成功', { time: 1000 })
+                    setTimeout(function sign_up_fun() {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭   
+                    }, 1000);
+                }
+                else {
+                    layer.msg("添加失败", { time: 1000 })
+                }
+                return false;
+            }
+
         });
-
-        //基础区
-        document.getElementById("head_img").src = hd_img;
-        document.getElementById("head_img").style.border = "1px solid #6e7474";
-
-        document.getElementById("change_info_a").href = ChangeInfoURL;
-        document.getElementById("safety_info_a").href = SafetyURL;
-        document.getElementById("quit_a").href = QuitURL;
     </script>
 </body>
 </html>
