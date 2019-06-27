@@ -47,4 +47,22 @@
         <servlet-name>SchoolTeacherSignupServlet</servlet-name>
         <url-pattern>/SchoolTeacherSignupServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetCompanyServlet</servlet-name>
+        <servlet-class>com.servlet.GetCompanyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetCompanyServlet</servlet-name>
+        <url-pattern>/GetCompanyServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetSchoolServlet</servlet-name>
+        <servlet-class>com.servlet.GetSchoolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetSchoolServlet</servlet-name>
+        <url-pattern>/GetSchoolServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

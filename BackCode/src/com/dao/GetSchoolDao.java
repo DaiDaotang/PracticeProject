@@ -1,7 +1,7 @@
 package com.dao;
 
 import com.DBConn;
-import com.bean.CompanyBean;
+import com.bean.SchoolBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,25 +9,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GetCompanyDao {
-    public ArrayList<CompanyBean> GetCompany()
+public class GetSchoolDao {
+    public ArrayList<SchoolBean> GetSchool()
     {
-        ArrayList<CompanyBean> companyBeans = new ArrayList<>();
+        ArrayList<SchoolBean> schoolBeans = new ArrayList<>();
         Connection conn = DBConn.getConnection();
         PreparedStatement state;
         try{
             conn.setAutoCommit(false);
-            String sql ="SELECT companyId,companyName FROM company";
+            String sql ="SELECT * FROM school";
             state = conn.prepareStatement(sql);
             ResultSet rs = state.executeQuery();
             conn.commit();
             while (rs.next()){
-                CompanyBean companyBean = new CompanyBean();
-                companyBean.setId(rs.getInt(1));
-                companyBean.setName(rs.getString(2));
-                companyBeans.add(companyBean);
+                SchoolBean schoolBean = new SchoolBean();
+                schoolBean.setId(rs.getInt(1));
+                schoolBean.setName(rs.getString(2));
+                schoolBeans.add(schoolBean);
             }
-            return companyBeans;
+            return schoolBeans;
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);

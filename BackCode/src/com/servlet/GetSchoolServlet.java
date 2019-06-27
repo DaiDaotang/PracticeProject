@@ -1,10 +1,9 @@
 package com.servlet;
 
-import com.bean.CompanyBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.dao.CompanySignupDao;
-import com.dao.GetCompanyDao;
+import com.bean.SchoolBean;
+import com.dao.GetSchoolDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,7 +17,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class GetCompanyServlet extends HttpServlet {
+public class GetSchoolServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -30,12 +29,12 @@ public class GetCompanyServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new Gson();
-        Type requestType = new TypeToken<RequestBean<CompanyBean>>(){}.getType();
-        RequestBean<CompanyBean> reqBean = gson.fromJson(content,requestType);
+        Type requestType = new TypeToken<RequestBean<SchoolBean>>(){}.getType();
+        RequestBean<SchoolBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean resBean = new ResponseBean<>();
         try{
-            GetCompanyDao dao = new GetCompanyDao();
-            ArrayList<CompanyBean> result = dao.GetCompany();
+            GetSchoolDao dao = new GetSchoolDao();
+            ArrayList<SchoolBean> result = dao.GetSchool();
             if (result == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
@@ -46,7 +45,7 @@ public class GetCompanyServlet extends HttpServlet {
                 resBean.setResData(result);
             }
             //识别ResponseBean<LoginBean>类的结构
-            Type respType = new TypeToken<ResponseBean<CompanyBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<SchoolBean>>(){}.getType();
             //通过toJson方法将对象转化为json格式的字符串
             String s = gson.toJson(resBean,respType);
             out.print(s);
