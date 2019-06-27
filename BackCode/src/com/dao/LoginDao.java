@@ -31,10 +31,8 @@ public class LoginDao {
                 if(resultSet.next()){
                     if(password.equals(resultSet.getString(1))){
                         int id = resultSet.getInt(2);
+                        newbean.setresId(id);
                         newbean.setAuthority(authority);
-                        newbean.setPassword(password);
-                        newbean.setTelephone(telephone);
-                        newbean.setId(id);
                         return newbean;
                     }
                 }
@@ -45,10 +43,8 @@ public class LoginDao {
                 if(resultSet.next()){
                     if(password.equals(resultSet.getString(1))){
                         int id = resultSet.getInt(2);
+                        newbean.setresId(id);
                         newbean.setAuthority(authority);
-                        newbean.setPassword(password);
-                        newbean.setTelephone(telephone);
-                        newbean.setId(id);
                         return newbean;
                     }
                 }
@@ -59,10 +55,8 @@ public class LoginDao {
                 if(resultSet.next()){
                     if(password.equals(resultSet.getString(1))){
                         int id = resultSet.getInt(2);
+                        newbean.setresId(id);
                         newbean.setAuthority(authority);
-                        newbean.setPassword(password);
-                        newbean.setTelephone(telephone);
-                        newbean.setId(id);
                         return newbean;
                     }
                 }
@@ -73,10 +67,8 @@ public class LoginDao {
                 if(resultSet.next()){
                     if(password.equals(resultSet.getString(1))){
                         int id = resultSet.getInt(2);
+                        newbean.setresId(id);
                         newbean.setAuthority(authority);
-                        newbean.setPassword(password);
-                        newbean.setTelephone(telephone);
-                        newbean.setId(id);
                         return newbean;
                     }
                 }

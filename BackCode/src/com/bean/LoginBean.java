@@ -4,7 +4,7 @@ public class LoginBean {
     private String telephone;
     private String password;
     private String authority;
-    private int id;
+    private int resId;
 
     public void setTelephone(String telephone){
         this.telephone = telephone;
@@ -24,10 +24,10 @@ public class LoginBean {
 
     public String getAuthority(){return authority;}
 
-    public int getId(){return id;}
+    public int getresId(){return resId;}
 
-    public void setId(int id){
-        this.id = id;
+    public void setresId(int resId){
+        this.resId = resId;
     }
 
 }
