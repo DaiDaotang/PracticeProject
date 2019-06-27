@@ -92,4 +92,13 @@
         <servlet-name>CreateTeamServlet</servlet-name>
         <url-pattern>/CreateTeamServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddStudentServlet</servlet-name>
+        <servlet-class>com.servlet.AddStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddStudentServlet</servlet-name>
+        <url-pattern>/AddStudentServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

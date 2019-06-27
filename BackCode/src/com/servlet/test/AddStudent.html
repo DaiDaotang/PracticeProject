@@ -10,14 +10,13 @@ $END$
 <script>
     $.ajax({
         type:"POST",
-        url:"http://localhost:8080/CreateTeamServlet",
+        url:"http://localhost:8080/AddStudentServlet",
         async:true,
         data:JSON.stringify({
             "reqId":"111",
             "reqParam":{
-                "teamName":"王者四缺一",
-                "captainId":4,
-                "projectId":1
+                "teamId":23,
+                "studentId":5
             }
         }),
         dataType:"json",

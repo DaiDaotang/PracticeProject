@@ -4,8 +4,10 @@ public class TeamBean {
     private int teamId;
     private String teamName;
     private int captainId;
+    private int projectId;
     private int teamScores;
     private String githubLink;
+    private int studentId;
 
     public int getteamId(){return teamId;}
 
@@ -25,6 +27,12 @@ public class TeamBean {
         this.captainId = captainId;
     }
 
+    public int getprojectId(){return projectId;}
+
+    public void setprojectId(int projectId){
+        this.projectId = projectId;
+    }
+
     public int getteamScores(){return teamScores;}
 
     public void setteamScores(int teamScores){
@@ -35,5 +43,11 @@ public class TeamBean {
 
     public void setgithubLink(String githubLink){
         this.githubLink = githubLink;
+    }
+
+    public int getstudentId(){return studentId;}
+
+    public void setstudentId(int studentId){
+        this.studentId = studentId;
     }
 }
