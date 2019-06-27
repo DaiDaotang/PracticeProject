@@ -110,4 +110,13 @@
         <servlet-name>CreatProjectServlet</servlet-name>
         <url-pattern>/CreatProjectServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetStudentServlet</servlet-name>
+        <servlet-class>com.servlet.GetStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetStudentServlet</servlet-name>
+        <url-pattern>/GetStudentServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
