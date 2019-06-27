@@ -29,7 +29,8 @@ public class CreateTeamDao {
             conn.commit();
 
             state2 = conn.prepareStatement("select teamId from team where captainId = ?");
-            ResultSet set = state.executeQuery();
+            state2.setInt(1,teamBean.getcaptainId());
+            ResultSet set = state2.executeQuery();
             conn.commit();
             if (set.next()){
                 TeamBean bean = new TeamBean();

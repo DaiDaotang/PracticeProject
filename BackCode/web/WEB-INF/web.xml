@@ -85,11 +85,11 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>CreatTeamServlet</servlet-name>
+        <servlet-name>CreateTeamServlet</servlet-name>
         <servlet-class>com.servlet.CreateTeamServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CreatTeamServlet</servlet-name>
-        <url-pattern>/CreatTeamServlet</url-pattern>
+        <servlet-name>CreateTeamServlet</servlet-name>
+        <url-pattern>/CreateTeamServlet</url-pattern>
     </servlet-mapping>
 </web-app>
