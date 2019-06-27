@@ -5,6 +5,7 @@ import com.bean.RequestBean;
 import com.bean.ResponseBean;
 import com.dao.CreatPracticeDao;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ public class CreatPracticeServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Type requestType = new TypeToken<RequestBean<PracticeBean>>(){}.getType();
         RequestBean<PracticeBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean resBean = new ResponseBean<>();

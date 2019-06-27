@@ -103,7 +103,6 @@
                     document.getElementById('extra-input').innerHTML = '<div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px; "><label class="layui-form-label">企业名称</label><div class="layui-input-block"><input type="text" name="username" lay-filter="username" id="username" autocomplete="off" placeholder="请输入企业名称" class="layui-input"></div></div>';
                 }
                 else if (data.value == "School") {
-                    var temp = '<div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">教师姓名</label><div class="layui-input-block"><input type="text" name="username" lay-filter="username" id="username" autocomplete="off" placeholder="请输入教师姓名" class="layui-input"></div></div><div class="layui-form-item" id="sex-div" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">性别</label><div class="layui-input-block"><input type="radio" name="sex" value="男" title="男" checked=""><input type="radio" name="sex" value="女" title="女"></div></div><div class="layui-form-item" id="company-div" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">所属学校</label><div class="layui-input-block"><select name="school_sort" lay-filter="school_sort" id="school_sort"><option value=""></option>';
                     //获取学校名称
                     $.ajax({
                         type: "POST",
@@ -115,8 +114,25 @@
                         dataType: "json",
                         success: function (res) {
                             if (res.isSuccess) {
-                                window.localStorage.school_info_temp = res.resData;
                                 console.log(res);
+
+                                var temp = '<div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">教师姓名</label><div class="layui-input-block"><input type="text" name="username" lay-filter="username" id="username" autocomplete="off" placeholder="请输入教师姓名" class="layui-input"></div></div><div class="layui-form-item" id="sex-div" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">性别</label><div class="layui-input-block"><input type="radio" name="sex" value="男" title="男" checked=""><input type="radio" name="sex" value="女" title="女"></div></div><div class="layui-form-item" id="company-div" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">所属学校</label><div class="layui-input-block"><select name="school_sort" lay-filter="school_sort" id="school_sort"><option value=""></option>';
+                                for (var i = 0; i < res.resData.length; i++) {
+                                    var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
+                                    temp += temptemp;
+                                }
+
+                                ////
+                                //temp += '<option value="000">武汉大学</option>';
+                                ////
+
+                                temp += '</select></div></div> ';
+
+                                document.getElementById('extra-input').innerHTML = temp;
+                                document.getElementById('signup').style.marginBottom = "80px";
+                                form.render('radio');
+                                form.render('select');
+
                             }
                         },
                         error: function (res) {
@@ -124,22 +140,6 @@
                             console.log(res);
                         }
                     });
-                    for (var i = 0; i < window.localStorage.school_info_temp.length; i++) {
-                        temp += '<option value=';
-                        temp += window.localStorage.school_info_temp[i].id;
-                        temp += '>'
-                        temp += window.localStorage.school_info_temp[i].name;
-                        temp += '</option>'
-                    }
-                    ////
-                    //temp += '<option value="000">武汉大学</option>';
-                    ////
-                    temp += '</select></div></div> ';
-
-                    document.getElementById('extra-input').innerHTML = temp;
-                    document.getElementById('signup').style.marginBottom = "80px";
-                    form.render('radio');
-                    form.render('select');
                 }
                 else if (data.value == "Teacher") {
                     var temp = '<div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">教师姓名</label><div class="layui-input-block"><input type="text" name="username" lay-filter="username" id="username" autocomplete="off" placeholder="请输入教师姓名" class="layui-input"></div></div><div class="layui-form-item" id="sex-div" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">性别</label><div class="layui-input-block"><input type="radio" name="sex" value="男" title="男" checked=""><input type="radio" name="sex" value="女" title="女"></div></div><div class="layui-form-item" id="company-div" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">所属企业</label><div class="layui-input-block"><select name="company_sort" lay-filter="company_sort" id="company_sort"><option value=""></option>';

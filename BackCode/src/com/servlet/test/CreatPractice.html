@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    var CreatPracticeURL = "http://localhost:8080/CreatPracticeServlet";
+    $.ajax({
+        type:"POST",
+        url:CreatPracticeURL,
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "name":"2017实训",
+                "content":"我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分",
+                "startTime":"2017-05-10",
+                "endTime":"2017-05-10"
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        }
+    });
+</script>
+</html>
