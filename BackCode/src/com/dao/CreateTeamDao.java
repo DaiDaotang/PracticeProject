@@ -23,10 +23,9 @@ public class CreateTeamDao {
             state.executeUpdate();
             ResultSet set = state.getGeneratedKeys();
             if (set.next()){
+                conn.commit();
                 return set.getInt(1);
             }
-
-            conn.commit();
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);
