@@ -35,23 +35,86 @@
             <legend style="font-size:32px;">添加项目</legend>
         </fieldset>
 
-        <div style="width:auto; height:auto; margin: 20px 50px; border:1px solid black;">
-            
+        <div style="width:auto; height:auto; margin: 20px 50px;">
+            <div class="layui-row" style="height:100px;">
+                <div class="layui-col-md8" style="height:100px;">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                        <p style="font-size:30px; margin: 0 0 0 20px;">实训名称：<span id="pt_name"></span></p>
+                    </div>
+                </div>
+                <div class="layui-col-md4" style="height:100px;">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                        <p style="font-size:20px;">主办学校：<span id="school_name"></span></p>
+                        <p style="font-size:20px;">承包公司：<span id="company_name"></span></p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div style="width:auto; height:auto; margin: 20px 50px; border:1px solid black;">
-            <form class="layui-form" action="" lay-filter="pt_item_add_form"></form>
+            <table class="layui-hide" id="item_table" lay-filter="item_table"></table>
         </div>
     </div>
 
     <script src="layui/layui.js" charset="utf-8"></script>
+    <script type="text/html" id="bar_change_delete">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
     <script>
         //变量
         var teacher_id = "000"
             , teacher_school_id = "000"
             , teacher_school_name = "武汉大学"
             , teacher_company_id = "000"
-            , teacher_company_name = "爱学记公司";
+            , teacher_company_name = "爱学记公司"
+            , hd_img = ""
+            , pt_id = "000"
+            , pt_name = "Holiday Practice 2019"
+            , pt_school_id = "000"
+            , pt_school_name = "武汉大学"
+            , pt_company_id = "000"
+            , pt_company_name = "爱学记公司";
+
+        var GetExistedItemURL = "./json/item_existed_local.json"
+            , QuitURL = "login.html"
+            , ChangeInfoURL = "login.html"
+            , SafetyURL = "safety_info.html";
+
+        //本地json文件
+        var param_item_existed = {
+            elem: '#item_table'
+            , url: GetExistedItemURL
+            , title: '项目列表'
+            , toolbar: '#toolbar_kid'
+            , contentType: 'application/json'
+            , method: "POST"
+            , width: 1100
+            , height: 1000
+            , where: {
+                "reqId": teacher_id
+            }
+            , deal: function (res) {
+                return {
+                    code: 0
+                    , msg: ""
+                    , count: 1000
+                    , data: res.resData
+                }
+            }
+            , cols: [[
+                { type: 'numbers' }
+                , { field: 'projectId', width: 100, title: '项目ID', hide: true }
+                , { field: 'projectName', width: 100, title: '项目名称' }
+                , { field: 'projectType', width: 100, title: '项目类型' }
+                , { field: 'projectDifficulty', width: 100, title: '项目难度', sort: true }
+                , { field: 'projectIntroduce', title: '项目概述'}
+                , { field: 'projectBaseContent', title: '基本功能' }
+                , { field: 'projectExtendContent', title: '扩展功能' }
+                , { field: 'projectAdvanceContent', title: '高级功能' }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 150 }
+            ]]
+        }
 
         //测试变量
         var test_style = "1px solid #000";
@@ -74,12 +137,42 @@
             });
         });
 
-        //基础区
-        document.getElementById("head_img").src = hd_img;
-        document.getElementById("head_img").style.border = "1px solid #6e7474";
+        //table区
+        layui.use('table', function () {
+            var table = layui.table;
 
-        document.getElementById("username").innerText = username;
-        document.getElementById("gender").innerHTML = gender == "男" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
+            table.render(param_item_existed);
+            table.on('toolbar(item_table)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                console.log(checkStatus)
+                switch (obj.event) {
+                    case 'getCheckData':
+                        var data = checkStatus.data;
+                        var num = 0;
+                        var contents = new Array(data.length);
+                        while (num < data.length) {
+                            contents[num] = data[num].id
+                            console.log(data[num].id)
+                            num++;
+                        }
+                        console.log("共" + num + "人")
+                        console.log(contents)
+                        layer.alert(JSON.stringify(contents), {
+                            title: '选中运动员'
+                        });
+                        break;
+                    case 'getCheckLength':
+                        var data = checkStatus.data;
+                        layer.msg('选中了：' + data.length + ' 个');
+                        break;
+                };
+            });
+        })
+
+        //基础区
+        document.getElementById("school_name").innerText = pt_school_name;
+        document.getElementById("company_name").innerText = pt_company_name;
+        document.getElementById("pt_name").innerText = pt_name;
 
         document.getElementById("change_info_a").href = ChangeInfoURL;
         document.getElementById("safety_info_a").href = SafetyURL;

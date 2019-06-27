@@ -61,7 +61,7 @@
             </div>
 
             <div class="layui-form-item">
-                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="pt_finish_btn" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-left:30px;">Complete</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="pt_apply_btn" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-left:30px;">Apply</button>
             </div>
         </form>
     </div>
@@ -72,8 +72,8 @@
         var teacher_id = "000"
             , teacher_school_id = "000"
             , teacher_school_name = "武汉大学"
-            , teacher_company_id = "000"
-            , teacher_company_name = "爱学记公司";
+            , teacher_company_id = ""
+            , teacher_company_name = "";
 
         //form区
         layui.use(['form', 'jquery', 'laydate'], function () {
@@ -82,14 +82,26 @@
                 , laydate = layui.laydate;
 
             //表单初始赋值
-            form.val('pt_create_form', {
-                "pt_name": ""
-                , "pt_school": teacher_school_name
-                , "pt_company": ""
-            })
+            if (teacher_company_id == "") {
+                form.val('pt_create_form', {
+                    "pt_name": ""
+                    , "pt_school": teacher_school_id
+                    , "pt_company": ""
+                })
+            }
+            else if (teacher_school_id == "") {
+                form.val('pt_create_form', {
+                    "pt_name": ""
+                    , "pt_school": ""
+                    , "pt_company": teacher_company_id
+                })
+            }
+            else {
+                console.log("身份认证失败")
+            }
 
-            //监听完成
-            form.on('submit(pt_finish_btn)', function (data) {
+            //监听申请
+            form.on('submit(pt_apply_btn)', function (data) {
                 window.localStorage.pt_name = data.field.pt_name;
                 window.localStorage.pt_starttime = data.field.pt_start_data;
                 window.localStorage.pt_endtime = data.field.pt_end_data;
