@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 1000,
+  "resData": [
+    {
+      "companyTeacherId": 100,
+      "companyTeacherName": "a",
+      "sex": "ÄÐ"
+    },
+    {
+      "companyTeacherId": 101,
+      "companyTeacherName": "a",
+      "sex": "ÄÐ"
+    },
+    {
+      "companyTeacherId": 102,
+      "companyTeacherName": "a",
+      "sex": "ÄÐ"
+    }
+  ]
+}  

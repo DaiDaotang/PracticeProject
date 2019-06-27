@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加项目页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+
+    <style type="text/css">
+        .layui-form-select dl dd:hover {
+            background-color: #1E9FFF;
+            color: #d4dadb
+        }
+    </style>
+</head>
+<body id="body_whole">
+
+    <ul class="layui-nav" style="position:fixed; width:100%; right:0px;">
+        <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
+            <a href="javascript:;" style="font-size:28px; color:#000; "><img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
+            <dl class="layui-nav-child">
+                <dd><a id="change_info_a" href="">修改信息</a></dd>
+                <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
+                <dd><a id="quit_a" href="login.html">退出登录</a></dd>
+            </dl>
+        </li>
+    </ul>
+
+    <ins class="adsbygoogle" style="display:inline-block;width:970px; height: 0;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+
+    <div style="width: auto; height: 100%; margin: 50px 150px 50px 150px;">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 80px; margin-bottom: 50px;">
+            <legend style="font-size:32px;">添加项目</legend>
+        </fieldset>
+
+        <div style="width:auto; height:auto; margin: 20px 50px;">
+            <div class="layui-row" style="height:100px;">
+                <div class="layui-col-md8" style="height:100px;">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                        <p style="font-size:30px; margin: 0 0 0 20px;">实训名称：<span id="pt_name"></span></p>
+                    </div>
+                </div>
+                <div class="layui-col-md4" style="height:100px;">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                        <p style="font-size:20px;">主办学校：<span id="school_name"></span></p>
+                        <p style="font-size:20px;">承包公司：<span id="company_name"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width:auto; height:auto; margin: 20px 50px;">
+            <div style="margin: 5px;">
+                <table class="layui-hide" id="item_table" lay-filter="item_table"></table>
+            </div>
+        </div>
+
+        <div style="width:auto; height:auto; margin: 20px 50px;">
+            <div class="layui-row">
+                <div class="layui-col-md5">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 20px 20px 20px;float:left;">
+                        <table class="layui-hide" id="school_teacher_table" lay-filter="school_teacher_table"></table>
+                    </div>
+                </div>
+                <div class="layui-col-md2">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 20px 20px 20px; text-align:center;">
+                        <p id="school_center_display"></p>
+                        <p>PLUS</p>
+                        <p id="company_center_display"></p>
+                    </div>
+                </div>
+                <div class="layui-col-md5">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 20px 20px 20px; float:right;">
+                        <table class="layui-hide" id="company_teacher_table" lay-filter="company_teacher_table"></table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script type="text/html" id="bar_change_delete">
+        <a class="layui-btn layui-btn-xs" style="background-color:green" lay-event="detail">详情</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <script type="text/html" id="bar_teacher_detail_delete">
+        <a class="layui-btn layui-btn-xs" style="background-color:green" lay-event="detail">详情</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <script type="text/html" id="toolbar_item">
+        <div>项目列表</div>
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addItem" style=" margin:5px; position:relative; left:970px;">添加项目</button>
+        </div>
+    </script>
+    <script type="text/html" id="toolbar_school_teacher">
+        <div>校园老师</div>
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addSchoolTeacher" style=" margin:5px; position:relative; left:230px;">添加校园老师</button>
+        </div>
+    </script>
+    <script type="text/html" id="toolbar_company_teacher">
+        <div>企业老师</div>
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addCompanyTeacher" style=" margin:5px; position:relative; left:230px;">添加企业老师</button>
+        </div>
+    </script>
+    <script>
+        //变量
+        var teacher_id = "000"
+            , teacher_school_id = "000"
+            , teacher_school_name = "武汉大学"
+            , teacher_company_id = ""
+            , teacher_company_name = ""
+            , hd_img = ""
+            , pt_id = "000"
+            , pt_name = "Holiday Practice 2019"
+            , pt_school_id = "000"
+            , pt_school_name = "武汉大学"
+            , pt_company_id = "000"
+            , pt_company_name = "爱学记公司";
+
+        var GetExistedItemURL = "./json/item_existed_local.json"
+            , GetSchoolTeacherURL = "./json/school_teacher_local.json"
+            , GetCompanyTeacherURL = "./json/company_teacher_local.json"
+            , QuitURL = "login.html"
+            , ChangeInfoURL = "login.html"
+            , SafetyURL = "safety_info.html"
+            , ItemDetailURL = "login.html"
+            , TeacherHomePageURL = "login.html"
+            , AddItemURL = "login.html"
+            , AddCompanyTeacherURL = "teacher_add_pt_teacher.html?authority='CompanyTeacher'"
+            , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority='SchoolTeacher'";
+
+        //表格
+        var param_item_existed = {
+            elem: '#item_table'
+            , url: GetExistedItemURL
+            , title: '项目列表'
+            , toolbar: "#toolbar_item"
+            , contentType: 'application/json'
+            , method: "POST"
+            , width: 1100
+            , where: {
+                "reqId": teacher_id
+            }
+            , deal: function (res) {
+                return {
+                    code: 0
+                    , msg: ""
+                    , count: 1000
+                    , data: res.resData
+                }
+            }
+            , cols: [[
+                { type: 'numbers' }
+                , { field: 'projectId', width: 150, title: '项目ID', hide: true }
+                , { field: 'projectName', width: 150, title: '项目名称' }
+                , { field: 'projectType', width: 150, title: '项目类型' }
+                , { field: 'projectDifficulty', width: 150, title: '项目难度', sort: true }
+                , { field: 'projectIntroduce', title: '项目概述' }
+                , { field: 'projectBaseContent', title: '基本功能', hide: true }
+                , { field: 'projectExtendContent', title: '扩展功能', hide: true }
+                , { field: 'projectAdvanceContent', title: '高级功能', hide: true }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 158 }
+            ]]
+        }
+            , param_pt_school_teacher = {
+                elem: '#school_teacher_table'
+                , url: GetSchoolTeacherURL
+                , title: '校园老师'
+                , toolbar: "#toolbar_school_teacher"
+                , contentType: 'application/json'
+                , method: "POST"
+                , width: 380
+                , where: {
+                    "reqId": teacher_id
+                }
+                , deal: function (res) {
+                    return {
+                        code: 0
+                        , msg: ""
+                        , count: 1000
+                        , data: res.resData
+                    }
+                }
+                , cols: [[
+                    { type: 'numbers' }
+                    , { field: 'schoolTeacherId', width: 75, title: 'ID', hide: true }
+                    , { field: 'schoolTeacherName', width: 120, title: '名称' }
+                    , { field: 'sex', width: 100, title: '性别' }
+                    , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
+                ]]
+            }
+            , param_pt_company_teacher = {
+                elem: '#company_teacher_table'
+                , url: GetCompanyTeacherURL
+                , title: '企业老师'
+                , toolbar: "#toolbar_company_teacher"
+                , contentType: 'application/json'
+                , method: "POST"
+                , width: 380
+                , where: {
+                    "reqId": teacher_id
+                }
+                , deal: function (res) {
+                    return {
+                        code: 0
+                        , msg: ""
+                        , count: 1000
+                        , data: res.resData
+                    }
+                }
+                , cols: [[
+                    { type: 'numbers' }
+                    , { field: 'companyTeacherId', width: 75, title: 'ID', hide: true }
+                    , { field: 'companyTeacherName', width: 120, title: '名称' }
+                    , { field: 'sex', width: 100, title: '性别' }
+                    , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
+                ]]
+            }
+
+        //测试变量
+        var test_style = "1px solid #000";
+
+        //form区 + 大区
+        layui.use(['form', 'jquery', 'layer'], function () {
+            var form = layui.form
+                , $ = layui.jquery
+                , layer = layui.layer;
+        });
+
+        //element区
+        layui.use('element', function () {
+            var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+            //监听导航点击
+            element.on('nav(me)', function (elem) {
+                console.log(elem)
+                layer.msg(elem.text());
+            });
+        });
+
+        //table区
+        layui.use(['form', 'table', 'layer'], function () {
+            var table = layui.table
+                , layer = layui.layer
+                , form = layui.form;
+
+            //头工具栏事件
+            table.on('toolbar(item_table)', function (obj) {
+                switch (obj.event) {
+                    case 'addItem':
+                        console.log('addItem')
+                        layer.open({
+                            title: '添加项目',
+                            type: 2,
+                            area: ["500px", "500px"],
+                            content: AddItemURL
+                        });
+                        break;
+                };
+            });
+            table.on('toolbar(school_teacher_table)', function (obj) {
+                switch (obj.event) {
+                    case 'addSchoolTeacher':
+                        console.log('addSchoolTeacher')
+                        layer.open({
+                            title: '添加学校老师',
+                            type: 2,
+                            area: ["500px", "500px"],
+                            content: AddSchoolTeacherURL
+                        });
+                        break;
+                };
+            });
+            table.on('toolbar(company_teacher_table)', function (obj) {
+                switch (obj.event) {
+                    case 'addCompanyTeacher':
+                        console.log('addCompanyTeacher')
+                        layer.open({
+                            title: '添加企业老师',
+                            type: 2,
+                            area: ["500px", "500px"],
+                            content: AddCompanyTeacherURL
+                        });
+                        break;
+                };
+            });
+
+            //监听工具条
+            table.on('tool(item_table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+                if (layEvent === 'detail') { //查看
+                    console.log("detail")
+                    layer.open({
+                        title: data.projectName,
+                        type: 2,
+                        area: ["500px", "500px"],
+                        content: ItemDetailURL
+                    });
+
+                }
+                else if (layEvent === 'del') { //删除
+                    console.log("delete")
+                    layer.confirm('真的删除这一项目吗？', function (index) {
+                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+
+                        ////向服务端发送删除指令
+
+                        table.render(param_item_existed);
+                    });
+                }
+                else if (layEvent === 'edit') { //编辑
+                    console.log("edit")
+                    //do something
+
+                    layer.open({
+                        title: data.projectName,
+                        type: 2,
+                        area: ["500px", "500px"],
+                        content: ItemDetailURL,
+                        end: function () {
+                            table.render(param_item_existed);
+                        }
+                    });
+
+                    //同步更新缓存对应的值
+                    obj.update({
+                        projectName: '123'
+                    });
+                }
+                else if (layEvent === 'addItem') {
+                    console.log("addItem");
+                }
+            });
+            table.on('tool(school_teacher_table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+                if (layEvent === 'detail') { //查看
+                    console.log("detail")
+                    window.open(TeacherHomePageURL + "?id=" + data.schoolTeacherId)
+                }
+                else if (layEvent === 'del') { //删除
+                    console.log("delete")
+                    layer.confirm('真的删除这位老师吗？', function (index) {
+                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+
+                        ////向服务端发送删除指令
+
+                        table.render(param_item_existed);
+                    });
+                } 
+            });
+            table.on('tool(company_teacher_table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+                if (layEvent === 'detail') { //查看
+                    console.log("detail")
+                    console.log(data.companyTeacherId);
+                    window.open(TeacherHomePageURL + "?id=" + data.companyTeacherId)
+                }
+                else if (layEvent === 'del') { //删除
+                    console.log("delete")
+                    layer.confirm('真的删除这位老师吗？', function (index) {
+                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+
+                        ////向服务端发送删除指令
+
+                        table.render(param_item_existed);
+                    });
+                }
+            });
+
+            table.render(param_item_existed);
+            table.render(param_pt_school_teacher);
+            table.render(param_pt_company_teacher);
+        })
+
+        //基础区
+        document.getElementById("school_name").innerText = pt_school_name;
+        document.getElementById("company_name").innerText = pt_company_name;
+        document.getElementById("pt_name").innerText = pt_name;
+
+        document.getElementById("school_center_display").innerText = pt_school_name;
+        document.getElementById("company_center_display").innerText = pt_company_name;
+
+        document.getElementById("change_info_a").href = ChangeInfoURL;
+        document.getElementById("safety_info_a").href = SafetyURL;
+        document.getElementById("quit_a").href = QuitURL;
+    </script>
+</body>
+</html>
