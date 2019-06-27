@@ -77,7 +77,7 @@
 
     <servlet>
         <servlet-name>CreatPracticeServlet</servlet-name>
-        <servlet-class>com.servlet.CreatPracticeServlet</servlet-class>
+        <servlet-class>com.servlet.CreatePracticeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreatPracticeServlet</servlet-name>
@@ -100,5 +100,14 @@
     <servlet-mapping>
         <servlet-name>AddStudentServlet</servlet-name>
         <url-pattern>/AddStudentServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreatProjectServlet</servlet-name>
+        <servlet-class>com.servlet.CreateProjectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreatProjectServlet</servlet-name>
+        <url-pattern>/CreatProjectServlet</url-pattern>
     </servlet-mapping>
 </web-app>

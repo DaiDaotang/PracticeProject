@@ -6,7 +6,7 @@ import com.bean.RequestBean;
 
 import java.sql.*;
 
-public class CreatPracticeDao {
+public class CreatePracticeDao {
 
     public int creat(RequestBean<PracticeBean> practiceBean)
     {
