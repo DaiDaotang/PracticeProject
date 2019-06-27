@@ -83,4 +83,13 @@
         <servlet-name>CreatPracticeServlet</servlet-name>
         <url-pattern>/CreatPracticeServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreatTeamServlet</servlet-name>
+        <servlet-class>com.servlet.CreateTeamServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreatTeamServlet</servlet-name>
+        <url-pattern>/CreatTeamServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

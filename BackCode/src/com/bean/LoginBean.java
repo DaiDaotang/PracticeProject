@@ -1,6 +1,6 @@
 package com.bean;
 
-public class Loginbean {
+public class LoginBean {
     private String telephone;
     private String password;
     private String authority;
@@ -24,9 +24,10 @@ public class Loginbean {
 
     public String getAuthority(){return authority;}
 
+    public int getId(){return id;}
+
     public void setId(int id){
         this.id = id;
     }
 
-    public int getId(){return id;}
 }

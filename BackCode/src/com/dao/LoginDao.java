@@ -1,28 +1,25 @@
 package com.dao;
 
 import com.DBConn;
-import com.bean.CompanyBean;
-import com.bean.Loginbean;
+import com.bean.LoginBean;
 import com.bean.RequestBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginDao {
 
-    public Loginbean checkIn(RequestBean<Loginbean> bean)
+    public LoginBean checkIn(RequestBean<LoginBean> bean)
     {
-        Loginbean loginbean = bean.getReqParam();
+        LoginBean loginbean = bean.getReqParam();
         String telephone = loginbean.getTelephone();
         String password = loginbean.getPassword();
         String authority = loginbean.getAuthority();
         Connection conn = DBConn.getConnection();
         ResultSet resultSet;
-        Loginbean newbean = new Loginbean();
+        LoginBean newbean = new LoginBean();
         try{
             PreparedStatement state;
 
