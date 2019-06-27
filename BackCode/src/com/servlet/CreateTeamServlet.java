@@ -38,15 +38,15 @@ public class CreateTeamServlet extends HttpServlet {
         ResponseBean resBean = new ResponseBean<>();
         try{
             CreateTeamDao dao = new CreateTeamDao();
-            ArrayList<TeamBean> list = dao.createTeam(reqBean);
-            if (list == null){
+            int i = dao.createTeam(reqBean);
+            if (i == -1){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
-                resBean.setResData(list);
+                resBean.setResData(i);
             }
             //识别ResponseBean<LoginBean>类的结构
             Type respType = new TypeToken<ResponseBean<TeamBean>>(){}.getType();
