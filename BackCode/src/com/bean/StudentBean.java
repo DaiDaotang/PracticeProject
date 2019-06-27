@@ -1,6 +1,7 @@
 package com.bean;
 
 public class StudentBean {
+    private int id;
     private String telephone;
     private String password;
     private String name;
@@ -72,5 +73,13 @@ public class StudentBean {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

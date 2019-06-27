@@ -1,6 +1,7 @@
 package com.bean;
 
 public class CompanyTeacherBean {
+    private int id;
     private String telephone;
     private String password;
     private String name;
@@ -54,5 +55,13 @@ public class CompanyTeacherBean {
 
     public void setHead(String head) {
         this.head = head;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

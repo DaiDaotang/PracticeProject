@@ -3,6 +3,7 @@ package com.bean;
 import com.mysql.cj.jdbc.Blob;
 
 public class CompanyBean {
+    private int id;
     private String telephone;
     private String password;
     private String name;
@@ -33,5 +34,13 @@ public class CompanyBean {
     public String getHead()
     {
         return head;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
