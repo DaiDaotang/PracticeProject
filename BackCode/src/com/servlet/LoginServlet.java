@@ -39,11 +39,11 @@ public class LoginServlet extends HttpServlet {
             LoginDao dao = new LoginDao();
             Loginbean loginbean = dao.checkIn(reqBean);
             if (loginbean == null){
-                resBean.setReqId(reqBean.getReqId());
+                resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
             else {
-                resBean.setReqId(reqBean.getReqId());
+                resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
                 resBean.setResData(loginbean);
             }
