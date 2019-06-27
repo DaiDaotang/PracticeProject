@@ -29,4 +29,13 @@
         <servlet-name>StudentSignupServlet</servlet-name>
         <url-pattern>/StudentSignupServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CompanyTeacherSignupServlet</servlet-name>
+        <servlet-class>com.servlet.CompanyTeacherSignupServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CompanyTeacherSignupServlet</servlet-name>
+        <url-pattern>/CompanyTeacherSignupServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
