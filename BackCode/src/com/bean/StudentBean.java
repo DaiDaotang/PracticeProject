@@ -11,8 +11,6 @@ public class StudentBean {
     private String major;
     private String number;
     private String grade;
-    private int teamId;
-    private String schoolName;
 
     public String getTelephone() {
         return telephone;
@@ -92,21 +90,5 @@ public class StudentBean {
 
     public void setGrade(String grade) {
         this.grade = grade;
-    }
-
-    public int getteamId() {
-        return teamId;
-    }
-
-    public void setteamId(int teamId) {
-        this.teamId = teamId;
-    }
-
-    public String getschoolName() {
-        return schoolName;
-    }
-
-    public void setschoolName(String schoolName) {
-        this.schoolName = schoolName;
     }
 }
