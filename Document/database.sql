@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 27/06/2019 09:21:58
+ Date: 27/06/2019 09:26:48
 */
 
 SET NAMES utf8mb4;
@@ -103,7 +103,8 @@ CREATE TABLE `school`  (
   `schoolName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`schoolId`) USING BTREE,
   UNIQUE INDEX `schoolName_UNIQUE`(`schoolName`) USING BTREE,
-  INDEX `schoolId`(`schoolId`) USING BTREE
+  INDEX `schoolId`(`schoolId`) USING BTREE,
+  INDEX `schoolId_2`(`schoolId`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -115,8 +116,8 @@ CREATE TABLE `schoolteacher`  (
   `schoolteacherPhone` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `schoolteacherPassword` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `schoolteacherName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `schoolteacherHead` blob NULL,
   `schoolTeacherSex` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `schoolteacherHead` blob NULL,
   `schoolId` int(11) NOT NULL,
   PRIMARY KEY (`schoolteacherId`) USING BTREE,
   UNIQUE INDEX `schoolteacherPhone_UNIQUE`(`schoolteacherPhone`) USING BTREE,
