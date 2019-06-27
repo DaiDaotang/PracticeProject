@@ -8,7 +8,7 @@ public class ProjectBean {
     private String introduce;
     private String baseContent;
     private String extendContent;
-    private String AdvanceContent;
+    private String advanceContent;
     private int practiceId;
 
     public int getId() {
@@ -68,11 +68,11 @@ public class ProjectBean {
     }
 
     public String getAdvanceContent() {
-        return AdvanceContent;
+        return advanceContent;
     }
 
     public void setAdvanceContent(String advanceContent) {
-        AdvanceContent = advanceContent;
+        this.advanceContent = advanceContent;
     }
 
     public int getPracticeId() {

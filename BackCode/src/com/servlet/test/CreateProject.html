@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    var CreatPracticeURL = "http://localhost:8080/CreatProjectServlet";
+    $.ajax({
+        type:"POST",
+        url:CreatPracticeURL,
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "name":"实训平台开发",
+                "type":"数据分析",
+                "difficulty":4,
+                "introduce":"开发一个实训平台",
+                "baseContent":"开发开发开发一个实训平台噢噢噢噢",
+                "extentContent":"",
+                "advanceContent":"人脸识别",
+                "practiceId":4
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        }
+    });
+</script>
+</html>
