@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/LoginServlet",
+        async:true,
+        data:JSON.stringify({
+            "reqId":"111",
+            "reqParam":{
+                "telephone":"123",
+                "password":"123",
+                "authority":"Company"
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        }
+    });
+    //console.log("fail");
+</script>
+</html>
