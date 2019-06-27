@@ -1,9 +1,9 @@
 package com.servlet;
 
-import com.bean.PracticeBean;
+import com.bean.ProjectBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.dao.CreatPracticeDao;
+import com.dao.CreateProjectDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 
-public class CreatPracticeServlet extends HttpServlet {
+public class CreateProjectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -29,11 +29,11 @@ public class CreatPracticeServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Type requestType = new TypeToken<RequestBean<PracticeBean>>(){}.getType();
-        RequestBean<PracticeBean> reqBean = gson.fromJson(content,requestType);
+        Type requestType = new TypeToken<RequestBean<ProjectBean>>(){}.getType();
+        RequestBean<ProjectBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean resBean = new ResponseBean<>();
         try{
-            CreatPracticeDao dao = new CreatPracticeDao();
+            CreateProjectDao dao = new CreateProjectDao();
             int res = dao.creat(reqBean);
             if (res == -1){
                 resBean.setResId(reqBean.getReqId());
@@ -44,7 +44,7 @@ public class CreatPracticeServlet extends HttpServlet {
                 resBean.setSuccess(true);
             }
             //识别ResponseBean<LoginBean>类的结构
-            Type respType = new TypeToken<ResponseBean<PracticeBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<ProjectBean>>(){}.getType();
             //通过toJson方法将对象转化为json格式的字符串
             out.print(gson.toJson(resBean,respType));
         }catch (Exception e){
