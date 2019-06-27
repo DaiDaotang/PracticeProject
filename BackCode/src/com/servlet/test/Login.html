@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/StudentSignupServlet",
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "telephone":"789789789",
+                "password":"12345687",
+                "name":"好学生",
+                "school":1,
+                "major":"计算机学院",
+                "number":"2017302584444",
+                "sex":"女"
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        }
+    });
+    //console.log("fail");
+</script>
+</html>
