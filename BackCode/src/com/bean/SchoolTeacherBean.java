@@ -5,6 +5,6 @@ public class SchoolTeacherBean {
     private String password;
     private String name;
     private String sex;
-    private int company;
+    private int school;
     private String head;
 }

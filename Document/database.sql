@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 27/06/2019 09:26:48
+ Date: 27/06/2019 09:33:42
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `company`  (
   `companyHead` blob NULL,
   PRIMARY KEY (`companyId`) USING BTREE,
   UNIQUE INDEX `companyPhone_UNIQUE`(`companyPhone`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for companyteacher
@@ -40,9 +40,9 @@ CREATE TABLE `companyteacher`  (
   `teacherPhone` int(11) NOT NULL,
   `teacherPassword` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `teacherName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `companyId` int(11) NOT NULL,
-  `teacherHead` blob NULL,
   `teacherSex` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `teacherHead` blob NULL,
+  `companyId` int(11) NOT NULL,
   PRIMARY KEY (`teacherId`) USING BTREE,
   UNIQUE INDEX `tel_UNIQUE`(`teacherPhone`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
@@ -105,7 +105,7 @@ CREATE TABLE `school`  (
   UNIQUE INDEX `schoolName_UNIQUE`(`schoolName`) USING BTREE,
   INDEX `schoolId`(`schoolId`) USING BTREE,
   INDEX `schoolId_2`(`schoolId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for schoolteacher
@@ -138,7 +138,7 @@ CREATE TABLE `signin`  (
   PRIMARY KEY (`signinId`) USING BTREE,
   INDEX `signStudentId_idx`(`studentId`) USING BTREE,
   CONSTRAINT `signStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for stprelation
@@ -174,7 +174,7 @@ CREATE TABLE `student`  (
   `studentSex` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`studentId`) USING BTREE,
   UNIQUE INDEX `studentPhone_UNIQUE`(`studentPhone`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for studentdiary
@@ -189,7 +189,7 @@ CREATE TABLE `studentdiary`  (
   PRIMARY KEY (`studentdiaryId`) USING BTREE,
   INDEX `sdStudentId_idx`(`studentId`) USING BTREE,
   CONSTRAINT `sdStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for teacherdiary
@@ -203,7 +203,7 @@ CREATE TABLE `teacherdiary`  (
   PRIMARY KEY (`teacherdiaryId`) USING BTREE,
   INDEX `tdTeacherId_idx`(`teacherId`) USING BTREE,
   CONSTRAINT `tdTeacherId` FOREIGN KEY (`teacherId`) REFERENCES `companyteacher` (`teacherId`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for team
@@ -218,7 +218,7 @@ CREATE TABLE `team`  (
   PRIMARY KEY (`teamId`) USING BTREE,
   INDEX `teamCaptainId_idx`(`captainId`) USING BTREE,
   CONSTRAINT `teamCaptainId` FOREIGN KEY (`captainId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for teamdiary
@@ -233,6 +233,6 @@ CREATE TABLE `teamdiary`  (
   PRIMARY KEY (`teamdiaryId`) USING BTREE,
   INDEX `tdTeamId_idx`(`teamId`) USING BTREE,
   CONSTRAINT `tdTeamId` FOREIGN KEY (`teamId`) REFERENCES `team` (`teamid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
