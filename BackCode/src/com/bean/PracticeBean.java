@@ -8,6 +8,8 @@ public class PracticeBean {
     private String content;
     private Date startTime;
     private Date endTime;
+    private int company;
+    private int school;
 
     public int getId() {
         return id;
@@ -47,5 +49,21 @@ public class PracticeBean {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public int getCompany() {
+        return company;
+    }
+
+    public void setCompany(int company) {
+        this.company = company;
+    }
+
+    public int getSchool() {
+        return school;
+    }
+
+    public void setSchool(int school) {
+        this.school = school;
     }
 }

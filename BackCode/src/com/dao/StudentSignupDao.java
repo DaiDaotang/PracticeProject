@@ -12,14 +12,14 @@ import java.sql.SQLException;
 
 public class StudentSignupDao {
 
-    public void signup(RequestBean<StudentBean> studentBean)
+    public int signup(RequestBean<StudentBean> studentBean)
     {
         Connection conn = DBConn.getConnection();
         PreparedStatement state;
         try{
             StudentBean bean = studentBean.getReqParam();
             conn.setAutoCommit(false);
-            String sql ="INSERT INTO student (studentPhone,studentPassword,studentName,schoolId,studentNumber,studentMajor,studentSex) VALUES (?,?,?,?,?,?,?)";
+            String sql ="INSERT INTO student (studentPhone,studentPassword,studentName,schoolId,studentNumber,studentMajor,studentSex,studentGrade) VALUES (?,?,?,?,?,?,?,?)";
             state = conn.prepareStatement(sql);
             state.setString(1,bean.getTelephone());
             state.setString(2,bean.getPassword());
@@ -28,11 +28,14 @@ public class StudentSignupDao {
             state.setString(5,bean.getNumber());
             state.setString(6,bean.getMajor());
             state.setString(7,bean.getSex());
+            state.setString(8,bean.getGrade());
             state.executeUpdate();
             conn.commit();
+            return 1;
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);
+            return -1;
         }finally {
             DBConn.closeConn(conn);
         }

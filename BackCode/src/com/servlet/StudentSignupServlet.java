@@ -35,9 +35,15 @@ public class StudentSignupServlet extends HttpServlet {
         ResponseBean resBean = new ResponseBean<>();
         try{
             StudentSignupDao dao = new StudentSignupDao();
-            dao.signup(reqBean);
-            resBean.setResId(reqBean.getReqId());
-            resBean.setSuccess(true);
+            int res = dao.signup(reqBean);
+            if (res == -1){
+                resBean.setResId(reqBean.getReqId());
+                resBean.setSuccess(false);
+            }
+            else {
+                resBean.setResId(reqBean.getReqId());
+                resBean.setSuccess(true);
+            }
             //识别ResponseBean<LoginBean>类的结构
             Type respType = new TypeToken<ResponseBean<StudentBean>>(){}.getType();
             //通过toJson方法将对象转化为json格式的字符串
