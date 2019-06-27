@@ -74,4 +74,13 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreatPracticeServlet</servlet-name>
+        <servlet-class>com.servlet.CreatPracticeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreatPracticeServlet</servlet-name>
+        <url-pattern>/CreatPracticeServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
