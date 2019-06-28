@@ -164,4 +164,13 @@
         <servlet-name>GetCompanyInformationServlet</servlet-name>
         <url-pattern>/GetCompanyInformationServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetCompanyTeacherInformationServlet</servlet-name>
+        <servlet-class>com.servlet.GetCompanyTeacherInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetCompanyTeacherInformationServlet</servlet-name>
+        <url-pattern>/GetCompanyTeacherInformationServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
