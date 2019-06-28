@@ -1,10 +1,8 @@
 package com.servlet;
 
-import com.bean.CompanyTeacherBean;
 import com.bean.PracticeBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.dao.GetCompanyTeacherInformationDao;
 import com.dao.GetPracticeInformationDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

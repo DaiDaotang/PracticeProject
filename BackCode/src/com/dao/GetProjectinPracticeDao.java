@@ -23,6 +23,7 @@ public class GetProjectinPracticeDao {
             resultSet = state.executeQuery();
             while(resultSet.next()) {
                 ProjectBean projectBean = new ProjectBean();
+                projectBean.setId(resultSet.getInt("projectId"));
                 projectBean.setName(resultSet.getString("projectName"));
                 projectBean.setType(resultSet.getString("projectType"));
                 projectBean.setDifficulty(resultSet.getInt("projectDifficulty"));

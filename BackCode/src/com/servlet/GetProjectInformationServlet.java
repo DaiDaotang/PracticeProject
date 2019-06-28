@@ -1,13 +1,10 @@
 package com.servlet;
 
-import com.bean.PracticeBean;
 import com.bean.ProjectBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.dao.GetPracticeInformationDao;
 import com.dao.GetProjectInformationDao;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.ServletException;
