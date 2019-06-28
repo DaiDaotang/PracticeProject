@@ -28,6 +28,7 @@
         <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
             <a href="javascript:;" style="font-size:28px; color:#000; "><img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
             <dl class="layui-nav-child">
+                <dd><a id="myself_info_a" href="">我的页面</a></dd>
                 <dd><a id="change_info_a" href="">修改信息</a></dd>
                 <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
                 <dd><a id="quit_a" href="login.html">退出登录</a></dd>
@@ -145,6 +146,7 @@
         var GetExistedItemURL = "./json/item_existed_local.json"
             , GetSchoolTeacherURL = "./json/school_teacher_local.json"
             , GetCompanyTeacherURL = "./json/company_teacher_local.json"
+            , MyOwnHomePageURL = "login.html"
             , QuitURL = "login.html"
             , ChangeInfoURL = "login.html"
             , SafetyURL = "safety_info.html"
@@ -462,6 +464,7 @@
         document.getElementById("company_name").innerText = pt_company_name;
         document.getElementById("pt_name").innerText = pt_name;
 
+        document.getElementById("myself_info_a").href = MyOwnHomePageURL;
         document.getElementById("change_info_a").href = ChangeInfoURL;
         document.getElementById("safety_info_a").href = SafetyURL;
         document.getElementById("quit_a").href = QuitURL;
