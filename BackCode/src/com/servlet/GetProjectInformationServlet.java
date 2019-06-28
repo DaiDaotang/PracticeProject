@@ -38,7 +38,7 @@ public class GetProjectInformationServlet extends HttpServlet {
         ResponseBean<ProjectBean> resBean = new ResponseBean<>();
         try{
             GetProjectInformationDao dao = new GetProjectInformationDao();
-            ProjectBean projectBean = dao.getProjectInformation(reqBean.getReqParam());
+            ProjectBean projectBean = dao.getProjectByProjectId(reqBean.getReqParam());
             if (projectBean == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);

@@ -11,11 +11,10 @@ import java.util.ArrayList;
 
 public class GetProjectInformationDao {
 
-    public ProjectBean getProjectInformation(int id)
+
+    public ProjectBean getProjectByProjectId(int id)
     {
         Connection conn = DBConn.getConnection();
-        ProjectBean projectBean = new ProjectBean();
-        ArrayList<String> teacherName = new ArrayList<>();
         ResultSet resultSet,resultSet2;
         try {
             PreparedStatement state,state2;
@@ -23,6 +22,8 @@ public class GetProjectInformationDao {
             state.setInt(1, id);
             resultSet = state.executeQuery();
             if (resultSet.next()) {
+                ProjectBean projectBean = new ProjectBean();
+                ArrayList<String> teacherName = new ArrayList<>();
                 projectBean.setName(resultSet.getString("projectName"));
                 projectBean.setType(resultSet.getString("projectType"));
                 projectBean.setDifficulty(resultSet.getInt("projectDifficulty"));

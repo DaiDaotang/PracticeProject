@@ -11,22 +11,39 @@ import java.util.ArrayList;
 
 public class GetProjectinPracticeDao {
 
-    public ArrayList<ProjectBean> getProjectinPractice(int id) {
-        ArrayList<ProjectBean> projectBeans = new ArrayList<>();
+    public ArrayList<ProjectBean> getProjectinPractice(int id)
+    {
         Connection conn = DBConn.getConnection();
-        PreparedStatement state;
+        ArrayList<ProjectBean> arrayList = new ArrayList<>();
+        ResultSet resultSet,resultSet2;
         try {
-            conn.setAutoCommit(false);
-            state = conn.prepareStatement("select projectId,projectName from project where projectPracticeId = ?;");
+            PreparedStatement state,state2;
+            state = conn.prepareStatement("select * from project where projectPracticeId = ?;");
             state.setInt(1, id);
-            ResultSet resultSet = state.executeQuery();
-            while (resultSet.next()) {
+            resultSet = state.executeQuery();
+            while(resultSet.next()) {
                 ProjectBean projectBean = new ProjectBean();
-                projectBean.setId(resultSet.getInt(1));
-                projectBean.setName(resultSet.getString(2));
-                projectBeans.add(projectBean);
+                projectBean.setName(resultSet.getString("projectName"));
+                projectBean.setType(resultSet.getString("projectType"));
+                projectBean.setDifficulty(resultSet.getInt("projectDifficulty"));
+                projectBean.setIntroduce(resultSet.getString("projectIntroduce"));
+                projectBean.setBaseContent(resultSet.getString("projectBaseContent"));
+                projectBean.setExtendContent(resultSet.getString("projectExtendContent"));
+                projectBean.setAdvanceContent(resultSet.getString("projectAdvanceContent"));
+
+                state2 = conn.prepareStatement("select teacherName from projtrelation,companyTeacher where projectId = ? and projtrelation.companyTeacherId = companyTeacher.teacherId;");
+                state2.setInt(1,resultSet.getInt("projectId"));
+                resultSet2 = state2.executeQuery();
+                ArrayList<String> teacherName = new ArrayList<>();
+                while (resultSet2.next())
+                {
+                    teacherName.add(resultSet2.getString(1));
+                }
+                projectBean.setTeacherNames(teacherName);
+                arrayList.add(projectBean);
+
             }
-            return projectBeans;
+            return arrayList;
         } catch (SQLException e) {
             e.printStackTrace();
             DBConn.rollback(conn);
