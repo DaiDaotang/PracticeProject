@@ -1,5 +1,7 @@
 package com.bean;
 
+import java.util.ArrayList;
+
 public class ProjectBean {
     private int id;
     private String name;
@@ -10,6 +12,7 @@ public class ProjectBean {
     private String extendContent;
     private String advanceContent;
     private int practiceId;
+    private ArrayList<Integer> teachers;
 
     public int getId() {
         return id;
@@ -81,5 +84,13 @@ public class ProjectBean {
 
     public void setPracticeId(int practiceId) {
         this.practiceId = practiceId;
+    }
+
+    public ArrayList<Integer> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(ArrayList<Integer> teachers) {
+        this.teachers = teachers;
     }
 }

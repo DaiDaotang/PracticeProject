@@ -11,6 +11,8 @@ public class PracticeBean {
     private int company;
     private int school;
     private String template;
+    private int companyTeacherId;
+    private int schoolTeacherId;
 
     public int getId() {
         return id;
@@ -74,5 +76,21 @@ public class PracticeBean {
 
     public void setTemplate(String template) {
         this.template = template;
+    }
+
+    public int getCompanyTeacherId() {
+        return companyTeacherId;
+    }
+
+    public void setCompanyTeacherId(int companyTeacherId) {
+        this.companyTeacherId = companyTeacherId;
+    }
+
+    public int getSchoolTeacherId() {
+        return schoolTeacherId;
+    }
+
+    public void setSchoolTeacherId(int schoolTeacherId) {
+        this.schoolTeacherId = schoolTeacherId;
     }
 }

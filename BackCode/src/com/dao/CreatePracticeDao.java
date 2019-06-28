@@ -35,6 +35,24 @@ public class CreatePracticeDao {
             state2.setInt(2,bean.getSchool());
             state2.setInt(3,bean.getCompany());
             state2.executeUpdate();
+            if (bean.getCompanyTeacherId()!=0){
+                String sql3 = "INSERT INTO pracctrelation VALUES(?,?,?)";
+                PreparedStatement state3;
+                state3 = conn.prepareStatement(sql3);
+                state3.setInt(1,id);
+                state3.setInt(2,bean.getCompanyTeacherId());
+                state3.setBoolean(3,true);
+                state3.executeUpdate();
+            }
+            if (bean.getSchoolTeacherId()!=0){
+                String sql3 = "INSERT INTO pracstrelation VALUES(?,?,?)";
+                PreparedStatement state3;
+                state3 = conn.prepareStatement(sql3);
+                state3.setInt(1,id);
+                state3.setInt(2,bean.getSchoolTeacherId());
+                state3.setBoolean(3,true);
+                state3.executeUpdate();
+            }
             conn.commit();
         }catch (SQLException e){
             e.printStackTrace();
