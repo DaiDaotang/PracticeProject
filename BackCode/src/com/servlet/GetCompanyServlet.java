@@ -31,7 +31,7 @@ public class GetCompanyServlet extends HttpServlet {
         Gson gson = new Gson();
         Type requestType = new TypeToken<RequestBean<CompanyBean>>(){}.getType();
         RequestBean<CompanyBean> reqBean = gson.fromJson(content,requestType);
-        ResponseBean resBean = new ResponseBean<>();
+        ResponseBean<ArrayList<CompanyBean>> resBean = new ResponseBean<>();
         try{
             GetCompanyDao dao = new GetCompanyDao();
             ArrayList<CompanyBean> result = dao.GetCompany();
@@ -45,7 +45,7 @@ public class GetCompanyServlet extends HttpServlet {
                 resBean.setResData(result);
             }
             //识别ResponseBean<LoginBean>类的结构
-            Type respType = new TypeToken<ResponseBean<CompanyBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<ArrayList<CompanyBean>>>(){}.getType();
             //通过toJson方法将对象转化为json格式的字符串
             String s = gson.toJson(resBean,respType);
             out.print(s);

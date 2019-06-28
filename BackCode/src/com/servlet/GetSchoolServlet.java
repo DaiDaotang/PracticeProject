@@ -31,7 +31,7 @@ public class GetSchoolServlet extends HttpServlet {
         Gson gson = new Gson();
         Type requestType = new TypeToken<RequestBean<SchoolBean>>(){}.getType();
         RequestBean<SchoolBean> reqBean = gson.fromJson(content,requestType);
-        ResponseBean resBean = new ResponseBean<>();
+        ResponseBean<ArrayList<SchoolBean>> resBean = new ResponseBean<>();
         try{
             GetSchoolDao dao = new GetSchoolDao();
             ArrayList<SchoolBean> result = dao.GetSchool();
@@ -45,7 +45,7 @@ public class GetSchoolServlet extends HttpServlet {
                 resBean.setResData(result);
             }
             //识别ResponseBean<LoginBean>类的结构
-            Type respType = new TypeToken<ResponseBean<SchoolBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<ArrayList<SchoolBean>>>(){}.getType();
             //通过toJson方法将对象转化为json格式的字符串
             String s = gson.toJson(resBean,respType);
             out.print(s);
