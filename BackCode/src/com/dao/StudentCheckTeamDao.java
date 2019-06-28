@@ -18,7 +18,7 @@ public class StudentCheckTeamDao {
 
         try{
             PreparedStatement state,state2;
-            state = conn.prepareStatement("select teamId from stprelation where studentId = ?;");
+            state = conn.prepareStatement("select max(teamId) from stprelation where studentId = ?;");
             state.setInt(1,id);
             resultSet = state.executeQuery();
             if(resultSet.next())

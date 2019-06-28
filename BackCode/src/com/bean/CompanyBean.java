@@ -1,6 +1,5 @@
 package com.bean;
 
-import com.mysql.cj.jdbc.Blob;
 
 public class CompanyBean {
     private int id;

@@ -13,14 +13,13 @@ public class GetStudentInformationDao {
     public StudentBean getStudentInformation(int id)
     {
         Connection conn = DBConn.getConnection();
-        int studentId = id;
         StudentBean studentBean = new StudentBean();
         ResultSet resultSet,resultSet2;
         String schoolname;
         try{
             PreparedStatement state,state2;
             state = conn.prepareStatement("select studentName,studentHead,studentSex,studentMajor,studentGrade,studentNumber,schoolId,studentHead from student where studentId = ?;");
-            state.setInt(1,studentId);
+            state.setInt(1,id);
             resultSet = state.executeQuery();
             if(resultSet.next())
             {

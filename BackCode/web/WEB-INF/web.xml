@@ -155,4 +155,13 @@
         <servlet-name>DownloadServlet</servlet-name>
         <url-pattern>/DownloadServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetCompanyInformationServlet</servlet-name>
+        <servlet-class>com.servlet.GetCompanyInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetCompanyInformationServlet</servlet-name>
+        <url-pattern>/GetCompanyInformationServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

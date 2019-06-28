@@ -8,6 +8,8 @@ public class SchoolTeacherBean {
     private String sex;
     private int school;
     private String head;
+    private String schoolName;
+
 
     public SchoolTeacherBean() {
     }
@@ -66,5 +68,13 @@ public class SchoolTeacherBean {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getschoolName() {
+        return schoolName;
+    }
+
+    public void setschoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 }
