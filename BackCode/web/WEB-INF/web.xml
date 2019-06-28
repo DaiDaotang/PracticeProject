@@ -76,12 +76,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>CreatPracticeServlet</servlet-name>
+        <servlet-name>CreatePracticeServlet</servlet-name>
         <servlet-class>com.servlet.CreatePracticeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CreatPracticeServlet</servlet-name>
-        <url-pattern>/CreatPracticeServlet</url-pattern>
+        <servlet-name>CreatePracticeServlet</servlet-name>
+        <url-pattern>/CreatePracticeServlet</url-pattern>
     </servlet-mapping>
 
     <servlet>
