@@ -19,7 +19,7 @@ public class GetStudentInformationDao {
         String schoolname;
         try{
             PreparedStatement state,state2;
-            state = conn.prepareStatement("select studentName,studentHead,studentSex,studentMajor,studentGrade,studentNumber,schoolId from student where studentId = ?;");
+            state = conn.prepareStatement("select studentName,studentHead,studentSex,studentMajor,studentGrade,studentNumber,schoolId,studentHead from student where studentId = ?;");
             state.setInt(1,studentId);
             resultSet = state.executeQuery();
             if(resultSet.next())
@@ -40,6 +40,7 @@ public class GetStudentInformationDao {
                 studentBean.setMajor(resultSet.getString(4));
                 studentBean.setGrade(resultSet.getString(5));
                 studentBean.setNumber(resultSet.getString(6));
+                studentBean.setHead(resultSet.getString(8));
             }
             return studentBean;
         }catch (SQLException e){

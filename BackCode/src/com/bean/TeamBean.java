@@ -4,12 +4,13 @@ public class TeamBean {
     private int teamId;
     private String teamName;
     private int captainId;
-    private int projectId;
     private int teamScores;
     private String githubLink;
     private int studentId;
     private boolean isCaptain;
+    private int projectId;
     private String projectName;
+    private int practiceId;
     private String practiceName;
 
     public int getteamId(){return teamId;}
@@ -59,4 +60,23 @@ public class TeamBean {
     public void setisCaptain(boolean isCaptain){
         this.isCaptain = isCaptain;
     }
+
+    public String getprojectName(){return projectName;}
+
+    public void setprojectName(String projectName){
+        this.projectName = projectName;
+    }
+
+    public String getpracticeName(){return practiceName;}
+
+    public void setpracticeName(String practiceName){
+        this.practiceName = practiceName;
+    }
+
+    public int getpracticeId(){return practiceId;}
+
+    public void setpracticeId(int practiceId){
+        this.practiceId = practiceId;
+    }
+
 }

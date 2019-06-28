@@ -1,11 +1,8 @@
 package com.servlet;
 
-import com.bean.RequestBean;
-import com.bean.ResponseBean;
-import com.bean.SchoolBean;
-import com.bean.StudentBean;
-import com.dao.GetSchoolDao;
+import com.bean.*;
 import com.dao.GetStudentInformationDao;
+import com.dao.StudentCheckTeamDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,10 +15,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
-@WebServlet(name = "GetStudentInformationServlet")
-public class GetStudentInformationServlet extends HttpServlet {
+@WebServlet(name = "StudentCheckTeamServlet")
+public class StudentCheckTeamServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -35,21 +31,20 @@ public class GetStudentInformationServlet extends HttpServlet {
         Gson gson = new Gson();
         Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
         RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
-        ResponseBean<StudentBean> resBean = new ResponseBean<>();
+        ResponseBean<TeamBean> resBean = new ResponseBean<>();
         try{
-            GetStudentInformationDao dao = new GetStudentInformationDao();
-
-            StudentBean studentBean = dao.getStudentInformation(reqBean.getReqParam());
-            if (studentBean == null){
+            StudentCheckTeamDao dao = new StudentCheckTeamDao();
+            TeamBean teamBean = dao.checkTeam(reqBean.getReqParam());
+            if (teamBean == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
-                resBean.setResData(studentBean);
+                resBean.setResData(teamBean);
             }
-            Type respType = new TypeToken<ResponseBean<StudentBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<TeamBean>>(){}.getType();
             String s = gson.toJson(resBean,respType);
             out.print(s);
         }catch (Exception e){

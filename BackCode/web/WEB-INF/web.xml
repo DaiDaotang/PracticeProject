@@ -128,4 +128,13 @@
         <servlet-name>SigninServlet</servlet-name>
         <url-pattern>/SigninServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudentCheckTeamServlet</servlet-name>
+        <servlet-class>com.servlet.StudentCheckTeamServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentCheckTeamServlet</servlet-name>
+        <url-pattern>/StudentCheckTeamServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
