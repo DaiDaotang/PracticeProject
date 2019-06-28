@@ -13,6 +13,7 @@ public class ProjectBean {
     private String advanceContent;
     private int practiceId;
     private ArrayList<Integer> teachers;
+    private ArrayList<String> teacherNames;
 
     public int getId() {
         return id;
@@ -92,5 +93,13 @@ public class ProjectBean {
 
     public void setTeachers(ArrayList<Integer> teachers) {
         this.teachers = teachers;
+    }
+
+    public ArrayList<String> getTeacherNames() {
+        return teacherNames;
+    }
+
+    public void setTeacherNames(ArrayList<String> teacherNames) {
+        this.teacherNames = teacherNames;
     }
 }

@@ -15,7 +15,7 @@ public class GetProjectInformationDao {
     {
         Connection conn = DBConn.getConnection();
         ProjectBean projectBean = new ProjectBean();
-        ArrayList<Integer> teacherId = new ArrayList<>();
+        ArrayList<String> teacherName = new ArrayList<>();
         ResultSet resultSet,resultSet2;
         try {
             PreparedStatement state,state2;
@@ -31,14 +31,14 @@ public class GetProjectInformationDao {
                 projectBean.setExtendContent(resultSet.getString("projectExtendContent"));
                 projectBean.setAdvanceContent(resultSet.getString("projectAdvanceContent"));
 
-                state2 = conn.prepareStatement("select companyTeacherId from projtrelation where projectId = ?;");
+                state2 = conn.prepareStatement("select teacherName from projtrelation,companyTeacher where projectId = ? and projtrelation.companyTeacherId = companyTeacher.teacherId;");
                 state2.setInt(1,id);
                 resultSet2 = state2.executeQuery();
                 while (resultSet2.next())
                 {
-                    teacherId.add(resultSet2.getInt(1));
+                    teacherName.add(resultSet2.getString(1));
                 }
-                projectBean.setTeachers(teacherId);
+                projectBean.setTeacherNames(teacherName);
 
                 return projectBean;
             }
