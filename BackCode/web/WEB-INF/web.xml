@@ -182,4 +182,13 @@
         <servlet-name>GetSchoolTeacherInformationServlet</servlet-name>
         <url-pattern>/GetSchoolTeacherInformationServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetPracticeInformationServlet</servlet-name>
+        <servlet-class>com.servlet.GetPracticeInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetPracticeInformationServlet</servlet-name>
+        <url-pattern>/GetPracticeInformationServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
