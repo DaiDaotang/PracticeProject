@@ -200,4 +200,13 @@
         <servlet-name>GetProjectinPracticeServlet</servlet-name>
         <url-pattern>/GetProjectinPracticeServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetProjectInformationServlet</servlet-name>
+        <servlet-class>com.servlet.GetProjectInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetProjectInformationServlet</servlet-name>
+        <url-pattern>/GetProjectInformationServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
