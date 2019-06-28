@@ -100,7 +100,7 @@
                                 window.localStorage.user_id = res.resData.resId;
                                 window.localStorage.user_authority = res.resData.authority;
                                 layer.msg('登陆成功', { time: 1500 })
-                                switch (window.localStorage.authority) {
+                                switch (window.localStorage.user_authority) {
                                     case "Student":
                                         setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
                                         break;
