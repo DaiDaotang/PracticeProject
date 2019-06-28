@@ -9,7 +9,7 @@
 $END$
 </body>
 <script>
-    var CreatPracticeURL = "http://localhost:8080/CreateProjectServlet";
+    var CreatPracticeURL = "http://localhost:8080/SigninServlet";
     $.ajax({
         type:"POST",
         url:CreatPracticeURL,
@@ -17,14 +17,9 @@ $END$
         data:JSON.stringify({
             "reqId":"",
             "reqParam":{
-                "name":"实训平台开发",
-                "type":"数据分析",
-                "difficulty":4,
-                "introduce":"开发一个实训平台",
-                "baseContent":"开发开发开发一个实训平台噢噢噢噢",
-                "extentContent":"",
-                "advanceContent":"人脸识别",
-                "practiceId":4
+                "studentId":25,
+                "dateTime":"2017-06-28 20:20:50",
+                "atWork":false
             }
         }),
         dataType:"json",
