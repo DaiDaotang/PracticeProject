@@ -15,7 +15,6 @@ public class GetStudentInformationDao {
         Connection conn = DBConn.getConnection();
         StudentBean studentBean = new StudentBean();
         ResultSet resultSet,resultSet2;
-        String schoolname;
         try{
             PreparedStatement state,state2;
             state = conn.prepareStatement("select studentName,studentHead,studentSex,studentMajor,studentGrade,studentNumber,schoolId,studentHead from student where studentId = ?;");
@@ -26,22 +25,20 @@ public class GetStudentInformationDao {
                 studentBean.setName(resultSet.getString(1));
                 studentBean.setHead(resultSet.getString(2));
                 studentBean.setSex(resultSet.getString(3));
+                studentBean.setMajor(resultSet.getString(4));
+                studentBean.setGrade(resultSet.getString(5));
+                studentBean.setNumber(resultSet.getString(6));
+                studentBean.setHead(resultSet.getString(8));
                 state2 = conn.prepareStatement("select schoolName from school where schoolId = ?;");
                 state2.setInt(1,resultSet.getInt(7));
                 resultSet2 = state2.executeQuery();
                 if(resultSet2.next())
                 {
-                    schoolname = resultSet2.getString(1);
-                }else{
-                    schoolname = null;
+                    studentBean.setschoolName(resultSet2.getString(1));
+                    return studentBean;
                 }
-                studentBean.setschoolName(schoolname);
-                studentBean.setMajor(resultSet.getString(4));
-                studentBean.setGrade(resultSet.getString(5));
-                studentBean.setNumber(resultSet.getString(6));
-                studentBean.setHead(resultSet.getString(8));
             }
-            return studentBean;
+            return null;
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);

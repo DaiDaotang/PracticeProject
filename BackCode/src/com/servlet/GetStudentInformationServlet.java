@@ -2,9 +2,7 @@ package com.servlet;
 
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.bean.SchoolBean;
 import com.bean.StudentBean;
-import com.dao.GetSchoolDao;
 import com.dao.GetStudentInformationDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,7 +16,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 @WebServlet(name = "GetStudentInformationServlet")
 public class GetStudentInformationServlet extends HttpServlet {

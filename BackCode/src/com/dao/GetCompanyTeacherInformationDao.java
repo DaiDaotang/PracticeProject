@@ -1,7 +1,6 @@
 package com.dao;
 
 import com.DBConn;
-import com.bean.CompanyBean;
 import com.bean.CompanyTeacherBean;
 
 import java.sql.Connection;

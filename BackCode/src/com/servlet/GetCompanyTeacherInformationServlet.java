@@ -1,10 +1,8 @@
 package com.servlet;
 
-import com.bean.CompanyBean;
 import com.bean.CompanyTeacherBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.dao.GetCompanyInformationDao;
 import com.dao.GetCompanyTeacherInformationDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

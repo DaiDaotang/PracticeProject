@@ -1,7 +1,6 @@
 package com.servlet;
 
 import com.bean.*;
-import com.dao.GetStudentInformationDao;
 import com.dao.StudentCheckTeamDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

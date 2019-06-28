@@ -1,11 +1,9 @@
 package com.servlet;
 
-import com.bean.LoginBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
 import com.bean.TeamBean;
 import com.dao.CreateTeamDao;
-import com.dao.LoginDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,7 +16,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 @WebServlet(name = "CreateTeamServlet")
 public class CreateTeamServlet extends HttpServlet {

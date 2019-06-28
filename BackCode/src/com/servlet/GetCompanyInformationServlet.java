@@ -3,9 +3,7 @@ package com.servlet;
 import com.bean.CompanyBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.bean.StudentBean;
 import com.dao.GetCompanyInformationDao;
-import com.dao.GetStudentInformationDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

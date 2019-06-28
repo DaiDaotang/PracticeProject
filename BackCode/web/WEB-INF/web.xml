@@ -173,4 +173,13 @@
         <servlet-name>GetCompanyTeacherInformationServlet</servlet-name>
         <url-pattern>/GetCompanyTeacherInformationServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetSchoolTeacherInformationServlet</servlet-name>
+        <servlet-class>com.servlet.GetSchoolTeacherInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetSchoolTeacherInformationServlet</servlet-name>
+        <url-pattern>/GetSchoolTeacherInformationServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
