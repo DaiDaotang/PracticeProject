@@ -6,17 +6,47 @@
     {
       "companyTeacherId": 100,
       "companyTeacherName": "a",
-      "sex": "男"
+      "sex": "男",
+      "projectInCharge": [
+        {
+          "projectId": "991",
+          "projectName": "高校实训平台"
+        },
+        {
+          "projectId": "992",
+          "projectName": "高校实训平台"
+        }
+      ]
     },
     {
       "companyTeacherId": 101,
       "companyTeacherName": "a",
-      "sex": "男"
+      "sex": "男",
+      "projectInCharge": [
+        {
+          "projectId": "991",
+          "projectName": "高校实训平台"
+        },
+        {
+          "projectId": "992",
+          "projectName": "高校实训平台"
+        }
+      ]
     },
     {
       "companyTeacherId": 102,
       "companyTeacherName": "a",
-      "sex": "男"
+      "sex": "男",
+      "projectInCharge": [
+        {
+          "projectId": "991",
+          "projectName": "高校实训平台"
+        },
+        {
+          "projectId": "992",
+          "projectName": "高校实训平台"
+        }
+      ]
     }
   ]
 }  

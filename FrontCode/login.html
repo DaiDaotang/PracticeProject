@@ -57,7 +57,7 @@
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
         //变量
-        var LoginURL = "";
+        var LoginURL = "http://localhost:8080/LoginServlet";
 
         //form区
         layui.use(['form', 'jquery'], function () {
@@ -85,37 +85,43 @@
                     layer.msg("请选择身份")
                 else {
                     console.log(data.field);
-
-                    if (window.localStorage.authority == "Student") {
-                        if (data.field.telephone == "12345678900" && data.field.password == "123456") {
-                            window.location.href = "homepage_student.html"
+                    $.ajax({
+                        type: "POST",
+                        url: LoginURL,
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "telephone": data.field.telephone,
+                                "password": data.field.password,
+                                "authority": data.field.sort
+                            }
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            if (res.isSuccess) {
+                                layer.msg('登陆成功', { time: 1500 })
+                                switch (window.localStorage.authority) {
+                                    case "Student":
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html"; }, 1500);
+                                        break;
+                                    case "Teacher":
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html"; }, 1500);
+                                        break;
+                                    case "Company":
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html"; }, 1500);
+                                        break;
+                                    case "School":
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html"; }, 1500);
+                                        break;
+                                }
+                            }
+                            else {
+                                layer.msg('手机号/密码错误', { time: 1500 })
+                            }
                         }
-                        else {
-                            layer.msg('密码错误');
-                            return false;
-                        }
-                    }
-
-                    //$.ajax({
-                    //    type: "POST",
-                    //    url: LoginURL,
-                    //    async: true,
-                    //    data: JSON.stringify({
-                    //
-                    //    }),
-                    //    dataType: "json",
-                    //    success: function (res) {
-                    //        console.log(res);
-                    //        if (!res.isSuccess) {
-                    //            console.log("登陆失败");
-                    //            return;
-                    //        }
-                    //    },
-                    //    err: function (err) {
-                    //        console.log(err);
-                    //    }
-                    //});
-
+                    });
                     return false;
                 }
                 return false;
@@ -123,11 +129,11 @@
 
             //监听注册
             form.on('submit(logup)', function (data) {
-                window.location.href="signup.html"
+                window.location.href = "signup.html"
                 return false;
             });
         });
-        
+
         document.getElementById("telephone-div").style.width = '450px';
         document.getElementById("password-div").style.width = '450px';
         document.getElementById("sort-div").style.width = '450px';
