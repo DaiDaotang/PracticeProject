@@ -36,7 +36,6 @@
                 <div class="layui-input-block">
                     <select name="pt_school" requierd lay-verify="required" lay-filter="pt_school" id="pt_school">
                         <option value=""></option>
-                        <option value="000">武汉大学</option>
                     </select>
                 </div>
             </div>
@@ -46,7 +45,6 @@
                 <div class="layui-input-block">
                     <select name="pt_company" requierd lay-verify="required" lay-filter="pt_company" id="pt_company">
                         <option value=""></option>
-                        <option value="000">爱学记公司</option>
                     </select>
                 </div>
             </div>
@@ -68,11 +66,41 @@
 
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
+        //传参
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+        var t_param = GetRequest();
+        console.log(t_param);
+
         //变量
-        var teacher_id = "000"
-            , teacher_school_id = "000"
+        var teacher_id = window.localStorage.user_id
+            , teacher_authority = window.localStorage.user_authority
+            , teacher_school_id = -1
+            , teacher_school_name = ""
+            , teacher_company_id = -1
+            , teacher_company_name = "";
+;
+        if (teacher_authority == "Teacher") {
+            teacher_company_id = -1
+                , teacher_company_name = "";
+        }
+        else if (teacher_authority == "School") {
+            teacher_school_id = 3
+                , teacher_school_name = "武汉大学"
+        }
+        var teacher_school_id = 3
             , teacher_school_name = "武汉大学"
-            , teacher_company_id = ""
+            , teacher_company_id = -1
             , teacher_company_name = "";
 
         //form区
@@ -82,14 +110,14 @@
                 , laydate = layui.laydate;
 
             //表单初始赋值
-            if (teacher_company_id == "") {
+            if (teacher_company_id == -1) {
                 form.val('pt_create_form', {
                     "pt_name": ""
                     , "pt_school": teacher_school_id
                     , "pt_company": ""
                 })
             }
-            else if (teacher_school_id == "") {
+            else if (teacher_school_id == -1) {
                 form.val('pt_create_form', {
                     "pt_name": ""
                     , "pt_school": ""

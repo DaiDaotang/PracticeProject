@@ -17,10 +17,11 @@ public class CreateTeamDao {
             conn.setAutoCommit(false);
 
 
-            String sql ="INSERT INTO team (teamName,captainId) VALUES (?,?)";
+            String sql ="INSERT INTO team (teamName,captainId,githubLink) VALUES (?,?,?)";
             state = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             state.setString(1,teamBean.getteamName());
             state.setInt(2,teamBean.getcaptainId());
+            state.setString(3,teamBean.getgithubLink());
             state.executeUpdate();
             ResultSet set = state.getGeneratedKeys();
             if (set.next()){
