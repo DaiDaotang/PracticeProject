@@ -11,11 +11,11 @@ $END$
 <script>
     $.ajax({
         type:"POST",
-        url:"http://localhost:8080/GetStudentServlet",
+        url:"http://localhost:8080/GetStudentInformationServlet",
         async:true,
         data:JSON.stringify({
             "reqId":"111",
-            "reqParam":28
+            "reqParam":27
         }),
         dataType:"json",
         success:function(res){

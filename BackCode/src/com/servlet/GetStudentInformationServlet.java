@@ -20,8 +20,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-@WebServlet(name = "GetStudentServlet")
-public class GetStudentServlet extends HttpServlet {
+@WebServlet(name = "GetStudentInformationServlet")
+public class GetStudentInformationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }

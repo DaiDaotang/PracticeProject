@@ -8,6 +8,9 @@ public class TeamBean {
     private int teamScores;
     private String githubLink;
     private int studentId;
+    private boolean isCaptain;
+    private String projectName;
+    private String practiceName;
 
     public int getteamId(){return teamId;}
 
@@ -49,5 +52,11 @@ public class TeamBean {
 
     public void setstudentId(int studentId){
         this.studentId = studentId;
+    }
+
+    public boolean getisCaptain(){return isCaptain;}
+
+    public void setisCaptain(boolean isCaptain){
+        this.isCaptain = isCaptain;
     }
 }

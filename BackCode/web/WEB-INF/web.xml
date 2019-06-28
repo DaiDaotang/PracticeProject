@@ -76,12 +76,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>CreatPracticeServlet</servlet-name>
+        <servlet-name>CreatePracticeServlet</servlet-name>
         <servlet-class>com.servlet.CreatePracticeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CreatPracticeServlet</servlet-name>
-        <url-pattern>/CreatPracticeServlet</url-pattern>
+        <servlet-name>CreatePracticeServlet</servlet-name>
+        <url-pattern>/CreatePracticeServlet</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -103,12 +103,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>CreatProjectServlet</servlet-name>
+        <servlet-name>CreateProjectServlet</servlet-name>
         <servlet-class>com.servlet.CreateProjectServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CreatProjectServlet</servlet-name>
-        <url-pattern>/CreatProjectServlet</url-pattern>
+        <servlet-name>CreateProjectServlet</servlet-name>
+        <url-pattern>/CreateProjectServlet</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -118,5 +118,14 @@
     <servlet-mapping>
         <servlet-name>GetStudentServlet</servlet-name>
         <url-pattern>/GetStudentServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SigninServlet</servlet-name>
+        <servlet-class>com.servlet.SigninServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SigninServlet</servlet-name>
+        <url-pattern>/SigninServlet</url-pattern>
     </servlet-mapping>
 </web-app>
