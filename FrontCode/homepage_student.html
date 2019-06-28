@@ -27,7 +27,7 @@
 
     <ul class="layui-nav" style="position:fixed; width:100%; right:0px;">
         <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
-            <a href="javascript:;" style="font-size:28px;"><img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
+            <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
             <dl class="layui-nav-child">
                 <dd><a id="change_info_a" href="">修改信息</a></dd>
                 <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
@@ -39,7 +39,7 @@
     <ins class="adsbygoogle" style="display:inline-block;width:970px;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
 
     <div style="width: auto; height: 100%; margin: 0 150px 80px 150px;">
-        <img id="head_img" style="width:150px; height:150px; position:absolute; left: 210px; top: 190px; border-radius: 75px;" />
+        <img id="target_head_img" style="width:150px; height:150px; position:absolute; left: 210px; top: 190px; border-radius: 75px;" />
 
         <div style="background-color:#c9c9c9; width: auto; height: 230px; margin-top: 50px; border-top-left-radius: 30px; border-top-right-radius: 30px;">
             <div id="information" style="position:absolute; left: 420px; top: 190px; width:auto">
@@ -168,7 +168,8 @@
         console.log(t_param);
 
         //变量
-        var hd_img = "./img/defaultHead.jpg"
+        var target_hd_img = "./img/defaultHead.jpg"         //////////
+            , user_hd_img = "./img/defaultHead.jpg"         //////////
             , user_id = window.localStorage.user_id
             , user_authority = window.localStorage.user_authority
             , user_hasChecked = false
@@ -199,7 +200,8 @@
             , WriteDiaryURL = "login.html"
             , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
             , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
-            , CheckInOutURL = "http://localhost:8080/SigninServlet";
+            , CheckInOutURL = "http://localhost:8080/SigninServlet"
+            , ChangeHeadURL = "login.html";
 
         //测试变量
         var test_style = "1px solid #000";
@@ -298,7 +300,10 @@
                         , target_gender = res.resData.sex
                         , target_school_name = res.resData.schoolName
                         , target_grade = res.resData.grade
-                        , target_major = res.resData.major;
+                        , target_major = res.resData.major
+                        , target_hd_img = res.resData.head;
+
+                    target_hd_img = "./img/defaultHead.jpg";
 
                     $.ajax({
                         type: "POST",
@@ -330,8 +335,8 @@
                                 document.getElementById("write_diary_btn").style.display = "none";
                             }
 
-                            document.getElementById("head_img").src = hd_img;
-                            document.getElementById("head_img").style.border = "1px solid #6e7474";
+                            document.getElementById("target_head_img").src = hd_img;
+                            document.getElementById("target_head_img").style.border = "1px solid #6e7474";
 
                             document.getElementById("username").innerText = target_name;
                             document.getElementById("gender").innerHTML = target_gender == "男" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
@@ -340,6 +345,8 @@
                             document.getElementById("grade").innerText += target_grade;
                             document.getElementById("major").href = "https://baike.baidu.com/item/" + major;
                             document.getElementById("school_a").href = SchoolURL;
+
+                            document.getElementById("user_hd_img").src = user_hd_img;
 
                             if (target_group_id != -1) {
                                 document.getElementById("group_name").innerText = target_group_name;
