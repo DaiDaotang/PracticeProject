@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SigninDao {
     public int signin(RequestBean<SigninBean> signinBean)
@@ -20,7 +22,8 @@ public class SigninDao {
             PreparedStatement state;
             state = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             state.setInt(1,bean.getStudentId());
-            state.setString(2,bean.getDateTime());
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            state.setString(2,df.format(new Date()));
             state.setBoolean(3,bean.isAtWork());
             state.executeUpdate();
             conn.commit();

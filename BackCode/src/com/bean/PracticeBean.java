@@ -10,6 +10,7 @@ public class PracticeBean {
     private Date endTime;
     private int company;
     private int school;
+    private String template;
 
     public int getId() {
         return id;
@@ -65,5 +66,13 @@ public class PracticeBean {
 
     public void setSchool(int school) {
         this.school = school;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
     }
 }

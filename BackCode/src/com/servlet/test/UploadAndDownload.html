@@ -5,13 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="http://localhost:8080/UploadServlet" method="post" enctype="multipart/form-data">
+    <form action="http://localhost:8080/UploadServlet?type=template&id=4&name=武汉大学模板" method="post" enctype="multipart/form-data">
         <input type="file" name="head">
         <input type="submit" value="上传文件">
     </form>
-    <div id="image">
-        <img src= "http://localhost:8080/DownloadServlet?file=294228c0-258b-46fc-9c0d-415957a4e91a.jpg"  alt="logo">
-    </div>
+
     <a href="http://localhost:8080/DownloadServlet?file=294228c0-258b-46fc-9c0d-415957a4e91a.jpg" >下载头像</a>
 </body>
 </html>
