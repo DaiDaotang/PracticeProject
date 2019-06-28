@@ -191,4 +191,13 @@
         <servlet-name>GetPracticeInformationServlet</servlet-name>
         <url-pattern>/GetPracticeInformationServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetProjectinPracticeServlet</servlet-name>
+        <servlet-class>com.servlet.GetProjectinPracticeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetProjectinPracticeServlet</servlet-name>
+        <url-pattern>/GetProjectinPracticeServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
