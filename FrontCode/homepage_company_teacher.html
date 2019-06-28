@@ -44,12 +44,12 @@
         <div style="background-color:#c9c9c9; width: auto; height: 230px; margin-top: 50px; border-top-left-radius: 30px; border-top-right-radius: 30px;">
                         
             <div id="information" style="position:absolute; left: 420px; top: 190px; width:auto">
-                <span id="username" style="font-size:45px; text-align:left; width:400px; font-family:FangSong"></span>
+                <span id="username" style="font-size:45px; text-align:left; width:400px; font-family:FangSong;"></span>
                 <span id="gender" style="font-size:40px;"></span>
             </div>
 
             <div style="position:absolute; right:210px; top: 255px; width:auto; font-size: 30px;">
-                <span><a id="school_a" href="" target="_blank" title="企业主页"></a></span>
+                <span><a id="company_name" href="" target="_blank" title="企业主页">aaa</a></span>
             </div>
 
         </div>
@@ -57,38 +57,51 @@
         <div style="background-color:#fff; width: auto; height: auto; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; border: 1px solid #FFF;">
 
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px; ">
-                <legend style="font-size:24px;">当前负责实训</legend>
+                <legend style="font-size:24px;">当前负责项目</legend>
             </fieldset>
-            <div style="width: auto; height: 100px; margin: 0 20px 50px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
-                <div class="layui-row" style="height:100px;">
-                    <div class="layui-col-md6" style="height:100px;">
-                        <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                            <i class="layui-icon layui-icon-group" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
-                            <a id="group_a" href="" target="_blank" title="团队主页">
-                                <span style="font-size: 40px; font-family:STXingkai" id="group_name"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="layui-col-md6" style="height:100px;">
-                        <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                            <i class="layui-icon layui-icon-tabs" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
-                            <a id="item_a" href="" target="_blank" title="项目介绍页面">
-                                <span style="font-size: 40px; font-family:STXingkai" id="item_name"></span>
-                            </a>
-                        </div>
-                    </div>
+            <div style="width: auto; height: auto; margin: 0 20px 20px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
+                <div style="width:auto; height: auto; margin: 20px 20px;">
+                    <ul class="flow-default" id="pt_item_in_charge_now">
+                        <li>
+                            <div class="layui-row" style="height:100px;">
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="项目名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_item_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-tabs" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="实训名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-template-1" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="item_a" href="" target="_blank" title="学校名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_school_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px; ">
-                <legend style="font-size:24px;">日志</legend>
+                <legend style="font-size:24px;">历史负责项目</legend>
             </fieldset>
             <div style="width: auto; height: auto; margin: 0 20px 20px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
                 <div style="width:auto; height: auto; margin: 20px 40px;">
                     <form class="layui-form" action="" lay-filter="diary_form" id="diary_form">
                         <div class="layui-form-item" style="display:inline-flex; width: 100%;">
                             <input type="text" name="search_diary_input" lay-filter="search_diary_input" id="search_diary_input" placeholder="搜索..." autocomplete="off" class="layui-input" style="width:40%; border-radius: 20px;">
-                            <input type="text" class="layui-input" name="search_diary_data" id="search_diary_data" lay-filter="search_diary_data" placeholder="Year-Month-Day" style="width:20%; margin-left:20px; border-radius: 20px;">
                             <button class="layui-btn" lay-submit="" lay-filter="search_diary_btn" id="search_diary_btn" style="margin-left:20px; border-radius:20px;">
                                 <i class="layui-icon layui-icon-search" style="height:100px; color: #fff; font-size:25px;"></i>
                             </button>
@@ -96,38 +109,32 @@
                     </form>
                 </div>
                 <div style="width:auto; height: auto; margin: 20px 20px;">
-                    <ul class="flow-default" id="diary_flow">
+                    <ul class="flow-default" id="pt_item_in_charge_before">
                         <li>
-                            <div style="width:auto; height: auto; margin: 20px; background-color:#d4dadb; border-radius: 20px; border: 1px solid #d4dadb;">
-                                <div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;">
-                                    <div class="layui-row" style="height:auto;">
-                                        <div class="layui-col-md8" style="height:100px;">
-                                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                                <span style="font-size:30px;">不忘初心，方得始终</span>
-                                                <hr class="layui-bg-blue">
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-md4" style="height:auto; text-align:right;">
-                                            <div class="grid-demo grid-demo-bg1" style="margin: 20px;">
-                                                <a href="javascript:;" style="font-size:28px;"><span style="font-size:40px;">武大学子</span></a>
-                                            </div>
-                                        </div>
+                            <div class="layui-row" style="height:100px;">
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="项目名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_item_name_before"></span>
+                                        </a>
                                     </div>
                                 </div>
-                                <div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;">
-                                    <div class="layui-row" style="height:auto;">
-                                        <div class="layui-col-md7" style="height:100px;">
-                                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-md5" style="height:auto; text-align:right;">
-                                            <div class="grid-demo grid-demo-bg1" style="margin: 20px;">
-                                                <img src="./img/defaultHead.jpg" style="width: 300px;" />
-                                            </div>
-                                        </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-tabs" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="实训名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_name_before"></span>
+                                        </a>
                                     </div>
-
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-template-1" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="item_a" href="" target="_blank" title="学校名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_school_name_before"></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -165,15 +172,21 @@
             , user_authority = window.localStorage.user_authority
             , target_id = parseInt(t_param[`id`])
             , target_authority = t_param[`authority`]
-            , target_name = "武大学子"
-            , target_gender = "女";
+            , target_name = ""
+            , target_gender = ""
+            , target_head = ""
+            , target_company_id = -1
+            , target_company_name = "";
 
         console.log("id=" + target_id + " authority=" + t_param[`authority`])
 
         var QuitURL = "login.html"
             , ChangeInfoURL = "login.html"
             , SafetyURL = "safety_info.html"
-            , GetCompanyTeacherInfoURL = "http://localhost:8080/GetCompanyTeacherInformationServlet";
+            , GetCompanyTeacherInfoURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
+            , GetCompanyNameURL = "http://localhost:8080/GetCompanyInformationServlet"
+            , GetPTItemInChargeNowURL = ""
+            , GetPTItemInChargeBeforeURL = "";
 
         //测试变量
         var test_style = "1px solid #000";
@@ -197,16 +210,6 @@
                 return false;
             });
 
-            //监听写日志
-            $(document).on('click', '#write_diary_btn', function () {
-                layer.open({
-                    title: '签到情况',
-                    type: 2,
-                    area: ["500px", "500px"],
-                    content: WriteDiaryURL
-                });
-            });
-
             //监听置顶
             $(document).on('click', '#turntop', function () {
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -226,78 +229,29 @@
                     console.log(res);
                     target_name = res.resData.name
                         , target_gender = res.resData.sex
-                        , target_school_name = res.resData.schoolName
-                        , target_grade = res.resData.grade
-                        , target_major = res.resData.major;
+                        , target_company_id = res.resData.company
+                        , target_head = res.resData.head;
+                    document.getElementById("head_img").src = hd_img;
+                    document.getElementById("head_img").style.border = "1px solid #6e7474";
 
+                    document.getElementById("username").innerText = target_name;
+                    document.getElementById("gender").innerHTML = target_gender == "男" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
                     $.ajax({
                         type: "POST",
-                        url: GetStudentTeamURL,
+                        url: GetCompanyNameURL,
                         async: true,
                         data: JSON.stringify({
                             "reqId": "",
-                            "reqParam": target_id
+                            "reqParam": target_company_id
                         }),
                         dataType: "json",
                         success: function (res) {
                             console.log(res);
-                            if (res.isSuccess) {
-                                target_group_id = res.resData.teamId
-                                    , target_group_name = res.resData.teamName
-                                    , target_item_id = -1
-                                    , target_item_name = "";
-                            }
-                            else {
-                                target_group_id = -1
-                                    , target_group_name = ""
-                                    , target_item_id = -1
-                                    , target_item_name = "";
-                            }
-
-                            if (target_id != user_id || target_authority != user_authority) {
-                                user_hasChecked = true;
-                                document.getElementById("checkin").style.display = "none";
-                                document.getElementById("write_diary_btn").style.display = "none";
-                            }
-
-                            document.getElementById("head_img").src = hd_img;
-                            document.getElementById("head_img").style.border = "1px solid #6e7474";
-
-                            document.getElementById("username").innerText = target_name;
-                            document.getElementById("gender").innerHTML = target_gender == "男" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
-                            document.getElementById("school_a").innerText += target_school_name;
-                            document.getElementById("major").innerText += target_major;
-                            document.getElementById("grade").innerText += target_grade;
-
-                            if (target_group_id != -1) {
-                                document.getElementById("group_name").innerText = target_group_name;
-                                document.getElementById("group_a").href = GroupURL;
-                            }
-                            else {
-                                document.getElementById("group_name").innerText = "暂无";
-                                document.getElementById("item_name").innerText = "暂无";
-                                document.getElementById("item_a").href = "javascript:return false;";
-                                if (target_authority == user_authority && target_id == user_id) {
-                                    document.getElementById("group_a").href = CreateGroupURL;
-                                }
-                                else {
-                                    document.getElementById("group_a").href = "javascript:return false;";
-                                }
-                            }
-
-                            if (target_item_id != -1) {
-                                document.getElementById("item_name").innerText = target_item_name;
-                                document.getElementById("item_a").href = ItemURL;
-                            }
-                            else {
-                                document.getElementById("item_name").innerText = "暂无";
-                                document.getElementById("item_a").href = "javascript:return false;";
-                            }
-
+                            target_company_name = res.resData.name
+                            document.getElementById("company_name").innerText = target_company_name;
                         },
                         error: function (res) {
-                            console.log("获取团队信息失败");
-                            console.log(res);
+                            console.log("获取公司名称失败");
                         }
                     });
                 },

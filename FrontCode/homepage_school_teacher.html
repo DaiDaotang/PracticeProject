@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>学校老师界面</title>
+    <title>学校老师主页</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,87 +13,282 @@
             background-color: #1E9FFF;
             color: #d4dadb
         }
+
+        #body_whole {
+            height: 100%;
+            background: -webkit-linear-gradient(#2988d6, #bfddf8, #4df74b); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(#2988d6, #bfddf8, #4df74b); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(#2988d6, #bfddf8, #4df74b); /* Firefox 3.6 - 15 */
+            background: linear-gradient(#2988d6, #bfddf8, #4df74b); /* 标准的语法（必须放在最后） */
+        }
     </style>
 </head>
-<body class="layui-layout-body">
-    <div class="layui-layout layui-layout-admin">
-        <div class="layui-header">
-            <div class="layui-logo" id="left_top_logo"></div>
-            <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a href="">控制台</a></li>
-                <li class="layui-nav-item"><a href="">商品管理</a></li>
-                <li class="layui-nav-item"><a href="">用户</a></li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">其它系统</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">邮件管理</a></dd>
-                        <dd><a href="">消息管理</a></dd>
-                        <dd><a href="">授权管理</a></dd>
-                    </dl>
-                </li>
-            </ul>
-            <ul class="layui-nav" style="position:fixed; width:100%; right:0px;">
-                <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
-                    <a href="javascript:;" style="font-size:24px;">
-                        <img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">
-                        Me
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd><a id="change_info_a" href="">修改信息</a></dd>
-                        <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
-                        <dd><a id="quit_a" href="login.html">退出登录</a></dd>
-                    </dl>
-                </li>
-            </ul>
+<body id="body_whole">
 
-        </div>
+    <ul class="layui-nav" style="position:fixed; width:100%; right:0px;">
+        <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
+            <a href="javascript:;" style="font-size:28px;"><img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
+            <dl class="layui-nav-child">
+                <dd><a id="change_info_a" href="">修改信息</a></dd>
+                <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
+                <dd><a id="quit_a" href="login.html">退出登录</a></dd>
+            </dl>
+        </li>
+    </ul>
 
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="javascript:;">所有商品</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">列表一</a></dd>
-                            <dd><a href="javascript:;">列表二</a></dd>
-                            <dd><a href="javascript:;">列表三</a></dd>
-                            <dd><a href="">超链接</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">负责实训</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">列表一</a></dd>
-                            <dd><a href="javascript:;">列表二</a></dd>
-                            <dd><a href="">超链接</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a id="create_pt" href="">创建实训</a></li>
-                </ul>
+    <ins class="adsbygoogle" style="display:inline-block;width:970px;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+
+    <div style="width: auto; height: 100%; margin: 0 150px 80px 150px;">
+        <img id="head_img" style="width:150px; height:150px; position:absolute; left: 210px; top: 190px; border-radius: 75px;" />
+
+        <div style="background-color:#c9c9c9; width: auto; height: 230px; margin-top: 50px; border-top-left-radius: 30px; border-top-right-radius: 30px;">
+
+            <div id="information" style="position:absolute; left: 420px; top: 190px; width:auto">
+                <span id="username" style="font-size:45px; text-align:left; width:400px; font-family:FangSong;"></span>
+                <span id="gender" style="font-size:40px;"></span>
             </div>
+
+            <div style="position:absolute; right:210px; top: 255px; width:auto; font-size: 30px;">
+                <span><a id="school_name" href="" target="_blank" title="学校主页">aaa</a></span>
+            </div>
+
         </div>
 
-        <div class="layui-body">
-            <!-- 内容主体区域 -->
-            <div style="padding: 15px;">内容主体区域</div>
-        </div>
+        <div style="background-color:#fff; width: auto; height: auto; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; border: 1px solid #FFF;">
 
-        <div class="layui-footer">
-            <!-- 底部固定区域 -->
-            © layui.com - 底部固定区域
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px; ">
+                <legend style="font-size:24px;">当前负责项目</legend>
+            </fieldset>
+            <div style="width: auto; height: auto; margin: 0 20px 20px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
+                <div style="width:auto; height: auto; margin: 20px 20px;">
+                    <ul class="flow-default" id="pt_item_in_charge_now">
+                        <li>
+                            <div class="layui-row" style="height:100px;">
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="项目名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_item_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-tabs" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="实训名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-template-1" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="item_a" href="" target="_blank" title="学校名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_school_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px; ">
+                <legend style="font-size:24px;">历史负责项目</legend>
+            </fieldset>
+            <div style="width: auto; height: auto; margin: 0 20px 20px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
+                <div style="width:auto; height: auto; margin: 20px 40px;">
+                    <form class="layui-form" action="" lay-filter="diary_form" id="diary_form">
+                        <div class="layui-form-item" style="display:inline-flex; width: 100%;">
+                            <input type="text" name="search_diary_input" lay-filter="search_diary_input" id="search_diary_input" placeholder="搜索..." autocomplete="off" class="layui-input" style="width:40%; border-radius: 20px;">
+                            <button class="layui-btn" lay-submit="" lay-filter="search_diary_btn" id="search_diary_btn" style="margin-left:20px; border-radius:20px;">
+                                <i class="layui-icon layui-icon-search" style="height:100px; color: #fff; font-size:25px;"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div style="width:auto; height: auto; margin: 20px 20px;">
+                    <ul class="flow-default" id="pt_item_in_charge_before">
+                        <li>
+                            <div class="layui-row" style="height:100px;">
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="项目名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_item_name_before"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-tabs" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="实训名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_name_before"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-template-1" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="item_a" href="" target="_blank" title="学校名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_school_name_before"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
+    <button style="background:none; border:none; width: auto; height: auto; position:fixed; right: 50px; bottom:50px;" id="turntop">
+        <i class="layui-icon layui-icon-top" style="font-size: 70px; color: #000;"></i>
+    </button>
+
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
+        //获取传参
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+        var t_param = GetRequest();
+        console.log(t_param);
+
         //变量
+        var hd_img = "./img/defaultHead.jpg"
+            , user_id = window.localStorage.user_id
+            , user_authority = window.localStorage.user_authority
+            , target_id = parseInt(t_param[`id`])
+            , target_authority = t_param[`authority`]
+            , target_name = ""
+            , target_gender = ""
+            , target_head = ""
+            , target_school_name = "";
+
+        console.log("id=" + target_id + " authority=" + t_param[`authority`])
+
+        var QuitURL = "login.html"
+            , ChangeInfoURL = "login.html"
+            , SafetyURL = "safety_info.html"
+            , GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet";
+
+        //测试变量
+        var test_style = "1px solid #000";
+
+        //form区 + 大区
+        layui.use(['form', 'jquery', 'layer'], function () {
+            var form = layui.form
+                , $ = layui.jquery
+                , layer = layui.layer;
+
+            //表单初始赋值
+            form.val('diary_form', {
+                "search_diary_input": ""
+                , "search_diary_data": ""
+            })
+
+            //监听搜索
+            form.on('submit(search_diary_btn)', function (data) {
+                console.log(data.field);
+                //layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+
+            //监听置顶
+            $(document).on('click', '#turntop', function () {
+                document.body.scrollTop = document.documentElement.scrollTop = 0;
+            });
+
+            //获取信息
+            $.ajax({
+                type: "POST",
+                url: GetSchoolTeacherInfoURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": target_id
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    target_name = res.resData.name
+                        , target_gender = res.resData.sex
+                        , target_school_name = res.resData.schoolName
+                        , target_head = res.resData.head;
+                    document.getElementById("head_img").src = hd_img;
+                    document.getElementById("head_img").style.border = "1px solid #6e7474";
+
+                    document.getElementById("username").innerText = target_name;
+                    document.getElementById("gender").innerHTML = target_gender == "男" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
+                    document.getElementById("school_name").innerText = target_school_name;
+                },
+                error: function (res) {
+                    console.log("获取用户基本信息失败");
+                }
+            });
+        });
 
         //element区
         layui.use('element', function () {
-            var element = layui.element;
+            var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
+            //监听导航点击
+            element.on('nav(me)', function (elem) {
+                console.log(elem)
+                layer.msg(elem.text());
+            });
         });
+
+        //laydate区
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#search_diary_data'
+            });
+        });
+
+        //flow区
+        layui.use('flow', function () {
+            var flow = layui.flow
+                , $ = layui.jquery;
+
+            flow.load({
+                elem: '#diary_flow' //流加载容器
+                , done: function (page, next) { //执行下一页的回调
+
+                    //模拟数据插入
+                    setTimeout(function () {
+                        var lis = [];
+                        for (var i = 0; i < 8; i++) {
+                            lis.push('<li><div style="width:auto; height: 200px; margin: 20px; background-color:#d4dadb; border-radius: 20px;"><p>' + ((page - 1) * 8 + i + 1) + '</p></div></li>')
+                        }
+
+                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                        //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        next(lis.join(''), page < 10); //假设总页数为 10
+                    }, 300);
+                }
+            });
+        });
+
+        //基础区
+        document.getElementById("change_info_a").href = ChangeInfoURL;
+        document.getElementById("safety_info_a").href = SafetyURL;
+        document.getElementById("quit_a").href = QuitURL;
     </script>
 </body>
 </html>

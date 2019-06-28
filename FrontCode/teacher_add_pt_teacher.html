@@ -16,14 +16,13 @@
     </style>
 </head>
 <body id="body_whole">
-
     <table class="layui-hide" id="teacher_table" lay-filter="teacher_table" style="margin:50px;"></table>
     <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="upload" style="position:fixed; left:185px; font-size:26px; width:130px; border-radius: 20px; margin-top:50px;">Upload</button>
 
     <script type="text/html" id="toolbar_teacher">
         <div>老师列表</div>
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中人数</button>
         </div>
     </script>
     <script src="layui/layui.js" charset="utf-8"></script>
@@ -52,7 +51,7 @@
             , cols: [[
                 { type: 'checkbox' }
                 , { field: 'schoolTeacherId', title: 'ID', hide: true, sort: true }
-                , { field: 'schoolTeacherName',title: '名称' }
+                , { field: 'schoolTeacherName', title: '名称' }
                 , { field: 'sex', width: 150, title: '性别' }
             ]]
         }
@@ -99,7 +98,7 @@
                 layer.msg('添加成功', { time: 1000 })
                 setTimeout(function sign_up_fun() {
                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    parent.layer.close(index); //再执行关闭   
+                    parent.layer.close(index); //再执行关闭
                 }, 1000);
 
                 return false;
@@ -111,7 +110,7 @@
                     layer.msg('添加成功', { time: 1000 })
                     setTimeout(function sign_up_fun() {
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭   
+                        parent.layer.close(index); //再执行关闭
                     }, 1000);
                 }
                 else {

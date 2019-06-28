@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加新项目</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+
+    <style type="text/css">
+        .layui-form-select dl dd:hover {
+            background-color: #1E9FFF;
+            color: #1E9FFF
+        }
+    </style>
+</head>
+<body id="body_whole">
+    <form class="layui-form" action="" lay-filter="login_info" style="margin: 20px;">
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">项目名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="new_item_name" lay-filter="new_item_name" id="new_item_name" autocomplete="off" placeholder="请输入项目名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="new_item_type" lay-filter="new_item_type" id="new_item_type" autocomplete="off" placeholder="请输入项目类型" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">难度</label>
+            <div name="new_item_difficulty" lay-filter="new_item_difficulty" id="new_item_difficulty" style="float: left;">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">项目概述</label>
+            <div class="layui-input-block">
+                <textarea name="new_item_introduce" lay-filter="new_item_introduce" id="new_item_introduce" placeholder="概述..." autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">基本功能</label>
+            <div class="layui-input-block">
+                <textarea name="new_item_base_content" lay-filter="new_item_base_content" id="new_item_base_content" placeholder="基本功能..." autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">扩展功能</label>
+            <div class="layui-input-block">
+                <textarea name="new_item_extend_content" lay-filter="new_item_extend_content" id="new_item_extend_content" placeholder="扩展功能..." autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">高级功能</label>
+            <div class="layui-input-block">
+                <textarea name="new_item_advance_content" lay-filter="new_item_advance_content" id="new_item_advance_content" placeholder="高级功能..." autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">企业老师</label>
+            <div class="layui-input-block">
+                <table class="layui-hide" id="ni_company_teacher_table" lay-filter="new_item_company_teacher_table"></table>
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="new_item_upload" style="font-size:26px; width:130px; border-radius: 20px; margin:20px auto;">Upload</button>
+        </div>
+    </form>
+
+    <script type="text/html" id="toolbar_company_teacher">
+        <div>企业老师</div>
+        <div class="layui-btn-container">
+        </div>
+    </script>
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script>
+        //获取传参
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+        var t_param = GetRequest();
+        console.log(t_param)
+
+        //参数
+        var difficulty = 6;
+        var GetCompanyTeacherURL = "./json/company_teacher_local.json";
+        var checked_company_teacher = [];
+
+        //区
+        layui.use(['form', 'jquery', 'layer', 'rate', 'table'], function () {
+            var form = layui.form
+                , $ = layui.jquery
+                , layer = layui.layer
+                , rate = layui.rate
+                , table = layui.table;
+
+            //监听添加按钮
+            form.on('submit(new_item_upload)', function (data) {
+                console.log('upload')
+                console.log(data)
+                console.log(difficulty);
+                console.log(checked_company_teacher);
+
+                //layer.msg('添加成功', { time: 1000 })
+                //setTimeout(function sign_up_fun() {
+                //    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //    parent.layer.close(index); //再执行关闭
+                //}, 1000);
+
+                return false;
+            });
+
+            //success回调函数
+            function sign_up_btn_success(res) {
+                if (res.isSuccess) {
+                    layer.msg('添加成功', { time: 1000 })
+                    setTimeout(function sign_up_fun() {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    }, 1000);
+                }
+                else {
+                    layer.msg("添加失败", { time: 1000 })
+                }
+                return false;
+            }
+
+            //企业老师名单
+            table.render({
+                elem: '#ni_company_teacher_table'
+                , url: GetCompanyTeacherURL
+                , title: '企业老师'
+                , toolbar: '#toolbar_company_teacher'
+                , defaultToolbar:['filter']
+                , contentType: 'application/json'
+                , method: "POST"
+                , where: {
+                    "reqId": ""
+                }
+                , deal: function (res) {
+                    return {
+                        code: 0
+                        , msg: ""
+                        , count: 1000
+                        , data: res.resData
+                    }
+                }
+                , cols: [[
+                    { type: 'checkbox' }
+                    , { field: 'companyTeacherId', width: 75, title: 'ID', hide: true }
+                    , { field: 'companyTeacherName', title: '名称' }
+                    , { field: 'sex', title: '性别' }
+                ]]
+            })
+
+            //监听复选框
+            table.on('checkbox(new_item_company_teacher_table)', function (obj) {
+                //console.log(obj.checked); //当前是否选中状态
+                //console.log(obj.data); //选中行的相关数据
+                //console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+                if (obj.checked) {
+                    checked_company_teacher.push(obj.data.companyTeacherId)
+                }
+                else {
+                    var i = 0;
+                    for (i = 0; i < checked_company_teacher.length; i++) {
+                        if (checked_company_teacher[i] == obj.data.companyTeacherId)
+                            break;
+                    }
+                    checked_company_teacher.splice(i, 1);
+                }
+                console.log(checked_company_teacher)
+            });
+
+            //评分
+            rate.render({
+                elem: '#new_item_difficulty'
+                , value: 3
+                , text: true
+                , half: true
+                , theme: '#1E9FFF'
+                , setText: function (value) { //自定义文本的回调
+                    var arrs = {
+                        '0.5': 1
+                        , '1': 2
+                        , '1.5': 3
+                        , '2': 4
+                        , '2.5': 5
+                        , '3': 6
+                        , '3.5': 7
+                        , '4': 8
+                        , '4.5': 9
+                        , '5': 10
+                    };
+                    this.span.text(arrs[value] || (value + "星"));
+                }
+                , choose: function (value) {
+                    difficulty = value * 2;
+                }
+            })
+        });
+    </script>
+</body>
+</html>

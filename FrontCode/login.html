@@ -41,8 +41,8 @@
                     <select name="sort" lay-filter="sort" id="sort" lay-verify="sort">
                         <option value=""></option>
                         <option value="Student">学生</option>
-                        <option value="School">学校</option>
-                        <option value="Teacher">指导教师</option>
+                        <option value="School">学校教师</option>
+                        <option value="Teacher">企业教师</option>
                         <option value="Company">企业</option>
                     </select>
                 </div>
@@ -105,13 +105,13 @@
                                         setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
                                         break;
                                     case "Teacher":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.htmlid=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_company_teacher.html?id=" + window.localStorage.user_id + "&authority=Teacher"; }, 1000);
                                         break;
                                     case "Company":
                                         setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
                                         break;
                                     case "School":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_school_teacher.html?id=" + window.localStorage.user_id + "&authority=School"; }, 1000);
                                         break;
                                 }
                             }
