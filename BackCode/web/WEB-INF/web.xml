@@ -112,12 +112,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>GetStudentServlet</servlet-name>
-        <servlet-class>com.servlet.GetStudentServlet</servlet-class>
+        <servlet-name>GetStudentInformationServlet</servlet-name>
+        <servlet-class>com.servlet.GetStudentInformationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GetStudentServlet</servlet-name>
-        <url-pattern>/GetStudentServlet</url-pattern>
+        <servlet-name>GetStudentInformationServlet</servlet-name>
+        <url-pattern>/GetStudentInformationServlet</url-pattern>
     </servlet-mapping>
 
     <servlet>
