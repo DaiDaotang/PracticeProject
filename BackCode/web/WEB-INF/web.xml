@@ -119,4 +119,13 @@
         <servlet-name>GetStudentServlet</servlet-name>
         <url-pattern>/GetStudentServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SigninServlet</servlet-name>
+        <servlet-class>com.servlet.SigninServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SigninServlet</servlet-name>
+        <url-pattern>/SigninServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
