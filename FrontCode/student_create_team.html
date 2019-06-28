@@ -104,15 +104,11 @@
             return theRequest;
         }
         var t_param = GetRequest();
-        console.log(t_param);
+        //console.log(t_param);
 
         var user_id = parseInt(t_param[`user_id`])
             , user_pt_id = t_param[`user_pt_id`];
-
-        console.log('user_id=')
-        console.log(user_id)
-        console.log('user_pt_id')
-        console.log(user_pt_id);
+        //console.log('user_id=' + user_id + 'user_pt_id=' + user_pt_id)
 
         var GetPTItemListURL = "./json/item_existed_local.json"
             , ItemDetailURL = "login.html"
