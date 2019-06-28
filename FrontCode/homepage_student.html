@@ -152,23 +152,42 @@
 
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
+        //获取传参
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+        var t_param = GetRequest();
+
+        console.log(t_param);
+
         //变量
         var hd_img = "./img/defaultHead.jpg"
-            , id = "0"
-            , username = "武大学子"
-            , gender = "女"
-            , school_id = ""
-            , school_name = "武汉大学"
-            , grade = "2017级"
-            , major = "软件工程"
-            , authority = "Student"
-            , hasChecked = false
-            , group_id = "1"
-            , group_name = "王者四缺一队"
-            , item_id = "1"
-            , item_name = "高校实训平台";
+            , user_id = window.localStorage.user_id
+            , user_authority = window.localStorage.user_authority
+            , user_hasChecked = false
+            , target_id = parseInt(t_param[`id`])
+            , target_authority = t_param[`authority`]
+            , target_name = "武大学子"
+            , target_gender = "女"
+            , target_school_id = 3
+            , target_school_name = "武汉大学"
+            , target_grade = "2017级"
+            , target_major = "软件工程"
+            , target_group_id = 3
+            , target_group_name = "王者四缺一队"
+            , target_item_id = 3
+            , target_item_name = "高校实训平台";
 
-            
+        console.log("id=" + target_id + " authority=" + t_param[`authority`])
 
         var CheckRecordURL = "login.html"
             , GroupURL = "login.html"
@@ -178,7 +197,9 @@
             , SafetyURL = "safety_info.html"
             , SchoolURL = "login.html"
             , CreateGroupURL = "login.html"
-            , WriteDiaryURL = "login.html";
+            , WriteDiaryURL = "login.html"
+            , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
+            , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet";
 
         //测试变量
         var test_style = "1px solid #000";
@@ -239,6 +260,59 @@
             $(document).on('click', '#turntop', function () {
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
             });
+
+            //获取信息
+            $.ajax({
+                type: "POST",
+                url: GetStudentServletURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": window.localStorage.target_id
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    target_name = res.resData.name
+                        , target_gender = res.resData.sex
+                        , target_school_name = res.resData.schoolName
+                        , target_grade = res.resData.grade
+                        , target_major = res.resData.major;
+
+                    $.ajax({
+                        type: "POST",
+                        url: GetStudentTeamURL,
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": window.localStorage.target_id
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            if (res.isSuccess) {
+                                target_group_id = res.resData.teamId
+                                    , target_group_name = res.resData.teamName
+                                    , target_item_id = -1
+                                    , target_item_name = "";
+                            }
+                            else {
+                                target_group_id = -1
+                                    , target_group_name = ""
+                                    , target_item_id = -1
+                                    , target_item_name = "";
+                            }
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
+                        }
+                    });
+                },
+                error: function (res) {
+                    console.log("获取网页信息失败");
+                }
+            });
         });
 
         //element区
@@ -287,7 +361,7 @@
         });
 
         //基础区
-        if (authority != "Student") {
+        if (target_authority != user_id || target_authority != user_authority) {
             hasChecked = true;
             document.getElementById("checkin").style.display = "none";
         }
@@ -295,15 +369,15 @@
         document.getElementById("head_img").src = hd_img;
         document.getElementById("head_img").style.border = "1px solid #6e7474";
 
-        document.getElementById("username").innerText = username;
-        document.getElementById("gender").innerHTML = gender == "男" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
-        document.getElementById("school_a").innerText += school_name;
-        document.getElementById("major").innerText += major;
-        document.getElementById("grade").innerText += grade;
+        document.getElementById("username").innerText = target_name;
+        document.getElementById("gender").innerHTML = target_gender == "男" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
+        document.getElementById("school_a").innerText += target_school_name;
+        document.getElementById("major").innerText += target_major;
+        document.getElementById("grade").innerText += target_grade;
 
-        if (group_id != "") {
-            document.getElementById("group_name").innerText = group_name;
-            document.getElementById("item_name").innerText = item_name;
+        if (target_group_id != -1) {
+            document.getElementById("group_name").innerText = target_group_name;
+            document.getElementById("item_name").innerText = target_item_name;
             document.getElementById("group_a").href = GroupURL;
             document.getElementById("item_a").href = ItemURL;
         }
@@ -311,7 +385,7 @@
             document.getElementById("group_name").innerText = "暂无";
             document.getElementById("item_name").innerText = "暂无";
             document.getElementById("item_a").href = "javascript:return false;";
-            if (authority == "Student") {
+            if (target_authority == user_authority && target_id == user_id) {
                 document.getElementById("group_a").href = CreateGroupURL;
             }
             else {

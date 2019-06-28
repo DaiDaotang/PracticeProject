@@ -73,10 +73,6 @@
 
             //监听登陆
             form.on('submit(login)', function (data) {
-                window.localStorage.telephone = data.field.telephone;
-                window.localStorage.password = data.field.password;
-                window.localStorage.authority = data.field.sort;
-
                 if (data.field.telephone == "")
                     layer.msg("请输入手机号")
                 else if (data.field.password == "")
@@ -101,19 +97,21 @@
                         success: function (res) {
                             console.log(res);
                             if (res.isSuccess) {
+                                window.localStorage.user_id = res.resData.resId;
+                                window.localStorage.user_authority = res.resData.authority;
                                 layer.msg('登陆成功', { time: 1500 })
                                 switch (window.localStorage.authority) {
                                     case "Student":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html"; }, 1500);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
                                         break;
                                     case "Teacher":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html"; }, 1500);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.htmlid=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
                                         break;
                                     case "Company":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html"; }, 1500);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
                                         break;
                                     case "School":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html"; }, 1500);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
                                         break;
                                 }
                             }

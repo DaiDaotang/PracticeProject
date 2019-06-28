@@ -58,7 +58,7 @@
         }
 
         //获取传参
-        var t_param = function GetRequest() {
+        function GetRequest() {
             var url = location.search; //获取url中"?"符后的字串
             var theRequest = new Object();
             if (url.indexOf("?") != -1) {
@@ -70,6 +70,7 @@
             }
             return theRequest;
         }
+        var t_param = GetRequest();
 
         layui.use(['form', 'jquery', 'layer', 'table'], function () {
             var form = layui.form
@@ -117,7 +118,6 @@
                 }
                 return false;
             }
-
         });
     </script>
 </body>
