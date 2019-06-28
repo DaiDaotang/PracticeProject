@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <div style="text-align:center; margin-top: 750px;">
+        <div style="text-align:center; margin-top: 650px;">
             <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="create_team" style="font-size:26px; width:130px; border-radius: 20px; margin:20px auto;">Create!</button>
         </div>
     </form>
@@ -106,8 +106,18 @@
         var t_param = GetRequest();
         console.log(t_param);
 
+        var user_id = parseInt(t_param[`user_id`])
+            , user_pt_id = t_param[`user_pt_id`];
+
+        console.log('user_id=')
+        console.log(user_id)
+        console.log('user_pt_id')
+        console.log(user_pt_id);
+
         var GetPTItemListURL = "./json/item_existed_local.json"
-            , ItemDetailURL = "login.html";
+            , ItemDetailURL = "login.html"
+            , CreateTeamURL = "http://localhost:8080/CreateTeamServlet"
+            , HomePageURL = "homepage_student.html";
 
         var param_item_existed = {
             elem: '#item_table'
@@ -215,8 +225,31 @@
                 console.log('Creating')
                 console.log(data)
                 console.log(selected_item)
+                console.log(user_id)
+                console.log(user_pt_id)
 
-                layer.msg('创建成功', { time: 1000 })
+                $.ajax({
+                    type: "POST",
+                    url: CreateTeamURL,
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": "",
+                        "reqParam": {
+                            "teamName": data.field.team_name,
+                            "captainId": user_id,
+                            "projectId": selected_item
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        sign_up_btn_success(res)
+                    },
+                    error: function (res) {
+                        console.log("error");
+                        console.log(res);
+                    }
+                });
+
                 //setTimeout(function sign_up_fun() {
                 //    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                 //    parent.layer.close(index); //再执行关闭
@@ -230,8 +263,7 @@
                 if (res.isSuccess) {
                     layer.msg('创建成功', { time: 1000 })
                     setTimeout(function sign_up_fun() {
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
+                        window.location.href = HomePageURL + "?id=" + user_id + "&authority=Student";
                     }, 1000);
                 }
                 else {

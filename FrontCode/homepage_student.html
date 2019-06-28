@@ -148,7 +148,6 @@
         <i class="layui-icon layui-icon-edit" style="height:100px; color: #fff; font-size:35px;"></i>
     </button>
 
-
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
         //获取传参
@@ -173,6 +172,7 @@
             , user_id = window.localStorage.user_id
             , user_authority = window.localStorage.user_authority
             , user_hasChecked = false
+            , user_pt_id = 4                  ////////////window.localStorage....
             , target_id = parseInt(t_param[`id`])
             , target_authority = t_param[`authority`]
             , target_name = "武大学子"
@@ -195,7 +195,7 @@
             , ChangeInfoURL = "login.html"
             , SafetyURL = "safety_info.html"
             , SchoolURL = "login.html"
-            , CreateGroupURL = "student_create_team.html"
+            , CreateGroupURL = "student_create_team.html?user_id=" + user_id + "&user_pt_id=" + user_pt_id
             , WriteDiaryURL = "login.html"
             , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
             , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
