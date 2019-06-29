@@ -29,6 +29,7 @@
         <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
             <a href="javascript:;" style="font-size:28px;"><img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
             <dl class="layui-nav-child">
+                <dd><a id="my_homepage_a" href="">我的主页</a></dd>
                 <dd><a id="change_info_a" href="">修改信息</a></dd>
                 <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
                 <dd><a id="quit_a" href="login.html">退出登录</a></dd>
@@ -168,16 +169,16 @@
 
         //变量
         var hd_img = "./img/defaultHead.jpg"
-            , user_id = window.localStorage.user_id
-            , user_authority = window.localStorage.user_authority
-            , target_id = parseInt(t_param[`id`])
-            , target_authority = t_param[`authority`]
+            , user_id = parseInt(t_param[`user_id`])
+            , user_authority = t_param[`user_authority`]
+            , target_id = parseInt(t_param[`target_id`])
+            , target_authority = t_param[`target_authority`]
             , target_name = ""
             , target_gender = ""
             , target_head = ""
             , target_school_name = "";
 
-        console.log("id=" + target_id + " authority=" + t_param[`authority`])
+        //console.log("id=" + target_id + " authority=" + t_param[`authority`])
 
         var QuitURL = "login.html"
             , ChangeInfoURL = "login.html"
@@ -286,6 +287,20 @@
         });
 
         //基础区
+        switch (user_authority) {
+            case "Student":
+                HomepageURL = "homepage_student.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
+                break;
+            case "Teacher":
+                HomepageURL = "homepage_company_teacher.html?user_id=" + user_id + "&user_authority=Teacher&target_id=" + user_id + "&target_authority=Teacher"
+                break;
+            case "School":
+                HomepageURL = "homepage_school_teacher.html?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
+                break;
+            case "Company":
+                break;
+        }
+        document.getElementById("my_homepage_a").href = HomepageURL;
         document.getElementById("change_info_a").href = ChangeInfoURL;
         document.getElementById("safety_info_a").href = SafetyURL;
         document.getElementById("quit_a").href = QuitURL;

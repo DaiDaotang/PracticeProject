@@ -83,8 +83,8 @@
         console.log(t_param);
 
         //变量
-        var teacher_id = window.localStorage.user_id
-            , teacher_authority = window.localStorage.user_authority
+        var teacher_id = t_param[`user_id`]
+            , teacher_authority = t_param[`user_authority`]
             , teacher_school_id = -1
             , teacher_school_name = ""
             , teacher_company_id = -1
@@ -130,10 +130,6 @@
 
             //监听申请
             form.on('submit(pt_apply_btn)', function (data) {
-                window.localStorage.pt_name = data.field.pt_name;
-                window.localStorage.pt_starttime = data.field.pt_start_data;
-                window.localStorage.pt_endtime = data.field.pt_end_data;
-
                 console.log(data.field)
 
                 return false;

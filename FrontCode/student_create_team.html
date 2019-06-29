@@ -32,22 +32,36 @@
     <form class="layui-form" action="" lay-filter="create_team_form" style="margin:50px 150px;">
         <div style="width:auto; height:auto; margin: 20px 50px;">
             <div class="layui-row" style="height:100px;">
-                <div class="layui-col-md6" style="height:100px;">
+                <div class="layui-col-md4" style="height:100px;">
                     <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                        <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 20px;">
+                        <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
                             <label class="layui-form-label">团队名称</label>
                             <div class="layui-input-block">
-                                <input type="text" name="team_name" lay-filter="team_name" required lay-verify="required" id="team_name" autocomplete="off" placeholder="请输入团队名" class="layui-input" style="width:300px;">
+                                <input type="text" name="team_name" lay-filter="team_name" required lay-verify="required" id="team_name" autocomplete="off" placeholder="请输入团队名" class="layui-input" style="width:270px;">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-md6" style="height:100px;">
+                <div class="layui-col-md4" style="height:100px;">
                     <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                        <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 20px;">
+                        <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
+                            <label class="layui-form-label">实训</label>
+                            <div class="layui-input-block">
+                                <select name="team_pt" id="team_pt" lay-filter="team_pt">
+                                    <option value=""></option>
+                                    <option value=1>2017级计算机学院实训</option>
+                                    <option value=2>2018级计算机学院实训</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md4" style="height:100px;">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                        <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
                             <label class="layui-form-label">GitHub</label>
                             <div class="layui-input-block">
-                                <input type="text" name="team_github" lay-filter="team_github" lay-verify="team_github" id="team_github" autocomplete="off" placeholder="请输入GitHub链接(可空)" class="layui-input" style="width:300px;">
+                                <input type="text" name="team_github" lay-filter="team_github" lay-verify="team_github" id="team_github" autocomplete="off" placeholder="请输入GitHub链接(可空)" class="layui-input" style="width:270px;">
                             </div>
                         </div>
                     </div>
@@ -109,13 +123,14 @@
         //console.log(t_param);
 
         var user_id = parseInt(t_param[`user_id`])
-            , user_pt_id = parseInt(t_param[`user_pt_id`]);
-        //console.log('user_id=' + user_id + 'user_pt_id=' + user_pt_id)
+            , user_pt_id = -1;
+        //console.log('user_id=' + user_id + 'user_school_id=' + user_school_id + 'user_pt_id=' + user_pt_id)
 
         var GetPTItemListURL = "http://localhost:8080/GetProjectinPracticeServlet"
             , ItemDetailURL = "login.html"
             , CreateTeamURL = "http://localhost:8080/CreateTeamServlet"
-            , HomePageURL = "homepage_student.html";
+            , HomePageURL = "homepage_student.html"
+            , GetPTListURL = "";
 
         var param_item_existed = function (res) {
             return {
@@ -182,8 +197,34 @@
                 , layer = layui.layer
                 , table = layui.table;
 
-            //刷新表格
-            table.render(param_item_existed(1))
+            //获取可参加实训
+            $.ajax({
+                type: "POST",
+                url: GetPTListURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": user_id
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res)
+                    var temptemp = ""
+                },
+                error: function (res) {
+                    console.log("error");
+                }
+            });
+
+            //监听选择实训单选框
+            form.on('select(team_pt)', function (data) {
+                console.log(data.value); //得到被选中的值
+
+                user_pt_id = data.value;
+
+                //刷新表格
+                table.render(param_item_existed(1))
+            });
 
             //sort
             table.on('sort(item_table)', function (obj) {
@@ -224,7 +265,6 @@
                 console.log(data)
                 console.log(selected_item)
                 console.log(user_id)
-                console.log(user_pt_id)
 
                 $.ajax({
                     type: "POST",
@@ -235,7 +275,8 @@
                         "reqParam": {
                             "teamName": data.field.team_name,
                             "captainId": user_id,
-                            "projectId": selected_item
+                            "projectId": selected_item,
+                            "githubLink": data.field.team_github
                         }
                     }),
                     dataType: "json",
@@ -250,12 +291,12 @@
                 return false;
             });
 
-            //success回调函数
+            //创建成功回调函数
             function sign_up_btn_success(res) {
                 if (res.isSuccess) {
                     layer.msg('创建成功', { time: 1000 })
                     setTimeout(function sign_up_fun() {
-                        window.location.href = HomePageURL + "?id=" + user_id + "&authority=Student";
+                        window.location.href = HomePageURL + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student";
                     }, 1000);
                 }
                 else {
