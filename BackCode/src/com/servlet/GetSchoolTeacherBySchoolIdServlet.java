@@ -4,6 +4,7 @@ import com.bean.RequestBean;
 import com.bean.ResponseBean;
 import com.bean.SchoolTeacherBean;
 import com.dao.GetSchoolTeacherByPracticeIdDao;
+import com.dao.GetSchoolTeacherBySchoolIdDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -18,7 +19,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class GetSchoolTeacherByPracticeIdServlet extends HttpServlet {
+public class GetSchoolTeacherBySchoolIdServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -34,8 +35,8 @@ public class GetSchoolTeacherByPracticeIdServlet extends HttpServlet {
         RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
         ResponseBean<ArrayList<SchoolTeacherBean>> resBean = new ResponseBean<>();
         try{
-            GetSchoolTeacherByPracticeIdDao dao = new GetSchoolTeacherByPracticeIdDao();
-            ArrayList<SchoolTeacherBean> arrayList = dao.GetSchoolTeacher(reqBean.getReqParam());
+            GetSchoolTeacherBySchoolIdDao dao = new GetSchoolTeacherBySchoolIdDao();
+            ArrayList<SchoolTeacherBean> arrayList  = dao.GetSchoolTeacher(reqBean.getReqParam());
             if (arrayList == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);

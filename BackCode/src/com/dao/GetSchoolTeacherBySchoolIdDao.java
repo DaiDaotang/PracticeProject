@@ -9,17 +9,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GetSchoolTeacherByPracticeIdDao {
-    public ArrayList<SchoolTeacherBean> GetSchoolTeacher(int practiceId)
+public class GetSchoolTeacherBySchoolIdDao {
+    public ArrayList<SchoolTeacherBean> GetSchoolTeacher(int schoolId)
     {
         ArrayList<SchoolTeacherBean> teacherBeans = new ArrayList<>();
         Connection conn = DBConn.getConnection();
         PreparedStatement state;
         try{
             conn.setAutoCommit(false);
-            String sql ="SELECT schoolteacherId,schoolteacherName,schoolTeacherSex FROM pracstrelation,schoolteacher WHERE practiceId = ? AND pracstrelation.schoolTeacherId = schoolteacher.schoolTeacherId";
+            String sql ="SELECT schoolteacherId,schoolteacherName,schoolTeacherSex FROM schoolteacher WHERE schoolId = ?;";
             state = conn.prepareStatement(sql);
-            state.setInt(1,practiceId);
+            state.setInt(1,schoolId);
             ResultSet rs = state.executeQuery();
             while (rs.next()){
                 SchoolTeacherBean teacherBean = new SchoolTeacherBean();

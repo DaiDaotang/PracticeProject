@@ -238,11 +238,20 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>GetSchoolTeacherByPracticeIdServlet</servlet-name>
-        <servlet-class>com.servlet.GetSchoolTeacherByPracticeIdServlet</servlet-class>
-    </servlet>
+    <servlet-name>GetSchoolTeacherByPracticeIdServlet</servlet-name>
+    <servlet-class>com.servlet.GetSchoolTeacherByPracticeIdServlet</servlet-class>
+</servlet>
     <servlet-mapping>
         <servlet-name>GetSchoolTeacherByPracticeIdServlet</servlet-name>
         <url-pattern>/GetSchoolTeacherByPracticeIdServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetSchoolTeacherBySchoolIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetSchoolTeacherBySchoolIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetSchoolTeacherBySchoolIdServlet</servlet-name>
+        <url-pattern>/GetSchoolTeacherBySchoolIdServlet</url-pattern>
     </servlet-mapping>
 </web-app>
