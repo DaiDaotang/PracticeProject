@@ -87,6 +87,7 @@ public class UploadServlet extends HttpServlet {
                     else {
                         resBean.setSuccess(false);
                         resBean.setMessage("图片不能超过1M!");
+                        resBean.setResData("图片不能超过1M!");
                         try{
                             //识别ResponseBean<String>类的结构
                             Type respType = new TypeToken<ResponseBean<String>>(){}.getType();
@@ -116,6 +117,7 @@ public class UploadServlet extends HttpServlet {
                 else {
                     resBean.setSuccess(false);
                     resBean.setMessage("图片只支持png/jpg/jpeg格式！");
+                    resBean.setResData("图片只支持png/jpg/jpeg格式！");
                     try{
                         //识别ResponseBean<String>类的结构
                         Type respType = new TypeToken<ResponseBean<String>>(){}.getType();
@@ -129,7 +131,7 @@ public class UploadServlet extends HttpServlet {
             }
             else if (type.equals("template")){
                 String id = request.getParameter("id");
-                if (suffix.equals(".doc") || suffix.equals(".docx")  || suffix.equals(".zip") || suffix.equals(".rar")){
+                if (suffix.equals(".zip") || suffix.equals(".rar")){
                     //随机的生存一个32的字符串
                     //String filename = UUID.randomUUID()+suffix;
                     String front = request.getParameter("name");
@@ -161,6 +163,7 @@ public class UploadServlet extends HttpServlet {
                     else {
                         resBean.setSuccess(false);
                         resBean.setMessage("大小不能超过50M!");
+                        resBean.setResData("大小不能超过50M!");
                         try{
                             //识别ResponseBean<String>类的结构
                             Type respType = new TypeToken<ResponseBean<String>>(){}.getType();
@@ -176,7 +179,6 @@ public class UploadServlet extends HttpServlet {
                     }
                     is.close();
                     resBean.setSuccess(true);
-                    resBean.setResData(filename);
                     try{
                         //识别ResponseBean<String>类的结构
                         Type respType = new TypeToken<ResponseBean<String>>(){}.getType();
@@ -189,7 +191,8 @@ public class UploadServlet extends HttpServlet {
                 }
                 else {
                     resBean.setSuccess(false);
-                    resBean.setMessage("只支持doc/docx/zip/rar格式！");
+                    resBean.setMessage("只支持zip/rar格式！");
+                    resBean.setResData("只支持zip/rar格式！");
                     try{
                         //识别ResponseBean<String>类的结构
                         Type respType = new TypeToken<ResponseBean<String>>(){}.getType();

@@ -218,4 +218,13 @@
         <servlet-name>GetPracticeByStudentIdServlet</servlet-name>
         <url-pattern>/GetPracticeByStudentIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetSigninByStudentServlet</servlet-name>
+        <servlet-class>com.servlet.GetSigninByStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetSigninByStudentServlet</servlet-name>
+        <url-pattern>/GetSigninByStudentServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
