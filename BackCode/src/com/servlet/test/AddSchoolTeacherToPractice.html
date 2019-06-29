@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    var CreatPracticeURL = "http://localhost:8080/AddSchoolTeacherToPracticeServlet";
+    $.ajax({
+        type:"POST",
+        url:CreatPracticeURL,
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "id":4,
+                "companyTeachers":[2,3,4,5]
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        }
+    });
+</script>
+</html>

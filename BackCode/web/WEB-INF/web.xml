@@ -272,4 +272,13 @@
         <servlet-name>GetCompanyTeacherByCompanyIdServlet</servlet-name>
         <url-pattern>/GetCompanyTeacherByCompanyIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddSchoolTeacherToPracticeServlet</servlet-name>
+        <servlet-class>com.servlet.AddSchoolTeacherToPracticeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddSchoolTeacherToPracticeServlet</servlet-name>
+        <url-pattern>/AddSchoolTeacherToPracticeServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

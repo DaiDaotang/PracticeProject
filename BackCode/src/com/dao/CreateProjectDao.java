@@ -8,11 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CreateProjectDao {
-    public int creat(RequestBean<ProjectBean> practiceBean)
+    public int creat(RequestBean<ProjectBean> projectBean)
     {
         Connection conn = DBConn.getConnection();
         try{
-            ProjectBean bean = practiceBean.getReqParam();
+            ProjectBean bean = projectBean.getReqParam();
             conn.setAutoCommit(false);
             String sql ="INSERT INTO project (projectName,projectType,projectDifficulty,projectIntroduce,projectBaseContent,projectExtendContent,projectAdvanceContent,projectPracticeId) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement state;
@@ -41,6 +41,14 @@ public class CreateProjectDao {
                 state2.setInt(1, id);
                 state2.setInt(2, teacher);
                 state2.executeUpdate();
+
+                String sql3 = "INSERT INTO pracctrelation VALUES (?,?,?)";
+                PreparedStatement state3;
+                state3 = conn.prepareStatement(sql3);
+                state3.setInt(1,bean.getPracticeId());
+                state3.setInt(2,teacher);
+                state3.setBoolean(3,false);
+                state3.executeUpdate();
             }
             conn.commit();
             return id;

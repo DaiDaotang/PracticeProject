@@ -1,6 +1,7 @@
 package com.bean;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class PracticeBean {
     private int id;
@@ -15,6 +16,7 @@ public class PracticeBean {
     private String template;
     private int companyTeacherId;
     private int schoolTeacherId;
+    private ArrayList<Integer> companyTeachers;
 
     public int getId() {
         return id;
@@ -109,5 +111,13 @@ public class PracticeBean {
 
     public void setSchoolTeacherId(int schoolTeacherId) {
         this.schoolTeacherId = schoolTeacherId;
+    }
+
+    public ArrayList<Integer> getCompanyTeachers() {
+        return companyTeachers;
+    }
+
+    public void setCompanyTeachers(ArrayList<Integer> companyTeachers) {
+        this.companyTeachers = companyTeachers;
     }
 }
