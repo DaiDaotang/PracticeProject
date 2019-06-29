@@ -1,11 +1,9 @@
 package com.bean;
 
-import java.util.Date;
-
 public class SigninBean {
     private int id;
     private int studentId;
-    private String  dateTime;
+    private String dateTime;
     private boolean atWork;
 
     public int getId() {

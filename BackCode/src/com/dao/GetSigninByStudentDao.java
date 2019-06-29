@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.DBConn;
+import com.bean.OneDaySignins;
 import com.bean.RequestBean;
 import com.bean.SigninBean;
 import com.bean.StudentBean;
@@ -14,10 +15,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class GetSigninByStudentDao {
-    public ArrayList<ArrayList<SigninBean>> getSignin(RequestBean<StudentBean> requestBean) {
+    public ArrayList<OneDaySignins> getSignin(RequestBean<StudentBean> requestBean) {
         Connection conn = DBConn.getConnection();
         StudentBean studentBean = requestBean.getReqParam();
-        ArrayList<ArrayList<SigninBean>> allSignins = new ArrayList<>();
+        ArrayList<OneDaySignins> allSignins = new ArrayList<>();
         PreparedStatement state,state2;
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date startTime = new Date();
@@ -40,15 +41,19 @@ public class GetSigninByStudentDao {
                 state2.setInt(1,studentBean.getId());
                 state2.setString(2,df.format(calendar.getTime()));
                 ResultSet rs2 = state2.executeQuery();
-                ArrayList<SigninBean> oneDaySignins = new ArrayList<>();
+                ArrayList<SigninBean> signins = new ArrayList<>();
                 while (rs2.next()){
                     SigninBean signinBean = new SigninBean();
                     signinBean.setId(rs2.getInt(1));
                     signinBean.setStudentId(rs2.getInt(2));
                     signinBean.setDateTime(rs2.getString(3)+" "+rs2.getString(4));
                     signinBean.setAtWork(rs2.getBoolean(5));
-                    oneDaySignins.add(signinBean);
+                    signins.add(signinBean);
+
                 }
+                OneDaySignins oneDaySignins = new OneDaySignins();
+                oneDaySignins.setSignins(signins);
+                oneDaySignins.setDate(df.format(calendar.getTime()));
                 allSignins.add(oneDaySignins);
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
             }

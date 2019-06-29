@@ -1,9 +1,6 @@
 package com.servlet;
 
-import com.bean.RequestBean;
-import com.bean.ResponseBean;
-import com.bean.SigninBean;
-import com.bean.StudentBean;
+import com.bean.*;
 import com.dao.GetSigninByStudentDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,10 +29,10 @@ public class GetSigninByStudentServlet extends HttpServlet {
         Gson gson = new Gson();
         Type requestType = new TypeToken<RequestBean<StudentBean>>(){}.getType();
         RequestBean<StudentBean> reqBean = gson.fromJson(content,requestType);
-        ResponseBean<ArrayList<ArrayList<SigninBean>>> resBean = new ResponseBean<>();
+        ResponseBean<ArrayList<OneDaySignins>> resBean = new ResponseBean<>();
         try{
             GetSigninByStudentDao dao = new GetSigninByStudentDao();
-            ArrayList<ArrayList<SigninBean>> arrayList = dao.getSignin(reqBean);
+            ArrayList<OneDaySignins> arrayList = dao.getSignin(reqBean);
             if (arrayList == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
@@ -45,7 +42,7 @@ public class GetSigninByStudentServlet extends HttpServlet {
                 resBean.setSuccess(true);
                 resBean.setResData(arrayList);
             }
-            Type respType = new TypeToken<ResponseBean<ArrayList<ArrayList<SigninBean>>>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<ArrayList<OneDaySignins>>>(){}.getType();
             String s = gson.toJson(resBean,respType);
             out.print(s);
         }catch (Exception e){
