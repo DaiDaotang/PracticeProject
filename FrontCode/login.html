@@ -97,6 +97,7 @@
                         success: function (res) {
                             console.log(res);
                             if (res.isSuccess) {
+                                console.log(res)
                                 layer.msg('登陆成功', { time: 1500 })
                                 switch (res.resData.authority) {
                                     case "Student":

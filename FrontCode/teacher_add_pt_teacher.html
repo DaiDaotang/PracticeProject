@@ -77,8 +77,11 @@
 
         var school_id = t_param[`pt_school_id`]
             , pt_id = t_param[`pt_id`]
+            , user_id = t_param[`user_id`]
 
-            var AddSchoolTeacherURL = "http://localhost:8080/"
+        var checked_school_teacher = [];
+
+        var AddSchoolTeacherURL = "http://localhost:8080/AddSchoolTeacherToPracticeServlet"
 
         //区
         layui.use(['form', 'jquery', 'layer', 'table'], function () {
@@ -100,26 +103,38 @@
                 };
             });
 
+            //监听复选框
+            table.on('checkbox(teacher_table)', function (obj) {
+                //console.log(obj.checked); //当前是否选中状态
+                //console.log(obj.data); //选中行的相关数据
+                //console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+                if (obj.checked) {
+                    checked_school_teacher.push(obj.data.id)
+                }
+                else {
+                    var i = 0;
+                    for (i = 0; i < checked_school_teacher.length; i++) {
+                        if (checked_school_teacher[i] == obj.data.id)
+                            break;
+                    }
+                    checked_school_teacher.splice(i, 1);
+                }
+                console.log(checked_school_teacher)
+            });
+
             //监听添加按钮
             form.on('submit(upload)', function (obj) {
                 console.log('upload')
 
                 $.ajax({
                     type: "POST",
-                    url: CreateNewProjectURL,
+                    url: AddSchoolTeacherURL,
                     async: true,
                     data: JSON.stringify({
                         "reqId": "",
                         "reqParam": {
-                            "name": data.field.new_item_name,
-                            "type": data.field.new_item_type,
-                            "difficulty": difficulty,
-                            "introduce": data.field.new_item_introduce,
-                            "baseContent": data.field.new_item_base_content,
-                            "extentContent": data.field.new_item_extend_content,
-                            "advanceContent": data.field.new_item_advance_content,
-                            "practiceId": pt_id,
-                            "teachers": checked_company_teacher
+                            "id": user_id,
+                            "schoolTeachers": checked_school_teacher
                         }
                     }),
                     dataType: "json",
