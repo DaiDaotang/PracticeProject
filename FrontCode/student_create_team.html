@@ -13,9 +13,11 @@
             background-color: #1E9FFF;
             color: #d4dadb
         }
+
         .layui-table-cell .layui-rate {
             padding: 0 5px;
         }
+
         .layui-table-cell .star_container {
             margin-top: -5px;
         }
@@ -107,66 +109,66 @@
         //console.log(t_param);
 
         var user_id = parseInt(t_param[`user_id`])
-            , user_pt_id = t_param[`user_pt_id`];
+            , user_pt_id = parseInt(t_param[`user_pt_id`]);
         //console.log('user_id=' + user_id + 'user_pt_id=' + user_pt_id)
 
-        var GetPTItemListURL = "./json/item_existed_local.json"
+        var GetPTItemListURL = "http://localhost:8080/GetProjectinPracticeServlet"
             , ItemDetailURL = "login.html"
             , CreateTeamURL = "http://localhost:8080/CreateTeamServlet"
             , HomePageURL = "homepage_student.html";
 
-        var param_item_existed = {
-            elem: '#item_table'
-            , url: GetPTItemListURL
-            , title: '项目列表'
-            , toolbar: "#toolbar_item"
-            , contentType: 'application/json'
-            , method: "POST"
-            , width: 1100
-            , height: 600
-            , where: {
-                "reqId": ""
-            }
-            , deal: function (res) {
-                return {
-                    code: 0
-                    , msg: ""
-                    , count: 1000
-                    , data: res.resData
+        var param_item_existed = function (res) {
+            return {
+                elem: '#item_table'
+                , url: GetPTItemListURL
+                , title: '项目列表'
+                , toolbar: "#toolbar_item"
+                , contentType: 'application/json'
+                , method: "POST"
+                , width: 1100
+                , height: 600
+                , where: {
+                    "reqId": "111"
+                    , "reqParam": user_pt_id
                 }
-            }
-            , cols: [[
-                { type: 'radio' }
-                , { field: 'projectId', width: 150, title: '项目ID', hide: true }
-                , { field: 'projectName', width: 150, title: '项目名称' }
-                , { field: 'projectType', width: 150, title: '项目类型' }
-                , {
-                    field: 'projectDifficulty', width: 150, title: '项目难度', sort: true, templet: function (d) {
-                        return '<div id="star_' + d.projectId + '"></div>'
+                , deal: function (res) {
+                    return {
+                        code: 0
+                        , msg: ""
+                        , count: 1000
+                        , data: res.resData
                     }
                 }
-                , { field: 'projectIntroduce', title: '项目概述' }
-                , { field: 'projectBaseContent', title: '基本功能', hide: true }
-                , { field: 'projectExtendContent', title: '扩展功能', hide: true }
-                , { field: 'projectAdvanceContent', title: '高级功能', hide: true }
-                , {
-                    field: 'projectCompanyTeacher', title: '负责老师', templet: function (d) {
-                        return '<div id="companyTeacher_' + d.projectId + '"></div>';
+                , cols: [[
+                    { type: 'radio' }
+                    , { field: 'id', width: 150, title: '项目ID', hide: true }
+                    , { field: 'name', width: 150, title: '项目名称' }
+                    , { field: 'type', width: 150, title: '项目类型' }
+                    , {
+                        field: 'difficulty', width: 150, title: '项目难度', sort: true, templet: function (d) {
+                            return '<div id="star_' + d.id + '"></div>'
+                        }
                     }
-                }
-                , { fixed: 'right', title: '操作', toolbar: '#bar_detail', width: 60 }
-            ]]
-            , done: function (res) {
-                for (var i = 0; i < res.data.length; i++) {
-                    console.log(res.data)
-                    console.log(res)
-                    console.log(res.resData)
-                    renderStar('star_' + res.data[i].projectId, res.data[i].projectDifficulty / 2);
-                    var temptemp = ""
-                    for (var j = 0; j < res.data[i].projectCompanyTeacher.length; j++) {
-                        temptemp += res.data[i].projectCompanyTeacher[j].companyTeacherName + ' ';
+                    , { field: 'introduce', title: '项目概述' }
+                    , { field: 'baseContent', title: '基本功能', hide: true }
+                    , { field: 'extendContent', title: '扩展功能', hide: true }
+                    , { field: 'advanceContent', title: '高级功能', hide: true }
+                    , {
+                        field: 'teachers', title: '负责老师', templet: function (d) {
+                            return '<div id="companyTeacher_' + d.id + '"></div>';
+                        }
                     }
-                    document.getElementById('companyTeacher_' + res.data[i].projectId).innerText = temptemp;
+                    , { fixed: 'right', title: '操作', toolbar: '#bar_detail', width: 60 }
+                ]]
+                , done: function (res) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        renderStar('star_' + res.data[i].id, res.data[i].difficulty / 2);
+                        var temptemp = ""
+                        for (var j = 0; j < res.data[i].teacherNames.length; j++) {
+                            temptemp += res.data[i].teacherNames[j] + ' ';
+                        }
+                        document.getElementById('companyTeacher_' + res.data[i].id).innerText = temptemp;
+                    }
                 }
             }
         }
@@ -181,7 +183,7 @@
                 , table = layui.table;
 
             //刷新表格
-            table.render(param_item_existed)
+            table.render(param_item_existed(1))
 
             //sort
             table.on('sort(item_table)', function (obj) {
@@ -212,7 +214,7 @@
             table.on('radio(item_table)', function (obj) {
                 //console.log(obj.checked); //当前是否选中状态
                 //console.log(obj.data); //选中行的相关数据
-                selected_item = obj.data.projectId
+                selected_item = obj.data.id
                 console.log(selected_item)
             });
 
@@ -245,12 +247,6 @@
                         console.log(res);
                     }
                 });
-
-                //setTimeout(function sign_up_fun() {
-                //    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                //    parent.layer.close(index); //再执行关闭
-                //}, 1000);
-
                 return false;
             });
 

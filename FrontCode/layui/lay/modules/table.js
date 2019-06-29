@@ -1,5 +1,5 @@
 /** layui-v2.4.5 MIT License By https://www.layui.com */ ;
-layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
+layui.define(["laytpl", "laypage", "layer", "form", "util", "jquery"], function(e) {
 	"use strict";
 	var t = layui.$,
 		i = layui.laytpl,
@@ -264,24 +264,26 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function(e) {
 			var r = {};
 			//r[l.pageName] = e, r[l.limitName] = a.limit;
 			var d = t.extend(r, a.where);
-			//console.log(d);
 			if(!a.deal){
 				a.deal = function(res){
 					return res
 				}
 			}
-			a.contentType && 0 == a.contentType.indexOf("application/json") && (d = JSON.stringify(d)), t.ajax({
-				type: a.method || "get",
+            a.contentType && 0 == a.contentType.indexOf("application/json") && (d = JSON.stringify(d)),
+            t.ajax({
+				//type: a.method || "get",
+                type:"POST",
 				url: a.url,
 				//contentType: a.contentType,
+                async: true,
 				data: d,
 				dataType: "json",
 				headers: a.headers || {},
-				success: function(res) {
-					var t = a.deal(res) || res;
+                success: function (res) {
+                    var t = a.deal(res) || res;
 					"function" == typeof a.parseData && (t = a.parseData(t) || t), t[n.statusName] != n.statusCode ? (i.renderForm(), i.layMain.html('<div class="' + f + '">' + (t[n.msgName] || "返回的数据不符合规范，正确的成功状态码 (" + n.statusName + ") 应为：" + n.statusCode) + "</div>")) : (i.renderData(t, e, t[n.countName]), o(), a.time = (new Date).getTime() - i.startTime + " ms"), i.setColsWidth(), "function" == typeof a.done && a.done(t, e, t[n.countName])
 				},
-				error: function(e, t) {
+                error: function (e, t) {
 					i.layMain.html('<div class="' + f + '">数据接口请求异常：' + t + "</div>"), i.renderForm(), i.setColsWidth()
 				}
 			})
