@@ -42,8 +42,8 @@ public class CreateProjectDao {
                 state2.setInt(2, teacher);
                 state2.executeUpdate();
             }
-
             conn.commit();
+            return id;
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);

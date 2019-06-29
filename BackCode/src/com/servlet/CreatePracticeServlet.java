@@ -31,7 +31,7 @@ public class CreatePracticeServlet extends HttpServlet {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Type requestType = new TypeToken<RequestBean<PracticeBean>>(){}.getType();
         RequestBean<PracticeBean> reqBean = gson.fromJson(content,requestType);
-        ResponseBean resBean = new ResponseBean<>();
+        ResponseBean<Integer> resBean = new ResponseBean<>();
         try{
             CreatePracticeDao dao = new CreatePracticeDao();
             int res = dao.creat(reqBean);
@@ -42,9 +42,10 @@ public class CreatePracticeServlet extends HttpServlet {
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
+                resBean.setResData(res);
             }
             //识别ResponseBean<LoginBean>类的结构
-            Type respType = new TypeToken<ResponseBean<PracticeBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<Integer>>(){}.getType();
             //通过toJson方法将对象转化为json格式的字符串
             out.print(gson.toJson(resBean,respType));
         }catch (Exception e){

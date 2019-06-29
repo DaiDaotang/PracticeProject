@@ -42,6 +42,7 @@ public class CreateProjectServlet extends HttpServlet {
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
+                resBean.setResData(res);
             }
             //识别ResponseBean<LoginBean>类的结构
             Type respType = new TypeToken<ResponseBean<ProjectBean>>(){}.getType();

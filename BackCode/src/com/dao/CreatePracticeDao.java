@@ -54,6 +54,7 @@ public class CreatePracticeDao {
                 state3.executeUpdate();
             }
             conn.commit();
+            return id;
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);
