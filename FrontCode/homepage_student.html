@@ -176,7 +176,7 @@
             , target_authority = t_param[`target_authority`]
             , target_name = ""
             , target_gender = ""
-            , target_hd_img = "./img/defaultHead.jpg"         //////////
+            , target_hd_img = ""
             , target_school_id = -1
             , target_school_name = ""
             , target_grade = ""
@@ -201,7 +201,8 @@
             , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
             , CheckInOutURL = "http://localhost:8080/SigninServlet"
             , ChangeHeadURL = "login.html"
-            , HomepageURL = "";
+            , HomepageURL = ""
+            , GetHeadImgURL = "http://localhost:8080/DownloadServlet?head=";
 
         //测试变量
         var test_style = "1px solid #000";
@@ -303,7 +304,7 @@
                         , target_major = res.resData.major
                         , target_hd_img = res.resData.head;
 
-                    target_hd_img = "./img/defaultHead.jpg";
+                    //target_hd_img = "./img/defaultHead.jpg";
 
                     $.ajax({
                         type: "POST",
@@ -335,7 +336,7 @@
                                 document.getElementById("write_diary_btn").style.display = "none";
                             }
 
-                            document.getElementById("target_head_img").src = target_hd_img;
+                            document.getElementById("target_head_img").src = GetHeadImgURL + target_hd_img;
                             document.getElementById("target_head_img").style.border = "1px solid #6e7474";
 
                             document.getElementById("username").innerText = target_name;
