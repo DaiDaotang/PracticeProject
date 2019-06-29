@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public class GetStudentInformationDao {
 
@@ -26,7 +27,9 @@ public class GetStudentInformationDao {
                 studentBean.setHead(resultSet.getString(2));
                 studentBean.setSex(resultSet.getString(3));
                 studentBean.setMajor(resultSet.getString(4));
-                studentBean.setGrade(resultSet.getString(5));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(resultSet.getDate(5));
+                studentBean.setGrade(""+calendar.get(Calendar.YEAR));
                 studentBean.setNumber(resultSet.getString(6));
                 studentBean.setHead(resultSet.getString(8));
                 state2 = conn.prepareStatement("select schoolName from school where schoolId = ?;");

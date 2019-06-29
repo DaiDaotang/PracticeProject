@@ -5,6 +5,7 @@ import com.bean.ResponseBean;
 import com.bean.StudentBean;
 import com.dao.GetStudentInformationDao;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.ServletException;
@@ -29,7 +30,7 @@ public class GetStudentInformationServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy").create();
         Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
         RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
         ResponseBean<StudentBean> resBean = new ResponseBean<>();
