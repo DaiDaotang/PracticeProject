@@ -202,6 +202,8 @@
             , target_item_name = ""
             , target_pt_id = -1;
 
+        var default_target_pt_id = -1;
+
         //console.log("id=" + target_id + " authority=" + t_param[`authority`])
 
         var CheckRecordURL = "login.html"
@@ -387,11 +389,61 @@
                         success: function (res) {
                             console.log(res);
                             var temp = ""
+                            target_pt_id = res.resData[0].id;
                             for (var i = 0; i < res.resData.length; i++) {
                                 temp += "<option value=" + res.resData[i].id + ">" + res.resData[i].name + "</option>";
                             }
                             document.getElementById("student_pt").innerHTML += temp;
                             form.render('select')
+                            form.val('student_pt', {
+                                "student_pt": target_pt_id
+                            })
+                            $.ajax({
+                                type: "POST",
+                                url: GetStudentTeamURL,
+                                async: true,
+                                data: JSON.stringify({
+                                    "reqId": "",
+                                    "reqParam": {
+                                        "id": target_id,
+                                        "practiceId": target_pt_id
+                                    }
+                                }),
+                                dataType: "json",
+                                success: function (res) {
+                                    console.log(res);
+                                    if (res.isSuccess) {        //有团队
+                                        target_group_id = res.resData.teamId
+                                            , target_group_name = res.resData.teamName
+                                            , target_item_id = res.resData.projectId
+                                            , target_item_name = res.resData.projectName;
+                                        document.getElementById("group_name").innerText = target_group_name;
+                                        document.getElementById("group_a").href = GroupURL;
+                                        document.getElementById("item_name").innerText = target_item_name;
+                                        document.getElementById("item_a").href = ItemURL;
+                                    } else {              //没团队
+                                        target_group_id = -1
+                                            , target_group_name = ""
+                                            , target_item_id = -1
+                                            , target_item_name = "";
+
+                                        document.getElementById("group_name").innerText = "暂无";
+                                        document.getElementById("item_name").innerText = "暂无";
+                                        document.getElementById("item_a").href = "javascript:return false;";
+                                        if (target_authority == user_authority && target_id == user_id) {
+                                            document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_pt_id=" + target_pt_id;
+                                        }
+                                        else {
+                                            document.getElementById("group_a").href = "javascript:;";
+                                        }
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log("获取团队信息失败");
+                                    console.log(res);
+                                }
+                            });
+
                         },
                         error: function (res) {
                             console.log("error");
@@ -400,6 +452,31 @@
                     });
 
                     //设置签到
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/GetAtWorkServlet",
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": user_id
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            if (res.resData) {
+                                user_hasChecked = true;
+                                document.getElementById("checkin").innerText = "Check Out";
+                            }
+                            else {
+                                user_hasChecked = false;
+                                document.getElementById("checkin").innerText = "Check In";
+                            }
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
+                        }
+                    });
                     if (target_id != user_id || target_authority != user_authority) {
                         document.getElementById("checkin").style.display = "none";
                         document.getElementById("write_diary_btn").style.display = "none";
