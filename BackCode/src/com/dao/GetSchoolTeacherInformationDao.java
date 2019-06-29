@@ -24,6 +24,7 @@ public class GetSchoolTeacherInformationDao {
                 schoolTeacherBean.setName(resultSet.getString(1));
                 schoolTeacherBean.setHead(resultSet.getString(2));
                 schoolTeacherBean.setSex(resultSet.getString(3));
+                schoolTeacherBean.setSchool(resultSet.getInt(4));
 
                 state2 = conn.prepareStatement("select schoolName from school where schoolId = ?;");
                 state2.setInt(1,resultSet.getInt(4));
