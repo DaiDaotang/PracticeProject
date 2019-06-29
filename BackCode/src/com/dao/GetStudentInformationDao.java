@@ -15,9 +15,16 @@ public class GetStudentInformationDao {
     {
         Connection conn = DBConn.getConnection();
         StudentBean studentBean = new StudentBean();
-        ResultSet resultSet,resultSet2;
+        ResultSet resultSet,resultSet2,resultSet3;
         try{
-            PreparedStatement state,state2;
+            PreparedStatement state,state2,state3;
+            state3 = conn.prepareStatement("select projectPracticeId from project natural join stprelation where studentId = ?;");
+            state3.setInt(1,id);
+            resultSet3 = state3.executeQuery();
+            if(resultSet3.next())
+            {
+                studentBean.setPracticeId(resultSet3.getInt(1));
+            }
             state = conn.prepareStatement("select studentName,studentHead,studentSex,studentMajor,studentGrade,studentNumber,schoolId,studentHead from student where studentId = ?;");
             state.setInt(1,id);
             resultSet = state.executeQuery();

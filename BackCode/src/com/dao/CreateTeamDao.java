@@ -15,8 +15,6 @@ public class CreateTeamDao {
         try{
             TeamBean teamBean = reqbean.getReqParam();
             conn.setAutoCommit(false);
-
-
             String sql ="INSERT INTO team (teamName,captainId,githubLink) VALUES (?,?,?)";
             state = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             state.setString(1,teamBean.getteamName());
