@@ -61,7 +61,7 @@ public class GetPracticeInformationDao {
         ResultSet resultSet;
         try {
             PreparedStatement state;
-            state = conn.prepareStatement("select practiceId,practiceName,starttime from pscrelation natural join practice where schoolId = (select schoolId from student where studentId = ?);");
+            state = conn.prepareStatement("select practiceId,practiceName,endtime from pscrelation natural join practice where schoolId = (select schoolId from student where studentId = ?);");
             state.setInt(1, id);
             resultSet = state.executeQuery();
             while (resultSet.next())
