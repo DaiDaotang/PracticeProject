@@ -38,4 +38,33 @@ public class GetPracticeInformationDao {
         }
         return null;
     }
+
+    public PracticeBean getPracticeByStudentId(int id)
+    {
+        Connection conn = DBConn.getConnection();
+        PracticeBean practiceBean = new PracticeBean();
+        ResultSet resultSet;
+        try {
+            PreparedStatement state;
+            state = conn.prepareStatement("select practiceName,practiceContent,starttime,endtime,practiceId,template from practice where practiceId = ?;");
+            state.setInt(1, id);
+            resultSet = state.executeQuery();
+            if (resultSet.next()) {
+                practiceBean.setName(resultSet.getString(1));
+                practiceBean.setContent(resultSet.getString(2));
+                practiceBean.setStartTime(resultSet.getDate(3));
+                practiceBean.setEndTime(resultSet.getDate(4));
+                practiceBean.setId(resultSet.getInt(5));
+                practiceBean.setTemplate(resultSet.getString(6));
+                return practiceBean;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            DBConn.rollback(conn);
+            return null;
+        } finally {
+            DBConn.closeConn(conn);
+        }
+        return null;
+    }
 }

@@ -14,10 +14,10 @@ public class StudentCheckTeamDao {
     {
         Connection conn = DBConn.getConnection();
         TeamBean teamBean = new TeamBean();
-        ResultSet resultSet,resultSet2;
+        ResultSet resultSet,resultSet2,resultSet3,resultSet4;
 
         try{
-            PreparedStatement state,state2;
+            PreparedStatement state,state2,state3,state4;
             state = conn.prepareStatement("select max(teamId) from stprelation where studentId = ?;");
             state.setInt(1,id);
             resultSet = state.executeQuery();
@@ -40,8 +40,25 @@ public class StudentCheckTeamDao {
                     }else {
                         teamBean.setisCaptain(false);
                     }
-                    return teamBean;
                 }
+                state3 = conn.prepareStatement("select projectId,projectName from project where projectId = (select projectId from stprelation where teamId = ?);");
+                state3.setInt(1,teamId);
+                resultSet3 = state3.executeQuery();
+                if(resultSet3.next())
+                {
+                    teamBean.setprojectId(resultSet3.getInt(1));
+                    teamBean.setprojectName(resultSet3.getString(2));
+                    state4 = conn.prepareStatement("select practiceId,practiceName from practice where practiceId = (select projectPracticeId from project where projectId = ?);");
+                    state4.setInt(1,resultSet3.getInt(1));
+                    resultSet4 = state4.executeQuery();
+                    if(resultSet4.next())
+                    {
+                        teamBean.setpracticeId(resultSet4.getInt(1));
+                        teamBean.setpracticeName(resultSet4.getString(2));
+                        return teamBean;
+                    }
+                }
+
             }
         }catch (SQLException e){
             e.printStackTrace();
