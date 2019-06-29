@@ -97,21 +97,19 @@
                         success: function (res) {
                             console.log(res);
                             if (res.isSuccess) {
-                                window.localStorage.user_id = res.resData.resId;
-                                window.localStorage.user_authority = res.resData.authority;
                                 layer.msg('登陆成功', { time: 1500 })
-                                switch (window.localStorage.user_authority) {
+                                switch (res.resData.authority) {
                                     case "Student":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?user_id=" + res.resData.resId + "&user_authority=Student&target_id=" + res.resData.resId + "&target_authority=Student"; }, 1000);
                                         break;
                                     case "Teacher":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_company_teacher.html?id=" + window.localStorage.user_id + "&authority=Teacher"; }, 1000);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_company_teacher.html?user_id=" + res.resData.resId + "&user_authority=Teacher&target_id=" + res.resData.resId + "&target_authority=Teacher"; }, 1000);
                                         break;
                                     case "Company":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?id=" + window.localStorage.user_id + "&authority=Student"; }, 1000);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?user_id=" + res.resData.resId + "&user_authority=Company&target_id=" + res.resData.resId + "&target_authority=Company"; }, 1000);
                                         break;
                                     case "School":
-                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_school_teacher.html?id=" + window.localStorage.user_id + "&authority=School"; }, 1000);
+                                        setTimeout(function sign_up_fun() { window.location.href = "homepage_school_teacher.html?user_id=" + res.resData.resId + "&user_authority=School&target_id=" + res.resData.resId + "&target_authority=School"; }, 1000);
                                         break;
                                 }
                             }

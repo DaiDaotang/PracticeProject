@@ -29,6 +29,7 @@
         <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
             <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
             <dl class="layui-nav-child">
+                <dd><a id="my_homepage_a" href="">我的主页</a></dd>
                 <dd><a id="change_info_a" href="">修改信息</a></dd>
                 <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
                 <dd><a id="quit_a" href="login.html">退出登录</a></dd>
@@ -168,26 +169,25 @@
         console.log(t_param);
 
         //变量
-        var target_hd_img = "./img/defaultHead.jpg"         //////////
-            , user_hd_img = "./img/defaultHead.jpg"         //////////
-            , user_id = window.localStorage.user_id
-            , user_authority = window.localStorage.user_authority
+        var user_hd_img = "./img/defaultHead.jpg"         //////////
+            , user_id = parseInt(t_param[`user_id`])
+            , user_authority = t_param[`user_authority`]
             , user_hasChecked = false
-            , user_pt_id = 4                  ////////////window.localStorage....
-            , target_id = parseInt(t_param[`id`])
-            , target_authority = t_param[`authority`]
-            , target_name = "武大学子"
-            , target_gender = "女"
-            , target_school_id = 3
-            , target_school_name = "武汉大学"
-            , target_grade = "2017级"
-            , target_major = "软件工程"
-            , target_group_id = 3
-            , target_group_name = "王者四缺一队"
-            , target_item_id = 3
-            , target_item_name = "高校实训平台";
+            , target_id = parseInt(t_param[`target_id`])
+            , target_authority = t_param[`target_authority`]
+            , target_name = ""
+            , target_gender = ""
+            , target_hd_img = "./img/defaultHead.jpg"         //////////
+            , target_school_id = -1
+            , target_school_name = ""
+            , target_grade = ""
+            , target_major = ""
+            , target_group_id = -1
+            , target_group_name = ""
+            , target_item_id = -1
+            , target_item_name = "";
 
-        console.log("id=" + target_id + " authority=" + t_param[`authority`])
+        //console.log("id=" + target_id + " authority=" + t_param[`authority`])
 
         var CheckRecordURL = "login.html"
             , GroupURL = "login.html"
@@ -196,12 +196,13 @@
             , ChangeInfoURL = "login.html"
             , SafetyURL = "safety_info.html"
             , SchoolURL = "login.html"
-            , CreateGroupURL = "student_create_team.html?user_id=" + user_id + "&user_pt_id=" + user_pt_id
+            , CreateGroupURL = "student_create_team.html"
             , WriteDiaryURL = "login.html"
             , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
             , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
             , CheckInOutURL = "http://localhost:8080/SigninServlet"
-            , ChangeHeadURL = "login.html";
+            , ChangeHeadURL = "login.html"
+            , HomepageURL = "";
 
         //测试变量
         var test_style = "1px solid #000";
@@ -344,7 +345,7 @@
                             document.getElementById("major").innerText += target_major;
                             document.getElementById("grade").innerText += target_grade;
                             document.getElementById("major").href = "https://baike.baidu.com/item/" + major;
-                            document.getElementById("school_a").href = SchoolURL;
+                            document.getElementById("school_a").href = "https://baike.baidu.com/item/" + target_school_name;
 
                             document.getElementById("user_hd_img").src = user_hd_img;
 
@@ -357,7 +358,7 @@
                                 document.getElementById("item_name").innerText = "暂无";
                                 document.getElementById("item_a").href = "javascript:return false;";
                                 if (target_authority == user_authority && target_id == user_id) {
-                                    document.getElementById("group_a").href = CreateGroupURL;
+                                    document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id;
                                 }
                                 else {
                                     document.getElementById("group_a").href = "javascript:return false;";
@@ -432,6 +433,20 @@
         });
 
         //基础区
+        switch (user_authority) {
+            case "Student":
+                HomepageURL = "homepage_student.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
+                break;
+            case "Teacher":
+                HomepageURL = "homepage_company_teacher.html?user_id=" + user_id + "&user_authority=Teacher&target_id=" + user_id + "&target_authority=Teacher"
+                break;
+            case "School":
+                HomepageURL = "homepage_school_teacher.html?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
+                break;
+            case "Company":
+                break;
+        }
+        document.getElementById("my_homepage_a").href = HomepageURL;
         document.getElementById("change_info_a").href = ChangeInfoURL;
         document.getElementById("safety_info_a").href = SafetyURL;
         document.getElementById("quit_a").href = QuitURL;
