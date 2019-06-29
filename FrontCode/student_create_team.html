@@ -49,8 +49,6 @@
                             <div class="layui-input-block">
                                 <select name="team_pt" id="team_pt" lay-filter="team_pt">
                                     <option value=""></option>
-                                    <option value=1>2017级计算机学院实训</option>
-                                    <option value=2>2018级计算机学院实训</option>
                                 </select>
                             </div>
                         </div>
@@ -120,7 +118,7 @@
             return theRequest;
         }
         var t_param = GetRequest();
-        //console.log(t_param);
+        console.log(t_param);
 
         var user_id = parseInt(t_param[`user_id`])
             , user_pt_id = -1;
@@ -130,7 +128,7 @@
             , ItemDetailURL = "login.html"
             , CreateTeamURL = "http://localhost:8080/CreateTeamServlet"
             , HomePageURL = "homepage_student.html"
-            , GetPTListURL = "";
+            , GetPTListURL = "http://localhost:8080/GetPracticeByStudentIdServlet";
 
         var param_item_existed = function (res) {
             return {
@@ -209,7 +207,12 @@
                 dataType: "json",
                 success: function (res) {
                     console.log(res)
-                    var temptemp = ""
+                    var temp = ""
+                    for (var i = 0; i < res.resData.length; i++) {
+                        temp += '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>'
+                    }
+                    document.getElementById('team_pt').innerHTML += temp;
+                    form.render('select')
                 },
                 error: function (res) {
                     console.log("error");
