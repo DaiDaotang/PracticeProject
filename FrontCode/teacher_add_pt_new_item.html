@@ -92,9 +92,12 @@
         var t_param = GetRequest();
         console.log(t_param)
 
+        var pt_id = t_param[`pt_id`]
+
         //参数
         var difficulty = 6;
-        var GetCompanyTeacherURL = "./json/company_teacher_local.json";
+        var GetCompanyTeacherURL = "./json/company_teacher_local.json"
+            , CreateNewProjectURL = "http://localhost:8080/CreateProjectServlet";
         var checked_company_teacher = [];
 
         //区
@@ -112,11 +115,34 @@
                 console.log(difficulty);
                 console.log(checked_company_teacher);
 
-                //layer.msg('添加成功', { time: 1000 })
-                //setTimeout(function sign_up_fun() {
-                //    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                //    parent.layer.close(index); //再执行关闭
-                //}, 1000);
+                $.ajax({
+                    type: "POST",
+                    url: CreateNewProjectURL,
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": "",
+                        "reqParam": {
+                            "name": data.field.new_item_name,
+                            "type": data.field.new_item_type,
+                            "difficulty": difficulty,
+                            "introduce": data.field.new_item_introduce,
+                            "baseContent": data.field.new_item_base_content,
+                            "extentContent": data.field.new_item_extend_content,
+                            "advanceContent": data.field.new_item_advance_content,
+                            "practiceId": pt_id,
+                            "teachers": checked_company_teacher                                 
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        layer.msg('添加成功', { time: 1000 })
+                        setTimeout(function sign_up_fun() {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                        }, 1000);
+                    }
+                });
 
                 return false;
             });
@@ -142,7 +168,7 @@
                 , url: GetCompanyTeacherURL
                 , title: '企业老师'
                 , toolbar: '#toolbar_company_teacher'
-                , defaultToolbar:['filter']
+                , defaultToolbar: ['filter']
                 , contentType: 'application/json'
                 , method: "POST"
                 , where: {

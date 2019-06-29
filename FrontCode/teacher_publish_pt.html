@@ -58,6 +58,13 @@
                 </div>
             </div>
 
+            <div class="layui-form-item" id="pt_name_div" style="width:500px; margin: 0 auto 15px auto; position:relative; right: 36px;">
+                <label class="layui-form-label">实训概述</label>
+                <div class="layui-input-block">
+                    <textarea name="pt_content" lay-filter="pt_content" id="pt_content" autocomplete="off" placeholder="请输入实训概述" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
             <div class="layui-form-item">
                 <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="pt_apply_btn" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-left:30px;">Apply</button>
             </div>
@@ -176,40 +183,83 @@
             form.on('submit(pt_apply_btn)', function (data) {
                 console.log(data.field)
 
-                $.ajax({
-                    type: "POST",
-                    url: GetSchoolInfoURL,
-                    async: true,
-                    data: JSON.stringify({
-                        "reqId": ""
-                        , "reqParam": {
-                            "name": data.field.pt_name,
-                            "content": data.field.pt_content,
-                            "startTime": data.field.pt_start_data,
-                            "endTime": data.field.pt_end_data,
-                            "school": data.field.pt_school,
-                            "company": data.field.pt_company,
-                            "companyTeacherId": teacher_authority == "Teacher" ? teacher_id : "",
-                            "schoolTeacherId": teacher_authority == "School" ? teacher_id : ""
-                        }
-                    }),
-                    dataType: "json",
-                    success: function (res) {
-                        if (res.isSuccess) {
-                            layer.msg('创建成功', { time: 1000 })
-                            setTimeout(function finish_publish_fun() {
-                                window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + parseInt(res.practiceTrainingId);
-                            }, 1500);
-                        }
-                        else {
-                            layer.msg('创建失败',{time:1000})
-                        }
-                    },
-                    error: function (res) {
-                        console.log("error");
-                        console.log(res);
-                    }
-                });
+                console.log(data.field.pt_start_data)
+
+                switch (teacher_authority) {
+                    case "Teacher":
+                        $.ajax({
+                            type: "POST",
+                            url: CreatePTURL,
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": ""
+                                , "reqParam": {
+                                    "name": data.field.pt_name,
+                                    "content": "",
+                                    //"content": data.field.pt_content,
+                                    "startTime": data.field.pt_start_data,
+                                    "endTime": data.field.pt_end_data,
+                                    "school": data.field.pt_school,
+                                    "company": data.field.pt_company,
+                                    "companyTeacherId": teacher_id
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                if (res.isSuccess) {
+                                    console.log(res)
+                                    layer.msg('创建成功', { time: 1000 })
+                                    setTimeout(function finish_publish_fun() {
+                                        window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + parseInt(res.resData);
+                                    }, 1500);
+                                }
+                                else {
+                                    layer.msg('创建失败', { time: 1000 })
+                                }
+                            },
+                            error: function (res) {
+                                console.log("error");
+                                console.log(res);
+                            }
+                        });
+                        break;
+                    case "School":
+                        $.ajax({
+                            type: "POST",
+                            url: CreatePTURL,
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": ""
+                                , "reqParam": {
+                                    "name": data.field.pt_name,
+                                    "content": data.field.pt_content,
+                                    "startTime": data.field.pt_start_data,
+                                    "endTime": data.field.pt_end_data,
+                                    "school": data.field.pt_school,
+                                    "company": data.field.pt_company,
+                                    "schoolTeacherId": teacher_id
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                if (res.isSuccess) {
+                                    console.log(res)
+                                    layer.msg('创建成功', { time: 1000 })
+                                    setTimeout(function finish_publish_fun() {
+                                        window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + res.resData;
+                                    }, 1000);
+                                }
+                                else {
+                                    layer.msg('创建失败', { time: 1000 })
+                                }
+                            },
+                            error: function (res) {
+                                console.log("error");
+                                console.log(res);
+                            }
+                        });
+                        break;
+                }
 
                 return false;
             });

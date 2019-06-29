@@ -27,33 +27,36 @@
     </script>
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
-        var GetSchoolTeacherListURL = "./json/school_teacher_local.json";
+        var GetSchoolTeacherListURL = "http://localhost:8080/GetSchoolTeacherBySchoolIdServlet";
 
-        var param_teacher = {
-            elem: '#teacher_table'
-            , url: GetSchoolTeacherListURL
-            , title: '老师列表'
-            , toolbar: "#toolbar_teacher"
-            , contentType: 'application/json'
-            , method: "POST"
-            , width: 500
-            , where: {
-                "reqId": ""
-            }
-            , deal: function (res) {
-                return {
-                    code: 0
-                    , msg: ""
-                    , count: 1000
-                    , data: res.resData
+        var param_teacher = function (res) {
+            return {
+                elem: '#teacher_table'
+                , url: GetSchoolTeacherListURL
+                , title: '老师列表'
+                , toolbar: "#toolbar_teacher"
+                , contentType: 'application/json'
+                , method: "POST"
+                , width: 500
+                , where: {
+                    "reqId": "",
+                    "reqParam": school_id
                 }
+                , deal: function (res) {
+                    return {
+                        code: 0
+                        , msg: ""
+                        , count: 1000
+                        , data: res.resData
+                    }
+                }
+                , cols: [[
+                    { type: 'checkbox' }
+                    , { field: 'schoolTeacherId', title: 'ID', hide: true, sort: true }
+                    , { field: 'schoolTeacherName', title: '名称' }
+                    , { field: 'sex', width: 150, title: '性别' }
+                ]]
             }
-            , cols: [[
-                { type: 'checkbox' }
-                , { field: 'schoolTeacherId', title: 'ID', hide: true, sort: true }
-                , { field: 'schoolTeacherName', title: '名称' }
-                , { field: 'sex', width: 150, title: '性别' }
-            ]]
         }
 
         //获取传参
@@ -71,6 +74,12 @@
         }
         var t_param = GetRequest();
         console.log(t_param);
+
+        var school_id = t_param[`pt_school_id`]
+            , pt_id = t_param[`pt_id'`]
+
+        console.log(school_id)
+        console.log(pt_id)
 
         //区
         layui.use(['form', 'jquery', 'layer', 'table'], function () {

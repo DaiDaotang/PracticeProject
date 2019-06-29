@@ -47,7 +47,7 @@
                         <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
                             <label class="layui-form-label">实训</label>
                             <div class="layui-input-block">
-                                <select name="team_pt" id="team_pt" lay-filter="team_pt">
+                                <select name="team_pt" id="team_pt" lay-filter="team_pt" disabled="disabled">
                                     <option value=""></option>
                                 </select>
                             </div>
@@ -121,7 +121,7 @@
         console.log(t_param);
 
         var user_id = parseInt(t_param[`user_id`])
-            , user_pt_id = -1;
+            , user_pt_id = parseInt(t_param[`user_pt_id`]);
         //console.log('user_id=' + user_id + 'user_school_id=' + user_school_id + 'user_pt_id=' + user_pt_id)
 
         var GetPTItemListURL = "http://localhost:8080/GetProjectinPracticeServlet"
@@ -213,6 +213,11 @@
                     }
                     document.getElementById('team_pt').innerHTML += temp;
                     form.render('select')
+                    form.val('create_team_form', {
+                        "team_pt": user_pt_id
+                    })
+                    table.render(param_item_existed(1))
+                    document.getElementById('team_pt').readonly = true;
                 },
                 error: function (res) {
                     console.log("error");

@@ -148,25 +148,23 @@
         //变量
         var user_id = t_param[`user_id`]
             , user_authority = t_param[`user_authority`]
+            , user_hd_img = ""
             , pt_id = t_param[`pt_id`];
 
-        var teacher_id = t_param[`user_id`]
-            , teacher_authority = t_param[`user_authority`]
-            , teacher_school_id = "000"
-            , teacher_school_name = "武汉大学"
-            , teacher_company_id = ""
-            , teacher_company_name = ""
-            , hd_img = ""
-            , pt_id = "000"
-            , pt_name = "Holiday Practice 2019"
-            , pt_school_id = "000"
-            , pt_school_name = "武汉大学"
-            , pt_company_id = "000"
-            , pt_company_name = "爱学记公司";
+        var teacher_school_id = -1
+            , teacher_school_name = ""
+            , teacher_company_id = -1
+            , teacher_company_name = "";
 
-        var GetExistedItemURL = "./json/item_existed_local.json"
-            , GetSchoolTeacherURL = "./json/school_teacher_local.json"
-            , GetCompanyTeacherURL = "./json/company_teacher_local.json"
+        var pt_name = ""
+            , pt_school_id = -1
+            , pt_school_name = ""
+            , pt_company_id = -1
+            , pt_company_name = "";
+
+        var GetExistedItemURL = "http://localhost:8080/GetProjectinPracticeServlet"
+            , GetSchoolTeacherURL = "http://localhost:8080/GetSchoolTeacherByPracticeIdServlet"
+            , GetCompanyTeacherURL = "http://localhost:8080/GetCompanyTeacherByPracticeIdServlet"
             , HomepageURL = ""
             , QuitURL = "login.html"
             , ChangeInfoURL = "login.html"
@@ -174,75 +172,24 @@
             , ItemDetailURL = "login.html"
             , TeacherHomePageURL = "login.html"
             , AddItemURL = "teacher_add_pt_new_item.html"
+            , GetPTInfoURL = "http://localhost:8080/GetPracticeInformationServlet"
             , AddCompanyTeacherURL = "teacher_add_pt_teacher.html?authority=CompanyTeacher&companyId=" + pt_company_id
             , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority=SchoolTeacher&schoolId=" + pt_school_id;
 
         //表格
-        var param_item_existed = {
-            elem: '#item_table'
-            , url: GetExistedItemURL
-            , title: '项目列表'
-            , toolbar: "#toolbar_item"
-            , contentType: 'application/json'
-            , method: "POST"
-            , width: 1100
-            , height: 500
-            , where: {
-                "reqId": teacher_id
-            }
-            , deal: function (res) {
-                return {
-                    code: 0
-                    , msg: ""
-                    , count: 1000
-                    , data: res.resData
-                }
-            }
-            , cols: [[
-                { type: 'numbers' }
-                , { field: 'projectId', width: 150, title: '项目ID', hide: true }
-                , { field: 'projectName', width: 150, title: '项目名称' }
-                , { field: 'projectType', width: 150, title: '项目类型' }
-                , {
-                    field: 'projectDifficulty', width: 150, title: '项目难度', sort: true, templet: function (d) {
-                        return '<div id="star_' + d.projectId + '"></div>'
-                    }
-                }
-                , { field: 'projectIntroduce', title: '项目概述' }
-                , { field: 'projectBaseContent', title: '基本功能', hide: true }
-                , { field: 'projectExtendContent', title: '扩展功能', hide: true }
-                , { field: 'projectAdvanceContent', title: '高级功能', hide: true }
-                , {
-                    field: 'projectCompanyTeacher', title: '负责老师', templet: function (d) {
-                        return '<div id="companyTeacher_' + d.projectId + '"></div>';
-                    }
-                }
-                , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 158 }
-            ]]
-            , done: function (res) {
-                for (var i = 0; i < res.data.length; i++) {
-                    console.log(res.data)
-                    console.log(res)
-                    console.log(res.resData)
-                    renderStar('star_' + res.data[i].projectId, res.data[i].projectDifficulty / 2);
-                    var temptemp = ""
-                    for (var j = 0; j < res.data[i].projectCompanyTeacher.length; j++) {
-                        temptemp += res.data[i].projectCompanyTeacher[j].companyTeacherName + ' ';
-                    }
-                    document.getElementById('companyTeacher_' + res.data[i].projectId).innerText = temptemp;
-                }
-            }
-        }
-            , param_pt_school_teacher = {
-                elem: '#school_teacher_table'
-                , url: GetSchoolTeacherURL
-                , title: '校园老师'
-                , toolbar: "#toolbar_school_teacher"
+        var param_item_existed = function (res) {
+            return {
+                elem: '#item_table'
+                , url: GetExistedItemURL
+                , title: '项目列表'
+                , toolbar: "#toolbar_item"
                 , contentType: 'application/json'
                 , method: "POST"
-                , width: 380
+                , width: 1100
+                , height: 500
                 , where: {
-                    "reqId": teacher_id
+                    "reqId": ""
+                    , "reqParam": pt_id
                 }
                 , deal: function (res) {
                     return {
@@ -254,53 +201,115 @@
                 }
                 , cols: [[
                     { type: 'numbers' }
-                    , { field: 'schoolTeacherId', width: 75, title: 'ID', hide: true }
-                    , { field: 'schoolTeacherName', width: 120, title: '名称' }
-                    , { field: 'sex', width: 100, title: '性别' }
-                    , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
-                ]]
-            }
-            , param_pt_company_teacher = {
-                elem: '#company_teacher_table'
-                , url: GetCompanyTeacherURL
-                , title: '企业老师'
-                , toolbar: "#toolbar_company_teacher"
-                , contentType: 'application/json'
-                , method: "POST"
-                , width: 700
-                , where: {
-                    "reqId": teacher_id
-                }
-                , deal: function (res) {
-                    return {
-                        code: 0
-                        , msg: ""
-                        , count: 1000
-                        , data: res.resData
-                    }
-                }
-                , cols: [[
-                    { type: 'numbers' }
-                    , { field: 'companyTeacherId', width: 75, title: 'ID', hide: true }
-                    , { field: 'companyTeacherName', width: 120, title: '名称' }
-                    , { field: 'sex', width: 100, title: '性别' }
+                    , { field: 'id', width: 150, title: '项目ID', hide: true }
+                    , { field: 'name', width: 150, title: '项目名称' }
+                    , { field: 'type', width: 150, title: '项目类型' }
                     , {
-                        field: 'projectInCharge', title: '负责项目', templet: function (d) {
-                            return '<div id="projectInCharge_' + d.companyTeacherId + '"></div>'
+                        field: 'difficulty', width: 150, title: '项目难度', sort: true, templet: function (d) {
+                            return '<div id="star_' + d.id + '"></div>'
                         }
                     }
-                    , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
+                    , { field: 'introduce', title: '项目概述' }
+                    , { field: 'baseContent', title: '基本功能', hide: true }
+                    , { field: 'extendContent', title: '扩展功能', hide: true }
+                    , { field: 'advanceContent', title: '高级功能', hide: true }
+                    , {
+                        field: 'teachers', title: '负责老师', templet: function (d) {
+                            return '<div id="companyTeacher_' + d.id + '"></div>';
+                        }
+                    }
+                    , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 158 }
                 ]]
                 , done: function (res) {
                     for (var i = 0; i < res.data.length; i++) {
+                        renderStar('star_' + res.data[i].id, res.data[i].difficulty / 2);
+                        var temptemp = ""
+                        for (var j = 0; j < res.data[i].teacherNames.length; j++) {
+                            temptemp += res.data[i].teacherNames[j] + ' ';
+                        }
+                        document.getElementById('companyTeacher_' + res.data[i].id).innerText = temptemp;
+                    }
+                }
+            }
+        }
+            , param_pt_school_teacher = function (res) {
+                return {
+                    elem: '#school_teacher_table'
+                    , url: GetSchoolTeacherURL
+                    , title: '校园老师'
+                    , toolbar: "#toolbar_school_teacher"
+                    , contentType: 'application/json'
+                    , method: "POST"
+                    , width: 380
+                    , where: {
+                        "reqId": "",
+                        "reqParam": pt_id
+                    }
+                    , deal: function (res) {
+                        return {
+                            code: 0
+                            , msg: ""
+                            , count: 1000
+                            , data: res.resData
+                        }
+                    }
+                    , cols: [[
+                        { type: 'numbers' }
+                        , { field: 'schoolTeacherId', width: 75, title: 'ID', hide: true }
+                        , { field: 'schoolTeacherName', width: 120, title: '名称' }
+                        , { field: 'sex', width: 100, title: '性别' }
+                        , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
+                    ]]
+                }
+            }
+            , param_pt_company_teacher = function (res) {
+                return {
+                    elem: '#company_teacher_table'
+                    , url: GetCompanyTeacherURL
+                    , title: '企业老师'
+                    , toolbar: "#toolbar_company_teacher"
+                    , contentType: 'application/json'
+                    , method: "POST"
+                    , width: 700
+                    , where: {
+                        "reqId": "",
+                        "reqParam": pt_id
+                    }
+                    , deal: function (res) {
+                        console.log(res)
+                        return {
+                            code: 0
+                            , msg: ""
+                            , count: 1000
+                            , data: res.resData
+                        }
+                    }
+                    , cols: [[
+                        { type: 'numbers' }
+                        , { field: 'companyTeacherId', width: 75, title: 'ID', hide: true }
+                        , { field: 'companyTeacherName', width: 120, title: '名称' }
+                        , { field: 'sex', width: 100, title: '性别' }
+                        , {
+                            field: 'projectInCharge', title: '负责项目', templet: function (d) {
+                                return '<div id="projectInCharge_' + d.companyTeacherId + '"></div>'
+                            }
+                        }
+                        , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
+                    ]]
+                    , done: function (res) {
                         console.log(res.data)
                         console.log(res)
                         console.log(res.resData)
-                        var temptemp = ""
-                        for (var j = 0; j < res.data[i].projectInCharge.length; j++) {
-                            temptemp += res.data[i].projectInCharge[j].projectName + ' ';
+                        for (var i = 0; i < res.data.length; i++) {
+                            console.log(res.data)
+                            console.log(res)
+                            console.log(res.resData)
+                            var temptemp = ""
+                            for (var j = 0; j < res.data[i].projectInCharge.length; j++) {
+                                temptemp += res.data[i].projectInCharge[j].projectName + ' ';
+                            }
+                            document.getElementById('projectInCharge_' + res.data[i].companyTeacherId).innerText = temptemp;
                         }
-                        document.getElementById('projectInCharge_' + res.data[i].companyTeacherId).innerText = temptemp;
                     }
                 }
             }
@@ -313,6 +322,33 @@
             var form = layui.form
                 , $ = layui.jquery
                 , layer = layui.layer;
+
+            $.ajax({
+                type: "POST",
+                url: GetPTInfoURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": pt_id
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    pt_name = res.resData.name
+                        , pt_school_id = res.resData.schoolId
+                        , pt_school_name = res.resData.schoolName
+                        , pt_company_id = res.resData.companyId
+                        , pt_company_name = res.resData.companyName
+
+                    document.getElementById("school_name").innerText = pt_school_name;
+                    document.getElementById("company_name").innerText = pt_company_name;
+                    document.getElementById("pt_name").innerText = pt_name;
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
         });
 
         //element区
@@ -336,12 +372,15 @@
             table.on('toolbar(item_table)', function (obj) {
                 switch (obj.event) {
                     case 'addItem':
-                        console.log('addItem')
+                        //console.log('addItem')
                         layer.open({
                             title: '添加项目',
                             type: 2,
                             area: ["500px", "500px"],
-                            content: AddItemURL
+                            content: AddItemURL + "?pt_company_id=" + pt_company_id + "&pt_id=" + pt_id,
+                            end: function () {
+                                table.render(param_item_existed);
+                            }
                         });
                         break;
                 };
@@ -354,9 +393,9 @@
                             title: '添加学校老师',
                             type: 2,
                             area: ["500px", "500px"],
-                            content: AddSchoolTeacherURL,
+                            content: AddSchoolTeacherURL + "?pt_school_id=" + pt_school_id + "&pt_id=" + pt_id,
                             end: function () {
-                                table.render(param_item_existed);
+                                table.render(param_pt_school_teacher);
                             }
                         });
                         break;
@@ -477,16 +516,12 @@
                 });
             });
 
-            table.render(param_item_existed);
-            table.render(param_pt_school_teacher);
-            table.render(param_pt_company_teacher);
+            table.render(param_item_existed(1));
+            table.render(param_pt_school_teacher(1));
+            table.render(param_pt_company_teacher(1));
         })
 
         //基础区
-        document.getElementById("school_name").innerText = pt_school_name;
-        document.getElementById("company_name").innerText = pt_company_name;
-        document.getElementById("pt_name").innerText = pt_name;
-
         switch (user_authority) {
             case "Student":
                 HomepageURL = "homepage_student.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
