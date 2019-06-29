@@ -28,12 +28,13 @@ public class StudentCheckTeamServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new Gson();
-        Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
-        RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
+        Type requestType = new TypeToken<RequestBean<StudentBean>>(){}.getType();
+        RequestBean<StudentBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean<TeamBean> resBean = new ResponseBean<>();
         try{
             StudentCheckTeamDao dao = new StudentCheckTeamDao();
-            TeamBean teamBean = dao.checkTeam(reqBean.getReqParam());
+            StudentBean studentBean = reqBean.getReqParam();
+            TeamBean teamBean = dao.checkTeam(studentBean.getId(),studentBean.getPracticeId());
             if (teamBean == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);

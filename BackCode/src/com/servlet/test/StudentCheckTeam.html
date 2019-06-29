@@ -15,7 +15,10 @@ $END$
         async:true,
         data:JSON.stringify({
             "reqId":"111",
-            "reqParam":1
+            "reqParam":{
+                "id":26,
+                "practiceId":5
+            }
         }),
         dataType:"json",
         success:function(res){
