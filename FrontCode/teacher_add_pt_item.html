@@ -174,7 +174,7 @@
             , AddItemURL = "teacher_add_pt_new_item.html"
             , GetPTInfoURL = "http://localhost:8080/GetPracticeInformationServlet"
             , AddCompanyTeacherURL = "teacher_add_pt_teacher.html?authority=CompanyTeacher&companyId=" + pt_company_id
-            , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority=SchoolTeacher&schoolId=" + pt_school_id;
+            , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority=SchoolTeacher";
 
         //表格
         var param_item_existed = function (res) {
@@ -246,6 +246,7 @@
                         "reqParam": pt_id
                     }
                     , deal: function (res) {
+                        console.log(res)
                         return {
                             code: 0
                             , msg: ""
@@ -286,8 +287,8 @@
                     }
                     , cols: [[
                         { type: 'numbers' }
-                        , { field: 'companyTeacherId', width: 75, title: 'ID', hide: true }
-                        , { field: 'companyTeacherName', width: 120, title: '名称' }
+                        , { field: 'id', width: 75, title: 'ID', hide: true }
+                        , { field: 'name', width: 120, title: '名称' }
                         , { field: 'sex', width: 100, title: '性别' }
                         , {
                             field: 'projectInCharge', title: '负责项目', templet: function (d) {
@@ -304,11 +305,11 @@
                             console.log(res.data)
                             console.log(res)
                             console.log(res.resData)
-                            var temptemp = ""
-                            for (var j = 0; j < res.data[i].projectInCharge.length; j++) {
-                                temptemp += res.data[i].projectInCharge[j].projectName + ' ';
-                            }
-                            document.getElementById('projectInCharge_' + res.data[i].companyTeacherId).innerText = temptemp;
+                            //var temptemp = ""
+                            //for (var j = 0; j < res.data[i].projectInCharge.length; j++) {
+                            //    temptemp += res.data[i].projectInCharge[j].projectName + ' ';
+                            //}
+                            //document.getElementById('projectInCharge_' + res.data[i].companyTeacherId).innerText = temptemp;
                         }
                     }
                 }
@@ -335,11 +336,11 @@
                 success: function (res) {
                     console.log(res);
                     pt_name = res.resData.name
-                        , pt_school_id = res.resData.schoolId
+                        , pt_school_id = res.resData.school
                         , pt_school_name = res.resData.schoolName
-                        , pt_company_id = res.resData.companyId
+                        , pt_company_id = res.resData.company
                         , pt_company_name = res.resData.companyName
-
+                    console.log(pt_school_id)
                     document.getElementById("school_name").innerText = pt_school_name;
                     document.getElementById("company_name").innerText = pt_company_name;
                     document.getElementById("pt_name").innerText = pt_name;
@@ -377,7 +378,7 @@
                             title: '添加项目',
                             type: 2,
                             area: ["500px", "500px"],
-                            content: AddItemURL + "?pt_company_id=" + pt_company_id + "&pt_id=" + pt_id,
+                            content: AddItemURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id" + user_id,
                             end: function () {
                                 table.render(param_item_existed);
                             }
@@ -393,7 +394,7 @@
                             title: '添加学校老师',
                             type: 2,
                             area: ["500px", "500px"],
-                            content: AddSchoolTeacherURL + "?pt_school_id=" + pt_school_id + "&pt_id=" + pt_id,
+                            content: AddSchoolTeacherURL + "&pt_school_id=" + pt_school_id + "&pt_id=" + pt_id,
                             end: function () {
                                 table.render(param_pt_school_teacher);
                             }

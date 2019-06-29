@@ -52,8 +52,8 @@
                 }
                 , cols: [[
                     { type: 'checkbox' }
-                    , { field: 'schoolTeacherId', title: 'ID', hide: true, sort: true }
-                    , { field: 'schoolTeacherName', title: '名称' }
+                    , { field: 'id', title: 'ID', hide: true, sort: true }
+                    , { field: 'name', title: '名称' }
                     , { field: 'sex', width: 150, title: '性别' }
                 ]]
             }
@@ -76,10 +76,9 @@
         console.log(t_param);
 
         var school_id = t_param[`pt_school_id`]
-            , pt_id = t_param[`pt_id'`]
+            , pt_id = t_param[`pt_id`]
 
-        console.log(school_id)
-        console.log(pt_id)
+            var AddSchoolTeacherURL = "http://localhost:8080/"
 
         //区
         layui.use(['form', 'jquery', 'layer', 'table'], function () {
@@ -88,7 +87,7 @@
                 , layer = layui.layer
                 , table = layui.table;
 
-            table.render(param_teacher)
+            table.render(param_teacher(1))
 
             //头工具栏事件
             table.on('toolbar(teacher_table)', function (obj) {
@@ -105,11 +104,34 @@
             form.on('submit(upload)', function (obj) {
                 console.log('upload')
 
-                layer.msg('添加成功', { time: 1000 })
-                setTimeout(function sign_up_fun() {
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    parent.layer.close(index); //再执行关闭
-                }, 1000);
+                $.ajax({
+                    type: "POST",
+                    url: CreateNewProjectURL,
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": "",
+                        "reqParam": {
+                            "name": data.field.new_item_name,
+                            "type": data.field.new_item_type,
+                            "difficulty": difficulty,
+                            "introduce": data.field.new_item_introduce,
+                            "baseContent": data.field.new_item_base_content,
+                            "extentContent": data.field.new_item_extend_content,
+                            "advanceContent": data.field.new_item_advance_content,
+                            "practiceId": pt_id,
+                            "teachers": checked_company_teacher
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        layer.msg('添加成功', { time: 1000 })
+                        setTimeout(function sign_up_fun() {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                        }, 1000);
+                    }
+                });
 
                 return false;
             });
