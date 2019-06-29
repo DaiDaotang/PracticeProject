@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 28/06/2019 18:01:28
+ Date: 29/06/2019 12:00:34
 */
 
 SET NAMES utf8mb4;
@@ -78,6 +78,11 @@ CREATE TABLE `pracctrelation`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of pracctrelation
+-- ----------------------------
+INSERT INTO `pracctrelation` VALUES (14, 15, '1');
+
+-- ----------------------------
 -- Table structure for pracstrelation
 -- ----------------------------
 DROP TABLE IF EXISTS `pracstrelation`;
@@ -90,6 +95,11 @@ CREATE TABLE `pracstrelation`  (
   CONSTRAINT `pracstPracticeId` FOREIGN KEY (`practiceId`) REFERENCES `practice` (`practiceid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `pracstTeacherId` FOREIGN KEY (`schoolTeacherId`) REFERENCES `schoolteacher` (`schoolteacherid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of pracstrelation
+-- ----------------------------
+INSERT INTO `pracstrelation` VALUES (13, 2, '1');
 
 -- ----------------------------
 -- Table structure for practice
@@ -105,7 +115,7 @@ CREATE TABLE `practice`  (
   PRIMARY KEY (`practiceId`) USING BTREE,
   INDEX `practiecId`(`practiceId`) USING BTREE,
   INDEX `practiecId_2`(`practiceId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of practice
@@ -119,12 +129,14 @@ INSERT INTO `practice` VALUES (9, '2017实训', '我法术等级分厘卡积分�
 INSERT INTO `practice` VALUES (10, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
 INSERT INTO `practice` VALUES (11, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
 INSERT INTO `practice` VALUES (12, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
+INSERT INTO `practice` VALUES (13, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
+INSERT INTO `practice` VALUES (14, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
 
 -- ----------------------------
--- Table structure for practiceproject
+-- Table structure for project
 -- ----------------------------
-DROP TABLE IF EXISTS `practiceproject`;
-CREATE TABLE `practiceproject`  (
+DROP TABLE IF EXISTS `project`;
+CREATE TABLE `project`  (
   `projectId` int(11) NOT NULL AUTO_INCREMENT,
   `projectName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `projectType` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -136,22 +148,18 @@ CREATE TABLE `practiceproject`  (
   `projectPracticeId` int(11) NOT NULL,
   PRIMARY KEY (`projectId`) USING BTREE,
   INDEX `practiceId_idx`(`projectPracticeId`) USING BTREE,
+  INDEX `projectId`(`projectId`) USING BTREE,
   CONSTRAINT `practiceId` FOREIGN KEY (`projectPracticeId`) REFERENCES `practice` (`practiceId`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of practiceproject
+-- Records of project
 -- ----------------------------
-INSERT INTO `practiceproject` VALUES (2, '实训平台开发', '数据分析', 0, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, NULL, 4);
-INSERT INTO `practiceproject` VALUES (3, '实训平台开发', '数据分析', 0, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `practiceproject` VALUES (4, '实训平台开发', '数据分析', 0, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `practiceproject` VALUES (5, '实训平台开发', '数据分析', 0, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `practiceproject` VALUES (6, '实训平台开发', '数据分析', 0, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `practiceproject` VALUES (7, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `practiceproject` VALUES (8, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `practiceproject` VALUES (9, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `practiceproject` VALUES (10, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `practiceproject` VALUES (11, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
+INSERT INTO `project` VALUES (2, '实训平台开发', '数据分析', 5, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, NULL, 4);
+INSERT INTO `project` VALUES (3, '实训平台开发', '数据分析', 8, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
+INSERT INTO `project` VALUES (4, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
+INSERT INTO `project` VALUES (5, '实训平台开发', '数据分析', 6, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
+INSERT INTO `project` VALUES (14, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
 
 -- ----------------------------
 -- Table structure for projtrelation
@@ -162,9 +170,19 @@ CREATE TABLE `projtrelation`  (
   `companyTeacherId` int(11) NOT NULL,
   PRIMARY KEY (`projectId`, `companyTeacherId`) USING BTREE,
   INDEX `projtTeacherId_idx`(`companyTeacherId`) USING BTREE,
-  CONSTRAINT `projtProjectId` FOREIGN KEY (`projectId`) REFERENCES `practiceproject` (`projectid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `projtProjectId` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `projtTeacherId` FOREIGN KEY (`companyTeacherId`) REFERENCES `companyteacher` (`teacherid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of projtrelation
+-- ----------------------------
+INSERT INTO `projtrelation` VALUES (2, 1);
+INSERT INTO `projtrelation` VALUES (14, 1);
+INSERT INTO `projtrelation` VALUES (2, 15);
+INSERT INTO `projtrelation` VALUES (14, 15);
+INSERT INTO `projtrelation` VALUES (4, 19);
+INSERT INTO `projtrelation` VALUES (14, 19);
 
 -- ----------------------------
 -- Table structure for pscrelation
@@ -194,6 +212,8 @@ INSERT INTO `pscrelation` VALUES (9, 1, 1);
 INSERT INTO `pscrelation` VALUES (10, 1, 1);
 INSERT INTO `pscrelation` VALUES (11, 1, 1);
 INSERT INTO `pscrelation` VALUES (12, 1, 1);
+INSERT INTO `pscrelation` VALUES (13, 1, 1);
+INSERT INTO `pscrelation` VALUES (14, 1, 1);
 
 -- ----------------------------
 -- Table structure for school
@@ -254,19 +274,20 @@ DROP TABLE IF EXISTS `signin`;
 CREATE TABLE `signin`  (
   `signinId` int(11) NOT NULL AUTO_INCREMENT,
   `studentId` int(11) NOT NULL,
-  `signinDateTime` datetime(0) NOT NULL,
+  `signinDate` date NOT NULL,
+  `signinTime` time(0) NULL DEFAULT NULL,
   `atwork` tinyint(1) NOT NULL,
   PRIMARY KEY (`signinId`) USING BTREE,
   INDEX `signStudentId_idx`(`studentId`) USING BTREE,
   CONSTRAINT `signStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of signin
 -- ----------------------------
-INSERT INTO `signin` VALUES (1, 25, '2017-05-10 00:00:00', 1);
-INSERT INTO `signin` VALUES (2, 25, '2017-05-10 08:20:00', 1);
-INSERT INTO `signin` VALUES (3, 25, '2017-06-28 20:20:50', 0);
+INSERT INTO `signin` VALUES (1, 25, '2017-05-10', '11:59:44', 1);
+INSERT INTO `signin` VALUES (2, 25, '2017-05-10', '11:59:47', 1);
+INSERT INTO `signin` VALUES (3, 25, '2017-06-28', '11:59:50', 0);
 
 -- ----------------------------
 -- Table structure for stprelation
@@ -280,10 +301,15 @@ CREATE TABLE `stprelation`  (
   PRIMARY KEY (`studentId`, `teamId`, `projectId`) USING BTREE,
   INDEX `stpTeamId_idx`(`teamId`) USING BTREE,
   INDEX `stpProject_idx`(`projectId`) USING BTREE,
-  CONSTRAINT `stpProject` FOREIGN KEY (`projectId`) REFERENCES `practiceproject` (`projectid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `stpProject` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `stpStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `stpTeamId` FOREIGN KEY (`teamId`) REFERENCES `team` (`teamid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of stprelation
+-- ----------------------------
+INSERT INTO `stprelation` VALUES (35, 3, 3, NULL);
 
 -- ----------------------------
 -- Table structure for student
@@ -296,7 +322,7 @@ CREATE TABLE `student`  (
   `studentName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `schoolId` int(11) NOT NULL,
   `studentNumber` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `studentGrade` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `studentGrade` year NOT NULL,
   `studentMajor` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `studentHead` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `studentSex` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -304,20 +330,26 @@ CREATE TABLE `student`  (
   UNIQUE INDEX `studentPhone_UNIQUE`(`studentPhone`) USING BTREE,
   INDEX `studentId`(`studentId`) USING BTREE,
   INDEX `studentId_2`(`studentId`) USING BTREE,
-  INDEX `studentId_3`(`studentId`) USING BTREE
+  INDEX `studentId_3`(`studentId`) USING BTREE,
+  INDEX `studentId_4`(`studentId`) USING BTREE,
+  INDEX `studentId_5`(`studentId`) USING BTREE,
+  INDEX `studentId_6`(`studentId`) USING BTREE,
+  INDEX `studentId_7`(`studentId`) USING BTREE,
+  INDEX `studentId_8`(`studentId`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES (1, '789789789', '12345687', '好学生', 1, '2017302584444', '2017级', '计算机学院', '', '女');
-INSERT INTO `student` VALUES (25, '12345655500', '123456789', '士大夫', 3, '1231654', '2017', '撒旦飞洒', NULL, '男');
-INSERT INTO `student` VALUES (26, '45632166600', '123456', '222', 2, '222', '2017', '222', NULL, '男');
-INSERT INTO `student` VALUES (27, '22255588800', '222222', '222', 2, '222', '2017', '222', NULL, '男');
-INSERT INTO `student` VALUES (28, '66688899977', '000000', '第三方', 1, '564654', '2017', '564654654', NULL, '男');
-INSERT INTO `student` VALUES (29, '77755544400', '123456', '萨尔', 3, '98787897897', '2017', '撒旦飞洒', NULL, '男');
-INSERT INTO `student` VALUES (30, '12347778989', '123456', '语文阅', 3, '789456123', '2017', '遥感', NULL, '男');
-INSERT INTO `student` VALUES (34, '78954554555', '123456', '风味儿', 3, '45645', '2017', '456456', 'd4aca98d-28bf-4ca7-8e09-ff7caae9dd17.jpg', '男');
+INSERT INTO `student` VALUES (1, '789789789', '12345687', '好学生', 1, '2017302584444', 2017, '计算机学院', '', '女');
+INSERT INTO `student` VALUES (25, '12345655500', '123456789', '士大夫', 3, '1231654', 2017, '撒旦飞洒', NULL, '男');
+INSERT INTO `student` VALUES (26, '45632166600', '123456', '222', 2, '222', 2017, '222', NULL, '男');
+INSERT INTO `student` VALUES (27, '22255588800', '222222', '222', 2, '222', 2017, '222', NULL, '男');
+INSERT INTO `student` VALUES (28, '66688899977', '000000', '第三方', 1, '564654', 2017, '564654654', NULL, '男');
+INSERT INTO `student` VALUES (29, '77755544400', '123456', '萨尔', 3, '98787897897', 2017, '撒旦飞洒', NULL, '男');
+INSERT INTO `student` VALUES (30, '12347778989', '123456', '语文阅', 3, '789456123', 2017, '遥感', NULL, '男');
+INSERT INTO `student` VALUES (34, '78954554555', '123456', '风味儿', 3, '45645', 2017, '456456', 'd4aca98d-28bf-4ca7-8e09-ff7caae9dd17.jpg', '男');
+INSERT INTO `student` VALUES (35, '15035749969', 'cjx991027', '常佳鑫', 1, '2017302580168', 2017, '软件工程', NULL, '男');
 
 -- ----------------------------
 -- Table structure for studentdiary
@@ -327,11 +359,15 @@ CREATE TABLE `studentdiary`  (
   `studentdiaryId` int(11) NOT NULL AUTO_INCREMENT,
   `studentId` int(11) NOT NULL,
   `studentDiaryDate` date NOT NULL,
+  `studentDiaryTitle` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `studentDiaryContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `isweeklyreport` tinyint(1) NOT NULL,
+  `projectId` int(11) NOT NULL,
   PRIMARY KEY (`studentdiaryId`) USING BTREE,
   INDEX `sdStudentId_idx`(`studentId`) USING BTREE,
-  CONSTRAINT `sdStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  INDEX `sdProjectId`(`projectId`) USING BTREE,
+  CONSTRAINT `sdStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `sdProjectId` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -342,10 +378,11 @@ CREATE TABLE `teacherdiary`  (
   `teacherdiaryId` int(11) NOT NULL AUTO_INCREMENT,
   `teacherId` int(11) NOT NULL,
   `teacherDiaryDate` date NOT NULL,
+  `teacherDiaryTitle` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `teacherDiaryContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`teacherdiaryId`) USING BTREE,
   INDEX `tdTeacherId_idx`(`teacherId`) USING BTREE,
-  CONSTRAINT `tdTeacherId` FOREIGN KEY (`teacherId`) REFERENCES `companyteacher` (`teacherId`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `tdTeacherId` FOREIGN KEY (`teacherId`) REFERENCES `companyteacher` (`teacherid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -360,8 +397,14 @@ CREATE TABLE `team`  (
   `githubLink` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`teamId`) USING BTREE,
   INDEX `teamCaptainId_idx`(`captainId`) USING BTREE,
+  INDEX `teamId`(`teamId`) USING BTREE,
   CONSTRAINT `teamCaptainId` FOREIGN KEY (`captainId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of team
+-- ----------------------------
+INSERT INTO `team` VALUES (3, '王者3缺2', 35, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for teamdiary
@@ -372,6 +415,7 @@ CREATE TABLE `teamdiary`  (
   `teamId` int(11) NOT NULL,
   `teamDiaryDate` date NOT NULL,
   `isweeklyreport` tinyint(1) NOT NULL,
+  `teamDiaryTitle` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `teamDiaryContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`teamdiaryId`) USING BTREE,
   INDEX `tdTeamId_idx`(`teamId`) USING BTREE,
