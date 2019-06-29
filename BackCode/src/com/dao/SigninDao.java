@@ -18,13 +18,16 @@ public class SigninDao {
         try{
             SigninBean bean = signinBean.getReqParam();
             conn.setAutoCommit(false);
-            String sql ="INSERT INTO signin (studentId,signinDateTime,atwork) VALUES (?,?,?)";
+            String sql ="INSERT INTO signin (studentId,signinDate,signinTime,atwork) VALUES (?,?,?,?)";
             PreparedStatement state;
             state = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             state.setInt(1,bean.getStudentId());
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            state.setString(2,df.format(new Date()));
-            state.setBoolean(3,bean.isAtWork());
+            Date date = new Date();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            state.setString(2,df.format(date));
+            SimpleDateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+            state.setString(3,df2.format(date));
+            state.setBoolean(4,bean.isAtWork());
             state.executeUpdate();
             conn.commit();
         }catch (SQLException e){

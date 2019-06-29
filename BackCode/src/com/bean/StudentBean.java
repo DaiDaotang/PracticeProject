@@ -13,6 +13,7 @@ public class StudentBean {
     private String grade;
     private int teamId;
     private String schoolName;
+    private int practiceId;
 
     public String getTelephone() {
         return telephone;
@@ -108,5 +109,13 @@ public class StudentBean {
 
     public void setschoolName(String schoolName) {
         this.schoolName = schoolName;
+    }
+
+    public int getPracticeId() {
+        return practiceId;
+    }
+
+    public void setPracticeId(int practiceId) {
+        this.practiceId = practiceId;
     }
 }
