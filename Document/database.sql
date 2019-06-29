@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 29/06/2019 12:00:34
+ Date: 29/06/2019 20:42:13
 */
 
 SET NAMES utf8mb4;
@@ -53,7 +53,9 @@ CREATE TABLE `companyteacher`  (
   `teacherHead` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `companyId` int(11) NOT NULL,
   PRIMARY KEY (`teacherId`) USING BTREE,
-  UNIQUE INDEX `tel_UNIQUE`(`teacherPhone`) USING BTREE
+  UNIQUE INDEX `tel_UNIQUE`(`teacherPhone`) USING BTREE,
+  INDEX `companyTeacherCompanyID`(`companyId`) USING BTREE,
+  CONSTRAINT `companyTeacherCompanyID` FOREIGN KEY (`companyId`) REFERENCES `company` (`companyid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -81,6 +83,9 @@ CREATE TABLE `pracctrelation`  (
 -- Records of pracctrelation
 -- ----------------------------
 INSERT INTO `pracctrelation` VALUES (14, 15, '1');
+INSERT INTO `pracctrelation` VALUES (15, 15, '1');
+INSERT INTO `pracctrelation` VALUES (16, 15, '1');
+INSERT INTO `pracctrelation` VALUES (17, 15, '1');
 
 -- ----------------------------
 -- Table structure for pracstrelation
@@ -120,9 +125,9 @@ CREATE TABLE `practice`  (
 -- ----------------------------
 -- Records of practice
 -- ----------------------------
-INSERT INTO `practice` VALUES (4, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', '武汉大学模板20190628-17-42-14.doc');
-INSERT INTO `practice` VALUES (5, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (6, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
+INSERT INTO `practice` VALUES (4, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2019-06-30', '2019-08-03', '武汉大学模板20190628-17-42-14.doc');
+INSERT INTO `practice` VALUES (5, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2019-06-30', '2019-07-07', NULL);
+INSERT INTO `practice` VALUES (6, '2017实训sdfasdf', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2019-06-26', '2019-07-28', NULL);
 INSERT INTO `practice` VALUES (7, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
 INSERT INTO `practice` VALUES (8, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
 INSERT INTO `practice` VALUES (9, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
@@ -131,6 +136,9 @@ INSERT INTO `practice` VALUES (11, '2017实训', '我法术等级分厘卡积分
 INSERT INTO `practice` VALUES (12, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
 INSERT INTO `practice` VALUES (13, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
 INSERT INTO `practice` VALUES (14, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
+INSERT INTO `practice` VALUES (15, '2017实训', '每天打王者', '2019-07-12', '2019-07-18', NULL);
+INSERT INTO `practice` VALUES (16, '2017实训', '每天打王者', '2019-07-12', '2019-07-18', NULL);
+INSERT INTO `practice` VALUES (17, '2017实训', '每天打王者', '2019-07-12', '2019-07-18', NULL);
 
 -- ----------------------------
 -- Table structure for project
@@ -214,6 +222,9 @@ INSERT INTO `pscrelation` VALUES (11, 1, 1);
 INSERT INTO `pscrelation` VALUES (12, 1, 1);
 INSERT INTO `pscrelation` VALUES (13, 1, 1);
 INSERT INTO `pscrelation` VALUES (14, 1, 1);
+INSERT INTO `pscrelation` VALUES (15, 1, 1);
+INSERT INTO `pscrelation` VALUES (16, 1, 1);
+INSERT INTO `pscrelation` VALUES (17, 1, 1);
 
 -- ----------------------------
 -- Table structure for school
@@ -287,7 +298,50 @@ CREATE TABLE `signin`  (
 -- ----------------------------
 INSERT INTO `signin` VALUES (1, 25, '2017-05-10', '11:59:44', 1);
 INSERT INTO `signin` VALUES (2, 25, '2017-05-10', '11:59:47', 1);
-INSERT INTO `signin` VALUES (3, 25, '2017-06-28', '11:59:50', 0);
+INSERT INTO `signin` VALUES (3, 25, '2017-05-12', '11:59:50', 0);
+INSERT INTO `signin` VALUES (10, 25, '2019-06-29', '08:33:20', 1);
+INSERT INTO `signin` VALUES (11, 25, '2019-06-29', '15:33:54', 0);
+INSERT INTO `signin` VALUES (13, 25, '2019-06-29', '18:26:03', 1);
+INSERT INTO `signin` VALUES (14, 25, '2019-06-29', '18:26:04', 0);
+INSERT INTO `signin` VALUES (15, 26, '2019-06-29', '18:26:25', 1);
+INSERT INTO `signin` VALUES (16, 26, '2019-06-29', '18:26:27', 0);
+INSERT INTO `signin` VALUES (17, 1, '2019-06-29', '18:34:46', 1);
+INSERT INTO `signin` VALUES (18, 1, '2019-06-29', '18:34:46', 0);
+INSERT INTO `signin` VALUES (19, 1, '2019-06-29', '18:34:47', 1);
+INSERT INTO `signin` VALUES (20, 1, '2019-06-29', '18:34:47', 0);
+INSERT INTO `signin` VALUES (21, 1, '2019-06-29', '18:34:47', 1);
+INSERT INTO `signin` VALUES (22, 1, '2019-06-29', '18:34:47', 0);
+INSERT INTO `signin` VALUES (23, 1, '2019-06-29', '18:34:48', 1);
+INSERT INTO `signin` VALUES (24, 1, '2019-06-29', '18:34:48', 0);
+INSERT INTO `signin` VALUES (25, 1, '2019-06-29', '18:34:48', 1);
+INSERT INTO `signin` VALUES (26, 1, '2019-06-29', '18:34:48', 0);
+INSERT INTO `signin` VALUES (27, 1, '2019-06-29', '18:34:48', 1);
+INSERT INTO `signin` VALUES (28, 1, '2019-06-29', '18:34:48', 0);
+INSERT INTO `signin` VALUES (29, 1, '2019-06-29', '18:34:48', 1);
+INSERT INTO `signin` VALUES (30, 1, '2019-06-29', '18:34:49', 0);
+INSERT INTO `signin` VALUES (31, 1, '2019-06-29', '18:34:49', 1);
+INSERT INTO `signin` VALUES (32, 1, '2019-06-29', '18:34:49', 0);
+INSERT INTO `signin` VALUES (33, 1, '2019-06-29', '18:34:49', 1);
+INSERT INTO `signin` VALUES (34, 1, '2019-06-29', '18:34:49', 0);
+INSERT INTO `signin` VALUES (35, 1, '2019-06-29', '18:34:49', 1);
+INSERT INTO `signin` VALUES (36, 1, '2019-06-29', '18:34:50', 0);
+INSERT INTO `signin` VALUES (37, 1, '2019-06-29', '18:34:50', 1);
+INSERT INTO `signin` VALUES (38, 1, '2019-06-29', '18:34:50', 0);
+INSERT INTO `signin` VALUES (39, 1, '2019-06-29', '18:34:50', 1);
+INSERT INTO `signin` VALUES (40, 1, '2019-06-29', '18:34:50', 0);
+INSERT INTO `signin` VALUES (41, 1, '2019-06-29', '18:34:51', 1);
+INSERT INTO `signin` VALUES (42, 1, '2019-06-29', '18:34:51', 0);
+INSERT INTO `signin` VALUES (43, 1, '2019-06-29', '18:34:51', 1);
+INSERT INTO `signin` VALUES (44, 1, '2019-06-29', '18:34:51', 0);
+INSERT INTO `signin` VALUES (45, 1, '2019-06-29', '18:34:51', 1);
+INSERT INTO `signin` VALUES (46, 1, '2019-06-29', '18:34:51', 0);
+INSERT INTO `signin` VALUES (47, 1, '2019-06-29', '18:34:52', 1);
+INSERT INTO `signin` VALUES (48, 1, '2019-06-29', '18:34:52', 0);
+INSERT INTO `signin` VALUES (49, 1, '2019-06-29', '18:34:52', 1);
+INSERT INTO `signin` VALUES (50, 1, '2019-06-29', '18:34:52', 0);
+INSERT INTO `signin` VALUES (51, 1, '2019-06-29', '18:34:52', 1);
+INSERT INTO `signin` VALUES (52, 1, '2019-06-29', '18:35:07', 0);
+INSERT INTO `signin` VALUES (53, 1, '2019-06-29', '18:35:09', 1);
 
 -- ----------------------------
 -- Table structure for stprelation
@@ -309,6 +363,7 @@ CREATE TABLE `stprelation`  (
 -- ----------------------------
 -- Records of stprelation
 -- ----------------------------
+INSERT INTO `stprelation` VALUES (1, 4, 14, NULL);
 INSERT INTO `stprelation` VALUES (35, 3, 3, NULL);
 
 -- ----------------------------
@@ -341,8 +396,8 @@ CREATE TABLE `student`  (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES (1, '789789789', '12345687', '好学生', 1, '2017302584444', 2017, '计算机学院', '', '女');
-INSERT INTO `student` VALUES (25, '12345655500', '123456789', '士大夫', 3, '1231654', 2017, '撒旦飞洒', NULL, '男');
+INSERT INTO `student` VALUES (1, '789789789', '12345687', '好学生', 1, '2017302584444', 2017, '计算机学院', '65729546-9699-4861-a5e4-f5df8ad0399c.jpg', '女');
+INSERT INTO `student` VALUES (25, '12345655500', '123456789', '士大夫', 3, '1231654', 2017, '撒旦飞洒', '1393a4e6-6654-4149-802b-07d6cb649a71.jpg', '男');
 INSERT INTO `student` VALUES (26, '45632166600', '123456', '222', 2, '222', 2017, '222', NULL, '男');
 INSERT INTO `student` VALUES (27, '22255588800', '222222', '222', 2, '222', 2017, '222', NULL, '男');
 INSERT INTO `student` VALUES (28, '66688899977', '000000', '第三方', 1, '564654', 2017, '564654654', NULL, '男');
@@ -405,6 +460,7 @@ CREATE TABLE `team`  (
 -- Records of team
 -- ----------------------------
 INSERT INTO `team` VALUES (3, '王者3缺2', 35, NULL, NULL);
+INSERT INTO `team` VALUES (4, '王九二六飞机', 1, NULL, '');
 
 -- ----------------------------
 -- Table structure for teamdiary
