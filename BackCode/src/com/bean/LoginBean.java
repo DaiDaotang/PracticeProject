@@ -5,6 +5,7 @@ public class LoginBean {
     private String password;
     private String authority;
     private int resId;
+    private String message;
 
     public void setTelephone(String telephone){
         this.telephone = telephone;
@@ -30,4 +31,9 @@ public class LoginBean {
         this.resId = resId;
     }
 
+    public void setMessage(String message){
+        this.message = message;
+    }
+
+    public String getMessage(){return message;}
 }

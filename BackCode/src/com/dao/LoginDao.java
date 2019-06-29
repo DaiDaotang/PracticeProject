@@ -33,8 +33,15 @@ public class LoginDao {
                         int id = resultSet.getInt(2);
                         newbean.setresId(id);
                         newbean.setAuthority(authority);
+                        newbean.setMessage("登陆成功！");
+                        return newbean;
+                    }else {
+                        newbean.setMessage("密码错误！");
                         return newbean;
                     }
+                }else{
+                    newbean.setMessage("账号不存在！");
+                    return newbean;
                 }
             } else if(authority.equals("School")){
                 state = conn.prepareStatement("select schoolteacherPassword, schoolteacherId from schoolteacher where schoolteacherPhone = ?");
@@ -45,8 +52,15 @@ public class LoginDao {
                         int id = resultSet.getInt(2);
                         newbean.setresId(id);
                         newbean.setAuthority(authority);
+                        newbean.setMessage("登陆成功！");
+                        return newbean;
+                    }else {
+                        newbean.setMessage("密码错误！");
                         return newbean;
                     }
+                }else{
+                    newbean.setMessage("账号不存在！");
+                    return newbean;
                 }
             }else if(authority.equals("Company")){
                 state = conn.prepareStatement("select companyPassword, companyId from company where companyPhone = ?");
@@ -57,8 +71,15 @@ public class LoginDao {
                         int id = resultSet.getInt(2);
                         newbean.setresId(id);
                         newbean.setAuthority(authority);
+                        newbean.setMessage("登陆成功！");
+                        return newbean;
+                    }else {
+                        newbean.setMessage("密码错误！");
                         return newbean;
                     }
+                }else{
+                    newbean.setMessage("账号不存在！");
+                    return newbean;
                 }
             }else if(authority.equals("Teacher")){
                 state = conn.prepareStatement("select teacherPassword, teacherId from companyteacher where teacherPhone = ?");
@@ -69,8 +90,15 @@ public class LoginDao {
                         int id = resultSet.getInt(2);
                         newbean.setresId(id);
                         newbean.setAuthority(authority);
+                        newbean.setMessage("登陆成功！");
+                        return newbean;
+                    }else {
+                        newbean.setMessage("密码错误！");
                         return newbean;
                     }
+                }else{
+                    newbean.setMessage("账号不存在！");
+                    return newbean;
                 }
             }
             return null;
