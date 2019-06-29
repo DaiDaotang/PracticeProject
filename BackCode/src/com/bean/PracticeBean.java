@@ -16,7 +16,7 @@ public class PracticeBean {
     private String template;
     private int companyTeacherId;
     private int schoolTeacherId;
-    private ArrayList<Integer> companyTeachers;
+    private ArrayList<Integer> schoolTeachers;
 
     public int getId() {
         return id;
@@ -113,11 +113,11 @@ public class PracticeBean {
         this.schoolTeacherId = schoolTeacherId;
     }
 
-    public ArrayList<Integer> getCompanyTeachers() {
-        return companyTeachers;
+    public ArrayList<Integer> getSchoolTeachers() {
+        return schoolTeachers;
     }
 
-    public void setCompanyTeachers(ArrayList<Integer> companyTeachers) {
-        this.companyTeachers = companyTeachers;
+    public void setSchoolTeachers(ArrayList<Integer> schoolTeachers) {
+        this.schoolTeachers = schoolTeachers;
     }
 }

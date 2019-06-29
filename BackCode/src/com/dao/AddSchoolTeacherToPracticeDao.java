@@ -13,7 +13,7 @@ public class AddSchoolTeacherToPracticeDao {
         Connection conn = DBConn.getConnection();
         try{
             PracticeBean practiceBean = bean.getReqParam();
-            ArrayList<Integer> teachers = practiceBean.getCompanyTeachers();
+            ArrayList<Integer> teachers = practiceBean.getSchoolTeachers();
             for (Integer teacher : teachers) {
                 conn.setAutoCommit(false);
                 String sql2 = "INSERT INTO pracstrelation VALUES (?,?,?)";
@@ -23,9 +23,9 @@ public class AddSchoolTeacherToPracticeDao {
                 state2.setInt(2, teacher);
                 state2.setBoolean(3,false);
                 state2.executeUpdate();
-                return 0;
             }
             conn.commit();
+            return 0;
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);
