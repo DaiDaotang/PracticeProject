@@ -19,9 +19,9 @@ public class GetPracticeInformationDao {
     {
         Connection conn = DBConn.getConnection();
         PracticeBean practiceBean = new PracticeBean();
-        ResultSet resultSet;
+        ResultSet resultSet,resultSet2;
         try {
-            PreparedStatement state;
+            PreparedStatement state,state2;
             state = conn.prepareStatement("select practiceName,practiceContent,starttime,endtime,practiceId,template from practice where practiceId = ?;");
             state.setInt(1, id);
             resultSet = state.executeQuery();
@@ -32,7 +32,17 @@ public class GetPracticeInformationDao {
                 practiceBean.setEndTime(resultSet.getDate(4));
                 practiceBean.setId(resultSet.getInt(5));
                 practiceBean.setTemplate(resultSet.getString(6));
-                return practiceBean;
+                state2 = conn.prepareStatement("select schoolId,schoolName,companyId,companyName from pscrelation natural join company natural join school where practiceId = ?;");
+                state2.setInt(1,resultSet.getInt(5));
+                resultSet2 = state2.executeQuery();
+                if(resultSet2.next())
+                {
+                    practiceBean.setSchool(resultSet2.getInt(1));
+                    practiceBean.setSchoolName(resultSet2.getString(2));
+                    practiceBean.setCompany(resultSet2.getInt(3));
+                    practiceBean.setCompanyName(resultSet2.getString(4));
+                    return practiceBean;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

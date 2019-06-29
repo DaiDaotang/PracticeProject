@@ -9,7 +9,9 @@ public class PracticeBean {
     private Date startTime;
     private Date endTime;
     private int company;
+    private String companyName;
     private int school;
+    private String schoolName;
     private String template;
     private int companyTeacherId;
     private int schoolTeacherId;
@@ -62,6 +64,14 @@ public class PracticeBean {
         this.company = company;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public int getSchool() {
         return school;
     }
@@ -70,6 +80,13 @@ public class PracticeBean {
         this.school = school;
     }
 
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
     public String getTemplate() {
         return template;
     }
