@@ -20,11 +20,11 @@ public class GetSigninByStudentDao {
             state = conn.prepareStatement("select * from signin where studentId = ? GROUP BY signinId;");
             state.setInt(1, id);
             resultSet = state.executeQuery();
-            if (resultSet.next()) {
-                companyBean.setName(resultSet.getString(1));
-                companyBean.setHead(resultSet.getString(2));
-                return companyBean;
-            }
+//            if (resultSet.next()) {
+//                companyBean.setName(resultSet.getString(1));
+//                companyBean.setHead(resultSet.getString(2));
+//                return companyBean;
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
             DBConn.rollback(conn);

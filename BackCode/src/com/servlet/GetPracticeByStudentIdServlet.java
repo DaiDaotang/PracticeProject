@@ -4,7 +4,6 @@ import com.bean.PracticeBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
 import com.dao.GetPracticeInformationDao;
-import com.dao.GetProjectInformationDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -18,9 +17,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
-@WebServlet(name = "GetPracticeInformationServlet")
-public class GetPracticeInformationServlet extends HttpServlet {
+@WebServlet(name = "GetPracticeByStudentIdServlet")
+public class GetPracticeByStudentIdServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -31,23 +31,23 @@ public class GetPracticeInformationServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Gson gson = new Gson();
         Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
         RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
-        ResponseBean<PracticeBean> resBean = new ResponseBean<>();
+        ResponseBean<ArrayList<PracticeBean>> resBean = new ResponseBean<>();
         try{
             GetPracticeInformationDao dao = new GetPracticeInformationDao();
-            PracticeBean practiceBean = dao.getPracticeInformation(reqBean.getReqParam());
-            if (practiceBean == null){
+            ArrayList<PracticeBean> arrayList = dao.getPracticeByStudentId(reqBean.getReqParam());
+            if (arrayList == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
-                resBean.setResData(practiceBean);
+                resBean.setResData(arrayList);
             }
-            Type respType = new TypeToken<ResponseBean<PracticeBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<ArrayList<PracticeBean>>>(){}.getType();
             String s = gson.toJson(resBean,respType);
             out.print(s);
         }catch (Exception e){
