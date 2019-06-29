@@ -246,7 +246,7 @@
             //监听选择实训以改变团队项目信息
             form.on('select(student_pt)', function (data) {
                 console.log(data.value); //得到被选中的值
-                target_pt_id = data.value;
+                target_pt_id = parseInt(data.value);
                 //设置团队信息
                 $.ajax({
                     type: "POST",
@@ -254,7 +254,10 @@
                     async: true,
                     data: JSON.stringify({
                         "reqId": "",
-                        "reqParam": target_id
+                        "reqParam": {
+                            "id": target_id,
+                            "practiceId": target_pt_id
+                        }
                     }),
                     dataType: "json",
                     success: function (res) {
