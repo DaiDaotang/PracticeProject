@@ -17,7 +17,7 @@ public class GetPracticeInformationDao {
         ResultSet resultSet;
         try {
             PreparedStatement state;
-            state = conn.prepareStatement("select practiceName,practiceContent,starttime,endtime from practice where practiceId = ?;");
+            state = conn.prepareStatement("select practiceName,practiceContent,starttime,endtime,procticeId from practice where practiceId = ?;");
             state.setInt(1, id);
             resultSet = state.executeQuery();
             if (resultSet.next()) {
@@ -25,6 +25,7 @@ public class GetPracticeInformationDao {
                 practiceBean.setContent(resultSet.getString(2));
                 practiceBean.setStartTime(resultSet.getDate(3));
                 practiceBean.setEndTime(resultSet.getDate(4));
+                practiceBean.setId(resultSet.getInt(5));
                 return practiceBean;
             }
         } catch (SQLException e) {
