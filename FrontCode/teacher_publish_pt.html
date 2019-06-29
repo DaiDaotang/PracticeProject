@@ -83,25 +83,23 @@
         console.log(t_param);
 
         //变量
-        var teacher_id = t_param[`user_id`]
+        var teacher_id = parseInt(t_param[`user_id`])
             , teacher_authority = t_param[`user_authority`]
-            , teacher_school_id = -1
-            , teacher_school_name = ""
-            , teacher_company_id = -1
-            , teacher_company_name = "";
-;
+            , teacher_school_id = ""
+            , teacher_company_id = "";
+
+        var GetSchoolInfoURL = "http://localhost:8080/GetSchoolServlet"
+            , GetCompanyInfoURL = "http://localhost:8080/GetCompanyServlet"
+            , CreatePTURL = "http://localhost:8080/CreatePracticeServlet"
+            , TeacherAddPTItemURL = "teacher_add_pt_item.html";
+        
+        //修改默认学校/公司
         if (teacher_authority == "Teacher") {
-            teacher_company_id = -1
-                , teacher_company_name = "";
+            teacher_company_id = parseInt(t_param[`user_company_id`]);
         }
         else if (teacher_authority == "School") {
-            teacher_school_id = 3
-                , teacher_school_name = "武汉大学"
+            teacher_school_id = parseInt(t_param[`user_school_id`])
         }
-        var teacher_school_id = 3
-            , teacher_school_name = "武汉大学"
-            , teacher_company_id = -1
-            , teacher_company_name = "";
 
         //form区
         layui.use(['form', 'jquery', 'laydate'], function () {
@@ -109,36 +107,117 @@
                 , $ = layui.jquery
                 , laydate = layui.laydate;
 
+            //获取学校名称
+            $.ajax({
+                type: "POST",
+                url: GetSchoolInfoURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": ""
+                }),
+                dataType: "json",
+                success: function (res) {
+                    if (res.isSuccess) {
+                        temp = '';
+                        for (var i = 0; i < res.resData.length; i++) {
+                            var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
+                            temp += temptemp;
+                        }
+                        document.getElementById('pt_school').innerHTML += temp;
+                        form.render('select');
+                        form.val('pt_create_form', {
+                            "pt_school": teacher_school_id
+                        })
+                    }
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
+
+            //获取公司名称
+            $.ajax({
+                type: "POST",
+                url: GetCompanyInfoURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": ""
+                }),
+                dataType: "json",
+                success: function (res) {
+                    if (res.isSuccess) {
+                        temp = '';
+                        for (var i = 0; i < res.resData.length; i++) {
+                            var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
+                            temp += temptemp;
+                        }
+                        document.getElementById('pt_company').innerHTML += temp;
+                        form.render('select');
+                        form.val('pt_create_form', {
+                            "pt_company": teacher_company_id
+                        })
+                    }
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
+
             //表单初始赋值
-            if (teacher_company_id == -1) {
-                form.val('pt_create_form', {
-                    "pt_name": ""
-                    , "pt_school": teacher_school_id
-                    , "pt_company": ""
-                })
-            }
-            else if (teacher_school_id == -1) {
-                form.val('pt_create_form', {
-                    "pt_name": ""
-                    , "pt_school": ""
-                    , "pt_company": teacher_company_id
-                })
-            }
-            else {
-                console.log("身份认证失败")
-            }
+            form.val('pt_create_form', {
+                "pt_name": ""
+                , "pt_school": teacher_school_id
+                , "pt_company": teacher_company_id
+            })
 
             //监听申请
             form.on('submit(pt_apply_btn)', function (data) {
                 console.log(data.field)
 
+                $.ajax({
+                    type: "POST",
+                    url: GetSchoolInfoURL,
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": ""
+                        , "reqParam": {
+                            "name": data.field.pt_name,
+                            "content": data.field.pt_content,
+                            "startTime": data.field.pt_start_data,
+                            "endTime": data.field.pt_end_data,
+                            "school": data.field.pt_school,
+                            "company": data.field.pt_company,
+                            "companyTeacherId": teacher_authority == "Teacher" ? teacher_id : "",
+                            "schoolTeacherId": teacher_authority == "School" ? teacher_id : ""
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.isSuccess) {
+                            layer.msg('创建成功', { time: 1000 })
+                            setTimeout(function finish_publish_fun() {
+                                window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + parseInt(res.practiceTrainingId);
+                            }, 1500);
+                        }
+                        else {
+                            layer.msg('创建失败',{time:1000})
+                        }
+                    },
+                    error: function (res) {
+                        console.log("error");
+                        console.log(res);
+                    }
+                });
+
                 return false;
             });
 
+            //选择时间
             laydate.render({
                 elem: '#pt_start_data'
             });
-
             laydate.render({
                 elem: '#pt_end_data'
             });

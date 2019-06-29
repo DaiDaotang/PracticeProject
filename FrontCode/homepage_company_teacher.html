@@ -43,7 +43,7 @@
         <img id="head_img" style="width:150px; height:150px; position:absolute; left: 210px; top: 190px; border-radius: 75px;" />
 
         <div style="background-color:#c9c9c9; width: auto; height: 230px; margin-top: 50px; border-top-left-radius: 30px; border-top-right-radius: 30px;">
-                        
+
             <div id="information" style="position:absolute; left: 420px; top: 190px; width:auto">
                 <span id="username" style="font-size:45px; text-align:left; width:400px; font-family:FangSong;"></span>
                 <span id="gender" style="font-size:40px;"></span>
@@ -148,6 +148,9 @@
     <button style="background:none; border:none; width: auto; height: auto; position:fixed; right: 50px; bottom:50px;" id="turntop">
         <i class="layui-icon layui-icon-top" style="font-size: 70px; color: #000;"></i>
     </button>
+    <button class="layui-btn" style="width: auto; height: auto; position:fixed; right: 50px; bottom:150px;" id="create_new_pt">
+        <i class="layui-icon layui-icon-add-1"></i>
+    </button>
 
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
@@ -187,7 +190,8 @@
             , GetCompanyTeacherInfoURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
             , GetCompanyNameURL = "http://localhost:8080/GetCompanyInformationServlet"
             , GetPTItemInChargeNowURL = ""
-            , GetPTItemInChargeBeforeURL = "";
+            , GetPTItemInChargeBeforeURL = ""
+            , CreateNewPTURL = "teacher_publish_pt.html";
 
         //测试变量
         var test_style = "1px solid #000";
@@ -214,6 +218,11 @@
             //监听置顶
             $(document).on('click', '#turntop', function () {
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
+            });
+
+            //监听创建新实训
+            $(document).on('click', '#create_new_pt', function () {
+                window.open(CreateNewPTURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_company_id=" + target_company_id);
             });
 
             //获取信息
@@ -250,6 +259,10 @@
                             console.log(res);
                             target_company_name = res.resData.name
                             document.getElementById("company_name").innerText = target_company_name;
+
+                            if (target_id != user_id || target_authority != user_authority) {
+                                document.getElementById("create_new_pt").style.display = "none";
+                            }
                         },
                         error: function (res) {
                             console.log("获取公司名称失败");

@@ -148,6 +148,9 @@
     <button style="background:none; border:none; width: auto; height: auto; position:fixed; right: 50px; bottom:50px;" id="turntop">
         <i class="layui-icon layui-icon-top" style="font-size: 70px; color: #000;"></i>
     </button>
+    <button class="layui-btn" style="width: auto; height: auto; position:fixed; right: 50px; bottom:150px;" id="create_new_pt">
+        <i class="layui-icon layui-icon-add-1"></i>
+    </button>
 
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
@@ -183,7 +186,8 @@
         var QuitURL = "login.html"
             , ChangeInfoURL = "login.html"
             , SafetyURL = "safety_info.html"
-            , GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet";
+            , GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
+            , CreateNewPTURL = "teacher_publish_pt.html";
 
         //测试变量
         var test_style = "1px solid #000";
@@ -212,6 +216,11 @@
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
             });
 
+            //监听创建新实训                       //////////
+            $(document).on('click', '#create_new_pt', function () {
+                window.open(CreateNewPTURLCreateNewPTURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_school_id=" + target_school_id);
+                });
+
             //获取信息
             $.ajax({
                 type: "POST",
@@ -230,6 +239,10 @@
                         , target_head = res.resData.head;
                     document.getElementById("head_img").src = hd_img;
                     document.getElementById("head_img").style.border = "1px solid #6e7474";
+
+                    if (target_id != user_id || target_authority != user_authority) {
+                        document.getElementById("create_new_pt").style.display = "none";
+                    }
 
                     document.getElementById("username").innerText = target_name;
                     document.getElementById("gender").innerHTML = target_gender == "男" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
