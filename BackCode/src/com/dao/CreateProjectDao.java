@@ -42,13 +42,18 @@ public class CreateProjectDao {
                 state2.setInt(2, teacher);
                 state2.executeUpdate();
 
-                String sql3 = "INSERT INTO pracctrelation VALUES (?,?,?)";
-                PreparedStatement state3;
-                state3 = conn.prepareStatement(sql3);
-                state3.setInt(1,bean.getPracticeId());
-                state3.setInt(2,teacher);
-                state3.setBoolean(3,false);
-                state3.executeUpdate();
+                try{
+                    String sql3 = "INSERT ignore INTO pracctrelation VALUES (?,?,?)";
+                    PreparedStatement state3;
+                    state3 = conn.prepareStatement(sql3);
+                    state3.setInt(1,bean.getPracticeId());
+                    state3.setInt(2,teacher);
+                    state3.setBoolean(3,false);
+                    state3.executeUpdate();
+                }
+                catch (Exception e){
+
+                }
             }
             conn.commit();
             return id;
@@ -61,6 +66,7 @@ public class CreateProjectDao {
         } finally {
             DBConn.closeConn(conn);
         }
+
         return 0;
     }
 
