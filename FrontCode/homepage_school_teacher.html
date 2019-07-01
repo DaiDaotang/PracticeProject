@@ -27,7 +27,7 @@
 
     <ul class="layui-nav" style="position:fixed; width:100%; right:0px;">
         <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
-            <a href="javascript:;" style="font-size:28px;"><img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
+            <a href="javascript:;" style="font-size:28px;"><img id="user_hd_img" src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
             <dl class="layui-nav-child">
                 <dd><a id="my_homepage_a" href="">我的主页</a></dd>
                 <dd><a id="change_info_a" href="">修改信息</a></dd>
@@ -40,7 +40,7 @@
     <ins class="adsbygoogle" style="display:inline-block;width:970px;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
 
     <div style="width: auto; height: 100%; margin: 0 150px 80px 150px;">
-        <img id="head_img" style="width:150px; height:150px; position:absolute; left: 210px; top: 190px; border-radius: 75px;" />
+        <img id="target_hd_img" style="width:150px; height:150px; position:absolute; left: 210px; top: 190px; border-radius: 75px;" />
 
         <div style="background-color:#c9c9c9; width: auto; height: 230px; margin-top: 50px; border-top-left-radius: 30px; border-top-right-radius: 30px;">
 
@@ -187,7 +187,13 @@
             , ChangeInfoURL = "login.html"
             , SafetyURL = "safety_info.html"
             , GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
-            , CreateNewPTURL = "teacher_publish_pt.html";
+            , CreateNewPTURL = "teacher_publish_pt.html"
+            , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
+            , GetCompanyTeacherServletURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
+            , GetSchoolTeacherServletURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
+            , GetCompanyServletURL = "http://localhost:8080/GetCompanyInformationServlet"
+            , GetAnyUserServlet = ""
+            , GetHeadImgURL = "http://localhost:8080/DownloadServlet?head=";
 
         //测试变量
         var test_style = "1px solid #000";
@@ -221,6 +227,37 @@
                 window.open(CreateNewPTURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_school_id=" + target_school_id);
                 });
 
+            //获取本人信息
+            switch (user_authority) {
+                case "Student":
+                    GetAnyUserServlet = GetStudentServletURL;
+                    break;
+                case "Teacher":
+                    GetAnyUserServlet = GetCompanyTeacherServletURL
+                    break;
+                case "School":
+                    GetAnyUserServlet = GetSchoolTeacherServletURL
+                    break;
+                case "Company":
+                    GetAnyUserServlet = GetCompanyServletURL
+                    break;
+            }
+            $.ajax({
+                type: "POST",
+                url: GetAnyUserServlet,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": user_id
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    user_hd_img = res.resData.head ? res.resData.head : "";
+                    document.getElementById("user_hd_img").src = (user_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + user_hd_img);
+                },
+            });
+
             //获取信息
             $.ajax({
                 type: "POST",
@@ -236,9 +273,9 @@
                     target_name = res.resData.name
                         , target_gender = res.resData.sex
                         , target_school_name = res.resData.schoolName
-                        , target_head = res.resData.head;
-                    document.getElementById("head_img").src = hd_img;
-                    document.getElementById("head_img").style.border = "1px solid #6e7474";
+                        , target_hd_img = res.resData.head ? res.resData.head : "";
+                    document.getElementById("target_hd_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+                    document.getElementById("target_hd_img").style.border = "1px solid #6e7474";
 
                     if (target_id != user_id || target_authority != user_authority) {
                         document.getElementById("create_new_pt").style.display = "none";

@@ -216,6 +216,10 @@
             , CreateGroupURL = "student_create_team.html"
             , WriteDiaryURL = "login.html"
             , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
+            , GetCompanyTeacherServletURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
+            , GetSchoolTeacherServletURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
+            , GetCompanyServletURL = "http://localhost:8080/GetCompanyInformationServlet"
+            , GetAnyUserServlet = ""
             , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
             , CheckInOutURL = "http://localhost:8080/SigninServlet"
             , GetPTInfoURL = "http://localhost:8080/GetPracticeByStudentIdServlet"
@@ -356,6 +360,37 @@
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
             });
 
+            //获取本人信息
+            switch (user_authority) {
+                case "Student":
+                    GetAnyUserServlet = GetStudentServletURL;
+                    break;
+                case "Teacher":
+                    GetAnyUserServlet = GetCompanyTeacherServletURL
+                    break;
+                case "School":
+                    GetAnyUserServlet = GetSchoolTeacherServletURL
+                    break;
+                case "Company":
+                    GetAnyUserServlet = GetCompanyServletURL
+                    break;
+            }
+            $.ajax({
+                type: "POST",
+                url: GetAnyUserServlet,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": user_id
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    user_hd_img = res.resData.head ? res.resData.head : "";
+                    document.getElementById("user_hd_img").src = (user_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + user_hd_img);
+                },
+            });
+
             //获取信息
             $.ajax({
                 type: "POST",
@@ -374,7 +409,6 @@
                         , target_grade = res.resData.grade
                         , target_major = res.resData.major
                         , target_hd_img = res.resData.head ? res.resData.head : "";
-                    //target_hd_img = "./img/defaultHead.jpg";
 
                     //设置实训
                     $.ajax({
@@ -501,8 +535,6 @@
                     document.getElementById("grade").innerText += target_grade;
                     document.getElementById("major").href = "https://baike.baidu.com/item/" + major;
                     document.getElementById("school_a").href = "https://baike.baidu.com/item/" + target_school_name;
-
-                    document.getElementById("user_hd_img").src = user_hd_img;
                 },
                 error: function (res) {
                     console.log("获取用户基本信息失败");

@@ -103,9 +103,11 @@
         //修改默认学校/公司
         if (teacher_authority == "Teacher") {
             teacher_company_id = parseInt(t_param[`user_company_id`]);
+            document.getElementById("pt_company").disabled = "disabled";
         }
         else if (teacher_authority == "School") {
             teacher_school_id = parseInt(t_param[`user_school_id`])
+            document.getElementById("pt_school").disabled = "disabled";
         }
 
         //form区

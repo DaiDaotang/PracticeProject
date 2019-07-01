@@ -20,7 +20,7 @@
 
     <div style="height:360px; margin: 0 auto 0 auto; text-align : center;">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 80px; margin-bottom: 50px;">
-            <legend style="font-size:32px;">登陆</legend>
+            <legend style="font-size:32px;">登录</legend>
         </fieldset>
         <form class="layui-form" action="" lay-filter="login_info">
             <div class="layui-form-item" id="telephone-div" style="margin: 0 auto 15px auto; position:relative; right: 40px;">
@@ -95,10 +95,9 @@
                         }),
                         dataType: "json",
                         success: function (res) {
-                            console.log(res);
                             if (res.isSuccess) {
                                 console.log(res)
-                                layer.msg('登陆成功', { time: 1500 })
+                                layer.msg('登录成功', { time: 1500 })
                                 switch (res.resData.authority) {
                                     case "Student":
                                         setTimeout(function sign_up_fun() { window.location.href = "homepage_student.html?user_id=" + res.resData.resId + "&user_authority=Student&target_id=" + res.resData.resId + "&target_authority=Student"; }, 1000);
@@ -115,7 +114,7 @@
                                 }
                             }
                             else {
-                                layer.msg('手机号/密码错误', { time: 1500 })
+                                layer.msg(res.message, { time: 1500 })
                             }
                         }
                     });
