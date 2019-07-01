@@ -13,6 +13,7 @@
             background-color: #1E9FFF;
             color: #d4dadb
         }
+
         .layui-table-cell .layui-rate {
             padding: 0 5px;
         }
@@ -106,7 +107,7 @@
     <script type="text/html" id="toolbar_company_teacher">
         <div>企业老师</div>
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addCompanyTeacher" style=" margin:5px; position:relative; left:550px; display:none;" >添加企业老师</button>
+            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addCompanyTeacher" style=" margin:5px; position:relative; left:550px; display:none;">添加企业老师</button>
         </div>
     </script>
     <script>
@@ -176,6 +177,7 @@
             , AddCompanyTeacherURL = "teacher_add_pt_teacher.html?authority=CompanyTeacher&companyId=" + pt_company_id
             , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority=SchoolTeacher";
 
+        var $ = layui.jquery;
         //表格
         var param_item_existed = function (res) {
             return {
@@ -209,10 +211,10 @@
                             return '<div id="star_' + d.id + '"></div>'
                         }
                     }
-                    , { field: 'introduce', title: '项目概述', event: 'lookIntroDetail'}
-                    , { field: 'baseContent', title: '基本功能', hide: true, event: 'lookBaseDetail'}
-                    , { field: 'extendContent', title: '扩展功能', hide: true, event: 'lookExtendDetail'}
-                    , { field: 'advanceContent', title: '高级功能', hide: true, event: 'lookAdvanceDetail'}
+                    , { field: 'introduce', title: '项目概述', event: 'lookIntroDetail' }
+                    , { field: 'baseContent', title: '基本功能', hide: true, event: 'lookBaseDetail' }
+                    , { field: 'extendContent', title: '扩展功能', hide: true, event: 'lookExtendDetail' }
+                    , { field: 'advanceContent', title: '高级功能', hide: true, event: 'lookAdvanceDetail' }
                     , {
                         field: 'teachers', title: '负责老师', templet: function (d) {
                             return '<div id="companyTeacher_' + d.id + '"></div>';
@@ -292,24 +294,52 @@
                         , { field: 'sex', width: 100, title: '性别' }
                         , {
                             field: 'projectInCharge', title: '负责项目', templet: function (d) {
-                                return '<div id="projectInCharge_' + d.companyTeacherId + '"></div>'
-                            }
+                                return '<div id="projectInCharge_' + d.id + '"></div>'
+                            }, event: 'lookProjectInChargeDetail'
                         }
                         , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
                     ]]
                     , done: function (res) {
                         console.log(res.data)
                         console.log(res)
-                        console.log(res.resData)
+
+                        //为每个老师添加负责项目
                         for (var i = 0; i < res.data.length; i++) {
                             console.log(res.data)
                             console.log(res)
-                            console.log(res.resData)
-                            //var temptemp = ""
-                            //for (var j = 0; j < res.data[i].projectInCharge.length; j++) {
-                            //    temptemp += res.data[i].projectInCharge[j].projectName + ' ';
-                            //}
-                            //document.getElementById('projectInCharge_' + res.data[i].companyTeacherId).innerText = temptemp;
+                            console.log("+++++++++++++++++++++++++++++")
+                            //console.log(res.resData)
+                            //获取每个老师负责的项目
+                            layui.use("jquery", function () {
+                                var $ = layui.jquery
+                                $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost:8080/GetProjectByCompanyTeacherIdServlet",
+                                    async: true,
+                                    data: JSON.stringify({
+                                        "reqId": "",
+                                        "reqParam": {
+                                            "id": res.data[i].id,
+                                            "practice": pt_id
+                                        }
+                                    }),
+                                    dataType: "json",
+                                    success: function (res0) {
+                                        console.log(res0);
+                                        var temptemp = res0.resData[0].name
+                                        for (var i = 1; i < res0.resData.length; i++) {
+                                            temptemp += "...\n" + res0.resData[i].name;
+                                        }
+                                        document.getElementById('projectInCharge_' + res.data[i].id).innerText = temptemp;
+                                    },
+                                    error: function (res0) {
+                                        console.log("error");
+                                        console.log(res0);
+                                    }
+                                });
+
+
+                            })
                         }
                     }
                 }
@@ -324,6 +354,7 @@
                 , $ = layui.jquery
                 , layer = layui.layer;
 
+            //获取实训信息
             $.ajax({
                 type: "POST",
                 url: GetPTInfoURL,
@@ -350,7 +381,12 @@
                     console.log(res);
                 }
             });
+
+            //获取老师负责项目
+            function getCTProject() {
+            }
         });
+
 
         //element区
         layui.use('element', function () {
@@ -446,7 +482,7 @@
                                     });
                                 }
                             }
-                        }); 
+                        });
                         break;
                 };
             });
@@ -574,7 +610,7 @@
                     layer.open({
                         type: 1
                         , title: '详情'
-                        , area:['500px', '500px']
+                        , area: ['500px', '500px']
                         , id: 'layerDemo'//防止重复弹出
                         , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.introduce + '</pre></div>'
                         , btn: '确定'
@@ -589,7 +625,7 @@
                     layer.open({
                         type: 1
                         , title: '详情'
-                        , area:['500px', '500px']
+                        , area: ['500px', '500px']
                         , id: 'layerDemo'//防止重复弹出
                         , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.baseContent + '</pre></div>'
                         , btn: '确定'
@@ -604,7 +640,7 @@
                     layer.open({
                         type: 1
                         , title: '详情'
-                        , area:['500px', '500px']
+                        , area: ['500px', '500px']
                         , id: 'layerDemo'//防止重复弹出
                         , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.extendContent + '</pre></div>'
                         , btn: '确定'
@@ -619,7 +655,7 @@
                     layer.open({
                         type: 1
                         , title: '详情'
-                        , area:['500px', '500px']
+                        , area: ['500px', '500px']
                         , id: 'layerDemo'//防止重复弹出
                         , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.advanceContent + '</pre></div>'
                         , btn: '确定'
@@ -656,7 +692,7 @@
                 var data = obj.data; //获得当前行数据
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 var tr = obj.tr; //获得当前行 tr 的DOM对象
-
+                console.log(data)
                 if (layEvent === 'detail') { //查看
                     console.log("detail")
                     console.log(data.companyTeacherId);
@@ -672,6 +708,21 @@
 
                         table.render(param_item_existed);
                     });
+                }
+                else if (layEvent === 'lookProjectInChargeDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 60px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + document.getElementById("projectInCharge_" + data.id).innerText + '</pre></div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
+
                 }
             });
 
