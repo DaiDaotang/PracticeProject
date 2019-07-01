@@ -305,40 +305,17 @@
                         for (var i = 0; i < res.data.length; i++) {
                             var dataTemp = res.data[i]
                             console.log(dataTemp.id)
+                            var temptemp = dataTemp.projects[0].name;
+                            for (var j = 1; j < dataTemp.projects.length; j++) {
+                                temptemp += "...\n";
+                                temptemp += dataTemp.projects[j].name;
+                            }
+                            document.getElementById("projectInCharge_" + dataTemp.id).innerText = temptemp;
                             //console.log(res.data[i])
                             //console.log(res)
                             //console.log(res.resData)
                             //获取每个老师负责的项目
-                            layui.use("jquery", function () {
-                                var $ = layui.jquery
-                                $.ajax({
-                                    type: "POST",
-                                    url: "http://localhost:8080/GetProjectByCompanyTeacherIdServlet",
-                                    async: true,
-                                    data: JSON.stringify({
-                                        "reqId": "",
-                                        "reqParam": {
-                                            "id": res.data[i].id,
-                                            "practice": pt_id
-                                        }
-                                    }),
-                                    dataType: "json",
-                                    success: function (res0) {
-                                        console.log(res0);
-                                        console.log(dataTemp)
-                                        var temptemp = res0.resData[0].name
-                                        for (var j = 1; j < res0.resData.length; j++) {
-                                            temptemp += "...\n" + res0.resData[j].name;
-                                        }
-                                        console.log(dataTemp.id)
-                                        document.getElementById('projectInCharge_' + dataTemp.id).innerText = temptemp;
-                                    },
-                                    error: function (res0) {
-                                        console.log("error");
-                                        console.log(res0);
-                                    }
-                                });
-                            })
+                            
                         }
                     }
                 }
