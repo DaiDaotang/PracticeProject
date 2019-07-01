@@ -1,0 +1,34 @@
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/ModifyTeamInformationServlet",
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "teamId":5,
+                "teamName":"王者四缺一队",
+                "githubLink":"www.baiduaaa.com",
+                "projectId":17
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        },
+        error:function(res){
+            console.log("error");
+            console.log(res);
+        }
+    });
+</script>
+</html>

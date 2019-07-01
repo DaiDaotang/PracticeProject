@@ -290,4 +290,13 @@
         <servlet-name>DeleteProjectServlet</servlet-name>
         <url-pattern>/DeleteProjectServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifyTeamInformationServlet</servlet-name>
+        <servlet-class>com.servlet.ModifyTeamInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifyTeamInformationServlet</servlet-name>
+        <url-pattern>/ModifyTeamInformationServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
