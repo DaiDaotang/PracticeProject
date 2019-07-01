@@ -41,9 +41,15 @@ public class LoginServlet extends HttpServlet {
                 resBean.setSuccess(false);
             }
             else {
-                resBean.setResId(reqBean.getReqId());
-                resBean.setSuccess(true);
-                resBean.setResData(loginbean);
+                if(resBean.getMessage()==null){
+                    resBean.setResId(reqBean.getReqId());
+                    resBean.setSuccess(true);
+                    resBean.setResData(loginbean);
+                }else {
+                    resBean.setResId(reqBean.getReqId());
+                    resBean.setSuccess(false);
+                    resBean.setResData(loginbean);
+                }
             }
             //识别ResponseBean<LoginBean>类的结构
             Type respType = new TypeToken<ResponseBean<LoginBean>>(){}.getType();

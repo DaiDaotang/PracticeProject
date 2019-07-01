@@ -33,7 +33,6 @@ public class LoginDao {
                         int id = resultSet.getInt(2);
                         newbean.setresId(id);
                         newbean.setAuthority(authority);
-                        newbean.setMessage("登陆成功！");
                         return newbean;
                     }else {
                         newbean.setMessage("密码错误！");
@@ -52,7 +51,6 @@ public class LoginDao {
                         int id = resultSet.getInt(2);
                         newbean.setresId(id);
                         newbean.setAuthority(authority);
-                        newbean.setMessage("登陆成功！");
                         return newbean;
                     }else {
                         newbean.setMessage("密码错误！");
