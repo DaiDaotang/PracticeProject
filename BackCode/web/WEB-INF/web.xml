@@ -299,4 +299,13 @@
         <servlet-name>ModifyTeamInformationServlet</servlet-name>
         <url-pattern>/ModifyTeamInformationServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteStudentFromTeamServlet</servlet-name>
+        <servlet-class>com.servlet.DeleteStudentFromTeamServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteStudentFromTeamServlet</servlet-name>
+        <url-pattern>/DeleteStudentFromTeamServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
