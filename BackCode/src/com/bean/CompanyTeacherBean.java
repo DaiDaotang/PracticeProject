@@ -8,6 +8,7 @@ public class CompanyTeacherBean {
     private String sex;
     private int company;
     private String head;
+    private int practice;
 
     public String getTelephone() {
         return telephone;
@@ -63,5 +64,13 @@ public class CompanyTeacherBean {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getPractice() {
+        return practice;
+    }
+
+    public void setPractice(int practice) {
+        this.practice = practice;
     }
 }
