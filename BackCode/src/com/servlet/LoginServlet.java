@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
                 resBean.setSuccess(false);
             }
             else {
-                if(resBean.getMessage()==null){
+                if(loginbean.getMessage()==null){
                     resBean.setResId(reqBean.getReqId());
                     resBean.setSuccess(true);
                     resBean.setResData(loginbean);
