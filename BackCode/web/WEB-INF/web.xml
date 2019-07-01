@@ -290,4 +290,13 @@
         <servlet-name>GetProjectByCompanyTeacherIdServlet</servlet-name>
         <url-pattern>/GetProjectByCompanyTeacherIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteProjectServlet</servlet-name>
+        <servlet-class>com.servlet.DeleteProjectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteProjectServlet</servlet-name>
+        <url-pattern>/DeleteProjectServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
