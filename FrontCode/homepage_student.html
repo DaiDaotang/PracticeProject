@@ -423,15 +423,40 @@
                         success: function (res) {
                             console.log(res);
                             var temp = ""
-                            target_pt_id = res.resData[0].id;
                             for (var i = 0; i < res.resData.length; i++) {
                                 temp += "<option value=" + res.resData[i].id + ">" + res.resData[i].name + "</option>";
                             }
                             document.getElementById("student_pt").innerHTML += temp;
                             form.render('select')
-                            form.val('student_pt', {
-                                "student_pt": target_pt_id
-                            })
+
+                            //获取参加的最新的实训和组队信息
+                            $.ajax({
+                                type: "POST",
+                                url: "http://localhost:8080/StudentCheckTeamServlet",
+                                async: true,
+                                data: JSON.stringify({
+                                    "reqId": "111",
+                                    "reqParam": {
+                                        "id": target_id,
+                                        "practiceId": -1
+                                    }
+                                }),
+                                dataType: "json",
+                                success: function (res) {
+                                    target_pt_id = res.resData.practiceId
+                                    form.val('student_pt', {
+                                        "student_pt": target_pt_id
+                                    })
+                                    form.render('select')
+
+                                    console.log(res);
+                                },
+                                error: function (res) {
+                                    console.log("error");
+                                    console.log(res);
+                                }
+                            });
+                            //显示团队信息
                             $.ajax({
                                 type: "POST",
                                 url: GetStudentTeamURL,
@@ -525,7 +550,7 @@
                     document.getElementById("item_name").innerText = "暂无";
                     document.getElementById("item_a").href = "javascript:return false;";
                     document.getElementById("group_a").href = "javascript:return false;";
-                    document.getElementById("target_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" :GetHeadImgURL + target_hd_img);
+                    document.getElementById("target_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
                     document.getElementById("target_head_img").style.border = "1px solid #6e7474";
 
                     document.getElementById("username").innerText = target_name;

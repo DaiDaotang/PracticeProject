@@ -16,7 +16,7 @@ public class AddSchoolTeacherToPracticeDao {
             ArrayList<Integer> teachers = practiceBean.getSchoolTeachers();
             for (Integer teacher : teachers) {
                 conn.setAutoCommit(false);
-                String sql2 = "INSERT INTO pracstrelation VALUES (?,?,?)";
+                String sql2 = "INSERT IGNORE INTO pracstrelation VALUES (?,?,?)";
                 PreparedStatement state2;
                 state2 = conn.prepareStatement(sql2);
                 state2.setInt(1, practiceBean.getId());

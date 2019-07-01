@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 29/06/2019 20:42:13
+ Date: 01/07/2019 11:57:34
 */
 
 SET NAMES utf8mb4;
@@ -32,15 +32,6 @@ CREATE TABLE `company`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of company
--- ----------------------------
-INSERT INTO `company` VALUES (1, '789789789', '12345687', '好公司', 'b549cd34-4fb3-47e9-a258-2b338d17fcb3.jpg');
-INSERT INTO `company` VALUES (9, '879789789', '45645645', '不好公司', NULL);
-INSERT INTO `company` VALUES (10, '15035749969', '46456456', '健身房的', NULL);
-INSERT INTO `company` VALUES (11, '12478945611', '123456', '阀手动', NULL);
-INSERT INTO `company` VALUES (12, '12347778989', '123456', '的说法为', NULL);
-
--- ----------------------------
 -- Table structure for companyteacher
 -- ----------------------------
 DROP TABLE IF EXISTS `companyteacher`;
@@ -56,14 +47,7 @@ CREATE TABLE `companyteacher`  (
   UNIQUE INDEX `tel_UNIQUE`(`teacherPhone`) USING BTREE,
   INDEX `companyTeacherCompanyID`(`companyId`) USING BTREE,
   CONSTRAINT `companyTeacherCompanyID` FOREIGN KEY (`companyId`) REFERENCES `company` (`companyid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of companyteacher
--- ----------------------------
-INSERT INTO `companyteacher` VALUES (1, '789789789', '12345687', '好老师', '女', '83ebbd8c-c6a1-486d-9b3d-916b6744554a.jpg', 1);
-INSERT INTO `companyteacher` VALUES (15, '12345678988', '123456', '123', '男', NULL, 9);
-INSERT INTO `companyteacher` VALUES (19, '12345678989', '123456', '范文芳', '男', NULL, 9);
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for pracctrelation
@@ -80,14 +64,6 @@ CREATE TABLE `pracctrelation`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of pracctrelation
--- ----------------------------
-INSERT INTO `pracctrelation` VALUES (14, 15, '1');
-INSERT INTO `pracctrelation` VALUES (15, 15, '1');
-INSERT INTO `pracctrelation` VALUES (16, 15, '1');
-INSERT INTO `pracctrelation` VALUES (17, 15, '1');
-
--- ----------------------------
 -- Table structure for pracstrelation
 -- ----------------------------
 DROP TABLE IF EXISTS `pracstrelation`;
@@ -100,11 +76,6 @@ CREATE TABLE `pracstrelation`  (
   CONSTRAINT `pracstPracticeId` FOREIGN KEY (`practiceId`) REFERENCES `practice` (`practiceid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `pracstTeacherId` FOREIGN KEY (`schoolTeacherId`) REFERENCES `schoolteacher` (`schoolteacherid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of pracstrelation
--- ----------------------------
-INSERT INTO `pracstrelation` VALUES (13, 2, '1');
 
 -- ----------------------------
 -- Table structure for practice
@@ -120,25 +91,7 @@ CREATE TABLE `practice`  (
   PRIMARY KEY (`practiceId`) USING BTREE,
   INDEX `practiecId`(`practiceId`) USING BTREE,
   INDEX `practiecId_2`(`practiceId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of practice
--- ----------------------------
-INSERT INTO `practice` VALUES (4, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2019-06-30', '2019-08-03', '武汉大学模板20190628-17-42-14.doc');
-INSERT INTO `practice` VALUES (5, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2019-06-30', '2019-07-07', NULL);
-INSERT INTO `practice` VALUES (6, '2017实训sdfasdf', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2019-06-26', '2019-07-28', NULL);
-INSERT INTO `practice` VALUES (7, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (8, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (9, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (10, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (11, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (12, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (13, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (14, '2017实训', '我法术等级分厘卡积分哦i我激烈是链接发啦上看见分厘卡十分到家啦十九分', '2017-05-09', '2017-05-09', NULL);
-INSERT INTO `practice` VALUES (15, '2017实训', '每天打王者', '2019-07-12', '2019-07-18', NULL);
-INSERT INTO `practice` VALUES (16, '2017实训', '每天打王者', '2019-07-12', '2019-07-18', NULL);
-INSERT INTO `practice` VALUES (17, '2017实训', '每天打王者', '2019-07-12', '2019-07-18', NULL);
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for project
@@ -161,15 +114,6 @@ CREATE TABLE `project`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of project
--- ----------------------------
-INSERT INTO `project` VALUES (2, '实训平台开发', '数据分析', 5, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, NULL, 4);
-INSERT INTO `project` VALUES (3, '实训平台开发', '数据分析', 8, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `project` VALUES (4, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `project` VALUES (5, '实训平台开发', '数据分析', 6, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-INSERT INTO `project` VALUES (14, '实训平台开发', '数据分析', 4, '开发一个实训平台', '开发开发开发一个实训平台噢噢噢噢', NULL, '人脸识别', 4);
-
--- ----------------------------
 -- Table structure for projtrelation
 -- ----------------------------
 DROP TABLE IF EXISTS `projtrelation`;
@@ -181,16 +125,6 @@ CREATE TABLE `projtrelation`  (
   CONSTRAINT `projtProjectId` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `projtTeacherId` FOREIGN KEY (`companyTeacherId`) REFERENCES `companyteacher` (`teacherid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of projtrelation
--- ----------------------------
-INSERT INTO `projtrelation` VALUES (2, 1);
-INSERT INTO `projtrelation` VALUES (14, 1);
-INSERT INTO `projtrelation` VALUES (2, 15);
-INSERT INTO `projtrelation` VALUES (14, 15);
-INSERT INTO `projtrelation` VALUES (4, 19);
-INSERT INTO `projtrelation` VALUES (14, 19);
 
 -- ----------------------------
 -- Table structure for pscrelation
@@ -209,24 +143,6 @@ CREATE TABLE `pscrelation`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of pscrelation
--- ----------------------------
-INSERT INTO `pscrelation` VALUES (4, 1, 1);
-INSERT INTO `pscrelation` VALUES (5, 1, 1);
-INSERT INTO `pscrelation` VALUES (6, 1, 1);
-INSERT INTO `pscrelation` VALUES (7, 1, 1);
-INSERT INTO `pscrelation` VALUES (8, 1, 1);
-INSERT INTO `pscrelation` VALUES (9, 1, 1);
-INSERT INTO `pscrelation` VALUES (10, 1, 1);
-INSERT INTO `pscrelation` VALUES (11, 1, 1);
-INSERT INTO `pscrelation` VALUES (12, 1, 1);
-INSERT INTO `pscrelation` VALUES (13, 1, 1);
-INSERT INTO `pscrelation` VALUES (14, 1, 1);
-INSERT INTO `pscrelation` VALUES (15, 1, 1);
-INSERT INTO `pscrelation` VALUES (16, 1, 1);
-INSERT INTO `pscrelation` VALUES (17, 1, 1);
-
--- ----------------------------
 -- Table structure for school
 -- ----------------------------
 DROP TABLE IF EXISTS `school`;
@@ -240,13 +156,6 @@ CREATE TABLE `school`  (
   INDEX `schoolId_3`(`schoolId`) USING BTREE,
   INDEX `schoolId_4`(`schoolId`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of school
--- ----------------------------
-INSERT INTO `school` VALUES (3, '华中师范大学');
-INSERT INTO `school` VALUES (2, '华中科技大学');
-INSERT INTO `school` VALUES (1, '武汉大学');
 
 -- ----------------------------
 -- Table structure for schoolteacher
@@ -264,19 +173,7 @@ CREATE TABLE `schoolteacher`  (
   UNIQUE INDEX `schoolteacherPhone_UNIQUE`(`schoolteacherPhone`) USING BTREE,
   INDEX `stSchoolId_idx`(`schoolId`) USING BTREE,
   CONSTRAINT `stSchoolId` FOREIGN KEY (`schoolId`) REFERENCES `school` (`schoolid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 84 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of schoolteacher
--- ----------------------------
-INSERT INTO `schoolteacher` VALUES (2, '789789789', '12345687', '好老师', '女', NULL, 1);
-INSERT INTO `schoolteacher` VALUES (3, '15827082200', '123456', '龙哥', '男', NULL, 1);
-INSERT INTO `schoolteacher` VALUES (4, '15827082118', '123456', '戴经理', '男', NULL, 1);
-INSERT INTO `schoolteacher` VALUES (5, '15022225555', 'ccc999', '坏老师', '女', NULL, 2);
-INSERT INTO `schoolteacher` VALUES (29, '15022225556', '123456', '大哥', '男', NULL, 2);
-INSERT INTO `schoolteacher` VALUES (81, '12345678900', '123456', '123', '男', NULL, 3);
-INSERT INTO `schoolteacher` VALUES (82, '17588889999', '456789', '士大夫', '男', NULL, 3);
-INSERT INTO `schoolteacher` VALUES (83, '12347778989', '123456', 'i微软也', '男', '1393a4e6-6654-4149-802b-07d6cb649a71.jpg', 3);
+) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for signin
@@ -291,57 +188,7 @@ CREATE TABLE `signin`  (
   PRIMARY KEY (`signinId`) USING BTREE,
   INDEX `signStudentId_idx`(`studentId`) USING BTREE,
   CONSTRAINT `signStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of signin
--- ----------------------------
-INSERT INTO `signin` VALUES (1, 25, '2017-05-10', '11:59:44', 1);
-INSERT INTO `signin` VALUES (2, 25, '2017-05-10', '11:59:47', 1);
-INSERT INTO `signin` VALUES (3, 25, '2017-05-12', '11:59:50', 0);
-INSERT INTO `signin` VALUES (10, 25, '2019-06-29', '08:33:20', 1);
-INSERT INTO `signin` VALUES (11, 25, '2019-06-29', '15:33:54', 0);
-INSERT INTO `signin` VALUES (13, 25, '2019-06-29', '18:26:03', 1);
-INSERT INTO `signin` VALUES (14, 25, '2019-06-29', '18:26:04', 0);
-INSERT INTO `signin` VALUES (15, 26, '2019-06-29', '18:26:25', 1);
-INSERT INTO `signin` VALUES (16, 26, '2019-06-29', '18:26:27', 0);
-INSERT INTO `signin` VALUES (17, 1, '2019-06-29', '18:34:46', 1);
-INSERT INTO `signin` VALUES (18, 1, '2019-06-29', '18:34:46', 0);
-INSERT INTO `signin` VALUES (19, 1, '2019-06-29', '18:34:47', 1);
-INSERT INTO `signin` VALUES (20, 1, '2019-06-29', '18:34:47', 0);
-INSERT INTO `signin` VALUES (21, 1, '2019-06-29', '18:34:47', 1);
-INSERT INTO `signin` VALUES (22, 1, '2019-06-29', '18:34:47', 0);
-INSERT INTO `signin` VALUES (23, 1, '2019-06-29', '18:34:48', 1);
-INSERT INTO `signin` VALUES (24, 1, '2019-06-29', '18:34:48', 0);
-INSERT INTO `signin` VALUES (25, 1, '2019-06-29', '18:34:48', 1);
-INSERT INTO `signin` VALUES (26, 1, '2019-06-29', '18:34:48', 0);
-INSERT INTO `signin` VALUES (27, 1, '2019-06-29', '18:34:48', 1);
-INSERT INTO `signin` VALUES (28, 1, '2019-06-29', '18:34:48', 0);
-INSERT INTO `signin` VALUES (29, 1, '2019-06-29', '18:34:48', 1);
-INSERT INTO `signin` VALUES (30, 1, '2019-06-29', '18:34:49', 0);
-INSERT INTO `signin` VALUES (31, 1, '2019-06-29', '18:34:49', 1);
-INSERT INTO `signin` VALUES (32, 1, '2019-06-29', '18:34:49', 0);
-INSERT INTO `signin` VALUES (33, 1, '2019-06-29', '18:34:49', 1);
-INSERT INTO `signin` VALUES (34, 1, '2019-06-29', '18:34:49', 0);
-INSERT INTO `signin` VALUES (35, 1, '2019-06-29', '18:34:49', 1);
-INSERT INTO `signin` VALUES (36, 1, '2019-06-29', '18:34:50', 0);
-INSERT INTO `signin` VALUES (37, 1, '2019-06-29', '18:34:50', 1);
-INSERT INTO `signin` VALUES (38, 1, '2019-06-29', '18:34:50', 0);
-INSERT INTO `signin` VALUES (39, 1, '2019-06-29', '18:34:50', 1);
-INSERT INTO `signin` VALUES (40, 1, '2019-06-29', '18:34:50', 0);
-INSERT INTO `signin` VALUES (41, 1, '2019-06-29', '18:34:51', 1);
-INSERT INTO `signin` VALUES (42, 1, '2019-06-29', '18:34:51', 0);
-INSERT INTO `signin` VALUES (43, 1, '2019-06-29', '18:34:51', 1);
-INSERT INTO `signin` VALUES (44, 1, '2019-06-29', '18:34:51', 0);
-INSERT INTO `signin` VALUES (45, 1, '2019-06-29', '18:34:51', 1);
-INSERT INTO `signin` VALUES (46, 1, '2019-06-29', '18:34:51', 0);
-INSERT INTO `signin` VALUES (47, 1, '2019-06-29', '18:34:52', 1);
-INSERT INTO `signin` VALUES (48, 1, '2019-06-29', '18:34:52', 0);
-INSERT INTO `signin` VALUES (49, 1, '2019-06-29', '18:34:52', 1);
-INSERT INTO `signin` VALUES (50, 1, '2019-06-29', '18:34:52', 0);
-INSERT INTO `signin` VALUES (51, 1, '2019-06-29', '18:34:52', 1);
-INSERT INTO `signin` VALUES (52, 1, '2019-06-29', '18:35:07', 0);
-INSERT INTO `signin` VALUES (53, 1, '2019-06-29', '18:35:09', 1);
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for stprelation
@@ -359,12 +206,6 @@ CREATE TABLE `stprelation`  (
   CONSTRAINT `stpStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `stpTeamId` FOREIGN KEY (`teamId`) REFERENCES `team` (`teamid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of stprelation
--- ----------------------------
-INSERT INTO `stprelation` VALUES (1, 4, 14, NULL);
-INSERT INTO `stprelation` VALUES (35, 3, 3, NULL);
 
 -- ----------------------------
 -- Table structure for student
@@ -391,20 +232,7 @@ CREATE TABLE `student`  (
   INDEX `studentId_6`(`studentId`) USING BTREE,
   INDEX `studentId_7`(`studentId`) USING BTREE,
   INDEX `studentId_8`(`studentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of student
--- ----------------------------
-INSERT INTO `student` VALUES (1, '789789789', '12345687', '好学生', 1, '2017302584444', 2017, '计算机学院', '65729546-9699-4861-a5e4-f5df8ad0399c.jpg', '女');
-INSERT INTO `student` VALUES (25, '12345655500', '123456789', '士大夫', 3, '1231654', 2017, '撒旦飞洒', '1393a4e6-6654-4149-802b-07d6cb649a71.jpg', '男');
-INSERT INTO `student` VALUES (26, '45632166600', '123456', '222', 2, '222', 2017, '222', NULL, '男');
-INSERT INTO `student` VALUES (27, '22255588800', '222222', '222', 2, '222', 2017, '222', NULL, '男');
-INSERT INTO `student` VALUES (28, '66688899977', '000000', '第三方', 1, '564654', 2017, '564654654', NULL, '男');
-INSERT INTO `student` VALUES (29, '77755544400', '123456', '萨尔', 3, '98787897897', 2017, '撒旦飞洒', NULL, '男');
-INSERT INTO `student` VALUES (30, '12347778989', '123456', '语文阅', 3, '789456123', 2017, '遥感', NULL, '男');
-INSERT INTO `student` VALUES (34, '78954554555', '123456', '风味儿', 3, '45645', 2017, '456456', 'd4aca98d-28bf-4ca7-8e09-ff7caae9dd17.jpg', '男');
-INSERT INTO `student` VALUES (35, '15035749969', 'cjx991027', '常佳鑫', 1, '2017302580168', 2017, '软件工程', NULL, '男');
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for studentdiary
@@ -421,8 +249,8 @@ CREATE TABLE `studentdiary`  (
   PRIMARY KEY (`studentdiaryId`) USING BTREE,
   INDEX `sdStudentId_idx`(`studentId`) USING BTREE,
   INDEX `sdProjectId`(`projectId`) USING BTREE,
-  CONSTRAINT `sdStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `sdProjectId` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectid`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `sdProjectId` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `sdStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -454,13 +282,7 @@ CREATE TABLE `team`  (
   INDEX `teamCaptainId_idx`(`captainId`) USING BTREE,
   INDEX `teamId`(`teamId`) USING BTREE,
   CONSTRAINT `teamCaptainId` FOREIGN KEY (`captainId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of team
--- ----------------------------
-INSERT INTO `team` VALUES (3, '王者3缺2', 35, NULL, NULL);
-INSERT INTO `team` VALUES (4, '王九二六飞机', 1, NULL, '');
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for teamdiary
