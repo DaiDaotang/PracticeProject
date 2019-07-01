@@ -14,6 +14,7 @@ public class StudentBean {
     private int teamId;
     private String schoolName;
     private int practiceId;
+    private int projectId;
 
     public String getTelephone() {
         return telephone;
@@ -117,5 +118,13 @@ public class StudentBean {
 
     public void setPracticeId(int practiceId) {
         this.practiceId = practiceId;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }

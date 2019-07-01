@@ -2,6 +2,7 @@ package com.servlet;
 
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
+import com.bean.StudentBean;
 import com.bean.TeamBean;
 import com.dao.AddStudentDao;
 import com.google.gson.Gson;
@@ -30,8 +31,8 @@ public class AddStudentServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new Gson();
-        Type requestType = new TypeToken<RequestBean<TeamBean>>(){}.getType();
-        RequestBean<TeamBean> reqBean = gson.fromJson(content,requestType);
+        Type requestType = new TypeToken<RequestBean<StudentBean>>(){}.getType();
+        RequestBean<StudentBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean resBean = new ResponseBean<>();
         try{
             AddStudentDao dao = new AddStudentDao();
@@ -44,7 +45,7 @@ public class AddStudentServlet extends HttpServlet {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
             }
-            Type respType = new TypeToken<ResponseBean<TeamBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<StudentBean>>(){}.getType();
             out.print(gson.toJson(resBean,respType));
         }catch (Exception e){
             out.print(e.toString());
