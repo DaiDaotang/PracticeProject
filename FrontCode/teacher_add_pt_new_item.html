@@ -65,7 +65,7 @@
             </div>
         </div>
         <div style="text-align:center;">
-            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="new_item_upload" style="font-size:26px; width:130px; border-radius: 20px; margin:20px auto;">Upload</button>
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="new_item_upload" style="font-size:26px; width:130px; border-radius: 20px; margin:20px auto; display:none;">Upload</button>
         </div>
     </form>
 
@@ -103,6 +103,8 @@
         var GetCompanyTeacherURL = "http://localhost:8080/GetCompanyTeacherByCompanyIdServlet"
             , CreateNewProjectURL = "http://localhost:8080/CreateProjectServlet";
         var checked_company_teacher = [];
+
+        window.localStorage.new_item_difficulty = 6
 
         var param_company_teacher = function (res) {
             return {
@@ -181,8 +183,10 @@
                             console.log(res);
                             layer.msg('添加成功', { time: 1000 })
                             setTimeout(function sign_up_fun() {
-                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                                parent.layer.close(index); //再执行关闭
+                                if (parent.layer) {
+                                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                    parent.layer.close(index); //再执行关闭
+                                }
                             }, 1000);
                         }
                     });
@@ -215,12 +219,10 @@
                 console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
                 if (obj.type == "all") {
                     if (obj.checked) {
-                        console.log(pt_company_teacher_id)
                         checked_company_teacher = []
                         for (var i = 0; i < pt_company_teacher_len; i++) {
                             checked_company_teacher.push(pt_company_teacher_id[i])
                         }
-                        console.log(checked_company_teacher)
                     }
                     else {
                         checked_company_teacher = [];
@@ -239,7 +241,8 @@
                         checked_company_teacher.splice(i, 1);
                     }
                 }
-                console.log(checked_company_teacher)
+                window.localStorage.checked_company_teacher = checked_company_teacher;
+                console.log(window.localStorage.checked_company_teacher )
             });
 
             //评分
@@ -266,8 +269,39 @@
                 }
                 , choose: function (value) {
                     difficulty = value * 2;
+                    window.localStorage.new_item_difficulty = value * 2;
                 }
             })
+
+            //监听input
+            document.getElementById('new_item_name').onchange = function () {
+                console.log(document.getElementById('new_item_name').value)
+                window.localStorage.new_item_name = document.getElementById('new_item_name').value
+            };
+            document.getElementById('new_item_type').onchange = function () {
+                console.log(document.getElementById('new_item_type').value)
+                window.localStorage.new_item_type = document.getElementById('new_item_type').value
+            };
+            document.getElementById('new_item_introduce').onchange = function () {
+                console.log(document.getElementById('new_item_introduce').value)
+                window.localStorage.new_item_introduce = document.getElementById('new_item_introduce').value
+            };
+            document.getElementById('new_item_base_content').onchange = function () {
+                console.log(document.getElementById('new_item_base_content').value)
+                window.localStorage.new_item_base_content = document.getElementById('new_item_base_content').value
+            };
+            document.getElementById('new_item_extend_content').onchange = function () {
+                console.log(document.getElementById('new_item_extend_content').value)
+                window.localStorage.new_item_extend_content = document.getElementById('new_item_extend_content').value
+            };
+            document.getElementById('new_item_advance_content').onchange = function () {
+                console.log(document.getElementById('new_item_advance_content').value)
+                window.localStorage.new_item_advance_content = document.getElementById('new_item_advance_content').value
+            };
+            document.getElementById('new_item_name').onchange = function () {
+                console.log(document.getElementById('new_item_name').value)
+                window.localStorage.new_item_name = document.getElementById('new_item_name').value
+            };
         });
     </script>
 </body>

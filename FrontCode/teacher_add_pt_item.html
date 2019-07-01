@@ -106,7 +106,7 @@
     <script type="text/html" id="toolbar_company_teacher">
         <div>企业老师</div>
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addCompanyTeacher" style=" margin:5px; position:relative; left:550px;">添加企业老师</button>
+            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addCompanyTeacher" style=" margin:5px; position:relative; left:550px; display:none;" >添加企业老师</button>
         </div>
     </script>
     <script>
@@ -209,16 +209,16 @@
                             return '<div id="star_' + d.id + '"></div>'
                         }
                     }
-                    , { field: 'introduce', title: '项目概述' }
-                    , { field: 'baseContent', title: '基本功能', hide: true }
-                    , { field: 'extendContent', title: '扩展功能', hide: true }
-                    , { field: 'advanceContent', title: '高级功能', hide: true }
+                    , { field: 'introduce', title: '项目概述', event: 'lookIntroDetail'}
+                    , { field: 'baseContent', title: '基本功能', hide: true, event: 'lookBaseDetail'}
+                    , { field: 'extendContent', title: '扩展功能', hide: true, event: 'lookExtendDetail'}
+                    , { field: 'advanceContent', title: '高级功能', hide: true, event: 'lookAdvanceDetail'}
                     , {
                         field: 'teachers', title: '负责老师', templet: function (d) {
                             return '<div id="companyTeacher_' + d.id + '"></div>';
                         }
                     }
-                    , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 158 }
+                    , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 160 }
                 ]]
                 , done: function (res) {
                     for (var i = 0; i < res.data.length; i++) {
@@ -364,10 +364,11 @@
         });
 
         //table区
-        layui.use(['form', 'table', 'layer'], function () {
+        layui.use(['form', 'table', 'layer', 'jquery'], function () {
             var table = layui.table
                 , layer = layui.layer
-                , form = layui.form;
+                , form = layui.form
+                , $ = layui.jquery;
 
             //头工具栏事件
             table.on('toolbar(item_table)', function (obj) {
@@ -380,9 +381,62 @@
                             area: ["500px", "500px"],
                             content: AddItemURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id" + user_id,
                             end: function () {
-                                table.render(param_item_existed);
+                                table.render(param_item_existed(1));
+                            },
+                            btn: '添加项目',
+                            btnAlign: 'c', //按钮居中,
+                            yes: function () {
+                                var new_item_name = window.localStorage.new_item_name
+                                    , new_item_type = window.localStorage.new_item_type
+                                    , new_item_difficulty = parseInt(window.localStorage.new_item_difficulty)
+                                    , new_item_introduce = window.localStorage.new_item_introduce
+                                    , new_item_base_content = window.localStorage.new_item_base_content
+                                    , new_item_extend_content = window.localStorage.new_item_extend_content
+                                    , new_item_advance_content = window.localStorage.new_item_advance_content
+                                    , new_item_teachers = [];
+
+                                var temptemptemp = window.localStorage.checked_company_teacher;
+                                var str = temptemptemp.substr(0);
+                                var strs = str.split(",");
+                                for (var i = 0; i < strs.length; i++) {
+                                    new_item_teachers.push(parseInt(strs[i]))
+                                }
+                                console.log(new_item_difficulty)
+
+                                if (new_item_teachers.length == 0) {
+                                    layer.msg("请选择企业老师", { time: 1000 })
+                                }
+                                else {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "http://localhost:8080/CreateProjectServlet",
+                                        async: true,
+                                        data: JSON.stringify({
+                                            "reqId": "",
+                                            "reqParam": {
+                                                "name": new_item_name,
+                                                "type": new_item_type,
+                                                "difficulty": new_item_difficulty,
+                                                "introduce": new_item_introduce,
+                                                "baseContent": new_item_base_content,
+                                                "extendContent": new_item_extend_content,
+                                                "advanceContent": new_item_advance_content,
+                                                "practiceId": pt_id,
+                                                "teachers": new_item_teachers
+                                            }
+                                        }),
+                                        dataType: "json",
+                                        success: function (res) {
+                                            console.log(res);
+                                            layer.msg('添加成功', { time: 1000 })
+                                            setTimeout(function sign_up_fun() {
+                                                layer.closeAll();
+                                            }, 1000);
+                                        }
+                                    });
+                                }
                             }
-                        });
+                        }); 
                         break;
                 };
             });
@@ -464,6 +518,62 @@
                 }
                 else if (layEvent === 'addItem') {
                     console.log("addItem");
+                }
+                else if (layEvent === 'lookIntroDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 100px;">' + data.introduce + '</div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }
+                else if (layEvent === 'lookBaseDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 100px;">' + data.baseContent + '</div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }
+                else if (layEvent === 'lookExtendDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 100px;">' + data.extendContent + '</div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }
+                else if (layEvent === 'lookAdvanceDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 100px;">' + data.advanceContent + '</div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
                 }
             });
             table.on('tool(school_teacher_table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
