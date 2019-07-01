@@ -179,6 +179,7 @@
             , target_name = ""
             , target_gender = ""
             , target_head = ""
+            , target_school_id = -1
             , target_school_name = "";
 
         //console.log("id=" + target_id + " authority=" + t_param[`authority`])
@@ -272,6 +273,7 @@
                     console.log(res);
                     target_name = res.resData.name
                         , target_gender = res.resData.sex
+                        , target_school_id = res.resData.school
                         , target_school_name = res.resData.schoolName
                         , target_hd_img = res.resData.head ? res.resData.head : "";
                     document.getElementById("target_hd_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
