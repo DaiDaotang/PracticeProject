@@ -416,6 +416,18 @@
                                 if (new_item_teachers.length == 0) {
                                     layer.msg("请选择企业老师", { time: 1000 })
                                 }
+                                else if (window.localStorage.new_item_name == "") {
+                                    layer.msg("请填写项目名称", { time: 1000 })
+                                }
+                                else if (window.localStorage.new_item_type == ""){
+                                    layer.msg("请填写项目类型", { time: 1000 })
+                                }
+                                else if (window.localStorage.new_item_introduce == "") {
+                                    layer.msg("请填写项目概述", { time: 1000 })
+                                }
+                                else if (window.localStorage.new_base_content == "") {
+                                    layer.msg("请填写项目简单功能", { time: 1000 })
+                                }
                                 else {
                                     $.ajax({
                                         type: "POST",

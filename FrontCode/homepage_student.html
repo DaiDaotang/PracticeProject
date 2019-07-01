@@ -207,7 +207,7 @@
         //console.log("id=" + target_id + " authority=" + t_param[`authority`])
 
         var CheckRecordURL = "login.html"
-            , GroupURL = "login.html"
+            , GroupURL = "homepage_team.html"
             , ItemURL = "login.html"
             , QuitURL = "login.html"
             , ChangeInfoURL = "login.html"
@@ -274,9 +274,11 @@
                                 , target_item_id = res.resData.projectId
                                 , target_item_name = res.resData.projectName;
                             document.getElementById("group_name").innerText = target_group_name;
-                            document.getElementById("group_a").href = GroupURL;
+                            document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority;
                             document.getElementById("item_name").innerText = target_item_name;
                             document.getElementById("item_a").href = ItemURL;
+                            console.log(document.getElementById("group_a").href)
+
                         } else {              //没团队
                             target_group_id = -1
                                 , target_group_name = ""
@@ -477,7 +479,7 @@
                                             , target_item_id = res.resData.projectId
                                             , target_item_name = res.resData.projectName;
                                         document.getElementById("group_name").innerText = target_group_name;
-                                        document.getElementById("group_a").href = GroupURL;
+                                        document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority;
                                         document.getElementById("item_name").innerText = target_item_name;
                                         document.getElementById("item_a").href = ItemURL;
                                     } else {              //没团队
@@ -630,6 +632,32 @@
         document.getElementById("change_info_a").href = ChangeInfoURL;
         document.getElementById("safety_info_a").href = SafetyURL;
         document.getElementById("quit_a").href = QuitURL;
+    </script>
+    <script type="text/javascript">
+        function submitForm(url, data) {
+            var eleForm = document.body.appendChild(document.createElement('form'));
+            eleForm.action = url;
+            for (var property in data) {
+                var hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = property;
+                hiddenInput.value = data[property];
+                eleForm.appendChild(hiddenInput);
+            }
+            this.eleForm = eleForm;
+            if (!submitForm._initialized) {
+                submitForm.prototype.post = function () {
+                    this.eleForm.method = 'post';
+                    this.eleForm.submit();
+                };
+                submitForm._initialized = true;
+            }
+        }
+
+        function onclick() {
+            //location.href = "/Activity/ActivityInformation?a_id=" + "1"; // Url中会带有参数
+            new submitForm('basic.html', { a_id: "1" }).post(); // Url中的参数被隐藏
+        }
     </script>
 </body>
 </html>

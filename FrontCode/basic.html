@@ -13,14 +13,18 @@
             background-color: #1E9FFF;
             color: #d4dadb
         }
+        .test {
+            border: 1px solid #000;
+        }
     </style>
 </head>
 <body id="body_whole">
 
     <ul class="layui-nav" style="position:fixed; width:100%; right:0px;">
         <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
-            <a href="javascript:;" style="font-size:28px; color:#000; "><img src="./img/defaultHead.jpg" class="layui-nav-img" style="width: 28px; height: 28px;">Me</a>
+            <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
             <dl class="layui-nav-child">
+                <dd><a id="user_homepage_a" href="">我的主页</a></dd>
                 <dd><a id="change_info_a" href="">修改信息</a></dd>
                 <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
                 <dd><a id="quit_a" href="login.html">退出登录</a></dd>
@@ -35,22 +39,74 @@
 
     <script src="layui/layui.js" charset="utf-8"></script>
     <script>
-        //变量
-        var hd_img = "./img/defaultHead.jpg"
-            , id = "0";
+        //获取传参
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+        var t_param = GetRequest();
+        console.log(t_param);
 
-        var QuitURL = "login.html"
+        //共有变量
+        var user_hd_img = ""
+            , user_id = parseInt(t_param[`user_id`])
+            , user_authority = t_param[`user_authority`];
+
+        //共有URL
+        var HomepageURL = ""
+            , QuitURL = "login.html"
             , ChangeInfoURL = "login.html"
-            , SafetyURL = "safety_info.html";
+            , SafetyURL = "safety_info.html"
+            , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
+            , GetCompanyTeacherServletURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
+            , GetSchoolTeacherServletURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
+            , GetCompanyServletURL = "http://localhost:8080/GetCompanyInformationServlet"
+            , GetAnyUserServlet = ""
+            , GetHeadImgURL = "http://localhost:8080/DownloadServlet?head=";
 
-        //测试变量
-        var test_style = "1px solid #000";
-
-        //form区 + 大区
-        layui.use(['form', 'jquery', 'layer'], function () {
-            var form = layui.form
-                , $ = layui.jquery
+        //获取个人信息
+        layui.use(['jquery','layer'], function () {
+            var $ = layui.jquery
                 , layer = layui.layer;
+
+            //获取本人信息
+            switch (user_authority) {
+                case "Student":
+                    GetAnyUserServlet = GetStudentServletURL;
+                    break;
+                case "Teacher":
+                    GetAnyUserServlet = GetCompanyTeacherServletURL
+                    break;
+                case "School":
+                    GetAnyUserServlet = GetSchoolTeacherServletURL
+                    break;
+                case "Company":
+                    GetAnyUserServlet = GetCompanyServletURL
+                    break;
+            }
+            $.ajax({
+                type: "POST",
+                url: GetAnyUserServlet,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": user_id
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    user_hd_img = res.resData.head ? res.resData.head : "";
+                    document.getElementById("user_hd_img").src = (user_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + user_hd_img);
+                },
+            });
         });
 
         //element区
@@ -65,9 +121,23 @@
         });
 
         //基础区
-        document.getElementById("head_img").src = hd_img;
-        document.getElementById("head_img").style.border = "1px solid #6e7474";
-
+        switch (user_authority) {
+            case "Student":
+                HomepageURL = "homepage_student.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
+                break;
+            case "Teacher":
+                HomepageURL = "homepage_company_teacher.html?user_id=" + user_id + "&user_authority=Teacher&target_id=" + user_id + "&target_authority=Teacher"
+                break;
+            case "School":
+                HomepageURL = "homepage_school_teacher.html?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
+                break;
+            case "Company":
+                break;
+            default:
+                HomepageURL = "login.html"
+                break;
+        }
+        document.getElementById("user_homepage_a").href = HomepageURL;
         document.getElementById("change_info_a").href = ChangeInfoURL;
         document.getElementById("safety_info_a").href = SafetyURL;
         document.getElementById("quit_a").href = QuitURL;
