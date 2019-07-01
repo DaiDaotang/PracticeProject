@@ -248,7 +248,6 @@
                         "reqParam": pt_id
                     }
                     , deal: function (res) {
-                        console.log(res)
                         return {
                             code: 0
                             , msg: ""
@@ -279,7 +278,6 @@
                         "reqParam": pt_id
                     }
                     , deal: function (res) {
-                        console.log(res)
                         return {
                             code: 0
                             , msg: ""
@@ -305,9 +303,10 @@
 
                         //为每个老师添加负责项目
                         for (var i = 0; i < res.data.length; i++) {
-                            console.log(res.data)
-                            console.log(res)
-                            console.log("+++++++++++++++++++++++++++++")
+                            var dataTemp = res.data[i]
+                            console.log(dataTemp.id)
+                            //console.log(res.data[i])
+                            //console.log(res)
                             //console.log(res.resData)
                             //获取每个老师负责的项目
                             layui.use("jquery", function () {
@@ -326,19 +325,19 @@
                                     dataType: "json",
                                     success: function (res0) {
                                         console.log(res0);
+                                        console.log(dataTemp)
                                         var temptemp = res0.resData[0].name
-                                        for (var i = 1; i < res0.resData.length; i++) {
-                                            temptemp += "...\n" + res0.resData[i].name;
+                                        for (var j = 1; j < res0.resData.length; j++) {
+                                            temptemp += "...\n" + res0.resData[j].name;
                                         }
-                                        document.getElementById('projectInCharge_' + res.data[i].id).innerText = temptemp;
+                                        console.log(dataTemp.id)
+                                        document.getElementById('projectInCharge_' + dataTemp.id).innerText = temptemp;
                                     },
                                     error: function (res0) {
                                         console.log("error");
                                         console.log(res0);
                                     }
                                 });
-
-
                             })
                         }
                     }
@@ -365,13 +364,11 @@
                 }),
                 dataType: "json",
                 success: function (res) {
-                    console.log(res);
                     pt_name = res.resData.name
                         , pt_school_id = res.resData.school
                         , pt_school_name = res.resData.schoolName
                         , pt_company_id = res.resData.company
                         , pt_company_name = res.resData.companyName
-                    console.log(pt_school_id)
                     document.getElementById("school_name").innerText = pt_school_name;
                     document.getElementById("company_name").innerText = pt_company_name;
                     document.getElementById("pt_name").innerText = pt_name;
@@ -438,7 +435,6 @@
                                 for (var i = 0; i < strs.length; i++) {
                                     new_item_teachers.push(parseInt(strs[i]))
                                 }
-                                console.log(new_item_difficulty)
 
                                 if (new_item_teachers.length == 0) {
                                     layer.msg("请选择企业老师", { time: 1000 })
@@ -489,7 +485,6 @@
             table.on('toolbar(school_teacher_table)', function (obj) {
                 switch (obj.event) {
                     case 'addSchoolTeacher':
-                        console.log('addSchoolTeacher')
                         layer.open({
                             title: '添加学校老师',
                             type: 2,
@@ -509,7 +504,6 @@
                                 for (var i = 0; i < strs.length; i++) {
                                     new_school_teachers.push(parseInt(strs[i]))
                                 }
-                                console.log(new_school_teachers)
 
                                 if (new_school_teachers.length == 0) {
                                     layer.msg("请选择要添加的学校老师", { time: 1000 })
@@ -546,7 +540,6 @@
             table.on('toolbar(company_teacher_table)', function (obj) {
                 switch (obj.event) {
                     case 'addCompanyTeacher':
-                        console.log('addCompanyTeacher')
                         layer.open({
                             title: '添加企业老师',
                             type: 2,
@@ -564,7 +557,6 @@
                 var tr = obj.tr; //获得当前行 tr 的DOM对象
 
                 if (layEvent === 'detail') { //查看
-                    console.log("detail")
                     layer.open({
                         title: data.projectName,
                         type: 2,
@@ -574,7 +566,6 @@
 
                 }
                 else if (layEvent === 'del') { //删除
-                    console.log("delete")
                     layer.confirm('真的删除这一项目吗？', function (index) {
                         obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                         layer.close(index);
@@ -585,7 +576,6 @@
                     });
                 }
                 else if (layEvent === 'edit') { //编辑
-                    console.log("edit")
                     //do something
 
                     layer.open({
