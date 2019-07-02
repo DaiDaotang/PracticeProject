@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>团队日志</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+
+    <style type="text/css">
+        .layui-form-select dl dd:hover {
+            background-color: #1E9FFF;
+            color: #d4dadb
+        }
+
+        .test {
+            border: 1px solid #000;
+        }
+
+        #body_whole {
+            height: 100%;
+            background: -webkit-linear-gradient(#2988d6, #bfddf8, #4df74b); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(#2988d6, #bfddf8, #4df74b); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(#2988d6, #bfddf8, #4df74b); /* Firefox 3.6 - 15 */
+            background: linear-gradient(#2988d6, #bfddf8, #4df74b); /* 标准的语法（必须放在最后） */
+        }
+    </style>
+</head>
+<body id="body_whole">
+
+    <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:100;">
+        <li class="layui-nav-item"><a href="" id="team_homepage">团队信息</a></li>
+        <li class="layui-nav-item layui-this"><a href="" id="team_diary">团队日志</a></li>
+        <li class="layui-nav-item"><a href="" id="team_progress">团队流程</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">队员列表</a>
+            <dl class="layui-nav-child" id="team_list">
+                <dd><a href="" id="team_list_whole">总列</a></dd>
+                <dd><a href="">队员1</a></dd>
+                <dd><a href="">队员2</a></dd>
+                <dd><a href="">队员3</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item" lay-unselect="" style="position:absolute; right:30px;" id="me">
+            <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
+            <dl class="layui-nav-child">
+                <dd><a id="user_homepage_a" href="">我的主页</a></dd>
+                <dd><a id="change_info_a" href="">修改信息</a></dd>
+                <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
+                <dd><a id="quit_a" href="login.html">退出登录</a></dd>
+            </dl>
+        </li>
+    </ul>
+
+    <ins class="adsbygoogle" style="display:inline-block;width:970px; height: 0;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+
+    <div class="test" style="width: auto; height: 100%; margin: 100px 150px 50px 150px;">
+
+        <img id="target_team_head_img" src="./img/defaultHead.jpg" style="width:150px; height:150px; position:absolute; left: 210px; top: 240px; border-radius: 75px; border: 1px solid #6e7474;" />
+
+        <div style="background-color:#c9c9c9; width: auto; height: 230px; border-top-left-radius: 30px; border-top-right-radius: 30px;">
+            <div id="information" style="position:absolute; left: 420px; top: 240px; width:auto">
+                <span id="target_team_name" style="font-size:45px; text-align:left; width:400px; font-family:FangSong">aaa</span>
+            </div>
+            <div style="position:absolute; right:210px; top: 305px; width:auto; font-size: 30px;">
+                <span><a id="target_team_item" href="" target="_blank" title="项目">项目：</a></span>
+            </div>
+        </div>
+
+        <div style="background-color:#fff; width: auto; height: auto; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; border: 1px solid #FFF;">
+
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px; ">
+                <legend style="font-size:24px;">日志</legend>
+            </fieldset>
+            <div style="width: auto; height: auto; margin: 0 20px 20px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
+                <div style="width:auto; height: auto; margin: 20px 40px;">
+                    <form class="layui-form" action="" lay-filter="diary_form" id="diary_form">
+                        <div class="layui-form-item" style="display:inline-flex; width: 100%;">
+                            <input type="text" name="search_diary_input" lay-filter="search_diary_input" id="search_diary_input" placeholder="搜索..." autocomplete="off" class="layui-input" style="width:40%; border-radius: 20px;">
+                            <input type="text" class="layui-input" name="search_diary_data" id="search_diary_data" lay-filter="search_diary_data" placeholder="Year-Month-Day" style="width:20%; margin-left:20px; border-radius: 20px;">
+                            <button class="layui-btn" lay-submit="" lay-filter="search_diary_btn" id="search_diary_btn" style="margin-left:20px; border-radius:20px;">
+                                <i class="layui-icon layui-icon-search" style="height:100px; color: #fff; font-size:25px;"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div style="width:auto; height: auto; margin: 20px 20px;">
+                    <ul class="flow-default" id="diary_flow">
+                        <li>
+                            <div style="width:auto; height: auto; margin: 20px; background-color:#d4dadb; border-radius: 20px; border: 1px solid #d4dadb;">
+                                <div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;">
+                                    <div class="layui-row" style="height:auto;">
+                                        <div class="layui-col-md8" style="height:100px;">
+                                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                                <span style="font-size:30px;">不忘初心，方得始终</span>
+                                                <hr class="layui-bg-blue">
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md4" style="height:auto; text-align:right;">
+                                            <div class="grid-demo grid-demo-bg1" style="margin: 20px;">
+                                                <a href="javascript:;" style="font-size:28px;"><span style="font-size:40px;">武大学子</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;">
+                                    <div class="layui-row" style="height:auto;">
+                                        <div class="layui-col-md7" style="height:100px;">
+                                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md5" style="height:auto; text-align:right;">
+                                            <div class="grid-demo grid-demo-bg1" style="margin: 20px;">
+                                                <img src="./img/defaultHead.jpg" style="width: 300px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script src="js/basic.js" charset="utf-8"></script>
+    <script src="js/team.js" charset="utf-8"></script>
+    <script>
+    </script>
+</body>
+</html>

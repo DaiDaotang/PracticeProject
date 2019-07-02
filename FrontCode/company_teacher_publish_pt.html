@@ -96,24 +96,10 @@
 
     <script src="layui/layui.js" charset="utf-8"></script>
     <script src="js/basic.js" charset="utf-8"></script>
+    <script src="js/company_teacher.js" charset="utf-8"></script>
+    <script src="js/company_teacher_publish_pt.js" charset="utf-8"></script>
     
     <script>
-        //传参
-        function GetRequest() {
-            var url = location.search; //获取url中"?"符后的字串
-            var theRequest = new Object();
-            if (url.indexOf("?") != -1) {
-                var str = url.substr(1);
-                strs = str.split("&");
-                for (var i = 0; i < strs.length; i++) {
-                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
-                }
-            }
-            return theRequest;
-        }
-        var t_param = GetRequest();
-        console.log(t_param);
-
         //变量
         var teacher_id = parseInt(t_param[`user_id`])
             , teacher_authority = t_param[`user_authority`]
