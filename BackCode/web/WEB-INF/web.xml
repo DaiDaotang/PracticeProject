@@ -317,4 +317,13 @@
         <servlet-name>ModifyPracticeServlet</servlet-name>
         <url-pattern>/ModifyPracticeServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetPracticeBySchoolIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetPracticeBySchoolIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetPracticeBySchoolIdServlet</servlet-name>
+        <url-pattern>/GetPracticeBySchoolIdServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
