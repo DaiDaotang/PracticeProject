@@ -109,7 +109,7 @@
         var GetSchoolInfoURL = "http://localhost:8080/GetSchoolServlet"
             , GetCompanyInfoURL = "http://localhost:8080/GetCompanyServlet"
             , CreatePTURL = "http://localhost:8080/CreatePracticeServlet"
-            , TeacherAddPTItemURL = "teacher_add_pt_item.html";
+            , TeacherAddPTItemURL = "company_teacher_add_pt_item.html";
 
         //修改默认学校/公司
         if (teacher_authority == "Teacher") {
@@ -223,7 +223,7 @@
                                     console.log(res)
                                     layer.msg('创建成功', { time: 1000 })
                                     setTimeout(function finish_publish_fun() {
-                                        window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + parseInt(res.resData);
+                                        window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + parseInt(res.resData) + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
                                     }, 1500);
                                 }
                                 else {
