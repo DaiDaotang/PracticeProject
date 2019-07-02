@@ -95,8 +95,8 @@
                         }),
                         dataType: "json",
                         success: function (res) {
+                            console.log(res)
                             if (res.isSuccess) {
-                                console.log(res)
                                 layer.msg('登录成功', { time: 1500 })
                                 switch (res.resData.authority) {
                                     case "Student":
@@ -114,7 +114,7 @@
                                 }
                             }
                             else {
-                                layer.msg(res.message, { time: 1500 })
+                                layer.msg(res.resData.message, { time: 1500 })
                             }
                         }
                     });
