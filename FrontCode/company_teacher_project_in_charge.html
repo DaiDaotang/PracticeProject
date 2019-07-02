@@ -67,8 +67,47 @@
         </div>
 
         <div style="background-color:#fff; width: auto; height: auto; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; border: 1px solid #FFF;">
+
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px; ">
+                <legend style="font-size:24px;">当前负责项目</legend>
+            </fieldset>
+            <div style="width: auto; height: auto; margin: 0 20px 20px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
+                <div style="width:auto; height: auto; margin: 20px 20px;">
+                    <ul class="flow-default" id="pt_item_in_charge_now">
+                        <li>
+                            <div class="layui-row" style="height:100px;">
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="项目名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_item_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-tabs" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="实训名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-template-1" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="item_a" href="" target="_blank" title="学校名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_school_name_now"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px; ">
-                <legend style="font-size:24px;" id="legend_whole">负责项目</legend>
+                <legend style="font-size:24px;">历史负责项目</legend>
             </fieldset>
             <div style="width: auto; height: auto; margin: 0 20px 20px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
                 <div style="width:auto; height: auto; margin: 20px 40px;">
@@ -80,7 +119,38 @@
                             </button>
                         </div>
                     </form>
-                    <table class="layui-hide" id="pt_table" lay-filter="pt_table"></table>
+                </div>
+                <div style="width:auto; height: auto; margin: 20px 20px;">
+                    <ul class="flow-default" id="pt_item_in_charge_before">
+                        <li>
+                            <div class="layui-row" style="height:100px;">
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="项目名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_item_name_before"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-tabs" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="" target="_blank" title="实训名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_name_before"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4" style="height:100px;">
+                                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-template-1" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="item_a" href="" target="_blank" title="学校名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_school_name_before"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

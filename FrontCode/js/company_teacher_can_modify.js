@@ -1,5 +1,6 @@
 ﻿// JavaScript source code
 var GetModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeByCompanyTeacherIdServlet"
+    , GetCannotModifyItemURL
     , ModifyPTDetailURL = "company_teacher_add_pt_item.html";
 
 var target_name = ""
@@ -42,6 +43,49 @@ var param_item_existed = function (res) {
             , { field: 'startTime', title: '开始时间' }
             , { field: 'endTime', title: '结束时间', event: 'lookIntroDetail' }
             , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 120 }
+        ]]
+        , done: function (res) {
+            console.log(res.data)
+            for (var i = 0; i < res.data.length; i++) {
+                document.getElementById('company_' + res.data[i].id).innerText = target_company_name;
+            }
+        }
+    }
+}
+    , param_item_past = function (res) {
+    return {
+        elem: '#pt_table_past'
+        , url: GetCannotModifyItemURL
+        , title: '项目列表'
+        , contentType: 'application/json'
+        , toolbar: "#toolbar_item_past"
+        , method: "POST"
+        , where: {
+            "reqId": ""
+            , "reqParam": t_param[`user_id`]
+        }
+        , deal: function (res) {
+            console.log(res)
+            return {
+                code: 0
+                , msg: ""
+                , count: 1000
+                , data: res.resData
+            }
+        }
+        , cols: [[
+            { field: 'id', title: '实训ID', sort: true }
+            , { field: 'name', title: '实训名称' }
+            , { field: 'schoolName', title: '主办学校' }
+            , {
+                field: 'type', title: '承包公司', templet: function (d) {
+                    return '<div id="company_' + d.id + '"></div>'
+                }
+            }
+            , { field: 'content', title: '实训概述', event: 'lookIntroDetail' }
+            , { field: 'startTime', title: '开始时间' }
+            , { field: 'endTime', title: '结束时间', event: 'lookIntroDetail' }
+            , { fixed: 'right', title: '操作', toolbar: '#bar_detail', width: 120 }
         ]]
         , done: function (res) {
             console.log(res.data)
@@ -96,6 +140,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                     target_company_name = res.resData.name;
                     document.getElementById("company_name").innerText = target_company_name;
                     table.render(param_item_existed(1));
+                    table.render(param_item_past(1))
                 },
                 error: function (res) {
                     console.log("error");

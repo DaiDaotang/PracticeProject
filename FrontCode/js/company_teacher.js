@@ -55,7 +55,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("target_company_pt_done").href = CompanyPTListURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&temp=done" + "&target_company_id=" + target_company_id;
             document.getElementById("target_create_pt").href = CreateNewPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
             document.getElementById("target_modify_pt").href = ModifyPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
-            document.getElementById("target_project_in_charge").href = ProjectInChargeURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
         },
         error: function (res) {
             console.log("获取用户基本信息失败");
