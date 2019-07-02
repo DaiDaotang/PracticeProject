@@ -33,8 +33,8 @@ public class GetCanModifiedPracticeByCompanyTeacherIdDao {
                 practiceBean.setStartTime(rs.getDate(4));
                 practiceBean.setEndTime(rs.getDate(5));
                 practiceBean.setTemplate(rs.getString(6));
-                practiceBean.setCompany(rs.getInt(7));
-                practiceBean.setCompanyName(rs.getString(8));
+                practiceBean.setSchool(rs.getInt(7));
+                practiceBean.setSchoolName(rs.getString(8));
                 practiceBeans.add(practiceBean);
             }
             conn.commit();
