@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class DeleteProjectDao {
 
-    public boolean deleteProject(RequestBean<ProjectBean> requestBean)
+    public int deleteProject(RequestBean<ProjectBean> requestBean)
     {
         ProjectBean projectBean = requestBean.getReqParam();
         Connection conn = DBConn.getConnection();
@@ -63,15 +63,17 @@ public class DeleteProjectDao {
                     state4.setInt(1,projectBean.getId());
                     int j = state4.executeUpdate();
                     conn.commit();
-                    return true;
+                    return 0;
+                }else{
+                    return -2;
                 }
             }
-            return false;
+            return -1;
 
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);
-            return false;
+            return -1;
         }finally {
             DBConn.closeConn(conn);
         }

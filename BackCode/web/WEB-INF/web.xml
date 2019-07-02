@@ -353,4 +353,13 @@
         <servlet-name>GetCanModifiedPracticeByCompanyTeacherIdServlet</servlet-name>
         <url-pattern>/GetCanModifiedPracticeByCompanyTeacherIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>WriteDiaryServlet</servlet-name>
+        <servlet-class>com.servlet.WriteDiaryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WriteDiaryServlet</servlet-name>
+        <url-pattern>/WriteDiaryServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

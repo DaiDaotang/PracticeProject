@@ -1,12 +1,10 @@
 package com.servlet;
 
-import com.bean.ProjectBean;
-import com.bean.RequestBean;
-import com.bean.ResponseBean;
-import com.bean.TeamBean;
-import com.dao.CreateTeamDao;
-import com.dao.DeleteProjectDao;
+import com.bean.*;
+import com.dao.StudentCheckTeamDao;
+import com.dao.WriteDiaryDao;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.ServletException;
@@ -19,8 +17,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 
-@WebServlet(name = "DeleteProjectServlet")
-public class DeleteProjectServlet extends HttpServlet {
+@WebServlet(name = "WriteDiaryServlet")
+public class WriteDiaryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -31,28 +29,24 @@ public class DeleteProjectServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
-        Gson gson = new Gson();
-        Type requestType = new TypeToken<RequestBean<ProjectBean>>(){}.getType();
-        RequestBean<ProjectBean> reqBean = gson.fromJson(content,requestType);
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Type requestType = new TypeToken<RequestBean<DiaryBean>>(){}.getType();
+        RequestBean<DiaryBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean resBean = new ResponseBean<>();
         try{
-            DeleteProjectDao dao = new DeleteProjectDao();
-            int a = dao.deleteProject(reqBean);
-            if(a == -1){
+            WriteDiaryDao dao = new WriteDiaryDao();
+            int i =dao.writeDiary(reqBean);
+            if (i == -1){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
-            }
-            else if(a == -2) {
-                resBean.setResId(reqBean.getReqId());
-                resBean.setSuccess(false);
-                resBean.setMessage("You do not have right!");
             }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
             }
-            Type respType = new TypeToken<ResponseBean<ProjectBean>>(){}.getType();
-            out.print(gson.toJson(resBean,respType));
+            Type respType = new TypeToken<ResponseBean>(){}.getType();
+            String s = gson.toJson(resBean,respType);
+            out.print(s);
         }catch (Exception e){
             out.print(e.toString());
         }

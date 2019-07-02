@@ -61,29 +61,22 @@ public class GetPracticeInformationDao {
         ResultSet resultSet;
         try {
             PreparedStatement state;
-            state = conn.prepareStatement("select practiceId,practiceName,endtime from pscrelation natural join practice where schoolId = (select schoolId from student where studentId = ?);");
+            state = conn.prepareStatement("select practiceId,practiceName from pscrelation natural join practice natural join student where studentId = ? and endtime > ?;");
             state.setInt(1, id);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            state.setString(2,dateFormat.format(new Date()));
             resultSet = state.executeQuery();
             while (resultSet.next())
             {
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                Date d1 = df.parse(resultSet.getString(3));
-                Date dt = new Date();
-                Date d2 = df.parse(df.format(dt));
-                if(d1.getTime() > d2.getTime())
-                {
-                    PracticeBean practiceBean = new PracticeBean();
-                    practiceBean.setId(resultSet.getInt(1));
-                    practiceBean.setName(resultSet.getString(2));
-                    arrayList.add(practiceBean);
-                }
+                PracticeBean practiceBean = new PracticeBean();
+                practiceBean.setId(resultSet.getInt(1));
+                practiceBean.setName(resultSet.getString(2));
+                arrayList.add(practiceBean);
             }
             return arrayList;
         } catch (SQLException e) {
             e.printStackTrace();
             DBConn.rollback(conn);
-        } catch (ParseException e) {
-            e.printStackTrace();
         } finally{
             DBConn.closeConn(conn);
         }
