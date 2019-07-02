@@ -37,7 +37,7 @@ public class DeleteProjectServlet extends HttpServlet {
         ResponseBean resBean = new ResponseBean<>();
         try{
             DeleteProjectDao dao = new DeleteProjectDao();
-            boolean a = dao.deleteProject(reqBean.getReqParam().getId());
+            boolean a = dao.deleteProject(reqBean);
             if (!a){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
