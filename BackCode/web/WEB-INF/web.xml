@@ -308,4 +308,13 @@
         <servlet-name>DeleteStudentFromTeamServlet</servlet-name>
         <url-pattern>/DeleteStudentFromTeamServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifyPracticeServlet</servlet-name>
+        <servlet-class>com.servlet.ModifyPracticeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifyPracticeServlet</servlet-name>
+        <url-pattern>/ModifyPracticeServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

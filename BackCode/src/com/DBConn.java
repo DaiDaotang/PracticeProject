@@ -16,7 +16,7 @@ public class DBConn {
         Connection con;
         //jdbc驱动
         dbDriver="com.mysql.cj.jdbc.Driver";
-        url="jdbc:mysql://localhost:3306/database?&useSSL=false&serverTimezone=UTC";
+        url="jdbc:mysql://localhost:3306/database?&useSSL=false&serverTimezone=Asia/Shanghai";
         user="root";
         password="";
 

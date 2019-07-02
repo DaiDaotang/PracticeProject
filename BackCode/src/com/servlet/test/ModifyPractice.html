@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/ModifyPracticeServlet",
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "id":19,
+                "name":"2017级第一次实训",
+                "content":"第一次实训",
+                "startTime":"2019-7-10",
+                "endTime":"2019-7-20",
+                "companyTeacherId": 1
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        },
+        error:function(res){
+            console.log("error");
+            console.log(res);
+        }
+    });
+</script>
+</html>
