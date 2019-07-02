@@ -3,7 +3,7 @@ package com.servlet;
 import com.bean.PracticeBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.dao.GetPracticeBySchoolIdDao;
+import com.dao.GetCanModifiedPracticeBySchoolTeacherIdDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -19,8 +19,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-@WebServlet(name = "GetPracticeBySchoolIdServlet")
-public class GetPracticeBySchoolIdServlet extends HttpServlet {
+@WebServlet(name = "GetCanModifiedPracticeBySchoolTeacherIdServlet")
+public class GetCanModifiedPracticeBySchoolTeacherIdServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -36,7 +36,7 @@ public class GetPracticeBySchoolIdServlet extends HttpServlet {
         RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
         ResponseBean<ArrayList<PracticeBean>> resBean = new ResponseBean<>();
         try{
-            GetPracticeBySchoolIdDao dao = new GetPracticeBySchoolIdDao();
+            GetCanModifiedPracticeBySchoolTeacherIdDao dao = new GetCanModifiedPracticeBySchoolTeacherIdDao();
             ArrayList<PracticeBean> arrayList  = dao.GetPractice(reqBean.getReqParam());
             if (arrayList == null){
                 resBean.setResId(reqBean.getReqId());

@@ -29,7 +29,7 @@ public class GetSchoolTeacherByPracticeIdServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
-        Gson gson = new GsonBuilder().setDateFormat("yyyy").create();
+        Gson gson = new Gson();
         Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
         RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
         ResponseBean<ArrayList<SchoolTeacherBean>> resBean = new ResponseBean<>();

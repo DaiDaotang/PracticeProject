@@ -326,4 +326,31 @@
         <servlet-name>GetPracticeBySchoolIdServlet</servlet-name>
         <url-pattern>/GetPracticeBySchoolIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetPracticeByCompanyIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetPracticeByCompanyIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetPracticeByCompanyIdServlet</servlet-name>
+        <url-pattern>/GetPracticeByCompanyIdServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetCanModifiedPracticeBySchoolTeacherIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetCanModifiedPracticeBySchoolTeacherIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetCanModifiedPracticeBySchoolTeacherIdServlet</servlet-name>
+        <url-pattern>/GetCanModifiedPracticeBySchoolTeacherIdServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetCanModifiedPracticeByCompanyTeacherIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetCanModifiedPracticeByCompanyTeacherIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetCanModifiedPracticeByCompanyTeacherIdServlet</servlet-name>
+        <url-pattern>/GetCanModifiedPracticeByCompanyTeacherIdServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
