@@ -1,5 +1,7 @@
 ﻿// JavaScript source code
-var target_group_id = -1
+var target_id = t_param[`target_id`]
+    , target_authority = t_param[`target_authority`]
+    , target_group_id = -1
     , target_group_name = ""
     , target_item_id = -1
     , target_item_name = ""
@@ -86,7 +88,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         , target_item_id = res.resData.projectId
                         , target_item_name = res.resData.projectName;
                     document.getElementById("group_name").innerText = target_group_name;
-                    document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&team_id=" + target_group_id;
+                    document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&user_pt_id=" + target_pt_id;
                     document.getElementById("item_name").innerText = target_item_name;
                     document.getElementById("item_a").href = ItemURL;
                     console.log(document.getElementById("group_a").href)
@@ -101,7 +103,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     document.getElementById("item_name").innerText = "暂无";
                     document.getElementById("item_a").href = "javascript:return false;";
                     if (target_authority == user_authority && target_id == user_id) {
-                        document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_pt_id=" + target_pt_id;
+                        document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&user_pt_id=" + target_pt_id;
                     }
                     else {
                         document.getElementById("group_a").href = "javascript:;";
@@ -153,36 +155,13 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         "student_pt": target_pt_id
                     })
                     form.render('select')
-
-                    console.log(res);
-                },
-                error: function (res) {
-                    console.log("error");
-                    console.log(res);
-                }
-            });
-            //显示团队信息
-            $.ajax({
-                type: "POST",
-                url: GetStudentTeamURL,
-                async: true,
-                data: JSON.stringify({
-                    "reqId": "",
-                    "reqParam": {
-                        "id": target_id,
-                        "practiceId": target_pt_id
-                    }
-                }),
-                dataType: "json",
-                success: function (res) {
-                    console.log(res);
                     if (res.isSuccess) {        //有团队
                         target_group_id = res.resData.teamId
                             , target_group_name = res.resData.teamName
                             , target_item_id = res.resData.projectId
                             , target_item_name = res.resData.projectName;
                         document.getElementById("group_name").innerText = target_group_name;
-                        document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&team_id=" + target_group_id;
+                        document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&user_pt_id=" + target_pt_id;
                         document.getElementById("item_name").innerText = target_item_name;
                         document.getElementById("item_a").href = ItemURL;
                     } else {              //没团队
@@ -195,7 +174,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("item_name").innerText = "暂无";
                         document.getElementById("item_a").href = "javascript:return false;";
                         if (target_authority == user_authority && target_id == user_id) {
-                            document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_pt_id=" + target_pt_id;
+                            document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&user_pt_id=" + target_pt_id;
                         }
                         else {
                             document.getElementById("group_a").href = "javascript:;";
@@ -203,7 +182,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     }
                 },
                 error: function (res) {
-                    console.log("获取团队信息失败");
+                    console.log("error");
                     console.log(res);
                 }
             });

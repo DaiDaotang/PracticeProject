@@ -37,7 +37,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
     //监听写日志
     $(document).on('click', '#write_diary_btn', function () {
         layer.open({
-            title: '签到情况',
+            title: '日志',
             type: 2,
             area: ["500px", "500px"],
             content: WriteDiaryURL
@@ -104,14 +104,16 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("grade").innerText += target_grade;
             document.getElementById("major").href = "https://baike.baidu.com/item/" + major;
             document.getElementById("school_a").href = "https://baike.baidu.com/item/" + target_school_name;
+
+
+            var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
+            document.getElementById("target_homepage").href = HomepageURL + basic_extra_url;
+            document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url;
+            document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url;
+            document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url;
         },
         error: function (res) {
             console.log("获取用户基本信息失败");
         }
     });
 })
-
-document.getElementById("target_homepage").href = HomepageURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
-document.getElementById("target_diary").href = StudentDiaryURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
-document.getElementById("target_history").href = StudentHistoryURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
-document.getElementById("target_resume").href = StudentResumeURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
