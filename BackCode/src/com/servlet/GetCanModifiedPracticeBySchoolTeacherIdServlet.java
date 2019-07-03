@@ -33,7 +33,7 @@ public class GetCanModifiedPracticeBySchoolTeacherIdServlet extends HttpServlet 
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
+        Type requestType = new TypeToken<RequestBean<SchoolTeacherBean>>(){}.getType();
         RequestBean<SchoolTeacherBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean<ArrayList<PracticeBean>> resBean = new ResponseBean<>();
         try{

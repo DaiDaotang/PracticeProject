@@ -1,9 +1,6 @@
 package com.servlet;
 
-import com.bean.CompanyTeacherBean;
-import com.bean.PracticeBean;
-import com.bean.RequestBean;
-import com.bean.ResponseBean;
+import com.bean.*;
 import com.dao.GetCanModifiedPracticeByCompanyTeacherIdDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,7 +30,7 @@ public class GetCanModifiedPracticeByCompanyTeacherIdServlet extends HttpServlet
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
+        Type requestType = new TypeToken<RequestBean<CompanyTeacherBean>>(){}.getType();
         RequestBean<CompanyTeacherBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean<ArrayList<PracticeBean>> resBean = new ResponseBean<>();
         try{

@@ -39,6 +39,10 @@ public class DeleteStudentFromTeamServlet extends HttpServlet {
             if (i == -1){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
+            } else if (i == -2){
+                resBean.setResId(reqBean.getReqId());
+                resBean.setSuccess(false);
+                resBean.setMessage("There is no such member!");
             }
             else {
                 resBean.setResId(reqBean.getReqId());
