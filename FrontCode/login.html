@@ -48,10 +48,12 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <button class="layui-btn" lay-submit="" lay-filter="logup" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-right:30px; color:#1E9FFF; background-color: white;">Sign Up</button>
-                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="login" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-left:30px;">Sign In</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="login" id="login" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-right:30px;">Sign In</button>
             </div>
         </form>
+
+        <button class="layui-btn" lay-submit="" lay-filter="logup" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-right:30px; background:none; border:none;"><p style="color:#5e5e5e; font-size: 16px"><u>还没有账号？点击注册</u></p></button>
+
     </div>
 
     <script src="layui/layui.js" charset="utf-8"></script>
@@ -70,6 +72,12 @@
                 , "password": ""
                 , "sort": ""
             })
+
+            //监听注册
+            form.on('submit(logup)', function (data) {
+                window.location.href = "signup.html"
+                return false;
+            });
 
             //监听登陆
             form.on('submit(login)', function (data) {
@@ -120,12 +128,6 @@
                     });
                     return false;
                 }
-                return false;
-            });
-
-            //监听注册
-            form.on('submit(logup)', function (data) {
-                window.location.href = "signup.html"
                 return false;
             });
         });
