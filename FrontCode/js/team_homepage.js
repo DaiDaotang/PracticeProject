@@ -28,7 +28,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                     code: 0
                     , msg: ""
                     , count: 1000
-                    , data: res.resData
+                    , data: res.resData.students
                 }
             }
             , cols: [[
@@ -41,31 +41,6 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
             ]]
             , done: function (res) {
                 console.log(res.data)
-                $.ajax({
-                    type: "POST",
-                    url: GetTeamInfoURL,
-                    async: true,
-                    data: JSON.stringify({
-                        "reqId": "",
-                        "reqParam": {
-                            "id": user_id,
-                            "practiceId": target_pt_id
-                        }
-                    }),
-                    dataType: "json",
-                    success: function (res) {
-                        console.log(res);
-                        user_is_captain = res.resData.isCaptain
-                        if (!user_is_captain) {
-                            $("[data-field='right']").css('display', 'none');
-                        }
-                    },
-                    error: function (res) {
-                        console.log("error");
-                        console.log(res);
-                    }
-                });
-
             }
         }
     }
