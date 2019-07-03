@@ -3,7 +3,7 @@ var HomepageURL = "homepage_team.html"
     , TeamDiaryURL = "team_diary.html"
     , TeamMemberURL = "team_list.html"
     , TeamProgressURL = "team_progress.html"
-    , GetTeamInfoURL = "http://localhost:8080/StudentCheckTeamServlet"
+    , GetTeamInfoURL = "http://localhost:8080/GetStudentByTeamIdServlet"
     , GetTeamMemberURL = "";
 
 var target_id = parseInt(t_param[`target_id`])
@@ -40,10 +40,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
         async: true,
         data: JSON.stringify({
             "reqId": "",
-            "reqParam": {
-                "id": target_id,
-                "practiceId": target_pt_id
-            }
+            "reqParam": target_team_id
         }),
         dataType: "json",
         success: function (res) {
