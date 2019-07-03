@@ -21,7 +21,7 @@ public class AddStudentDao {
             ResultSet resultSet1 = state.executeQuery();
             if(resultSet1.next())
             {
-                state2 = conn.prepareStatement("select projectPracticeId from stprelation natural join project where studentId = ? and stprelation.projectId = project.projectId;");
+                state2 = conn.prepareStatement("select projectPracticeId from stprelation natural join project where studentId = ?;");
                 state2.setInt(1,resultSet1.getInt(1));
                 ResultSet resultSet2 = state2.executeQuery();
                 while(resultSet2.next())
@@ -38,16 +38,16 @@ public class AddStudentDao {
                 int i = state3.executeUpdate();
                 if(i <= 0)
                 {
-                    return -1;
+                    return -2;
                 }
                 conn.commit();
                 return 0;
             }
-            return -1;
+            return -3;
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);
-            return -1;
+            return -2;
         }finally {
             DBConn.closeConn(conn);
         }
