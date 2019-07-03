@@ -57,6 +57,13 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("target_team_item").innerText += target_item_name;
             document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_team_head_img").style.border = "1px solid #6e7474";
+
+
+            var temp = ""
+            for (var i = 0; i < target_team_members.length; i++) {
+                temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
+            }
+            document.getElementById("team_list").innerHTML = temp;
         },
         error: function (res) {
             console.log("error");

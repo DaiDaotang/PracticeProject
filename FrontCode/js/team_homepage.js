@@ -50,7 +50,6 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 , target_item_name = res.resData.projectName
                 , target_pt_name = res.resData.practiceName
                 , target_team_scores = res.resData.teamScores
-                , user_is_captain = res.resData.isCaptain
                 , captain_id = res.resData.captainId
                 , target_hd_img = res.resData.head ? res.resData.head : ""
                 , target_team_members = res.resData.students;
@@ -65,6 +64,76 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
             }
             document.getElementById("team_list").innerHTML = temp;
+
+            var param_member_existed = function (res) {
+                if (user_id == captain_id) {
+                    return {
+                        elem: '#team_member_table'
+                        , url: GetTeamInfoURL
+                        , title: '队员列表'
+                        , contentType: 'application/json'
+                        , toolbar: "#toolbar_item"
+                        , method: "POST"
+                        , where: {
+                            "reqId": ""
+                            , "reqParam": target_team_id
+                        }
+                        , deal: function (res) {
+                            console.log(res)
+                            return {
+                                code: 0
+                                , msg: ""
+                                , count: 1000
+                                , data: res.resData.students
+                            }
+                        }
+                        , cols: [[{ field: 'id', title: 'ID', sort: true, hide: true }
+                            , { field: 'name', title: '姓名' }
+                            , { field: 'sex', title: '性别' }
+                            , { field: 'number', title: '学号' }
+                            , { field: 'grade', title: '年级' }
+                            , { fixed: 'right', title: '操作', toolbar: '#bar_trans_del', width: 140 }
+                        ]]
+                        , done: function (res) {
+                            console.log(res.data)
+                        }
+                    }
+                }
+                else {
+                    return {
+                        elem: '#team_member_table'
+                        , url: GetTeamInfoURL
+                        , title: '队员列表'
+                        , contentType: 'application/json'
+                        , toolbar: "#toolbar_item"
+                        , method: "POST"
+                        , where: {
+                            "reqId": ""
+                            , "reqParam": target_team_id
+                        }
+                        , deal: function (res) {
+                            console.log(res)
+                            return {
+                                code: 0
+                                , msg: ""
+                                , count: 1000
+                                , data: res.resData.students
+                            }
+                        }
+                        , cols: [[{ field: 'id', title: 'ID', sort: true, hide: true }
+                            , { field: 'name', title: '姓名' }
+                            , { field: 'sex', title: '性别' }
+                            , { field: 'number', title: '学号' }
+                            , { field: 'grade', title: '年级' }
+                        ]]
+                        , done: function (res) {
+                            console.log(res.data)
+                        }
+                    }
+                }
+            }
+
+            table.render(param_member_existed(1));
         },
         error: function (res) {
             console.log("error");
@@ -72,51 +141,13 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         }
     });
 
-    var param_member_existed = function (res) {
-        return {
-            elem: '#team_member_table'
-            , url: GetTeamInfoURL
-            , title: '队员列表'
-            , contentType: 'application/json'
-            , toolbar: "#toolbar_item"
-            , method: "POST"
-            , where: {
-                "reqId": ""
-                , "reqParam": target_team_id
-            }
-            , deal: function (res) {
-                console.log(res)
-                return {
-                    code: 0
-                    , msg: ""
-                    , count: 1000
-                    , data: res.resData.students
-                }
-            }
-            , cols: [[
-                { field: 'id', title: 'ID', sort: true, hide: true }
-                , { field: 'name', title: '姓名' }
-                , { field: 'sex', title: '性别' }
-                , { field: 'number', title: '学号' }
-                , { field: 'grade', title: '年级' }
-                , { fixed: 'right', title: '操作', toolbar: '#bar_trans_del', width: 140 }
-            ]]
-            , done: function (res) {
-                console.log(res.data)
-            }
-        }
-    }
-
-    //监听添加学院
+    //监听添加同学
     $(document).on('click', '#addMember', function () {
         layer.prompt({
             formType: 0,
             value: '',
             title: '请输入电话号',
             area: ['300px', '350px'], //自定义文本域宽高,
-            end: function () {
-                table.render(param_member_existed(1))
-            }
         }, function (value, index, elem) {
             //alert(value); //得到value
             console.log(target_team_id)
@@ -139,7 +170,39 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 dataType: "json",
                 success: function (res) {
                     console.log(res);
-                    layer.close(index);
+                    if (res.isSuccess) {
+                        layer.close(index);
+                        table.render(param_member_existed(1));
+
+                        //更新导航栏
+                        $.ajax({
+                            type: "POST",
+                            url: GetTeamInfoURL,
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": "",
+                                "reqParam": target_team_id
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                console.log(res);
+                                target_team_members = res.resData.students;
+
+                                var temp = ""
+                                for (var i = 0; i < target_team_members.length; i++) {
+                                    temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
+                                }
+                                document.getElementById("team_list").innerHTML = temp;
+                            },
+                            error: function (res) {
+                                console.log("error");
+                                console.log(res);
+                            }
+                        });
+
+                    } else {
+                        layer.msg(res.message, { time: 1000 })
+                    }
                 },
                 error: function (res) {
                     console.log("error");
@@ -147,7 +210,32 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 }
             });
         });
-    })
+    })    
 
-    table.render(param_member_existed(1));
+    table.on('tool(team_member_table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        var data = obj.data; //获得当前行数据
+        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+        var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+        if (layEvent === 'detail') { //查看
+            layer.open({
+                title: data.projectName,
+                type: 2,
+                area: ["500px", "500px"],
+                content: ItemDetailURL
+            });
+
+        }
+        else if (layEvent === 'del') { //删除
+            layer.confirm('<pre>真的删除这一成员吗？\n(如果是队长，将解散队伍)</pre>', function (index) {
+                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                layer.close(index);
+
+                ////向服务端发送删除指令
+
+                table.render(param_item_existed);
+            });
+        }
+    });
+
 });
