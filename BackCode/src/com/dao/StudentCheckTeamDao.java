@@ -25,7 +25,7 @@ public class StudentCheckTeamDao {
                 resultSet = state.executeQuery();
                 if(resultSet.next()) {
                     int teamId = resultSet.getInt(1);
-                    state5 = conn.prepareStatement("select projectPracticeId from project,stprelation where stprelation.teamId = ? and project.projectId = stprelation.projectId;");
+                    state5 = conn.prepareStatement("select projectPracticeId from project NATURAL JOIN stprelation where stprelation.teamId = ?;");
                     state5.setInt(1, teamId);
                     resultSet5 = state5.executeQuery();
                     if (resultSet5.next()) {

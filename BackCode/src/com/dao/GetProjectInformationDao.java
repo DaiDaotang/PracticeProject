@@ -32,7 +32,7 @@ public class GetProjectInformationDao {
                 projectBean.setExtendContent(resultSet.getString("projectExtendContent"));
                 projectBean.setAdvanceContent(resultSet.getString("projectAdvanceContent"));
 
-                state2 = conn.prepareStatement("select teacherName from projtrelation,companyTeacher where projectId = ? and projtrelation.companyTeacherId = companyTeacher.teacherId;");
+                state2 = conn.prepareStatement("select teacherName from projtrelation NATURAL JOIN companyTeacher where projectId = ?");
                 state2.setInt(1,id);
                 resultSet2 = state2.executeQuery();
                 while (resultSet2.next())

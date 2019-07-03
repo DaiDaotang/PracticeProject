@@ -362,4 +362,13 @@
         <servlet-name>WriteDiaryServlet</servlet-name>
         <url-pattern>/WriteDiaryServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetStudentByTeamIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetStudentByTeamIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetStudentByTeamIdServlet</servlet-name>
+        <url-pattern>/GetStudentByTeamIdServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
