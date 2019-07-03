@@ -71,16 +71,27 @@
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px; ">
                 <legend style="font-size:24px;">队员列表</legend>
             </fieldset>
-            <div style="width: auto; height: 100px; margin: 0 20px 50px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
+            <div style="width: auto; height: auto; margin: 0 20px 50px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
+                <div style="width:auto; height: auto; margin: 10px 20px;">
+                    <table class="layui-hide" id="team_member_table" lay-filter="team_member_table" style="width: auto; margin: 20px;"></table>
+                </div>
+            </div>
+            <div style=" text-align:center;">
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addMember" id="addMember" style="background:none; border:none; margin-bottom: 5px;">
+                    <i class="layui-icon layui-icon-add-circle" style="color:#00ff21; font-size:50px;"></i>
+                </button>
             </div>
         </div>
 
     </div>
 
+    <script type="text/html" id="bar_trans_del">
+        <a class="layui-btn layui-btn-xs" style="background-color:green" lay-event="trans">转让队长</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
     <script src="layui/layui.js" charset="utf-8"></script>
     <script src="js/basic.js" charset="utf-8"></script>
     <script src="js/team.js" charset="utf-8"></script>
-    <script>
-    </script>
+    <script src="js/team_homepage.js" charset="utf-8"></script>
 </body>
 </html>

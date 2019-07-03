@@ -40,8 +40,18 @@ public class AddStudentServlet extends HttpServlet {
             if (i == -1){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
-            }
-            else {
+                resBean.setMessage("The student has joined a team in this practice!");
+            } else if(i == -2)
+            {
+                resBean.setResId(reqBean.getReqId());
+                resBean.setSuccess(false);
+                resBean.setMessage("There is something wrong in the database!");
+            }else if(i == -3)
+            {
+                resBean.setResId(reqBean.getReqId());
+                resBean.setSuccess(false);
+                resBean.setMessage("the student is not found!");
+            }else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
             }
