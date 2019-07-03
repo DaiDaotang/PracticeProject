@@ -3,11 +3,12 @@ var HomepageURL = "homepage_team.html"
     , TeamDiaryURL = "team_diary.html"
     , TeamMemberURL = "team_list.html"
     , TeamProgressURL = "team_progress.html"
-    , GetTeamInfoURL = "http://localhost:8080/StudentCheckTeamServlet";
+    , GetTeamInfoURL = "http://localhost:8080/StudentCheckTeamServlet"
+    , GetTeamMemberURL = "";
 
 var target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
-    , target_team_id = parseInt(t_param[`user_team_id`])
+    , target_team_id = parseInt(t_param[`team_id`])
     , target_pt_id = parseInt(t_param[`user_pt_id`])
     , target_team_name = ""
     , target_item_id = -1
@@ -23,14 +24,16 @@ document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
 document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
 document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
 
-//获取队员名字并加入菜单栏
-
 //区
 layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form
         , $ = layui.jquery
         , layer = layui.layer;
 
+    //获取队员名字并加入菜单栏
+
+
+    //补全基本信息
     $.ajax({
         type: "POST",
         url: GetTeamInfoURL,
