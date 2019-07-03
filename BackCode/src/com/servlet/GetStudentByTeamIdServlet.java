@@ -3,6 +3,7 @@ package com.servlet;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
 import com.bean.StudentBean;
+import com.bean.TeamBean;
 import com.dao.GetStudentByTeamIdDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -34,20 +35,20 @@ public class GetStudentByTeamIdServlet extends HttpServlet {
         Gson gson = new Gson();
         Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
         RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
-        ResponseBean<ArrayList<StudentBean>> resBean = new ResponseBean<>();
+        ResponseBean<TeamBean> resBean = new ResponseBean<>();
         try{
             GetStudentByTeamIdDao dao = new GetStudentByTeamIdDao();
-            ArrayList<StudentBean> arrayList = dao.GetSchoolTeacher(reqBean.getReqParam());
-            if (arrayList == null){
+            TeamBean teamBean = dao.GetSchoolTeacher(reqBean.getReqParam());
+            if (teamBean == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
-                resBean.setResData(arrayList);
+                resBean.setResData(teamBean);
             }
-            Type respType = new TypeToken<ResponseBean<ArrayList<StudentBean>>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<TeamBean>>(){}.getType();
             String s = gson.toJson(resBean,respType);
             out.print(s);
         }catch (Exception e){
