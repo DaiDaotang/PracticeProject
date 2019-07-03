@@ -1,5 +1,7 @@
 package com.bean;
 
+import java.util.ArrayList;
+
 public class TeamBean {
     private int teamId;
     private String teamName;
@@ -12,6 +14,7 @@ public class TeamBean {
     private String projectName;
     private int practiceId;
     private String practiceName;
+    private ArrayList<StudentBean> students;
 
     public int getteamId(){return teamId;}
 
@@ -79,4 +82,11 @@ public class TeamBean {
         this.practiceId = practiceId;
     }
 
+    public ArrayList<StudentBean> getStudents() {
+        return students;
+    }
+
+    public void setStudents(ArrayList<StudentBean> students) {
+        this.students = students;
+    }
 }
