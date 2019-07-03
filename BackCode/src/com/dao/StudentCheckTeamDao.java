@@ -25,7 +25,7 @@ public class StudentCheckTeamDao {
                 if(resultSet.next()) {
                     int teamId = resultSet.getInt(1);
                     teamBean.setteamId(teamId);
-                    state2 = conn.prepareStatement("select teamName,projectId,projcetName,projectPracticeId from project NATURAL JOIN stprelation NATURAL JOIN team where stprelation.teamId = ?;");
+                    state2 = conn.prepareStatement("select teamName,projectId,projectName,projectPracticeId from project NATURAL JOIN stprelation NATURAL JOIN team where stprelation.teamId = ?;");
                     state2.setInt(1, teamId);
                     ResultSet resultSet2 = state2.executeQuery();
                     if (resultSet2.next()) {
@@ -35,6 +35,7 @@ public class StudentCheckTeamDao {
                         teamBean.setprojectName(resultSet2.getString(3));
                         teamBean.setpracticeId(resultSet2.getInt(4));
                     }
+                    return teamBean;
                 }
             }else{
                 PreparedStatement state;
@@ -44,11 +45,12 @@ public class StudentCheckTeamDao {
                 ResultSet resultSet = state.executeQuery();
                 if(resultSet.next()) {
                     teamBean.setteamId(resultSet.getInt(1));
-                    teamBean.setteamName(resultSet.getString(1));
-                    teamBean.setprojectId(resultSet.getInt(2));
-                    teamBean.setprojectName(resultSet.getString(3));
-                    teamBean.setpracticeId(resultSet.getInt(4));
+                    teamBean.setteamName(resultSet.getString(2));
+                    teamBean.setprojectId(resultSet.getInt(3));
+                    teamBean.setprojectName(resultSet.getString(4));
+                    teamBean.setpracticeId(resultSet.getInt(5));
                 }
+                return teamBean;
             }
         }catch (SQLException e){
             e.printStackTrace();
