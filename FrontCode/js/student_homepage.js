@@ -103,6 +103,9 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     document.getElementById("item_name").innerText = "暂无";
                     document.getElementById("item_a").href = "javascript:return false;";
                     if (target_authority == user_authority && target_id == user_id) {
+                        
+                    }
+                    if (target_authority == user_authority && target_id == user_id) {
                         document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id;
                     }
                     else {
@@ -133,7 +136,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
             for (var i = 0; i < res.resData.length; i++) {
                 temp += "<option value=" + res.resData[i].id + ">" + res.resData[i].name + "</option>";
             }
-            document.getElementById("student_pt").innerHTML += temp;
+            document.getElementById("student_pt").innerHTML = temp;
+            target_pt_id = res.resData[res.resData.length - 1].id
+            form.val('student_pt', {
+                "student_pt": target_pt_id
+            })
             form.render('select')
 
             //获取参加的最新的实训和组队信息

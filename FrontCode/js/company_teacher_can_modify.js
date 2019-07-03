@@ -45,7 +45,7 @@ var param_item_existed = function (res0) {
             }
             , { field: 'content', title: '实训概述', event: 'lookIntroDetail' }
             , { field: 'startTime', title: '开始时间' }
-            , { field: 'endTime', title: '结束时间', event: 'lookIntroDetail' }
+            , { field: 'endTime', title: '结束时间'}
             , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 120 }
         ]]
         , done: function (res) {
@@ -102,8 +102,6 @@ var param_item_existed = function (res0) {
             }
         }
     }
-
-
 
 layui.use(['form', 'table', 'layer', 'jquery'], function () {
     var table = layui.table
@@ -176,12 +174,11 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
         }
         else if (layEvent === 'del') { //删除
-            layer.confirm('真的删除这一项目吗？', function (index) {
+            layer.confirm('真的删除这一实训吗？', function (index) {
                 obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                layer.close(index);
 
                 ////向服务端发送删除指令
-
+                layer.close(index);
                 table.render(param_item_existed(1));
             });
         }
@@ -195,7 +192,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 , title: '详情'
                 , area: ['500px', '500px']
                 , id: 'layerDemo'//防止重复弹出
-                , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.introduce + '</pre></div>'
+                , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.content + '</pre></div>'
                 , btn: '确定'
                 , btnAlign: 'c' //按钮居中
                 , shade: 0 //不显示遮罩

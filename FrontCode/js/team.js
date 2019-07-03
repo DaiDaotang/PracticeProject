@@ -18,7 +18,8 @@ var target_id = parseInt(t_param[`target_id`])
     , user_is_captain = false
     , captain_id = -1
     , target_hd_img = "./img/defaultHead.jpg"
-    , target_team_members = [];
+    , target_team_members = []
+    , target_github_link = "";
 
 var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&target_pt_id=" + t_param[`target_pt_id`]
 document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
@@ -51,17 +52,28 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 , user_is_captain = res.resData.isCaptain
                 , captain_id = res.resData.captainId
                 , target_hd_img = res.resData.head ? res.resData.head : ""
-                , target_team_members = res.resData.students;
+                , target_team_members = res.resData.students
+                , target_github_link = res.resData.githubLink;
+
+            console.log(target_team_scores);
 
             document.getElementById("target_team_name").innerText = target_team_name;
             document.getElementById("target_team_item").innerText += target_item_name;
             document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_team_head_img").style.border = "1px solid #6e7474";
-
+            document.getElementById("target_team_score").innerText = target_team_scores == 0 ? "ÔÝÎÞ" : target_team_scores;
+            if (target_github_link === "") {
+                document.getElementById("target_github_link").href = "javescript:;";
+                document.getElementById("target_github_link").innerText += "(ÔÝÎÞ)";
+            }
+            else {
+                document.getElementById("target_github_link").href = target_github_link;
+                document.getElementById("target_github_link").target = "_blank";
+            }
 
             var temp = ""
             for (var i = 0; i < target_team_members.length; i++) {
-                temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
+                temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student" target="_blank">' + target_team_members[i].name + '</a></dd>';
             }
             document.getElementById("team_list").innerHTML = temp;
         },

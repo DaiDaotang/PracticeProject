@@ -22,7 +22,8 @@ var user_id = t_param[`user_id`]
     , user_is_captain = false
     , captain_id = -1
     , target_hd_img = "./img/defaultHead.jpg"
-    , target_team_members = [];
+    , target_team_members = []
+    , target_github_link = "";
 
 var param_member_existed = "";
 
@@ -56,16 +57,26 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 , target_team_scores = res.resData.teamScores
                 , captain_id = res.resData.captainId
                 , target_hd_img = res.resData.head ? res.resData.head : ""
-                , target_team_members = res.resData.students;
-
+                , target_team_members = res.resData.students
+                , target_github_link = res.resData.githubLink;
+            
             document.getElementById("target_team_name").innerText = target_team_name;
             document.getElementById("target_team_item").innerText += target_item_name;
             document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_team_head_img").style.border = "1px solid #6e7474";
+            document.getElementById("target_team_score").innerText = target_team_scores == 0 ? "暂无" : target_team_scores;
+            if (target_github_link === "") {
+                document.getElementById("target_github_link").href = "javescript:;";
+                document.getElementById("target_github_link").innerText += "(暂无)";
+            }
+            else {
+                document.getElementById("target_github_link").href = target_github_link;
+                document.getElementById("target_github_link").target = "_blank";
+            }
 
             var temp = ""
             for (var i = 0; i < target_team_members.length; i++) {
-                temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
+                temp += '<dd><a target="_blank"  href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
             }
             document.getElementById("team_list").innerHTML = temp;
 
@@ -258,40 +269,50 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         var data = obj.data; //获得当前行数据
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         var tr = obj.tr; //获得当前行 tr 的DOM对象
-        if (user_id == target_id && user_id == captain_id && data.id == captain_id) {
+        if (layEvent === 'trans' && user_id == target_id && user_id == captain_id && data.id == captain_id) {
             layer.msg('您就是队长哦', { time: 1000 })
+        }
+        else if (layEvent === 'del' && user_id == target_id && user_id == captain_id && data.id == captain_id) {
+            layer.msg('您是队长，只能解散队伍，不能删除自己哦', { time: 1000 })
         }
         else {
             if (layEvent === 'trans') { //转让
-                $.ajax({
-                    type: "POST",
-                    url: ModifyCaptainURL,
-                    async: true,
-                    data: JSON.stringify({
-                        "reqId": "",
-                        "reqParam": {
-                            "teamId": target_team_id,
-                            "studentId": data.id
+                layer.confirm('<pre>确认要转让队长吗？</pre>', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+
+                    ////向服务端发送删除指令
+
+                    $.ajax({
+                        type: "POST",
+                        url: ModifyCaptainURL,
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "teamId": target_team_id,
+                                "studentId": data.id
+                            }
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            if (res.isSuccess) {
+                                layer.msg("转让成功", { time: 1000 })
+                                setTimeout(function sign_up_fun() {
+                                    window.location.href = "homepage_team.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
+                                }, 1500);
+                            }
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
                         }
-                    }),
-                    dataType: "json",
-                    success: function (res) {
-                        console.log(res);
-                        if (res.isSuccess) {
-                            layer.msg("转让成功", { time: 1000 })
-                            setTimeout(function sign_up_fun() {
-                                window.location.href = "homepage_team.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
-                            }, 1500);
-                        }
-                    },
-                    error: function (res) {
-                        console.log("error");
-                        console.log(res);
-                    }
+                    });
                 });
             }
             else if (layEvent === 'del') { //删除
-                layer.confirm('<pre>真的删除这一成员吗？\n(如果是队长，将解散队伍)</pre>', function (index) {
+                layer.confirm('<pre>确认删除这一成员吗？</pre>', function (index) {
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                     layer.close(index);
 

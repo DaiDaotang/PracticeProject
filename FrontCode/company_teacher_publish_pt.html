@@ -193,9 +193,10 @@
 
             //监听申请
             form.on('submit(pt_apply_btn)', function (data) {
-                console.log(data.field)
-
-                console.log(data.field.pt_start_data)
+                var data_now = new Date();
+                console.log(data_now.getMonth() + 1);
+                var str1 = data.field.startTime;
+                var str2 = data.field.endTime;
 
                 switch (teacher_authority) {
                     case "Teacher":
@@ -207,7 +208,6 @@
                                 "reqId": ""
                                 , "reqParam": {
                                     "name": data.field.pt_name,
-                                    //"content": "",
                                     "content": data.field.pt_content,
                                     "startTime": data.field.pt_start_data,
                                     "endTime": data.field.pt_end_data,

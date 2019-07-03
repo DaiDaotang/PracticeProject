@@ -112,10 +112,10 @@ var param_item_existed = function (res) {
             }
             , cols: [[
                 { type: 'numbers' }
-                , { field: 'id', width: 75, title: 'ID', hide: true }
-                , { field: 'name', width: 120, title: '名称' }
-                , { field: 'sex', width: 100, title: '性别' }
-                , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
+                , { field: 'id', title: 'ID', hide: true }
+                , { field: 'name',  title: '名称' }
+                , { field: 'sex', title: '性别' }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 65 }
             ]]
         }
     }
@@ -133,6 +133,7 @@ var param_item_existed = function (res) {
                 "reqParam": pt_id
             }
             , deal: function (res) {
+                console.log(res)
                 return {
                     code: 0
                     , msg: ""
@@ -150,7 +151,7 @@ var param_item_existed = function (res) {
                         return '<div id="projectInCharge_' + d.id + '"></div>'
                     }, event: 'lookProjectInChargeDetail'
                 }
-                , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 115 }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 65 }
             ]]
             , done: function (res) {
                 console.log(res.data)

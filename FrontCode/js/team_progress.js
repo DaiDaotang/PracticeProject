@@ -48,3 +48,62 @@ layui.use(['element', 'jquery'], function () {
         checked_tab_id = data.index;
     });
 });
+
+layui.use(['tree', 'util'], function () {
+    var tree = layui.tree
+        , layer = layui.layer
+        , util = layui.util;
+
+    var data1 = [{
+        title: '江西'
+        , id: 1
+        , children: [{
+            title: '南昌'
+            , id: 1000
+            , children: [{
+                title: '青山湖区'
+                , id: 10001
+            }, {
+                title: '高新区'
+                , id: 10002
+            }]
+        }, {
+            title: '九江'
+            , id: 1001
+        }, {
+            title: '赣州'
+            , id: 1002
+        }]
+    }, {
+        title: '广西'
+        , id: 2
+        , children: [{
+            title: '南宁'
+            , id: 2000
+        }, {
+            title: '桂林'
+            , id: 2001
+        }]
+    }, {
+        title: '陕西'
+        , id: 3
+        , children: [{
+            title: '西安'
+            , id: 3000
+        }, {
+            title: '延安'
+            , id: 3001
+        }]
+    }]
+
+    //开启节点操作图标
+    tree.render({
+        elem: '#test9'
+        , data: data1
+        , showCheckbox: true  //是否显示复选框
+        , edit: ['add', 'update', 'del'] //操作节点的图标
+        , click: function (obj) {
+            layer.msg(JSON.stringify(obj.data));
+        }
+    });
+});
