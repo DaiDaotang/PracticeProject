@@ -18,7 +18,7 @@ public class GetCompanyTeacherByPracticeIdDao {
         PreparedStatement state;
         try{
             conn.setAutoCommit(false);
-            String sql ="SELECT teacherId,teacherName,teacherSex FROM pracctrelation NATURAL JOIN companyteacher WHERE practiceId = ?";
+            String sql ="SELECT teacherId,teacherName,teacherSex FROM companyteacher JOIN pracctrelation ON companyteacher.teacherId = pracctrelation.companyTeacherId WHERE practiceId = ?";
             state = conn.prepareStatement(sql);
             state.setInt(1,practiceId);
             ResultSet rs = state.executeQuery();
