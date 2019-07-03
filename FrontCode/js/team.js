@@ -17,7 +17,8 @@ var target_id = parseInt(t_param[`target_id`])
     , target_team_scores = -1
     , user_is_captain = false
     , captain_id = -1
-    , target_hd_img = "./img/defaultHead.jpg";
+    , target_hd_img = "./img/defaultHead.jpg"
+    , target_team_members = [];
 
 var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&user_pt_id=" + t_param[`user_pt_id`]
 document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
@@ -29,9 +30,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form
         , $ = layui.jquery
         , layer = layui.layer;
-
-    //获取队员名字并加入菜单栏
-
 
     //补全基本信息
     $.ajax({
@@ -52,7 +50,8 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 , target_team_scores = res.resData.teamScores
                 , user_is_captain = res.resData.isCaptain
                 , captain_id = res.resData.captainId
-                , target_hd_img = res.resData.head ? res.resData.head : "";;
+                , target_hd_img = res.resData.head ? res.resData.head : ""
+                , target_team_members = res.resData.students;
 
             document.getElementById("target_team_name").innerText = target_team_name;
             document.getElementById("target_team_item").innerText += target_item_name;
