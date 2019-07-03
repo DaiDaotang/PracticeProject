@@ -34,8 +34,8 @@ public class StudentCheckTeamDao {
                         teamBean.setprojectId(resultSet2.getInt(2));
                         teamBean.setprojectName(resultSet2.getString(3));
                         teamBean.setpracticeId(resultSet2.getInt(4));
+                        return teamBean;
                     }
-                    return teamBean;
                 }
             }else{
                 PreparedStatement state;
@@ -49,8 +49,8 @@ public class StudentCheckTeamDao {
                     teamBean.setprojectId(resultSet.getInt(3));
                     teamBean.setprojectName(resultSet.getString(4));
                     teamBean.setpracticeId(resultSet.getInt(5));
+                    return teamBean;
                 }
-                return teamBean;
             }
         }catch (SQLException e){
             e.printStackTrace();
