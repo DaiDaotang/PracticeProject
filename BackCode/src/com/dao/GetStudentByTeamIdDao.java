@@ -18,6 +18,7 @@ public class GetStudentByTeamIdDao {
         ArrayList<StudentBean> studentBeans = new ArrayList<>();
         Connection conn = DBConn.getConnection();
         PreparedStatement state,state2;
+        int captainId = 0;
         try{
             conn.setAutoCommit(false);
             String sql ="SELECT student.studentId,studentName,studentNumber,studentGrade,studentSex FROM student NATURAL JOIN stprelation WHERE teamId = ?;";
@@ -34,19 +35,27 @@ public class GetStudentByTeamIdDao {
                 studentBean.setSex(rs.getString(5));
                 studentBeans.add(studentBean);
             }
-            teamBean.setStudents(studentBeans);
             state2 = conn.prepareStatement("SELECT team.*,projectId,projectName FROM team NATURAL JOIN stprelation NATURAL JOIN project WHERE teamId = ?;");
             state2.setInt(1,teamId);
             ResultSet rs2 = state2.executeQuery();
             if (rs2.next()){
                 teamBean.setteamId(teamId);
                 teamBean.setteamName(rs2.getString(2));
-                teamBean.setcaptainId(rs2.getInt(3));
+                captainId = rs2.getInt(3);
+                teamBean.setcaptainId(captainId);
                 teamBean.setteamScores(rs2.getInt(4));
                 teamBean.setgithubLink(rs2.getString(5));
                 teamBean.setprojectId(rs2.getInt(6));
                 teamBean.setprojectName(rs2.getString(7));
+            } else return null;
+            for (StudentBean student:studentBeans) {
+                if (student.getId()==captainId){
+                    studentBeans.remove(student);
+                    studentBeans.add(0,student);
+                    break;
+                }
             }
+            teamBean.setStudents(studentBeans);
             conn.commit();
             return teamBean;
         }catch (SQLException e){
