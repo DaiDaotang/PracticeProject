@@ -1,4 +1,4 @@
-// JavaScript source code
+ï»¿// JavaScript source code
 var HomepageURL = "homepage_student.html"
     , StudentDiaryURL = "student_diary.html"
     , StudentHistoryURL = "student_history.html"
@@ -9,7 +9,7 @@ var HomepageURL = "homepage_student.html"
     , ChangeHeadURL = "login.html"
     , WriteDiaryURL = "login.html";
 
-//±äÁ¿
+//å˜é‡
 var user_hasChecked = false
     , target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
@@ -23,28 +23,28 @@ var user_hasChecked = false
 
 var default_target_pt_id = -1;
 
-//Çø
+//åŒº
 layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form
         , $ = layui.jquery
         , layer = layui.layer;
 
-    //¼àÌıÖÃ¶¥
+    //ç›‘å¬ç½®é¡¶
     $(document).on('click', '#turntop', function () {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
 
-    //¼àÌıĞ´ÈÕÖ¾
+    //ç›‘å¬å†™æ—¥å¿—
     $(document).on('click', '#write_diary_btn', function () {
         layer.open({
-            title: 'ÈÕÖ¾',
+            title: 'æ—¥å¿—',
             type: 2,
             area: ["500px", "500px"],
             content: WriteDiaryURL
         });
     });
 
-    //»ñÈ¡ĞÅÏ¢
+    //è·å–ä¿¡æ¯
     $.ajax({
         type: "POST",
         url: GetStudentServletURL,
@@ -63,7 +63,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 , target_major = res.resData.major
                 , target_hd_img = res.resData.head ? res.resData.head : "";
 
-            //ÉèÖÃÇ©µ½
+            //è®¾ç½®ç­¾åˆ°
             $.ajax({
                 type: "POST",
                 url: "http://localhost:8080/GetAtWorkServlet",
@@ -98,7 +98,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("target_head_img").style.border = "1px solid #6e7474";
 
             document.getElementById("username").innerText = target_name;
-            document.getElementById("gender").innerHTML = target_gender == "ÄĞ" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
+            document.getElementById("gender").innerHTML = target_gender == "ç”·" ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
             document.getElementById("school_a").innerText += target_school_name;
             document.getElementById("major").innerText += target_major;
             document.getElementById("grade").innerText += target_grade;
@@ -113,7 +113,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url;
         },
         error: function (res) {
-            console.log("»ñÈ¡ÓÃ»§»ù±¾ĞÅÏ¢Ê§°Ü");
+            console.log("è·å–ç”¨æˆ·åŸºæœ¬ä¿¡æ¯å¤±è´¥");
         }
     });
 })

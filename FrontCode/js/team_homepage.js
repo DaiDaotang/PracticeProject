@@ -1,61 +1,84 @@
-﻿var AddMemberURL = "http://localhost:8080/AddStudentServlet";
+﻿var AddMemberURL = "http://localhost:8080/AddStudentServlet"
+    , GetTeamMemberURL = "http://localhost:8080/GetStudentByTeamIdServlet";
 
-var param_member_existed = function (res) {
-    return {
-        elem: '#team_member_table'
-        , url: GetTeamMemberURL
-        , title: '队员列表'
-        , contentType: 'application/json'
-        , toolbar: "#toolbar_item"
-        , method: "POST"
-        , where: {
-            "reqId": ""
-            , "reqParam": ""
-        }
-        , deal: function (res) {
-            console.log(res)
-            return {
-                code: 0
-                , msg: ""
-                , count: 1000
-                , data: res.resData
-            }
-        }
-        , cols: [[
-            { field: 'id', title: '实训ID', sort: true }
-            , { field: 'name', title: '实训名称' }
-            , { field: 'schoolName', title: '主办学校' }
-            , {
-                field: 'type', title: '承包公司', templet: function (d) {
-                    return '<div id="company_' + d.id + '"></div>'
-                }
-            }
-            , { field: 'content', title: '实训概述', event: 'lookIntroDetail' }
-            , { field: 'startTime', title: '开始时间' }
-            , { field: 'endTime', title: '结束时间', event: 'lookIntroDetail' }
-            , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 120 }
-        ]]
-        , done: function (res) {
-            console.log(res.data)
-            for (var i = 0; i < res.data.length; i++) {
-                document.getElementById('company_' + res.data[i].id).innerText = target_company_name;
-            }
-        }
-    }
-}
+var target_team_id = parseInt(t_param[`team_id`])
+    , user_is_captain = false
+    , user_id = t_param[`user_id`];
 
 layui.use(['form', 'table', 'layer', 'jquery'], function () {
     var table = layui.table
         , layer = layui.layer
         , form = layui.form
         , $ = layui.jquery;
+    var param_member_existed = function (res) {
+        return {
+            elem: '#team_member_table'
+            , url: GetTeamMemberURL
+            , title: '队员列表'
+            , contentType: 'application/json'
+            , toolbar: "#toolbar_item"
+            , method: "POST"
+            , where: {
+                "reqId": ""
+                , "reqParam": target_team_id
+            }
+            , deal: function (res) {
+                console.log(res)
+                return {
+                    code: 0
+                    , msg: ""
+                    , count: 1000
+                    , data: res.resData
+                }
+            }
+            , cols: [[
+                { field: 'id', title: 'ID', sort: true, hide: true }
+                , { field: 'name', title: '姓名' }
+                , { field: 'sex', title: '性别' }
+                , { field: 'number', title: '学号' }
+                , { field: 'grade', title: '年级' }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_trans_del', width: 140 }
+            ]]
+            , done: function (res) {
+                console.log(res.data)
+                $.ajax({
+                    type: "POST",
+                    url: GetTeamInfoURL,
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": "",
+                        "reqParam": {
+                            "id": user_id,
+                            "practiceId": target_pt_id
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        user_is_captain = res.resData.isCaptain
+                        if (!user_is_captain) {
+                            $("[data-field='right']").css('display', 'none');
+                        }
+                    },
+                    error: function (res) {
+                        console.log("error");
+                        console.log(res);
+                    }
+                });
+
+            }
+        }
+    }
 
     $(document).on('click', '#addMember', function () {
         layer.prompt({
             formType: 0,
             value: '',
             title: '请输入电话号',
-            area: ['300px', '350px'] //自定义文本域宽高
+            area: ['300px', '350px'], //自定义文本域宽高,
+            end: function () {
+                table.render(param_member_existed(1))
+            }
         }, function (value, index, elem) {
             //alert(value); //得到value
             console.log(target_team_id)

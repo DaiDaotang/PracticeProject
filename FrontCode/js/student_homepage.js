@@ -150,12 +150,14 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 }),
                 dataType: "json",
                 success: function (res) {
-                    target_pt_id = res.resData.practiceId
-                    form.val('student_pt', {
-                        "student_pt": target_pt_id
-                    })
-                    form.render('select')
+                    console.log(res)
                     if (res.isSuccess) {        //有团队
+                        target_pt_id = res.resData.practiceId
+                        form.val('student_pt', {
+                            "student_pt": target_pt_id
+                        })
+                        form.render('select')
+
                         target_group_id = res.resData.teamId
                             , target_group_name = res.resData.teamName
                             , target_item_id = res.resData.projectId
@@ -173,7 +175,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("group_name").innerText = "暂无";
                         document.getElementById("item_name").innerText = "暂无";
                         document.getElementById("item_a").href = "javascript:return false;";
-                        if (target_authority == user_authority && target_id == user_id) {
+                        if (target_authority == user_authority && target_id == user_id && target_pt_id != -1) {
                             document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&user_pt_id=" + target_pt_id;
                         }
                         else {
