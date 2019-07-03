@@ -2,6 +2,8 @@ package com.dao;
 
 import com.DBConn;
 import com.bean.PracticeBean;
+import com.bean.RequestBean;
+import com.bean.SchoolTeacherBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,16 +14,23 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GetCanModifiedPracticeBySchoolTeacherIdDao {
-    public ArrayList<PracticeBean> GetPractice(int schoolTeacherId)
+    public ArrayList<PracticeBean> GetPractice(RequestBean<SchoolTeacherBean> reqBean)
     {
         ArrayList<PracticeBean> practiceBeans = new ArrayList<>();
+        SchoolTeacherBean schoolTeacherBean = reqBean.getReqParam();
         Connection conn = DBConn.getConnection();
         PreparedStatement state;
         try{
             conn.setAutoCommit(false);
-            String sql ="SELECT practice.*,company.companyId,companyName FROM pracstrelation NATURAL JOIN practice NATURAL JOIN pscrelation NATURAL JOIN company WHERE schoolTeacherId = ? AND isMain = TRUE AND starttime > ?;";
+            String sql;
+            if (schoolTeacherBean.isCanModify()){
+                sql = "SELECT practice.*,company.companyId,companyName FROM pracstrelation NATURAL JOIN practice NATURAL JOIN pscrelation NATURAL JOIN company WHERE schoolTeacherId = ? AND isMain = TRUE AND starttime > ?;";
+            }
+            else {
+                sql = "SELECT practice.*,company.companyId,companyName FROM pracstrelation NATURAL JOIN practice NATURAL JOIN pscrelation NATURAL JOIN company WHERE schoolTeacherId = ? AND isMain = TRUE AND starttime <= ?;";
+            }
             state = conn.prepareStatement(sql);
-            state.setInt(1,schoolTeacherId);
+            state.setInt(1,schoolTeacherBean.getId());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             state.setString(2,dateFormat.format(new Date()));
             ResultSet rs = state.executeQuery();

@@ -12,6 +12,7 @@ public class CompanyTeacherBean {
     private String head;
     private int practice;
     private ArrayList<ProjectBean> projects;
+    private boolean canModify;
 
     public String getTelephone() {
         return telephone;
@@ -83,5 +84,13 @@ public class CompanyTeacherBean {
 
     public void setProjects(ArrayList<ProjectBean> projects) {
         this.projects = projects;
+    }
+
+    public boolean isCanModify() {
+        return canModify;
+    }
+
+    public void setCanModify(boolean canModify) {
+        this.canModify = canModify;
     }
 }
