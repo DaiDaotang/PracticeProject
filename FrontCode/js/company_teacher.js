@@ -1,4 +1,4 @@
-//// JavaScript source code
+ï»¿//// JavaScript source code
 var GetCompanyTeacherInfoURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
     , GetCompanyNameURL = "http://localhost:8080/GetCompanyInformationServlet"
     , ProjectInChargeURL = "company_teacher_project_in_charge.html"
@@ -7,7 +7,7 @@ var GetCompanyTeacherInfoURL = "http://localhost:8080/GetCompanyTeacherInformati
     , HomepageURL = "homepage_company_teacher.html"
     , CompanyPTListURL = "company_pt_list.html";
 
-//±äÁ¿
+//å˜é‡
 var target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
     , target_name = ""
@@ -16,28 +16,28 @@ var target_id = parseInt(t_param[`target_id`])
     , target_company_id = -1
     , target_company_name = "";
 
-//²âÊÔ±äÁ¿
+//æµ‹è¯•å˜é‡
 var test_style = "1px solid #000";
 
-//formÇø + ´óÇø
+//formåŒº + å¤§åŒº
 layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form
         , $ = layui.jquery
         , layer = layui.layer;
 
-    //¼àÌıËÑË÷
+    //ç›‘å¬æœç´¢
     form.on('submit(search_diary_btn)', function (data) {
         console.log(data.field);
         //layer.msg(JSON.stringify(data.field));
         return false;
     });
 
-    //¼àÌıÖÃ¶¥
+    //ç›‘å¬ç½®é¡¶
     $(document).on('click', '#turntop', function () {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
 
-    //»ñÈ¡ĞÅÏ¢
+    //è·å–ä¿¡æ¯
     $.ajax({
         type: "POST",
         url: GetCompanyTeacherInfoURL,
@@ -57,40 +57,40 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("target_modify_pt").href = ModifyPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
         },
         error: function (res) {
-            console.log("»ñÈ¡ÓÃ»§»ù±¾ĞÅÏ¢Ê§°Ü");
+            console.log("è·å–ç”¨æˆ·åŸºæœ¬ä¿¡æ¯å¤±è´¥");
         }
     });
 });
 
-//laydateÇø
+//laydateåŒº
 layui.use('laydate', function () {
     var laydate = layui.laydate;
 
-    //Ö´ĞĞÒ»¸ölaydateÊµÀı
+    //æ‰§è¡Œä¸€ä¸ªlaydateå®ä¾‹
     laydate.render({
         elem: '#search_diary_data'
     });
 });
 
-//flowÇø
+//flowåŒº
 layui.use('flow', function () {
     var flow = layui.flow
         , $ = layui.jquery;
 
     flow.load({
-        elem: '#diary_flow' //Á÷¼ÓÔØÈİÆ÷
-        , done: function (page, next) { //Ö´ĞĞÏÂÒ»Ò³µÄ»Øµ÷
+        elem: '#diary_flow' //æµåŠ è½½å®¹å™¨
+        , done: function (page, next) { //æ‰§è¡Œä¸‹ä¸€é¡µçš„å›è°ƒ
 
-            //Ä£ÄâÊı¾İ²åÈë
+            //æ¨¡æ‹Ÿæ•°æ®æ’å…¥
             setTimeout(function () {
                 var lis = [];
                 for (var i = 0; i < 8; i++) {
                     lis.push('<li><div style="width:auto; height: 200px; margin: 20px; background-color:#d4dadb; border-radius: 20px;"><p>' + ((page - 1) * 8 + i + 1) + '</p></div></li>')
                 }
 
-                //Ö´ĞĞÏÂÒ»Ò³äÖÈ¾£¬µÚ¶ş²ÎÊıÎª£ºÂú×ã¡°¼ÓÔØ¸ü¶à¡±µÄÌõ¼ş£¬¼´ºóÃæÈÔÓĞ·ÖÒ³
-                //pagesÎªAjax·µ»ØµÄ×ÜÒ³Êı£¬Ö»ÓĞµ±Ç°Ò³Ğ¡ÓÚ×ÜÒ³ÊıµÄÇé¿öÏÂ£¬²Å»á¼ÌĞø³öÏÖ¼ÓÔØ¸ü¶à
-                next(lis.join(''), page < 10); //¼ÙÉè×ÜÒ³ÊıÎª 10
+                //æ‰§è¡Œä¸‹ä¸€é¡µæ¸²æŸ“ï¼Œç¬¬äºŒå‚æ•°ä¸ºï¼šæ»¡è¶³â€œåŠ è½½æ›´å¤šâ€çš„æ¡ä»¶ï¼Œå³åé¢ä»æœ‰åˆ†é¡µ
+                //pagesä¸ºAjaxè¿”å›çš„æ€»é¡µæ•°ï¼Œåªæœ‰å½“å‰é¡µå°äºæ€»é¡µæ•°çš„æƒ…å†µä¸‹ï¼Œæ‰ä¼šç»§ç»­å‡ºç°åŠ è½½æ›´å¤š
+                next(lis.join(''), page < 10); //å‡è®¾æ€»é¡µæ•°ä¸º 10
             }, 300);
         }
     });

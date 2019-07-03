@@ -27,7 +27,7 @@ var pt_id = t_param[`pt_id`]
 var GetExistedItemURL = "http://localhost:8080/GetProjectinPracticeServlet"
     , GetSchoolTeacherURL = "http://localhost:8080/GetSchoolTeacherByPracticeIdServlet"
     , GetCompanyTeacherURL = "http://localhost:8080/GetCompanyTeacherByPracticeIdServlet"
-    , ItemDetailURL = "login.html"
+    , ItemDetailURL = "teacher_add_pt_new_item.html"
     , TeacherHomePageURL = "login.html"
     , AddItemURL = "teacher_add_pt_new_item.html"
     , GetPTInfoURL = "http://localhost:8080/GetPracticeInformationServlet"
@@ -217,7 +217,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     title: '添加项目',
                     type: 2,
                     area: ["500px", "500px"],
-                    content: AddItemURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id" + user_id,
+                    content: AddItemURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id,
                     end: function () {
                         table.render(param_item_existed(1));
                         table.render(param_pt_company_teacher(1));
@@ -378,9 +378,8 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                 title: data.projectName,
                 type: 2,
                 area: ["500px", "500px"],
-                content: ItemDetailURL
+                content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=detail"
             });
-
         }
         else if (layEvent === 'del') { //删除
             layer.confirm('真的删除这一项目吗？', function (index) {
@@ -394,14 +393,87 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
         }
         else if (layEvent === 'edit') { //编辑
             //do something
-
             layer.open({
-                title: data.projectName,
+                title: '添加项目',
                 type: 2,
                 area: ["500px", "500px"],
-                content: ItemDetailURL,
+                content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=edit",
                 end: function () {
-                    table.render(param_item_existed);
+                    table.render(param_item_existed(1));
+                    table.render(param_pt_company_teacher(1));
+                },
+                btn: '添加项目',
+                btnAlign: 'c', //按钮居中,
+                yes: function () {
+                    var new_item_name = window.localStorage.new_item_name
+                        , new_item_type = window.localStorage.new_item_type
+                        , new_item_difficulty = parseInt(window.localStorage.new_item_difficulty)
+                        , new_item_introduce = window.localStorage.new_item_introduce
+                        , new_item_base_content = window.localStorage.new_item_base_content
+                        , new_item_extend_content = window.localStorage.new_item_extend_content
+                        , new_item_advance_content = window.localStorage.new_item_advance_content
+                        , new_item_teachers = [];
+
+                    var temptemptemp = window.localStorage.checked_company_teacher;
+                    var str = temptemptemp.substr(0);
+                    var strs = str.split(",");
+                    for (var i = 0; i < strs.length; i++) {
+                        new_item_teachers.push(parseInt(strs[i]))
+                    }
+
+                    if (new_item_teachers.length == 0) {
+                        layer.msg("请选择企业老师", { time: 1000 })
+                    }
+                    else if (window.localStorage.new_item_name == "") {
+                        layer.msg("请填写项目名称", { time: 1000 })
+                    }
+                    else if (window.localStorage.new_item_type == "") {
+                        layer.msg("请填写项目类型", { time: 1000 })
+                    }
+                    else if (window.localStorage.new_item_introduce == "") {
+                        layer.msg("请填写项目概述", { time: 1000 })
+                    }
+                    else if (window.localStorage.new_base_content == "") {
+                        layer.msg("请填写项目简单功能", { time: 1000 })
+                    }
+                    else {
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:8080/CreateProjectServlet",
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": "",
+                                "reqParam": {
+                                    "name": new_item_name,
+                                    "type": new_item_type,
+                                    "difficulty": new_item_difficulty,
+                                    "introduce": new_item_introduce,
+                                    "baseContent": new_item_base_content,
+                                    "extendContent": new_item_extend_content,
+                                    "advanceContent": new_item_advance_content,
+                                    "practiceId": pt_id,
+                                    "teachers": new_item_teachers
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                //console.log(res);
+                                layer.msg('添加成功', { time: 1000 })
+                                window.localStorage.new_item_name = ""
+                                window.localStorage.new_item_type = ""
+                                window.localStorage.new_item_difficulty = ""
+                                window.localStorage.new_item_introduce = ""
+                                window.localStorage.new_item_base_content = ""
+                                window.localStorage.new_item_extend_content = ""
+                                window.localStorage.new_item_advance_content = ""
+                                window.localStorage.checked_company_teacher = ""
+
+                                setTimeout(function sign_up_fun() {
+                                    layer.closeAll();
+                                }, 1000);
+                            }
+                        });
+                    }
                 }
             });
 

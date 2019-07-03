@@ -62,5 +62,4 @@ layui.use(['form', 'jquery', 'layer'], function () {
             console.log("获取用户基本信息失败");
         }
     });
-
 });

@@ -15,7 +15,6 @@
     </style>
 </head>
 <body>
-
     <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:100;">
         <li class="layui-nav-item"><a href="" id="target_homepage">首页</a></li>
         <li class="layui-nav-item">
@@ -193,86 +192,87 @@
 
             //监听申请
             form.on('submit(pt_apply_btn)', function (data) {
-                var data_now = new Date();
-                console.log(data_now.getMonth() + 1);
-                var str1 = data.field.startTime;
-                var str2 = data.field.endTime;
-
-                switch (teacher_authority) {
-                    case "Teacher":
-                        $.ajax({
-                            type: "POST",
-                            url: CreatePTURL,
-                            async: true,
-                            data: JSON.stringify({
-                                "reqId": ""
-                                , "reqParam": {
-                                    "name": data.field.pt_name,
-                                    "content": data.field.pt_content,
-                                    "startTime": data.field.pt_start_data,
-                                    "endTime": data.field.pt_end_data,
-                                    "school": data.field.pt_school,
-                                    "company": data.field.pt_company,
-                                    "companyTeacherId": teacher_id
-                                }
-                            }),
-                            dataType: "json",
-                            success: function (res) {
-                                if (res.isSuccess) {
-                                    console.log(res)
-                                    layer.msg('创建成功', { time: 1000 })
-                                    setTimeout(function finish_publish_fun() {
-                                        window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + parseInt(res.resData) + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
-                                    }, 1500);
-                                }
-                                else {
-                                    layer.msg('创建失败', { time: 1000 })
-                                }
-                            },
-                            error: function (res) {
-                                console.log("error");
-                                console.log(res);
-                            }
-                        });
-                        break;
-                    case "School":
-                        $.ajax({
-                            type: "POST",
-                            url: CreatePTURL,
-                            async: true,
-                            data: JSON.stringify({
-                                "reqId": ""
-                                , "reqParam": {
-                                    "name": data.field.pt_name,
-                                    "content": data.field.pt_content,
-                                    "startTime": data.field.pt_start_data,
-                                    "endTime": data.field.pt_end_data,
-                                    "school": data.field.pt_school,
-                                    "company": data.field.pt_company,
-                                    "schoolTeacherId": teacher_id
-                                }
-                            }),
-                            dataType: "json",
-                            success: function (res) {
-                                if (res.isSuccess) {
-                                    console.log(res)
-                                    layer.msg('创建成功', { time: 1000 })
-                                    setTimeout(function finish_publish_fun() {
-                                        window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + res.resData;
-                                    }, 1000);
-                                }
-                                else {
-                                    layer.msg('创建失败', { time: 1000 })
-                                }
-                            },
-                            error: function (res) {
-                                console.log("error");
-                                console.log(res);
-                            }
-                        });
-                        break;
+                console.log("sss")
+                if (!check_data(data.field.pt_start_data, data.field.pt_end_data)) {
+                    layer.alert('时间有误');
                 }
-
+                else {
+                    switch (teacher_authority) {
+                        case "Teacher":
+                            $.ajax({
+                                type: "POST",
+                                url: CreatePTURL,
+                                async: true,
+                                data: JSON.stringify({
+                                    "reqId": ""
+                                    , "reqParam": {
+                                        "name": data.field.pt_name,
+                                        "content": data.field.pt_content,
+                                        "startTime": data.field.pt_start_data,
+                                        "endTime": data.field.pt_end_data,
+                                        "school": data.field.pt_school,
+                                        "company": data.field.pt_company,
+                                        "companyTeacherId": teacher_id
+                                    }
+                                }),
+                                dataType: "json",
+                                success: function (res) {
+                                    if (res.isSuccess) {
+                                        console.log(res)
+                                        layer.msg('创建成功', { time: 1000 })
+                                        setTimeout(function finish_publish_fun() {
+                                            window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + parseInt(res.resData) + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
+                                        }, 1500);
+                                    }
+                                    else {
+                                        layer.msg('创建失败', { time: 1000 })
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log("error");
+                                    console.log(res);
+                                }
+                            });
+                            break;
+                        case "School":
+                            $.ajax({
+                                type: "POST",
+                                url: CreatePTURL,
+                                async: true,
+                                data: JSON.stringify({
+                                    "reqId": ""
+                                    , "reqParam": {
+                                        "name": data.field.pt_name,
+                                        "content": data.field.pt_content,
+                                        "startTime": data.field.pt_start_data,
+                                        "endTime": data.field.pt_end_data,
+                                        "school": data.field.pt_school,
+                                        "company": data.field.pt_company,
+                                        "schoolTeacherId": teacher_id
+                                    }
+                                }),
+                                dataType: "json",
+                                success: function (res) {
+                                    if (res.isSuccess) {
+                                        console.log(res)
+                                        layer.msg('创建成功', { time: 1000 })
+                                        setTimeout(function finish_publish_fun() {
+                                            window.location.href = TeacherAddPTItemURL + "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&pt_id=" + res.resData;
+                                        }, 1000);
+                                    }
+                                    else {
+                                        layer.msg('创建失败', { time: 1000 })
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log("error");
+                                    console.log(res);
+                                }
+                            });
+                            break;
+                    }
+                    return false;
+                }
                 return false;
             });
 
@@ -283,6 +283,28 @@
             laydate.render({
                 elem: '#pt_end_data'
             });
+
+            function check_data(str1, str2) {
+                var data_now = new Date()
+                    , year_now = data_now.getFullYear()
+                    , month_now = data_now.getMonth() + 1
+                    , day_now = data_now.getDay();
+                var strs1 = str1.split("-")
+                var strs2 = str2.split("-");
+                
+                if (parseInt(strs1[0]) < year_now || parseInt(strs2[0]) < parseInt(strs1[0])) {
+                    return false;
+                } else if (parseInt(strs1[0]) >= year_now || parseInt(strs2[0]) >= parseInt(strs1[0])) {
+                    if (parseInt(strs1[1]) < month_now || parseInt(strs2[1]) < parseInt(strs1[1])) {
+                        return false;
+                    } else if (parseInt(strs1[1]) >= month_now || parseInt(strs2[1]) >= parseInt(strs1[1])) {
+                        if (parseInt(strs1[2]) <= day_now || parseInt(strs2[2]) <= parseInt(strs1[2])) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
         });
     </script>
 </body>

@@ -59,7 +59,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 , target_hd_img = res.resData.head ? res.resData.head : ""
                 , target_team_members = res.resData.students
                 , target_github_link = res.resData.githubLink;
-            
+
             document.getElementById("target_team_name").innerText = target_team_name;
             document.getElementById("target_team_item").innerText += target_item_name;
             document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
@@ -230,11 +230,10 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 }
             });
         });
-    })    
+    })
 
     //监听解散队伍
     $(document).on('click', '#delTeam', function () {
-
         layer.confirm('<pre>Are you seriously?</pre>', function (index) {
             $.ajax({
                 type: "POST",
@@ -263,7 +262,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 }
             });
         });
-    })    
+    })
 
     table.on('tool(team_member_table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data; //获得当前行数据
@@ -342,7 +341,6 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                     //table.render(param_member_existed(1));
                 });
             }
-
         }
     });
 });
