@@ -88,7 +88,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         , target_item_id = res.resData.projectId
                         , target_item_name = res.resData.projectName;
                     document.getElementById("group_name").innerText = target_group_name;
-                    document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&user_pt_id=" + target_pt_id;
+                    document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&target_pt_id=" + target_pt_id;
                     document.getElementById("item_name").innerText = target_item_name;
                     document.getElementById("item_a").href = ItemURL;
                     console.log(document.getElementById("group_a").href)
@@ -103,7 +103,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     document.getElementById("item_name").innerText = "暂无";
                     document.getElementById("item_a").href = "javascript:return false;";
                     if (target_authority == user_authority && target_id == user_id) {
-                        document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&user_pt_id=" + target_pt_id;
+                        document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id;
                     }
                     else {
                         document.getElementById("group_a").href = "javascript:;";
@@ -163,7 +163,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                             , target_item_id = res.resData.projectId
                             , target_item_name = res.resData.projectName;
                         document.getElementById("group_name").innerText = target_group_name;
-                        document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&user_pt_id=" + target_pt_id;
+                        document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&target_pt_id=" + target_pt_id;
                         document.getElementById("item_name").innerText = target_item_name;
                         document.getElementById("item_a").href = ItemURL;
                     } else {              //没团队
@@ -176,7 +176,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("item_name").innerText = "暂无";
                         document.getElementById("item_a").href = "javascript:return false;";
                         if (target_authority == user_authority && target_id == user_id && target_pt_id != -1) {
-                            document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&user_pt_id=" + target_pt_id;
+                            document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id;
                         }
                         else {
                             document.getElementById("group_a").href = "javascript:;";

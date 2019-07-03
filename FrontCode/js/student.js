@@ -7,7 +7,7 @@ var HomepageURL = "homepage_student.html"
     , SchoolURL = "login.html"
     , CheckInOutURL = "http://localhost:8080/SigninServlet"
     , ChangeHeadURL = "login.html"
-    , WriteDiaryURL = "login.html";
+    , WriteDiaryURL = "student_write_diary.html";
 
 //变量
 var user_hasChecked = false
@@ -40,7 +40,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             title: '日志',
             type: 2,
             area: ["500px", "500px"],
-            content: WriteDiaryURL
+            content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority
         });
     });
 

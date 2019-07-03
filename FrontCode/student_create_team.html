@@ -121,8 +121,8 @@
         console.log(t_param);
 
         var user_id = parseInt(t_param[`user_id`])
-            , user_pt_id = parseInt(t_param[`user_pt_id`]);
-        //console.log('user_id=' + user_id + 'user_school_id=' + user_school_id + 'user_pt_id=' + user_pt_id)
+            , target_pt_id = parseInt(t_param[`target_pt_id`]);
+        //console.log('user_id=' + user_id + 'user_school_id=' + user_school_id + 'target_pt_id=' + target_pt_id)
 
         var GetPTItemListURL = "http://localhost:8080/GetProjectinPracticeServlet"
             , ItemDetailURL = "login.html"
@@ -142,7 +142,7 @@
                 , height: 600
                 , where: {
                     "reqId": "111"
-                    , "reqParam": user_pt_id
+                    , "reqParam": target_pt_id
                 }
                 , deal: function (res) {
                     return {
@@ -214,7 +214,7 @@
                     document.getElementById('team_pt').innerHTML += temp;
                     form.render('select')
                     form.val('create_team_form', {
-                        "team_pt": user_pt_id
+                        "team_pt": target_pt_id
                     })
                     table.render(param_item_existed(1))
                     document.getElementById('team_pt').readonly = true;
@@ -228,7 +228,7 @@
             form.on('select(team_pt)', function (data) {
                 console.log(data.value); //得到被选中的值
 
-                user_pt_id = data.value;
+                target_pt_id = data.value;
 
                 //刷新表格
                 table.render(param_item_existed(1))

@@ -9,7 +9,7 @@ var HomepageURL = "homepage_team.html"
 var target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
     , target_team_id = parseInt(t_param[`team_id`])
-    , target_pt_id = parseInt(t_param[`user_pt_id`])
+    , target_pt_id = parseInt(t_param[`target_pt_id`])
     , target_team_name = ""
     , target_item_id = -1
     , target_item_name = ""
@@ -20,7 +20,7 @@ var target_id = parseInt(t_param[`target_id`])
     , target_hd_img = "./img/defaultHead.jpg"
     , target_team_members = [];
 
-var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&user_pt_id=" + t_param[`user_pt_id`]
+var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&target_pt_id=" + t_param[`target_pt_id`]
 document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
 document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
 document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;

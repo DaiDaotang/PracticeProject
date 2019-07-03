@@ -4,14 +4,16 @@ var HomepageURL = "homepage_team.html"
     , TeamMemberURL = "team_list.html"
     , TeamProgressURL = "team_progress.html"
     , GetTeamInfoURL = "http://localhost:8080/GetStudentByTeamIdServlet"
-    , AddMemberURL = "http://localhost:8080/AddStudentServlet";
+    , AddMemberURL = "http://localhost:8080/AddStudentServlet"
+    , DelMemberURL = "http://localhost:8080/DeleteStudentFromTeamServlet"
+    , ModifyCaptainURL = "http://localhost:8080/ModifyCaptainServlet";
 
 var user_id = t_param[`user_id`]
     , user_authority = t_param[`user_authority`]
     , target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
     , target_team_id = parseInt(t_param[`team_id`])
-    , target_pt_id = parseInt(t_param[`user_pt_id`])
+    , target_pt_id = parseInt(t_param[`target_pt_id`])
     , target_team_name = ""
     , target_item_id = -1
     , target_item_name = ""
@@ -22,7 +24,9 @@ var user_id = t_param[`user_id`]
     , target_hd_img = "./img/defaultHead.jpg"
     , target_team_members = [];
 
-var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&user_pt_id=" + t_param[`user_pt_id`]
+var param_member_existed = "";
+
+var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&target_pt_id=" + t_param[`target_pt_id`]
 document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
 document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
 document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
@@ -33,7 +37,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         , form = layui.form
         , $ = layui.jquery;
 
-    //补全基本信息
+    //基本信息
     $.ajax({
         type: "POST",
         url: GetTeamInfoURL,
@@ -65,7 +69,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
             }
             document.getElementById("team_list").innerHTML = temp;
 
-            var param_member_existed = function (res) {
+            param_member_existed = function (res) {
                 if (user_id == captain_id) {
                     return {
                         elem: '#team_member_table'
@@ -133,6 +137,11 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 }
             }
 
+            if (user_id != captain_id) {
+                document.getElementById('addMember').style.display = 'none';
+                document.getElementById('delTeam').innerText = "退出队伍";
+            }
+
             table.render(param_member_existed(1));
         },
         error: function (res) {
@@ -172,6 +181,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                     console.log(res);
                     if (res.isSuccess) {
                         layer.close(index);
+
                         table.render(param_member_existed(1));
 
                         //更新导航栏
@@ -199,9 +209,41 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                                 console.log(res);
                             }
                         });
-
                     } else {
                         layer.msg(res.message, { time: 1000 })
+                    }
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
+        });
+    })    
+
+    //监听解散队伍
+    $(document).on('click', '#delTeam', function () {
+
+        layer.confirm('<pre>Are you seriously?</pre>', function (index) {
+            $.ajax({
+                type: "POST",
+                url: DelMemberURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": {
+                        "id": user_id,
+                        "teamId": target_team_id
+                    }
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    if (res.isSuccess) {
+                        layer.msg("操作成功", { time: 1000 })
+                        setTimeout(function sign_up_fun() {
+                            window.location.href = "homepage_student.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student";
+                        }, 1500);
                     }
                 },
                 error: function (res) {
@@ -216,26 +258,70 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         var data = obj.data; //获得当前行数据
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         var tr = obj.tr; //获得当前行 tr 的DOM对象
-
-        if (layEvent === 'detail') { //查看
-            layer.open({
-                title: data.projectName,
-                type: 2,
-                area: ["500px", "500px"],
-                content: ItemDetailURL
-            });
-
+        if (user_id == target_id && user_id == captain_id && data.id == captain_id) {
+            layer.msg('您就是队长哦', { time: 1000 })
         }
-        else if (layEvent === 'del') { //删除
-            layer.confirm('<pre>真的删除这一成员吗？\n(如果是队长，将解散队伍)</pre>', function (index) {
-                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                layer.close(index);
+        else {
+            if (layEvent === 'trans') { //转让
+                $.ajax({
+                    type: "POST",
+                    url: ModifyCaptainURL,
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": "",
+                        "reqParam": {
+                            "teamId": target_team_id,
+                            "studentId": data.id
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        if (res.isSuccess) {
+                            layer.msg("转让成功", { time: 1000 })
+                            setTimeout(function sign_up_fun() {
+                                window.location.href = "homepage_team.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
+                            }, 1500);
+                        }
+                    },
+                    error: function (res) {
+                        console.log("error");
+                        console.log(res);
+                    }
+                });
+            }
+            else if (layEvent === 'del') { //删除
+                layer.confirm('<pre>真的删除这一成员吗？\n(如果是队长，将解散队伍)</pre>', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
 
-                ////向服务端发送删除指令
+                    ////向服务端发送删除指令
 
-                table.render(param_item_existed);
-            });
+                    $.ajax({
+                        type: "POST",
+                        url: DelMemberURL,
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "id": data.id,
+                                "teamId": target_team_id
+                            }
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
+                        }
+                    });
+
+                    //table.render(param_member_existed(1));
+                });
+            }
+
         }
     });
-
 });
