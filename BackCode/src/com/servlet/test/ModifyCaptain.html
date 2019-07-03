@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="utf-8">
@@ -10,15 +11,13 @@ $END$
 <script>
     $.ajax({
         type:"POST",
-        url:"http://localhost:8080/AddStudentServlet",
+        url:"http://localhost:8080/ModifyCaptainServlet",
         async:true,
         data:JSON.stringify({
-            "reqId":"111",
+            "reqId":"",
             "reqParam":{
                 "teamId":4,
-                "telephone":"22255588800",
-                "practiceId":4,
-                "projectId":5
+                "studentId":35
             }
         }),
         dataType:"json",

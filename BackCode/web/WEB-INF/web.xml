@@ -371,4 +371,13 @@
         <servlet-name>GetStudentByTeamIdServlet</servlet-name>
         <url-pattern>/GetStudentByTeamIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifyCaptainServlet</servlet-name>
+        <servlet-class>com.servlet.ModifyCaptainServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifyCaptainServlet</servlet-name>
+        <url-pattern>/ModifyCaptainServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

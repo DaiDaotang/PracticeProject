@@ -1,9 +1,10 @@
 package com.servlet;
 
-import com.bean.*;
-import com.dao.WriteDiaryDao;
+import com.bean.RequestBean;
+import com.bean.ResponseBean;
+import com.bean.TeamBean;
+import com.dao.ModifyCaptainDao;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.ServletException;
@@ -16,8 +17,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 
-@WebServlet(name = "WriteDiaryServlet")
-public class WriteDiaryServlet extends HttpServlet {
+@WebServlet(name = "ModifyCaptainServlet")
+public class ModifyCaptainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -28,24 +29,30 @@ public class WriteDiaryServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Type requestType = new TypeToken<RequestBean<DiaryBean>>(){}.getType();
-        RequestBean<DiaryBean> reqBean = gson.fromJson(content,requestType);
+        Gson gson = new Gson();
+        Type requestType = new TypeToken<RequestBean<TeamBean>>(){}.getType();
+        RequestBean<TeamBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean resBean = new ResponseBean<>();
         try{
-            WriteDiaryDao dao = new WriteDiaryDao();
-            int i =dao.writeDiary(reqBean);
-            if (i == -1){
+            ModifyCaptainDao dao = new ModifyCaptainDao();
+            int res = dao.modifyCaptain(reqBean);
+            if (res == -1){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
+                resBean.setMessage("There is something wrong in the database!");
+            }else if (res == -2){
+                resBean.setResId(reqBean.getReqId());
+                resBean.setSuccess(false);
+                resBean.setMessage("The student is not in the team!");
             }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
             }
+            //识别ResponseBean<LoginBean>类的结构
             Type respType = new TypeToken<ResponseBean>(){}.getType();
-            String s = gson.toJson(resBean,respType);
-            out.print(s);
+            //通过toJson方法将对象转化为json格式的字符串
+            out.print(gson.toJson(resBean,respType));
         }catch (Exception e){
             out.print(e.toString());
         }
