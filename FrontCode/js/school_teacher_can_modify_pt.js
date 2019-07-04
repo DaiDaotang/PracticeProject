@@ -1,6 +1,6 @@
 ﻿// JavaScript source code
-var GetModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeByCompanyTeacherIdServlet"
-    , ModifyPTDetailURL = "company_teacher_add_pt_item.html";
+var GetModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeBySchoolTeacherIdServlet"
+    , ModifyPTDetailURL = "school_teacher_add_pt_item.html";
 
 var target_name = ""
     , target_gender = ""
@@ -35,7 +35,7 @@ var param_item_existed = function (res0) {
             }
         }
         , cols: [[
-            { field: 'id', title: '实训ID', sort: true , hide:true}
+            { field: 'id', title: '实训ID', sort: true, hide: true }
             , { field: 'name', title: '实训名称' }
             , { field: 'schoolName', title: '主办学校' }
             , {
@@ -45,7 +45,7 @@ var param_item_existed = function (res0) {
             }
             , { field: 'content', title: '实训概述', event: 'lookIntroDetail' }
             , { field: 'startTime', title: '开始时间' }
-            , { field: 'endTime', title: '结束时间'}
+            , { field: 'endTime', title: '结束时间' }
             , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 120 }
         ]]
         , done: function (res) {
@@ -68,7 +68,7 @@ var param_item_existed = function (res0) {
                 "reqId": ""
                 , "reqParam": {
                     "id": parseInt(t_param[`user_id`])
-                    , "canModify":false
+                    , "canModify": false
                 }
             }
             , deal: function (res) {
@@ -81,7 +81,7 @@ var param_item_existed = function (res0) {
                 }
             }
             , cols: [[
-                { field: 'id', title: '实训ID', sort: true, hide: true}
+                { field: 'id', title: '实训ID', sort: true, hide: true }
                 , { field: 'name', title: '实训名称' }
                 , { field: 'schoolName', title: '主办学校' }
                 , {
@@ -92,7 +92,7 @@ var param_item_existed = function (res0) {
                 , { field: 'content', title: '实训概述', event: 'lookIntroDetail' }
                 , { field: 'startTime', title: '开始时间' }
                 , { field: 'endTime', title: '结束时间', event: 'lookIntroDetail' }
-                , { fixed: 'right', title: '操作', toolbar: '#bar_detail', width: 62 }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_detail', width: 60 }
             ]]
             , done: function (res) {
                 console.log(res.data)
@@ -112,7 +112,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
     //获取信息
     $.ajax({
         type: "POST",
-        url: GetCompanyTeacherInfoURL,
+        url: GetSchoolTeacherInfoURL,
         async: true,
         data: JSON.stringify({
             "reqId": "",
@@ -123,35 +123,18 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
             console.log(res);
             target_name = res.resData.name
                 , target_gender = res.resData.sex
-                , target_company_id = res.resData.company
-                , target_company_name = res.resData.companyName
-                , target_hd_img = res.resData.head ? res.resData.head : "";
+                , target_hd_img = res.resData.head ? res.resData.head : ""
+                , target_school_name = res.resData.schoolName;
+
             document.getElementById("target_hd_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_hd_img").style.border = "1px solid #6e7474";
 
             document.getElementById("username").innerText = target_name;
             document.getElementById("gender").innerHTML = (target_gender == "男") ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
-            $.ajax({
-                type: "POST",
-                url: GetCompanyNameURL,
-                async: true,
-                data: JSON.stringify({
-                    "reqId": "",
-                    "reqParam": target_company_id
-                }),
-                dataType: "json",
-                success: function (res) {
-                    target_company_name = res.resData.name;
-                    document.getElementById("company_name").innerText = target_company_name;
+            document.getElementById("school_name").innerText = target_school_name;
 
-                    table.render(param_item_existed(1));
-                    table.render(param_item_past(1))
-                },
-                error: function (res) {
-                    console.log("error");
-                    console.log(res);
-                }
-            });
+            table.render(param_item_existed(1));
+            table.render(param_item_past(1))
         },
         error: function (res) {
             console.log("获取用户基本信息失败");
@@ -177,15 +160,11 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                         "reqId": "",
                         "reqParam": {
                             "id": data.id,
-                            "companyTeacherId": user_id
+                            "schoolTeacherId": user_id
                         }
                     }),
                     dataType: "json",
                     success: function (res) {
-                        console.log(user_id)
-                        console.log(data.id)
-                        console.log("aaa")
-                        console.log(res)
                         layer.close(index);
                         table.render(param_item_existed(1));
                     },
