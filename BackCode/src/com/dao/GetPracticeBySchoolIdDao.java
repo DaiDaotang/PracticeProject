@@ -7,19 +7,29 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class GetPracticeBySchoolIdDao {
-    public ArrayList<PracticeBean> GetPractice(int schoolId)
+    public ArrayList<PracticeBean> GetPractice(int schoolId,boolean finished)
     {
         ArrayList<PracticeBean> practiceBeans = new ArrayList<>();
         Connection conn = DBConn.getConnection();
         PreparedStatement state;
         try{
             conn.setAutoCommit(false);
-            String sql ="SELECT practice.*,company.companyId,companyName FROM pscrelation NATURAL JOIN practice NATURAL JOIN company WHERE schoolId = ?;";
+            String sql;
+            if(finished)
+            {
+                sql ="SELECT practice.*,company.companyId,companyName FROM pscrelation NATURAL JOIN practice NATURAL JOIN company WHERE schoolId = ? and endtime < ?;";
+            }else {
+                sql ="SELECT practice.*,company.companyId,companyName FROM pscrelation NATURAL JOIN practice NATURAL JOIN company WHERE schoolId = ? and endtime >= ?;";
+            }
             state = conn.prepareStatement(sql);
             state.setInt(1,schoolId);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            state.setString(2,dateFormat.format(new Date()));
             ResultSet rs = state.executeQuery();
             while (rs.next()){
                 PracticeBean practiceBean = new PracticeBean();

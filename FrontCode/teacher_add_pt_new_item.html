@@ -13,18 +13,11 @@
             background-color: #1E9FFF;
             color: #1E9FFF
         }
-        .layui-table-cell .layui-rate {
-            padding: 0 5px;
-        }
-
-        .layui-table-cell .star_container {
-            margin-top: -5px;
-        }
 
     </style>
 </head>
 <body id="body_whole">
-    <form class="layui-form" action="" lay-filter="item_info" style="margin: 20px;">
+    <form class="layui-form" action="" lay-filter="item_info" style="margin: 20px;" id="item_info">
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
             <label class="layui-form-label">项目名称</label>
             <div class="layui-input-block">
@@ -68,7 +61,7 @@
         </div>
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
             <label class="layui-form-label">企业老师</label>
-            <div class="layui-input-block">
+            <div class="layui-input-block" id="teacher_info">
                 <table class="layui-hide" id="ni_company_teacher_table" lay-filter="ni_company_teacher_table"></table>
             </div>
         </div>

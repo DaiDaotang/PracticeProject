@@ -17,6 +17,7 @@ public class PracticeBean {
     private int companyTeacherId;
     private int schoolTeacherId;
     private ArrayList<Integer> schoolTeachers;
+    private boolean isFinished;
 
     public int getId() {
         return id;
@@ -119,5 +120,13 @@ public class PracticeBean {
 
     public void setSchoolTeachers(ArrayList<Integer> schoolTeachers) {
         this.schoolTeachers = schoolTeachers;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 }
