@@ -19,9 +19,8 @@ var user_hasChecked = false
     , target_school_id = -1
     , target_school_name = ""
     , target_grade = ""
-    , target_major = "";
-
-var default_target_pt_id = -1;
+    , target_major = ""
+    , target_pt_id = -1;
 
 //区
 layui.use(['form', 'jquery', 'layer'], function () {
@@ -63,16 +62,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
         });
     });
 
-    //监听签到情况
-    $(document).on('click', '#checkrecord', function () {
-        layer.open({
-            title: '签到情况',
-            type: 2,
-            area: ["500px", "500px"],
-            content: CheckRecordURL
-        });
-    });
-
     //监听置顶
     $(document).on('click', '#turntop', function () {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -95,6 +84,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 , target_school_name = res.resData.schoolName
                 , target_grade = res.resData.grade
                 , target_major = res.resData.major
+                , target_pt_id = res.resData.practiceId
                 , target_hd_img = res.resData.head ? res.resData.head : "";
 
             //设置签到
@@ -122,6 +112,16 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     console.log("error");
                     console.log(res);
                 }
+            });
+
+            //监听签到情况
+            $(document).on('click', '#checkrecord', function () {
+                layer.open({
+                    title: '签到情况',
+                    type: 2,
+                    area: ["1100px", "500px"],
+                    content: CheckRecordURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id
+                });
             });
 
             if (target_id != user_id || target_authority != user_authority) {

@@ -25,6 +25,12 @@
         </ul>
         <div class="layui-tab-content" style="">
             <div class="layui-tab-item layui-show">
+                <div>
+                    <div id="weekly_check_record_up">
+                    </div>
+                    <div id="weekly_check_record">
+                    </div>
+                </div>
                 <div id="example_echarts_0" style="width: 500px;height:400px;"></div>
             </div>
             <div class="layui-tab-item">
@@ -39,10 +45,29 @@
         </div>
     </div>
 
-    <div id="example_echarts" style="width: 600px;height:400px;"></div>
-
     <script src="incubator-echarts-4.2.1/dist/echarts.min.js"></script>
     <script src="layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+        document.getElementById("weekly_check_record_up").innerHTML += '<div style="width:85px; margin-right:10px; float:left;">One Week</div>';
+        for (var i = 7; i < 22; i++) {
+            if(i < 10)
+                document.getElementById("weekly_check_record_up").innerHTML += '<div style="width:56px;float:left;text-align:left;">0' + i + ':00</div>';
+            else
+                document.getElementById("weekly_check_record_up").innerHTML += '<div style="width:56px;float:left;text-align:left;">' + i + ':00</div>';
+        }
+        document.getElementById("weekly_check_record_up").innerHTML += '<div style="float:left;text-align:left;">22:0</div>';
+        document.getElementById("weekly_check_record_up").innerHTML += '<div>0</div>';
+        //document.getElementById("weekly_check_record").innerHTML += '<div style="width:100px; float:left; margin-right:10px;">2019-07-02</div>'
+        //for (var i = 0; i < 60; i++) {
+        //    if (i % 4 == 0) {
+        //        document.getElementById("weekly_check_record").innerHTML += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+        //    }
+        //    else {
+        //        document.getElementById("weekly_check_record").innerHTML += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+        //    }
+        //}
+    </script>
     <script type="text/javascript">
         //获取传参
         function GetRequest() {
@@ -63,7 +88,8 @@
         var user_id = t_param[`user_id`]
             , user_authority = t_param[`user_authority`]
             , target_id = t_param[`user_id`]
-            , target_authority = t_param[`user_authority`];
+            , target_authority = t_param[`user_authority`]
+            , target_pt_id = t_param[`target_pt_id`];
 
         var date_now = new Date();
         var year_now = date_now.getFullYear()
@@ -81,7 +107,7 @@
         console.log(min_now)
         console.log(sec_now)
 
-        layui.use('element', function () {
+        layui.use(['element', 'jquery'], function () {
             var $ = layui.jquery
                 , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
@@ -89,6 +115,73 @@
                 var othis = $(this), type = othis.data('type');
                 active[type] ? active[type].call(this, othis) : '';
             });
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/GetSigninByStudentServlet",
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": {
+                        "id": target_id,
+                        "practiceId": target_pt_id
+                    }
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    var last_t = -1;
+                    var temp = "";
+                    var done = false;
+                    var scanned = false;
+                    var index = 0;
+                    var str = ""
+                        , strs = []
+                        , temp_compare = 0.0;
+
+                    for (var i = 0; i < 7; i++) {
+                        temp += '<div style="width:100px; float:left; margin-right:10px;">' + res.resData[i].date + '</div>'
+
+                        for (var j = 0; j < res.resData[i].signins.length; j++) {
+                            str = (res.resData[i].signins[j].dateTime.split(" "))[1];
+                            strs = str.split(":");
+                            temp_compare = (parseFloat(strs[0]) + parseFloat(strs[1]) / 60) * 4;
+                            var temp_compare_int = parseInt(temp_compare);
+                            console.log(strs)
+                            console.log(temp_compare)
+                            console.log(temp_compare_int)
+                        }
+
+                        //for (var j = 0; j < 60; j++) {
+                        //    if (j % 4 == 0) {
+                        //        temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                        //    }
+                        //    else {
+                        //        temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                        //    }
+                        //}
+                        temp += '<div style="font-style:1px;">.</div>'
+                    }
+                    document.getElementById("weekly_check_record").innerHTML += temp;
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
+
+            function getWeek(dateString) {
+                var date;
+                if (isNull(dateString)) {
+                    date = new Date();
+                } else {
+                    var dateArray = dateString.split("-");
+                    date = new Date(dateArray[0], parseInt(dateArray[1] - 1), dateArray[2]);
+                }
+                //var weeks = new Array("日", "一", "二", "三", "四", "五", "六");
+                //return "星期" + weeks[date.getDay()];
+                return "星期" + "日一二三四五六".charAt(date.getDay());
+            };
         });
     </script>
     <script type="text/javascript">
