@@ -14,6 +14,7 @@ public class ProjectBean {
     private int practiceId;
     private ArrayList<Integer> teachers;
     private ArrayList<String> teacherNames;
+    private ArrayList<CompanyTeacherBean> companyTeachers;
     private int companyTeacherId;
     private int schoolTeacherId;
 
@@ -119,5 +120,13 @@ public class ProjectBean {
 
     public void setSchoolTeacherId(int schoolTeacherId) {
         this.schoolTeacherId = schoolTeacherId;
+    }
+
+    public ArrayList<CompanyTeacherBean> getCompanyTeachers() {
+        return companyTeachers;
+    }
+
+    public void setCompanyTeachers(ArrayList<CompanyTeacherBean> companyTeachers) {
+        this.companyTeachers = companyTeachers;
     }
 }

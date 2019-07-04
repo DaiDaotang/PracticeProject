@@ -380,4 +380,13 @@
         <servlet-name>ModifyCaptainServlet</servlet-name>
         <url-pattern>/ModifyCaptainServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeletePracticeServlet</servlet-name>
+        <servlet-class>com.servlet.DeletePracticeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletePracticeServlet</servlet-name>
+        <url-pattern>/DeletePracticeServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

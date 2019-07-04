@@ -15,7 +15,7 @@ public class DeleteProjectDao {
     {
         ProjectBean projectBean = requestBean.getReqParam();
         Connection conn = DBConn.getConnection();
-        PreparedStatement state,state2,state3,state4,state5;
+        PreparedStatement state,state2,state3;
         try{
             conn.setAutoCommit(false);
             state = conn.prepareStatement("select projectPracticeId from project where projectId = ?;");
@@ -53,15 +53,9 @@ public class DeleteProjectDao {
                 }
                 if(haveRight)
                 {
-                    state3 = conn.prepareStatement("delete from projtrelation where projectId = ?;");
+                    state3 = conn.prepareStatement("delete from project where projectId = ?;");
                     state3.setInt(1,projectBean.getId());
-                    int i = state3.executeUpdate();
-                    state5 = conn.prepareStatement("delete from stprelation where projectId = ?;");
-                    state5.setInt(1,projectBean.getId());
-                    int t = state5.executeUpdate();
-                    state4 = conn.prepareStatement("delete from project where projectId = ?;");
-                    state4.setInt(1,projectBean.getId());
-                    int j = state4.executeUpdate();
+                    state3.executeUpdate();
                     conn.commit();
                     return 0;
                 }else{
@@ -69,7 +63,6 @@ public class DeleteProjectDao {
                 }
             }
             return -1;
-
         }catch (SQLException e){
             e.printStackTrace();
             DBConn.rollback(conn);

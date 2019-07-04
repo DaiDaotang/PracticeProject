@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.DBConn;
+import com.bean.CompanyTeacherBean;
 import com.bean.ProjectBean;
 
 import java.sql.Connection;
@@ -10,8 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GetProjectInformationDao {
-
-
     public ProjectBean getProjectByProjectId(int id)
     {
         Connection conn = DBConn.getConnection();
@@ -23,7 +22,7 @@ public class GetProjectInformationDao {
             resultSet = state.executeQuery();
             if (resultSet.next()) {
                 ProjectBean projectBean = new ProjectBean();
-                ArrayList<String> teacherName = new ArrayList<>();
+                ArrayList<CompanyTeacherBean> teacherBeans = new ArrayList<>();
                 projectBean.setName(resultSet.getString("projectName"));
                 projectBean.setType(resultSet.getString("projectType"));
                 projectBean.setDifficulty(resultSet.getInt("projectDifficulty"));
@@ -32,14 +31,17 @@ public class GetProjectInformationDao {
                 projectBean.setExtendContent(resultSet.getString("projectExtendContent"));
                 projectBean.setAdvanceContent(resultSet.getString("projectAdvanceContent"));
 
-                state2 = conn.prepareStatement("select teacherName from projtrelation NATURAL JOIN companyTeacher where projectId = ?");
+                state2 = conn.prepareStatement("select teacherId,teacherName from projtrelation JOIN companyTeacher ON projtrelation.companyTeacherId = companyTeacher.teacherId where projectId = ?");
                 state2.setInt(1,id);
                 resultSet2 = state2.executeQuery();
                 while (resultSet2.next())
                 {
-                    teacherName.add(resultSet2.getString(1));
+                    CompanyTeacherBean teacherBean = new CompanyTeacherBean();
+                    teacherBean.setId(resultSet2.getInt(1));
+                    teacherBean.setName(resultSet2.getNString(2));
+                    teacherBeans.add(teacherBean);
                 }
-                projectBean.setTeacherNames(teacherName);
+                projectBean.setCompanyTeachers(teacherBeans);
 
                 return projectBean;
             }
