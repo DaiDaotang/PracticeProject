@@ -38,43 +38,6 @@ layui.use(['form', 'jquery', 'layer', 'rate', 'table'], function () {
         , rate = layui.rate
         , table = layui.table;
 
-    var param_company_teacher = function (res) {
-        return {
-            elem: '#ni_company_teacher_table'
-            , url: GetCompanyTeacherURL
-            , title: '企业老师'
-            , toolbar: '#toolbar_company_teacher'
-            , defaultToolbar: ['filter']
-            , contentType: 'application/json'
-            , method: "POST"
-            , where: {
-                "reqId": "",
-                "reqParam": pt_company_id
-            }
-            , deal: function (res) {
-                console.log(res)
-                pt_company_teacher_len = res.resData.length;
-                for (var i = 0; i < pt_company_teacher_len; i++) {
-                    pt_company_teacher_id.push(res.resData[i].id)
-                }
-                console.log(pt_company_teacher_id)
-                return {
-                    code: 0
-                    , msg: ""
-                    , count: 1000
-                    , data: res.resData
-                }
-            }
-            , cols: [[
-                { type: 'checkbox' }
-                , { field: 'id', width: 75, title: 'ID', hide: true }
-                , { field: 'name', title: '名称' }
-                , { field: 'sex', title: '性别' }
-            ]]
-        }
-    }
-    table.render(param_company_teacher(1))
-
     //评分
     rate.render({
         elem: '#new_item_difficulty'
@@ -113,18 +76,65 @@ layui.use(['form', 'jquery', 'layer', 'rate', 'table'], function () {
                 , length: 5
                 , value: score
                 , half: true
-                , readonly: true
+                //, readonly: true
+                , setText: function (value) { //自定义文本的回调
+                    var arrs = {
+                        '0.5': 1
+                        , '1': 2
+                        , '1.5': 3
+                        , '2': 4
+                        , '2.5': 5
+                        , '3': 6
+                        , '3.5': 7
+                        , '4': 8
+                        , '4.5': 9
+                        , '5': 10
+                    };
+                    this.span.text(arrs[value] || (value + "星"));
+                }
                 , choose: function (value) {
-                    layer.alert("当前难度:" + value)
+                    layer.alert("当前难度:" + value * 2)
                 }
             });
         })
     }
 
+    function renderStar_d(id, score) {
+        layui.use('rate', function () {
+            var rate = layui.rate;
+
+            //渲染
+            var ins1 = rate.render({
+                elem: '#' + id  //绑定元素
+                , length: 5
+                , value: score
+                , half: true
+                , readonly: true
+                , setText: function (value) { //自定义文本的回调
+                    var arrs = {
+                        '0.5': 1
+                        , '1': 2
+                        , '1.5': 3
+                        , '2': 4
+                        , '2.5': 5
+                        , '3': 6
+                        , '3.5': 7
+                        , '4': 8
+                        , '4.5': 9
+                        , '5': 10
+                    };
+                    this.span.text(arrs[value] || (value + "星"));
+                }
+                , choose: function (value) {
+                    layer.alert("当前难度:" + value * 2)
+                }
+            });
+        })
+    }
 
     if (item_id) {
+        console.log("has item_id")
         var GetTeamInfoURL = "http://localhost:8080/GetProjectInformationServlet"
-
         $.ajax({
             type: "POST",
             url: GetTeamInfoURL,
@@ -138,18 +148,109 @@ layui.use(['form', 'jquery', 'layer', 'rate', 'table'], function () {
                 console.log(res);
                 document.getElementById("new_item_name").value = res.resData.name;
                 document.getElementById("new_item_type").value = res.resData.type;
-                renderStar("new_item_difficulty", res.resData.difficulty / 2);
                 document.getElementById("new_item_introduce").value = res.resData.introduce;
                 document.getElementById("new_item_base_content").value = res.resData.baseContent;
                 document.getElementById("new_item_extend_content").value = res.resData.extendContent;
                 document.getElementById("new_item_advance_content").value = res.resData.advanceContent;
-                document.getElementById("new_item_advance_content").value = res.resData.advanceContent;
+                for (var i = 0; i < res.resData.companyTeachers.length; i++) {
+                    console.log(res.resData.companyTeachers[i])
+                    checked_company_teacher.push(res.resData.companyTeachers[i].id)
+                }
+                console.log(checked_company_teacher)
+                window.localStorage.checked_company_teacher = checked_company_teacher;
+                var param_company_teacher = function (res) {
+                    return {
+                        elem: '#ni_company_teacher_table'
+                        , url: GetCompanyTeacherURL
+                        , title: '企业老师'
+                        , toolbar: '#toolbar_company_teacher'
+                        , defaultToolbar: ['filter']
+                        , contentType: 'application/json'
+                        , method: "POST"
+                        , where: {
+                            "reqId": "",
+                            "reqParam": pt_company_id
+                        }
+                        , deal: function (res) {
+                            console.log(res)
+                            pt_company_teacher_len = res.resData.length;
+                            for (var i = 0; i < pt_company_teacher_len; i++) {
+                                pt_company_teacher_id.push(res.resData[i].id)
+                                for (var j = 0; j < checked_company_teacher.length; j++) {
+                                    if (res.resData[i].id == checked_company_teacher[j]) {
+                                        res.resData[i].LAY_CHECKED = true;
+                                    }
+                                }
+                            }
+                            return {
+                                code: 0
+                                , msg: ""
+                                , count: 1000
+                                , data: res.resData
+                            }
+                        }
+                        , cols: [[
+                            { type: 'checkbox' }
+                            , { field: 'id', width: 75, title: 'ID', hide: true }
+                            , { field: 'name', title: '名称' }
+                            , { field: 'sex', title: '性别' }
+                        ]]
+                    }
+                }
+                table.render(param_company_teacher(1))
 
-                //form.val('item_info', {
-                //    "ni_company_teacher_table": res.resData.teachers
-                //})
 
-                //form.render('checkbox');
+                window.localStorage.new_item_name = res.resData.name;
+                window.localStorage.new_item_type = res.resData.type;
+                window.localStorage.new_item_introduce = res.resData.introduce;
+                window.localStorage.new_item_base_content = res.resData.baseContent;
+                window.localStorage.new_item_extend_content = res.resData.extendContent;
+                window.localStorage.new_item_advance_content = res.resData.advanceContent;
+                //window.localStorage.checked_company_teacher = res.resData.teacherID;
+                window.localStorage.new_item_difficulty = res.resData.difficulty;
+
+                if (temp_choose == "edit") {
+                    console.log("edit")
+                    //评分
+                    rate.render({
+                        elem: '#new_item_difficulty'
+                        , value: res.resData.difficulty / 2
+                        , text: true
+                        , half: true
+                        , theme: '#1E9FFF'
+                        , setText: function (value) { //自定义文本的回调
+                            var arrs = {
+                                '0.5': 1
+                                , '1': 2
+                                , '1.5': 3
+                                , '2': 4
+                                , '2.5': 5
+                                , '3': 6
+                                , '3.5': 7
+                                , '4': 8
+                                , '4.5': 9
+                                , '5': 10
+                            };
+                            this.span.text(arrs[value] || (value + "星"));
+                        }
+                        , choose: function (value) {
+                            difficulty = value * 2;
+                            window.localStorage.new_item_difficulty = value * 2;
+                        }
+                    })
+                }
+                else if (temp_choose == "detail") {
+                    console.log("detail")
+                    document.getElementById("new_item_name").disabled = "disabled";
+                    document.getElementById("new_item_type").disabled = "disabled";
+                    renderStar_d("new_item_difficulty", res.resData.difficulty / 2);
+                    document.getElementById("new_item_introduce").disabled = "disabled";
+                    document.getElementById("new_item_base_content").disabled = "disabled";
+                    document.getElementById("new_item_extend_content").disabled = "disabled";
+                    document.getElementById("new_item_advance_content").disabled = "disabled";
+                    document.getElementById("new_item_advance_content").disabled = "disabled";
+                }
+
             },
             error: function (res) {
                 console.log("error");
@@ -157,73 +258,101 @@ layui.use(['form', 'jquery', 'layer', 'rate', 'table'], function () {
             }
         });
     }
-
-    //企业老师名单
-    if (temp_choose == "edit" || !temp_choose) {
-        //监听复选框
-        table.on('checkbox(new_item_company_teacher_table)', function (obj) {
-            console.log(obj.checked); //当前是否选中状态
-            console.log(obj.data); //选中行的相关数据
-            console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
-            if (obj.type == "all") {
-                if (obj.checked) {
-                    checked_company_teacher = []
+    else {
+        var param_company_teacher = function (res) {
+            return {
+                elem: '#ni_company_teacher_table'
+                , url: GetCompanyTeacherURL
+                , title: '企业老师'
+                , toolbar: '#toolbar_company_teacher'
+                , defaultToolbar: ['filter']
+                , contentType: 'application/json'
+                , method: "POST"
+                , where: {
+                    "reqId": "",
+                    "reqParam": pt_company_id
+                }
+                , deal: function (res) {
+                    console.log(res)
+                    pt_company_teacher_len = res.resData.length;
                     for (var i = 0; i < pt_company_teacher_len; i++) {
-                        checked_company_teacher.push(pt_company_teacher_id[i])
+                        pt_company_teacher_id.push(res.resData[i].id)
+                    }
+                    return {
+                        code: 0
+                        , msg: ""
+                        , count: 1000
+                        , data: res.resData
                     }
                 }
-                else {
-                    checked_company_teacher = [];
+                , cols: [[
+                    { type: 'checkbox' }
+                    , { field: 'id', width: 75, title: 'ID', hide: true }
+                    , { field: 'name', title: '名称' }
+                    , { field: 'sex', title: '性别' }
+                ]]
+            }
+        }
+        table.render(param_company_teacher(1))
+    }
+
+    //监听复选框
+    table.on('checkbox(ni_company_teacher_table)', function (obj) {
+        console.log(obj.checked); //当前是否选中状态
+        console.log(obj.data); //选中行的相关数据
+        console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+        if (obj.type == "all") {
+            if (obj.checked) {
+                checked_company_teacher = []
+                for (var i = 0; i < pt_company_teacher_len; i++) {
+                    checked_company_teacher.push(pt_company_teacher_id[i])
                 }
             }
             else {
-                if (obj.checked) {
-                    checked_company_teacher.push(obj.data.id)
-                }
-                else {
-                    var i = 0;
-                    for (i = 0; i < checked_company_teacher.length; i++) {
-                        if (checked_company_teacher[i] == obj.data.id)
-                            break;
-                    }
-                    checked_company_teacher.splice(i, 1);
-                }
+                checked_company_teacher = [];
             }
-            window.localStorage.checked_company_teacher = checked_company_teacher;
-            console.log(window.localStorage.checked_company_teacher)
-        });
+        }
+        else {
+            if (obj.checked) {
+                checked_company_teacher.push(obj.data.id)
+            }
+            else {
+                var i = 0;
+                for (i = 0; i < checked_company_teacher.length; i++) {
+                    if (checked_company_teacher[i] == obj.data.id)
+                        break;
+                }
+                checked_company_teacher.splice(i, 1);
+            }
+        }
+        window.localStorage.checked_company_teacher = checked_company_teacher;
+        console.log(window.localStorage.checked_company_teacher)
+    });
 
-        //监听input
-        document.getElementById('new_item_name').onchange = function () {
-            console.log(document.getElementById('new_item_name').value)
-            window.localStorage.new_item_name = document.getElementById('new_item_name').value
-        };
-        document.getElementById('new_item_type').onchange = function () {
-            console.log(document.getElementById('new_item_type').value)
-            window.localStorage.new_item_type = document.getElementById('new_item_type').value
-        };
-        document.getElementById('new_item_introduce').onchange = function () {
-            console.log(document.getElementById('new_item_introduce').value)
-            window.localStorage.new_item_introduce = document.getElementById('new_item_introduce').value
-        };
-        document.getElementById('new_item_base_content').onchange = function () {
-            console.log(document.getElementById('new_item_base_content').value)
-            window.localStorage.new_item_base_content = document.getElementById('new_item_base_content').value
-        };
-        document.getElementById('new_item_extend_content').onchange = function () {
-            console.log(document.getElementById('new_item_extend_content').value)
-            window.localStorage.new_item_extend_content = document.getElementById('new_item_extend_content').value
-        };
-        document.getElementById('new_item_advance_content').onchange = function () {
-            console.log(document.getElementById('new_item_advance_content').value)
-            window.localStorage.new_item_advance_content = document.getElementById('new_item_advance_content').value
-        };
-        document.getElementById('new_item_name').onchange = function () {
-            console.log(document.getElementById('new_item_name').value)
-            window.localStorage.new_item_name = document.getElementById('new_item_name').value
-        };
-    }
-    else if (temp_choose == "detail") {
+    //监听input
+    document.getElementById('new_item_name').onchange = function () {
+        console.log(document.getElementById('new_item_name').value)
+        window.localStorage.new_item_name = document.getElementById('new_item_name').value
+    };
+    document.getElementById('new_item_type').onchange = function () {
+        console.log(document.getElementById('new_item_type').value)
+        window.localStorage.new_item_type = document.getElementById('new_item_type').value
+    };
+    document.getElementById('new_item_introduce').onchange = function () {
+        console.log(document.getElementById('new_item_introduce').value)
+        window.localStorage.new_item_introduce = document.getElementById('new_item_introduce').value
+    };
+    document.getElementById('new_item_base_content').onchange = function () {
+        console.log(document.getElementById('new_item_base_content').value)
+        window.localStorage.new_item_base_content = document.getElementById('new_item_base_content').value
+    };
+    document.getElementById('new_item_extend_content').onchange = function () {
+        console.log(document.getElementById('new_item_extend_content').value)
+        window.localStorage.new_item_extend_content = document.getElementById('new_item_extend_content').value
+    };
+    document.getElementById('new_item_advance_content').onchange = function () {
+        console.log(document.getElementById('new_item_advance_content').value)
+        window.localStorage.new_item_advance_content = document.getElementById('new_item_advance_content').value
+    };
 
-    }
 });

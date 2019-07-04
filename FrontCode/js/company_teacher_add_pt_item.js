@@ -22,7 +22,8 @@ var pt_id = t_param[`pt_id`]
     , pt_school_id = -1
     , pt_school_name = ""
     , pt_company_id = -1
-    , pt_company_name = "";
+    , pt_company_name = ""
+    , user_id = t_param[`user_id`];
 
 var GetExistedItemURL = "http://localhost:8080/GetProjectinPracticeServlet"
     , GetSchoolTeacherURL = "http://localhost:8080/GetSchoolTeacherByPracticeIdServlet"
@@ -133,7 +134,6 @@ var param_item_existed = function (res) {
                 "reqParam": pt_id
             }
             , deal: function (res) {
-                console.log(res)
                 return {
                     code: 0
                     , msg: ""
@@ -154,13 +154,9 @@ var param_item_existed = function (res) {
                 , { fixed: 'right', title: '操作', toolbar: '#bar_teacher_detail_delete', width: 65 }
             ]]
             , done: function (res) {
-                console.log(res.data)
-                console.log(res)
-
                 //为每个老师添加负责项目
                 for (var i = 0; i < res.data.length; i++) {
                     var dataTemp = res.data[i]
-                    console.log(dataTemp)
                     var temptemp = "无"
                     if (dataTemp.projects.length > 0) {
                         temptemp = dataTemp.projects[0].name;
@@ -212,7 +208,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
     table.on('toolbar(item_table)', function (obj) {
         switch (obj.event) {
             case 'addItem':
-                //console.log('addItem')
+                console.log('addItem')
                 layer.open({
                     title: '添加项目',
                     type: 2,
@@ -225,6 +221,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     btn: '添加项目',
                     btnAlign: 'c', //按钮居中,
                     yes: function () {
+                        console.log("yes")
                         var new_item_name = window.localStorage.new_item_name
                             , new_item_type = window.localStorage.new_item_type
                             , new_item_difficulty = parseInt(window.localStorage.new_item_difficulty)
@@ -233,12 +230,14 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                             , new_item_extend_content = window.localStorage.new_item_extend_content
                             , new_item_advance_content = window.localStorage.new_item_advance_content
                             , new_item_teachers = [];
-
+                        console.log(window.localStorage)
                         var temptemptemp = window.localStorage.checked_company_teacher;
                         var str = temptemptemp.substr(0);
                         var strs = str.split(",");
+                        console.log(strs)
                         for (var i = 0; i < strs.length; i++) {
-                            new_item_teachers.push(parseInt(strs[i]))
+                            if(strs[i] != "")
+                                new_item_teachers.push(parseInt(strs[i]))
                         }
 
                         if (new_item_teachers.length == 0) {
@@ -277,7 +276,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                                 }),
                                 dataType: "json",
                                 success: function (res) {
-                                    //console.log(res);
+                                    console.log(res);
                                     layer.msg('添加成功', { time: 1000 })
                                     window.localStorage.new_item_name = ""
                                     window.localStorage.new_item_type = ""
@@ -387,14 +386,33 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                 layer.close(index);
 
                 ////向服务端发送删除指令
-
-                table.render(param_item_existed);
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/DeleteProjectServlet",
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": "",
+                        "reqParam": {
+                            "id": data.id,
+                            "companyTeacherId": user_id
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        table.render(param_item_existed(1));
+                    },
+                    error: function (res) {
+                        console.log("error");
+                        console.log(res);
+                    }
+                });
             });
         }
         else if (layEvent === 'edit') { //编辑
             //do something
             layer.open({
-                title: '添加项目',
+                title: '编辑项目',
                 type: 2,
                 area: ["500px", "500px"],
                 content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=edit",
@@ -402,9 +420,10 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     table.render(param_item_existed(1));
                     table.render(param_pt_company_teacher(1));
                 },
-                btn: '添加项目',
+                btn: '提交',
                 btnAlign: 'c', //按钮居中,
                 yes: function () {
+                    console.log(window.localStorage)
                     var new_item_name = window.localStorage.new_item_name
                         , new_item_type = window.localStorage.new_item_type
                         , new_item_difficulty = parseInt(window.localStorage.new_item_difficulty)
@@ -413,7 +432,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                         , new_item_extend_content = window.localStorage.new_item_extend_content
                         , new_item_advance_content = window.localStorage.new_item_advance_content
                         , new_item_teachers = [];
-
+                    
                     var temptemptemp = window.localStorage.checked_company_teacher;
                     var str = temptemptemp.substr(0);
                     var strs = str.split(",");
@@ -421,7 +440,9 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                         new_item_teachers.push(parseInt(strs[i]))
                     }
 
-                    if (new_item_teachers.length == 0) {
+                    console.log(new_item_teachers)
+                    if (new_item_teachers.length == 0 || new_item_teachers[0] == "" || window.localStorage.checked_company_teacher == "") {
+                        console.log("aa")
                         layer.msg("请选择企业老师", { time: 1000 })
                     }
                     else if (window.localStorage.new_item_name == "") {
@@ -439,11 +460,12 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     else {
                         $.ajax({
                             type: "POST",
-                            url: "http://localhost:8080/CreateProjectServlet",
+                            url: "http://localhost:8080/ModifyProjectServlet",
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
                                 "reqParam": {
+                                    "id": data.id,
                                     "name": new_item_name,
                                     "type": new_item_type,
                                     "difficulty": new_item_difficulty,
@@ -452,13 +474,14 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                                     "extendContent": new_item_extend_content,
                                     "advanceContent": new_item_advance_content,
                                     "practiceId": pt_id,
-                                    "teachers": new_item_teachers
+                                    "teachers": new_item_teachers,
+                                    "companyTeacherId": user_id
                                 }
                             }),
                             dataType: "json",
                             success: function (res) {
                                 //console.log(res);
-                                layer.msg('添加成功', { time: 1000 })
+                                layer.msg('修改成功', { time: 1000 })
                                 window.localStorage.new_item_name = ""
                                 window.localStorage.new_item_type = ""
                                 window.localStorage.new_item_difficulty = ""
@@ -476,11 +499,11 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     }
                 }
             });
-
-            //同步更新缓存对应的值
-            obj.update({
-                projectName: '123'
-            });
+            table.render(param_item_existed(1));
+            ////同步更新缓存对应的值
+            //obj.update({
+            //    projectName: '123'
+            //});
         }
         else if (layEvent === 'addItem') {
             console.log("addItem");
@@ -571,7 +594,6 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
         var data = obj.data; //获得当前行数据
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         var tr = obj.tr; //获得当前行 tr 的DOM对象
-        console.log(data)
         if (layEvent === 'detail') { //查看
             console.log("detail")
             console.log(data.companyTeacherId);

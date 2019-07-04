@@ -35,7 +35,7 @@ var param_item_existed = function (res0) {
             }
         }
         , cols: [[
-            { field: 'id', title: '实训ID', sort: true }
+            { field: 'id', title: '实训ID', sort: true , hide:true}
             , { field: 'name', title: '实训名称' }
             , { field: 'schoolName', title: '主办学校' }
             , {
@@ -81,7 +81,7 @@ var param_item_existed = function (res0) {
                 }
             }
             , cols: [[
-                { field: 'id', title: '实训ID', sort: true }
+                { field: 'id', title: '实训ID', sort: true, hide: true}
                 , { field: 'name', title: '实训名称' }
                 , { field: 'schoolName', title: '主办学校' }
                 , {
