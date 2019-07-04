@@ -398,4 +398,13 @@
         <servlet-name>ModifyProjectServlet</servlet-name>
         <url-pattern>/ModifyProjectServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteTeacherFromPracticeServlet</servlet-name>
+        <servlet-class>com.servlet.DeleteTeacherFromPracticeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteTeacherFromPracticeServlet</servlet-name>
+        <url-pattern>/DeleteTeacherFromPracticeServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
