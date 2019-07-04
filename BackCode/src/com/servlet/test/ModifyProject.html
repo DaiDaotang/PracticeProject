@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/ModifyProjectServlet",
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "id":28,
+                "name":"第一项目啊",
+                "type":"数据",
+                "difficulty":2,
+                "introduce":"第一个项目啊范德萨发文丰富的第三方巅峰赛阿斯蒂芬撒旦阀手动发顺丰暗室逢灯",
+                "baseContent": "基本地方就爱上了放假啦违法解耦i有偶是法兰克福吉林省地方就啊",
+                "extendContent":"扩展爱上发动机昂克赛拉",
+                "advanceContent":"高级",
+                "teachers":[1,2,3,4],
+                "companyTeacherId":1
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        },
+        error:function(res){
+            console.log("error");
+            console.log(res);
+        }
+    });
+</script>
+</html>

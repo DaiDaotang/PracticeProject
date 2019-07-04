@@ -389,4 +389,13 @@
         <servlet-name>DeletePracticeServlet</servlet-name>
         <url-pattern>/DeletePracticeServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifyProjectServlet</servlet-name>
+        <servlet-class>com.servlet.ModifyProjectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifyProjectServlet</servlet-name>
+        <url-pattern>/ModifyProjectServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
