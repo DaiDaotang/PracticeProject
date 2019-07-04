@@ -3,11 +3,11 @@ var HomepageURL = "homepage_student.html"
     , StudentDiaryURL = "student_diary.html"
     , StudentHistoryURL = "student_history.html"
     , StudentResumeURL = "student_resume.html"
-    , CheckRecordURL = "login.html"
+    , CheckRecordURL = "student_check_record.html"
     , SchoolURL = "login.html"
     , CheckInOutURL = "http://localhost:8080/SigninServlet"
     , ChangeHeadURL = "login.html"
-    , WriteDiaryURL = "student_write_diary.html";
+    , WriteDiaryURL = "student_write_daily_diary.html";
 
 //变量
 var user_hasChecked = false
@@ -29,19 +29,53 @@ layui.use(['form', 'jquery', 'layer'], function () {
         , $ = layui.jquery
         , layer = layui.layer;
 
+    //监听签到
+    $(document).on('click', '#checkin', function () {
+        $.ajax({
+            type: "POST",
+            url: CheckInOutURL,
+            async: true,
+            data: JSON.stringify({
+                "reqId": "",
+                "reqParam": {
+                    "studentId": user_id,
+                    "atWork": !user_hasChecked
+                }
+            }),
+            dataType: "json",
+            success: function (res) {
+                if (res.isSuccess) {
+                    if (user_hasChecked) {
+                        layer.msg('辛苦啦！');
+                        user_hasChecked = false;
+                        document.getElementById("checkin").innerText = "Check In";
+                    } else {
+                        layer.msg('签到成功！');
+                        user_hasChecked = true;
+                        document.getElementById("checkin").innerText = "Check Out";
+                    }
+                }
+                else {
+                    layer.msg('签到失败！');
+                }
+                console.log(res);
+            }
+        });
+    });
+
+    //监听签到情况
+    $(document).on('click', '#checkrecord', function () {
+        layer.open({
+            title: '签到情况',
+            type: 2,
+            area: ["500px", "500px"],
+            content: CheckRecordURL
+        });
+    });
+
     //监听置顶
     $(document).on('click', '#turntop', function () {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
-    });
-
-    //监听写日志
-    $(document).on('click', '#write_diary_btn', function () {
-        layer.open({
-            title: '日志',
-            type: 2,
-            area: ["500px", "500px"],
-            content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority
-        });
     });
 
     //获取信息
@@ -89,6 +123,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     console.log(res);
                 }
             });
+
             if (target_id != user_id || target_authority != user_authority) {
                 document.getElementById("checkin").style.display = "none";
                 document.getElementById("write_diary_btn").style.display = "none";

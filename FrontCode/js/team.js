@@ -1,6 +1,6 @@
-// JavaScript source code
+ï»¿// JavaScript source code
 function GetRequest() {
-    var url = location.search; //»ñÈ¡urlÖĞ"?"·ûºóµÄ×Ö´®
+    var url = location.search; //è·å–urlä¸­"?"ç¬¦åçš„å­—ä¸²
     var theRequest = new Object();
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
@@ -41,13 +41,13 @@ document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
 document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
 document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
 
-//Çø
+//åŒº
 layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form
         , $ = layui.jquery
         , layer = layui.layer;
 
-    //²¹È«»ù±¾ĞÅÏ¢
+    //è¡¥å…¨åŸºæœ¬ä¿¡æ¯
     $.ajax({
         type: "POST",
         url: GetTeamInfoURL,
@@ -76,10 +76,10 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("target_team_item").innerText += target_item_name;
             document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_team_head_img").style.border = "1px solid #6e7474";
-            document.getElementById("target_team_score").innerText = target_team_scores == 0 ? "ÔİÎŞ" : target_team_scores;
+            document.getElementById("target_team_score").innerText = target_team_scores == 0 ? "æš‚æ— " : target_team_scores;
             if (target_github_link === "") {
                 document.getElementById("target_github_link").href = "javescript:;";
-                document.getElementById("target_github_link").innerText += "(ÔİÎŞ)";
+                document.getElementById("target_github_link").innerText += "(æš‚æ— )";
             }
             else {
                 document.getElementById("target_github_link").href = target_github_link;

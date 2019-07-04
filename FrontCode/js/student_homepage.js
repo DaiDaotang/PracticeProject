@@ -10,6 +10,7 @@ var target_id = t_param[`target_id`]
 var GroupURL = "homepage_team.html"
     , ItemURL = "login.html"
     , CreateGroupURL = "student_create_team.html"
+    , WriteDiaryURL = "student_write_daily_dairy.html"
     , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
     , GetPTInfoURL = "http://localhost:8080/GetPracticeByStudentIdServlet";
 
@@ -18,50 +19,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form
         , $ = layui.jquery
         , layer = layui.layer;
-
-    //监听签到
-    $(document).on('click', '#checkin', function () {
-        $.ajax({
-            type: "POST",
-            url: CheckInOutURL,
-            async: true,
-            data: JSON.stringify({
-                "reqId": "",
-                "reqParam": {
-                    "studentId": user_id,
-                    "atWork": !user_hasChecked
-                }
-            }),
-            dataType: "json",
-            success: function (res) {
-                if (res.isSuccess) {
-                    if (user_hasChecked) {
-                        layer.msg('辛苦啦！');
-                        user_hasChecked = false;
-                        document.getElementById("checkin").innerText = "Check In";
-                    } else {
-                        layer.msg('签到成功！');
-                        user_hasChecked = true;
-                        document.getElementById("checkin").innerText = "Check Out";
-                    }
-                }
-                else {
-                    layer.msg('签到失败！');
-                }
-                console.log(res);
-            }
-        });
-    });
-
-    //监听签到情况
-    $(document).on('click', '#checkrecord', function () {
-        layer.open({
-            title: '签到情况',
-            type: 2,
-            area: ["500px", "500px"],
-            content: CheckRecordURL
-        });
-    });
 
     //监听选择实训以改变团队项目信息
     form.on('select(student_pt)', function (data) {
@@ -93,6 +50,16 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     document.getElementById("item_a").href = ItemURL;
                     console.log(document.getElementById("group_a").href)
 
+                    //监听写日志
+                    $(document).on('click', '#write_diary_btn', function () {
+                        layer.open({
+                            title: '日志',
+                            type: 2,
+                            area: ["500px", "500px"],
+                            content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id
+                        });
+                    });
+
                 } else {              //没团队
                     target_group_id = -1
                         , target_group_name = ""
@@ -103,7 +70,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     document.getElementById("item_name").innerText = "暂无";
                     document.getElementById("item_a").href = "javascript:return false;";
                     if (target_authority == user_authority && target_id == user_id) {
-                        
+
                     }
                     if (target_authority == user_authority && target_id == user_id) {
                         document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id;
@@ -173,6 +140,47 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&target_pt_id=" + target_pt_id;
                         document.getElementById("item_name").innerText = target_item_name;
                         document.getElementById("item_a").href = ItemURL;
+
+                        //监听写日志
+                        $(document).on('click', '#write_diary_btn', function () {
+                            layer.open({
+                                title: '日志',
+                                type: 2,
+                                area: ["500px", "500px"],
+                                content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id,
+                                end: function () {
+                                    
+                                },
+                                btn: '发布',
+                                btnAlign: 'c',
+                                yes: function () {
+                                    var date_now = new Date();
+                                    var year_now = date_now.getFullYear()
+                                        , month_now = date_now.getMonth() + 1
+                                        , day_now = date_now.getDay()
+                                        , hour_now = date_now.getHours()
+                                        , min_now = date_now.getMinutes()
+                                        , sec_now = date_now.getSeconds();
+
+                                    var diary_name = window.localStorage.diary_name
+                                        , diary_content = window.localStorage.diary_content;
+
+                                    console.log(date_now)
+                                    console.log(year_now)
+                                    console.log(month_now)
+                                    console.log(day_now)
+                                    console.log(hour_now)
+                                    console.log(min_now)
+                                    console.log(sec_now)
+
+                                    console.log(diary_name)
+                                    console.log(diary_content)
+
+                                    layer.closeAll();
+                                }
+                            });
+                        });
+
                     } else {              //没团队
                         target_group_id = -1
                             , target_group_name = ""
