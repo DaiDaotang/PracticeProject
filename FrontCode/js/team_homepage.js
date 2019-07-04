@@ -253,7 +253,11 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
     //监听解散队伍
     $(document).on('click', '#delTeam', function () {
-        layer.confirm('<pre>Are you seriously?</pre>', function (index) {
+        var temp = "你确定要退出吗？";
+        if (user_id == captain_id) {
+            temp = "你确定要解散吗？"
+        } 
+        layer.confirm('<pre>' + temp + '</pre>', function (index) {
             $.ajax({
                 type: "POST",
                 url: DelMemberURL,
@@ -296,7 +300,6 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         else {
             if (layEvent === 'trans') { //转让
                 layer.confirm('<pre>确认要转让队长吗？</pre>', function (index) {
-                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                     layer.close(index);
 
                     ////向服务端发送删除指令
