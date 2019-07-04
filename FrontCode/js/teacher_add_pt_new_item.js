@@ -150,63 +150,15 @@ layui.use(['form', 'jquery', 'layer', 'rate', 'table'], function () {
                 document.getElementById("new_item_type").value = res.resData.type;
                 document.getElementById("new_item_introduce").value = res.resData.introduce;
                 document.getElementById("new_item_base_content").value = res.resData.baseContent;
-                document.getElementById("new_item_extend_content").value = res.resData.extendContent;
-                document.getElementById("new_item_advance_content").value = res.resData.advanceContent;
-                for (var i = 0; i < res.resData.companyTeachers.length; i++) {
-                    console.log(res.resData.companyTeachers[i])
-                    checked_company_teacher.push(res.resData.companyTeachers[i].id)
-                }
-                console.log(checked_company_teacher)
-                window.localStorage.checked_company_teacher = checked_company_teacher;
-                var param_company_teacher = function (res) {
-                    return {
-                        elem: '#ni_company_teacher_table'
-                        , url: GetCompanyTeacherURL
-                        , title: '企业老师'
-                        , toolbar: '#toolbar_company_teacher'
-                        , defaultToolbar: ['filter']
-                        , contentType: 'application/json'
-                        , method: "POST"
-                        , where: {
-                            "reqId": "",
-                            "reqParam": pt_company_id
-                        }
-                        , deal: function (res) {
-                            console.log(res)
-                            pt_company_teacher_len = res.resData.length;
-                            for (var i = 0; i < pt_company_teacher_len; i++) {
-                                pt_company_teacher_id.push(res.resData[i].id)
-                                for (var j = 0; j < checked_company_teacher.length; j++) {
-                                    if (res.resData[i].id == checked_company_teacher[j]) {
-                                        res.resData[i].LAY_CHECKED = true;
-                                    }
-                                }
-                            }
-                            return {
-                                code: 0
-                                , msg: ""
-                                , count: 1000
-                                , data: res.resData
-                            }
-                        }
-                        , cols: [[
-                            { type: 'checkbox' }
-                            , { field: 'id', width: 75, title: 'ID', hide: true }
-                            , { field: 'name', title: '名称' }
-                            , { field: 'sex', title: '性别' }
-                        ]]
-                    }
-                }
-                table.render(param_company_teacher(1))
-
+                document.getElementById("new_item_extend_content").value = res.resData.extendContent ? res.resData.extendContent : "暂无";
+                document.getElementById("new_item_advance_content").value = res.resData.advanceContent ? res.resData.advanceContent : "暂无";
 
                 window.localStorage.new_item_name = res.resData.name;
                 window.localStorage.new_item_type = res.resData.type;
                 window.localStorage.new_item_introduce = res.resData.introduce;
                 window.localStorage.new_item_base_content = res.resData.baseContent;
-                window.localStorage.new_item_extend_content = res.resData.extendContent;
-                window.localStorage.new_item_advance_content = res.resData.advanceContent;
-                //window.localStorage.checked_company_teacher = res.resData.teacherID;
+                window.localStorage.new_item_extend_content = res.resData.extendContent ? res.resData.extendContent : "暂无";
+                window.localStorage.new_item_advance_content = res.resData.advanceContent ? res.resData.advanceContent : "暂无";
                 window.localStorage.new_item_difficulty = res.resData.difficulty;
 
                 if (temp_choose == "edit") {
@@ -238,6 +190,53 @@ layui.use(['form', 'jquery', 'layer', 'rate', 'table'], function () {
                             window.localStorage.new_item_difficulty = value * 2;
                         }
                     })
+
+                    for (var i = 0; i < res.resData.companyTeachers.length; i++) {
+                        console.log(res.resData.companyTeachers[i])
+                        checked_company_teacher.push(res.resData.companyTeachers[i].id)
+                    }
+                    console.log(checked_company_teacher)
+                    window.localStorage.checked_company_teacher = checked_company_teacher;
+                    var param_company_teacher = function (res) {
+                        return {
+                            elem: '#ni_company_teacher_table'
+                            , url: GetCompanyTeacherURL
+                            , title: '企业老师'
+                            , toolbar: '#toolbar_company_teacher'
+                            , defaultToolbar: ['filter']
+                            , contentType: 'application/json'
+                            , method: "POST"
+                            , where: {
+                                "reqId": "",
+                                "reqParam": pt_company_id
+                            }
+                            , deal: function (res) {
+                                console.log(res)
+                                pt_company_teacher_len = res.resData.length;
+                                for (var i = 0; i < pt_company_teacher_len; i++) {
+                                    pt_company_teacher_id.push(res.resData[i].id)
+                                    for (var j = 0; j < checked_company_teacher.length; j++) {
+                                        if (res.resData[i].id == checked_company_teacher[j]) {
+                                            res.resData[i].LAY_CHECKED = true;
+                                        }
+                                    }
+                                }
+                                return {
+                                    code: 0
+                                    , msg: ""
+                                    , count: 1000
+                                    , data: res.resData
+                                }
+                            }
+                            , cols: [[
+                                { type: 'checkbox' }
+                                , { field: 'id', width: 75, title: 'ID', hide: true }
+                                , { field: 'name', title: '名称' }
+                                , { field: 'sex', title: '性别' }
+                            ]]
+                        }
+                    }
+                    table.render(param_company_teacher(1))
                 }
                 else if (temp_choose == "detail") {
                     console.log("detail")
@@ -249,6 +248,15 @@ layui.use(['form', 'jquery', 'layer', 'rate', 'table'], function () {
                     document.getElementById("new_item_extend_content").disabled = "disabled";
                     document.getElementById("new_item_advance_content").disabled = "disabled";
                     document.getElementById("new_item_advance_content").disabled = "disabled";
+                    document.getElementById("ni_company_teacher_table").style.display = "none";
+
+                    var temptemp = "<pre style='padding-top:11px'>";
+                    for (var i = 0; i < res.resData.companyTeachers.length; i++) {
+                        temptemp += res.resData.companyTeachers[i].name;
+                        temptemp += "  "
+                    }
+                    temptemp += "</pre>"
+                    document.getElementById("teacher_info").innerHTML += temptemp;
                 }
 
             },

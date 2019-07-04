@@ -6,7 +6,9 @@ var HomepageURL = "homepage_team.html"
     , GetTeamInfoURL = "http://localhost:8080/GetStudentByTeamIdServlet"
     , AddMemberURL = "http://localhost:8080/AddStudentServlet"
     , DelMemberURL = "http://localhost:8080/DeleteStudentFromTeamServlet"
-    , ModifyCaptainURL = "http://localhost:8080/ModifyCaptainServlet";
+    , ModifyCaptainURL = "http://localhost:8080/ModifyCaptainServlet"
+    , ItemDetailURL = "teacher_add_pt_new_item.html"
+    , GetCompanyTeacherURL = "http://localhost:8080/GetCompanyTeacherByCompanyIdServlet";
 
 var user_id = t_param[`user_id`]
     , user_authority = t_param[`user_authority`]
@@ -150,10 +152,26 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
             if (user_id != captain_id) {
                 document.getElementById('addMember').style.display = 'none';
+                document.getElementById('editTeam').style.display = 'none';
                 document.getElementById('delTeam').innerText = "退出队伍";
             }
 
             table.render(param_member_existed(1));
+
+            //监听点击项目
+            $(document).on('click', '#target_team_item', function () {
+                layer.open({
+                    title: "项目详情",
+                    type: 2,
+                    area: ["500px", "500px"],
+                    content: ItemDetailURL + "?pt_id=" + target_pt_id + "&pt_user_id=" + user_id + "&item_id=" + target_item_id + "&temp=detail"
+                });
+            })
+
+            //监听编辑信息
+            $(document).on('click', '#editTeam', function () {
+                window.location.href = "team_edit.html" + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id + "&target_item_id=" + target_item_id;
+            })
         },
         error: function (res) {
             console.log("error");
