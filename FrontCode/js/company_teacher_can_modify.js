@@ -92,7 +92,7 @@ var param_item_existed = function (res0) {
                 , { field: 'content', title: '实训概述', event: 'lookIntroDetail' }
                 , { field: 'startTime', title: '开始时间' }
                 , { field: 'endTime', title: '结束时间', event: 'lookIntroDetail' }
-                , { fixed: 'right', title: '操作', toolbar: '#bar_detail', width: 62 }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_detail', width: 65 }
             ]]
             , done: function (res) {
                 console.log(res.data)
