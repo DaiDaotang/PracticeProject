@@ -416,4 +416,22 @@
         <servlet-name>GetCanScoredProjectServlet</servlet-name>
         <url-pattern>/GetCanScoredProjectServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ScoreForTeamServlet</servlet-name>
+        <servlet-class>com.servlet.ScoreForTeamServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ScoreForTeamServlet</servlet-name>
+        <url-pattern>/ScoreForTeamServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ScoreForStudentServlet</servlet-name>
+        <servlet-class>com.servlet.ScoreForStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ScoreForStudentServlet</servlet-name>
+        <url-pattern>/ScoreForStudentServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

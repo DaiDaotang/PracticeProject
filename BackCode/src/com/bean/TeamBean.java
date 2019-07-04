@@ -14,6 +14,7 @@ public class TeamBean {
     private int practiceId;
     private String practiceName;
     private ArrayList<StudentBean> students;
+    private int studentScores;
 
     public int getteamId(){return teamId;}
 
@@ -81,5 +82,13 @@ public class TeamBean {
 
     public void setStudents(ArrayList<StudentBean> students) {
         this.students = students;
+    }
+
+    public int getStudentScores() {
+        return studentScores;
+    }
+
+    public void setStudentScores(int studentScores) {
+        this.studentScores = studentScores;
     }
 }
