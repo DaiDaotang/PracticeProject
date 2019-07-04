@@ -32,12 +32,13 @@ public class GetPracticeBySchoolIdServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
-        RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
+        Type requestType = new TypeToken<RequestBean<PracticeBean>>(){}.getType();
+        RequestBean<PracticeBean> reqBean = gson.fromJson(content,requestType);
         ResponseBean<ArrayList<PracticeBean>> resBean = new ResponseBean<>();
         try{
             GetPracticeBySchoolIdDao dao = new GetPracticeBySchoolIdDao();
-            ArrayList<PracticeBean> arrayList  = dao.GetPractice(reqBean.getReqParam());
+            PracticeBean practiceBean = reqBean.getReqParam();
+            ArrayList<PracticeBean> arrayList  = dao.GetPractice(practiceBean.getSchool(),practiceBean.isFinished());
             if (arrayList == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);

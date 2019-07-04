@@ -15,7 +15,10 @@ $END$
         async:true,
         data:JSON.stringify({
             "reqId":"",
-            "reqParam":1
+            "reqParam":{
+                "school":1,
+                "isFinished":false
+            }
         }),
         dataType:"json",
         success:function(res){
