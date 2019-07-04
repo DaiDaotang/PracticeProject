@@ -72,6 +72,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 document.getElementById("target_github_link").innerText += "(暂无)";
             }
             else {
+                console.log(target_github_link)
                 document.getElementById("target_github_link").href = target_github_link;
                 document.getElementById("target_github_link").target = "_blank";
             }

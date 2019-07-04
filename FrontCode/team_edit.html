@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>创建团队</title>
+    <title>修改团队信息</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -275,7 +275,7 @@
                 , width: 1100
                 , height: 350
                 , where: {
-                    "reqId": "111"
+                    "reqId": ""
                     , "reqParam": target_pt_id
                 }
                 , deal: function (res) {
@@ -422,14 +422,15 @@
                     data: JSON.stringify({
                         "reqId": "",
                         "reqParam": {
+                            "teamId": target_team_id,
                             "teamName": data.field.team_name,
-                            "captainId": user_id,
                             "projectId": selected_item,
                             "githubLink": data.field.team_github
                         }
                     }),
                     dataType: "json",
                     success: function (res) {
+                        console.log(selected_item)
                         sign_up_btn_success(res)
                     },
                     error: function (res) {
@@ -446,7 +447,7 @@
                     console.log(res)
                     layer.msg('修改成功', { time: 1000 })
                     setTimeout(function sign_up_fun() {
-                        //window.location.href = "homepage_team.html" + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student" + "&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
+                        window.location.href = "homepage_team.html" + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student" + "&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
                     }, 1000);
                 }
                 else {
