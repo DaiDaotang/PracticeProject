@@ -407,4 +407,13 @@
         <servlet-name>DeleteTeacherFromPracticeServlet</servlet-name>
         <url-pattern>/DeleteTeacherFromPracticeServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetCanScoredProjectServlet</servlet-name>
+        <servlet-class>com.servlet.GetCanScoredProjectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetCanScoredProjectServlet</servlet-name>
+        <url-pattern>/GetCanScoredProjectServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
