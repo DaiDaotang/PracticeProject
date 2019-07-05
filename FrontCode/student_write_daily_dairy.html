@@ -24,6 +24,12 @@
             </div>
         </div>
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">时间</label>
+            <div class="layui-input-block">
+                <input type="text" required lay-verify="required" name="diary_time" lay-filter="diary_time" id="diary_time" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
             <label class="layui-form-label">内容</label>
             <div class="layui-input-block">
                 <textarea name="diary_content" required lay-verify="required" lay-filter="diary_content" id="diary_content" placeholder="内容..." autocomplete="off" class="layui-textarea"></textarea>
@@ -72,14 +78,34 @@
         console.log(min_now)
         console.log(sec_now)
 
+        setDiaryTime();
+
         document.getElementById('diary_name').onchange = function () {
             console.log(document.getElementById('diary_name').value)
             window.localStorage.diary_name = document.getElementById('diary_name').value
+        };
+        document.getElementById('diary_time').onchange = function () {
+            console.log(document.getElementById('diary_time').value)
+            window.localStorage.diary_time = document.getElementById('diary_time').value
         };
         document.getElementById('diary_content').onchange = function () {
             console.log(document.getElementById('diary_content').value)
             window.localStorage.diary_content = document.getElementById('diary_content').value
         };
+
+        function setDiaryTime() {
+            var date_now = new Date();
+            var year_now = date_now.getFullYear()
+                , month_now = date_now.getMonth() + 1
+                , day_now = date_now.getDay()
+                , hour_now = date_now.getHours()
+                , min_now = date_now.getMinutes()
+                , sec_now = date_now.getSeconds();
+            var str = year_now + "-" + month_now + "-" + day_now + " " + hour_now + ":" + min_now + ":" + sec_now;
+            document.getElementById("diary_time").value = str;
+            window.localStorage.diary_time = str
+            setTimeout("setDiaryTime()", 1000);
+        }
     </script>
 </body>
 </html>

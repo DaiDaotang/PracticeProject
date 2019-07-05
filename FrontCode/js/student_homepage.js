@@ -154,29 +154,42 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                 btn: '发布',
                                 btnAlign: 'c',
                                 yes: function () {
-                                    var date_now = new Date();
-                                    var year_now = date_now.getFullYear()
-                                        , month_now = date_now.getMonth() + 1
-                                        , day_now = date_now.getDay()
-                                        , hour_now = date_now.getHours()
-                                        , min_now = date_now.getMinutes()
-                                        , sec_now = date_now.getSeconds();
-
                                     var diary_name = window.localStorage.diary_name
+                                        , diary_time = window.localStorage.diary_time
                                         , diary_content = window.localStorage.diary_content;
 
-                                    console.log(date_now)
-                                    console.log(year_now)
-                                    console.log(month_now)
-                                    console.log(day_now)
-                                    console.log(hour_now)
-                                    console.log(min_now)
-                                    console.log(sec_now)
-
                                     console.log(diary_name)
+                                    console.log(diary_time)
                                     console.log(diary_content)
 
-                                    layer.closeAll();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "http://localhost:8080/WriteDiaryServlet",
+                                        async: true,
+                                        data: JSON.stringify({
+                                            "reqId": "",
+                                            "reqParam": {
+                                                "studentId": user_id,
+                                                "authority": "Student",
+                                                "date": diary_time,
+                                                "title": diary_name,
+                                                "content": diary_content,
+                                                "projectId": target_pt_id
+                                            }
+                                        }),
+                                        dataType: "json",
+                                        success: function (res) {
+                                            if (res.isSuccess) {
+                                                layer.msg("发布成功！", { time: 1000 })
+                                                console.log(res);
+                                                setTimeout("layer.closeAll()", 1000 )
+                                            }
+                                        },
+                                        error: function (res) {
+                                            console.log("error");
+                                            console.log(res);
+                                        }
+                                    });
                                 }
                             });
                         });
