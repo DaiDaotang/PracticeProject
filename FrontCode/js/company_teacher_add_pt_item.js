@@ -415,7 +415,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                 title: '编辑项目',
                 type: 2,
                 area: ["500px", "500px"],
-                content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=edit",
+                content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=edit" + "&pt_company_id=" + pt_company_id,
                 end: function () {
                     table.render(param_item_existed(1));
                     table.render(param_pt_company_teacher(1));
