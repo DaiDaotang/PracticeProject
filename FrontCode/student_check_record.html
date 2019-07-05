@@ -16,52 +16,26 @@
 </head>
 <body id="body_whole">
 
-    <div class="layui-tab layui-tab-card">
-        <ul class="layui-tab-title">
-            <li class="layui-this">第一周</li>
-            <li>第二周</li>
-            <li>第三周</li>
-        </ul>
-        <div class="layui-tab-content" style="">
-            <div class="layui-tab-item layui-show">
-                <div>
-                    <div id="weekly_check_record_up">
-                    </div>
-                    <div id="weekly_check_record">
-                    </div>
-                </div>
-                <div id="chart_week_0" style="margin-top:50px; width: 500px;height:400px;"></div>
-            </div>
-            <div class="layui-tab-item">
-                <div id="example_echarts_1" style="width: 500px;height:400px;"></div>
-            </div>
-            <div class="layui-tab-item">
-                <div id="example_echarts_2" style="width: 500px;height:400px;"></div>
-            </div>
+    <div class="layui-tab layui-tab-card" lay-filter="record">
+        <ul class="layui-tab-title" id="ul_id"></ul>
+        <div class="layui-tab-content" id="div_id">
         </div>
     </div>
 
     <script src="incubator-echarts-4.2.1/dist/echarts.min.js"></script>
     <script src="layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript">
-        document.getElementById("weekly_check_record_up").innerHTML += '<div style="width:85px; margin-right:10px; float:left;">One Week</div>';
-        for (var i = 7; i < 22; i++) {
-            if (i < 10)
-                document.getElementById("weekly_check_record_up").innerHTML += '<div style="width:56px;float:left;text-align:left;">0' + i + ':00</div>';
-            else
-                document.getElementById("weekly_check_record_up").innerHTML += '<div style="width:56px;float:left;text-align:left;">' + i + ':00</div>';
+        function setToolBar(i) {
+            document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div style="width:85px; margin-right:10px; float:left;">One Week</div>';
+            for (var i = 7; i < 22; i++) {
+                if (i < 10)
+                    document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div style="width:56px;float:left;text-align:left;">0' + i + ':00</div>';
+                else
+                    document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div style="width:56px;float:left;text-align:left;">' + i + ':00</div>';
+            }
+            document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div style="float:left;text-align:left;">22:0</div>';
+            document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div>0</div>';
         }
-        document.getElementById("weekly_check_record_up").innerHTML += '<div style="float:left;text-align:left;">22:0</div>';
-        document.getElementById("weekly_check_record_up").innerHTML += '<div>0</div>';
-        //document.getElementById("weekly_check_record").innerHTML += '<div style="width:100px; float:left; margin-right:10px;">2019-07-02</div>'
-        //for (var i = 0; i < 60; i++) {
-        //    if (i % 4 == 0) {
-        //        document.getElementById("weekly_check_record").innerHTML += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
-        //    }
-        //    else {
-        //        document.getElementById("weekly_check_record").innerHTML += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
-        //    }
-        //}
     </script>
     <script type="text/javascript">
         //获取传参
@@ -94,16 +68,19 @@
             , min_now = date_now.getMinutes()
             , sec_now = date_now.getSeconds();
 
-        var work_time = [30, 40, 0, 0, 0, 0, 0]
-            , work_time_d = 0;
+        var work_time = []
+            , work_time_d = 0
+            , week = -1
+            , start_t = ""
+            , end_t = "";
 
-        console.log(date_now)
-        console.log(year_now)
-        console.log(month_now)
-        console.log(day_now)
-        console.log(hour_now)
-        console.log(min_now)
-        console.log(sec_now)
+        //console.log(date_now)
+        //console.log(year_now)
+        //console.log(month_now)
+        //console.log(day_now)
+        //console.log(hour_now)
+        //console.log(min_now)
+        //console.log(sec_now)
 
         layui.use(['element', 'jquery'], function () {
             var $ = layui.jquery
@@ -114,8 +91,56 @@
                 active[type] ? active[type].call(this, othis) : '';
             });
 
-            setTubeChart(0);
-            setBarChart("chart_week_0", work_time)
+            //setBarChart("chart_week_0", work_time)
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/StudentCheckTeamServlet",
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": {
+                        "id": target_id,
+                        "practiceId": -1
+                    }
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res)
+                    week = res.resData.weeks;
+                    var str1 = ""
+                        , str2 = ""
+                    if (week > 0) { //[]    [[0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0]]
+                        for (var i = 0; i < week; i++) {
+                            work_time.push([0, 0, 0, 0, 0, 0])
+                            if (i == 0) {
+                                str1 += '<li class="layui-this" id="first">第' + (i + 1) + '周</li>';
+                                str2 += '<div class="layui-tab-item layui-show">'
+                            }
+                            else {
+                                str1 += '<li>第' + (i + 1) + '周</li>'
+                                str2 += '<div class="layui-tab-item">'
+                            }
+                            str2 += '<div style="width:85px; margin-right:10px; float:left;">One Week</div><div style = "width:56px;float:left;text-align:left;"> 07: 00</div><div style="width:56px;float:left;text-align:left;">08:00</div><div style="width:56px;float:left;text-align:left;">09:00</div><div style="width:56px;float:left;text-align:left;">10:00</div><div style="width:56px;float:left;text-align:left;">11:00</div><div style="width:56px;float:left;text-align:left;">12:00</div><div style="width:56px;float:left;text-align:left;">13:00</div><div style="width:56px;float:left;text-align:left;">14:00</div><div style="width:56px;float:left;text-align:left;">15:00</div><div style="width:56px;float:left;text-align:left;">16:00</div><div style="width:56px;float:left;text-align:left;">17:00</div><div style="width:56px;float:left;text-align:left;">18:00</div><div style="width:56px;float:left;text-align:left;">19:00</div><div style="width:56px;float:left;text-align:left;">20:00</div><div style="width:56px;float:left;text-align:left;">21:00</div><div style="width:56px;float:left;text-align:left;">22:00</div><div><br /></div>'
+                            str2 += '<div><div id="weekly_check_record_up_' + i + '"></div><div id="weekly_check_record_' + i + '"></div></div ><div id="chart_week_' + i + '" style="margin-top:50px; width: 500px;height:400px;"></div></div >'
+                        }
+                        document.getElementById("ul_id").innerHTML += str1
+                        document.getElementById("div_id").innerHTML += str2
+                        document.getElementById("first").click();
+                    }
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
+
+            element.on('tab(record)', function (data) {
+                //console.log(this); //当前Tab标题所在的原始DOM元素
+                //console.log(data.index); //得到当前Tab的所在下标
+                //console.log(data.elem); //得到当前的Tab大容器
+                setTubeChart(data.index, data.index);
+            });
 
             function getWeek(dateString) {
                 var date;
@@ -129,207 +154,223 @@
                 //return "星期" + weeks[date.getDay()];
                 return "星期" + "日一二三四五六".charAt(date.getDay());
             };
-            function setTubeChart(index) {
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:8080/GetSigninByStudentServlet",
-                    async: true,
-                    data: JSON.stringify({
-                        "reqId": "",
-                        "reqParam": {
-                            "id": target_id,
-                            "practiceId": target_pt_id,
-                            "index": 0
-                        }
-                    }),
-                    dataType: "json",
-                    success: function (res) {
-                        console.log(res);
-                        var last_t = -1
-                            , last_f_t = 27
-                            , temp = ""
-                            , str = ""
-                            , strs0 = []
-                            , strs = []
-                            , temp_compare_float = 0.0
-                            , temp_compare = 0
-                            , atWork = false
-                        //获取今天日期
-                        var date_now = new Date()
-                            , day_now = date_now.getDay();
-
-                        for (var i = 0; i < res.resData.length; i++) {
-                            temp += '<div style="width:100px; float:left; margin-right:10px;">' + res.resData[i].date + '</div>'
-                            /**
-                             *  最长工作时间为7:00-22:00
-                             *  每小时4刻钟
-                             *  取值范围[27, 88]
-                             *  故比较方法为 (hour + min / 4) * 4
-                             */
-
-                            //有签到记录
-                            if (res.resData[i].signins.length > 0) {
-                                //扫描记录
-                                for (var j = 0; j < res.resData[i].signins.length; j++) {
-                                    strs0 = res.resData[i].signins[j].dateTime.split(" ");
-                                    str = strs0[1];
-                                    strs = str.split(":");
-
-                                    temp_compare_float = (parseFloat(strs[0]) + parseFloat(strs[1]) / 60) * 4;
-                                    temp_compare = parseInt(temp_compare_float);
-
-                                    //10:00后还有记录，否认，退出
-                                    if (temp_compare > 88)
-                                        break;
-                                    //10:00前的记录
-                                    else {
-                                        //true:签到   false:签退
-                                        atWork = res.resData[i].signins[j].atWork
-                                    }
-                                    console.log("+++++++" + j)
-                                    console.log("temp_c:" + temp_compare)
-                                    console.log("atWork:" + atWork)
-                                    console.log("last_t:" + last_t)
-                                    console.log("last_f_t:" + last_f_t)
-
-                                    //若这次记录比上次记录晚15分钟
-                                    if (temp_compare > last_t) {
-                                        last_t = temp_compare;
-
-                                        //这次是签退，上次至现在都是工作，蓝色
-                                        if (!atWork) {
-                                            console.log(last_f_t)
-                                            console.log(last_t)
-                                            for (var n = last_f_t; n < last_t; n++) {
-                                                if ((n + 1) % 4 == 0) {
-                                                    temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                                }
-                                                else {
-                                                    temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
-                                                }
-                                            }
-                                        }
-                                        //这次是签到，上次至现在都是休息，灰色
-                                        else {
-                                            for (var n = last_f_t; n < last_t; n++) {
-                                                if ((n + 1) % 4 == 0) {
-                                                    temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                                }
-                                                else {
-                                                    temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
-                                                }
-                                            }
-                                        }
-                                        //记录一下这次的签到/签退时间
-                                        last_f_t = last_t;
-                                        console.log(last_f_t)
-                                    }
-                                }
-
-                                //是今天的记录，且上一条扫描记录在22:00前，且是签到开始工作
-                                if (day_now == strs0[0].split("-")[2] && atWork) {
-                                    //获取现在时间，生成伪记录
-                                    var date_now = new Date()
-                                        , hour_now = date_now.getHours()
-                                        , min_now = date_now.getMinutes();
-                                    temp_compare = parseInt((hour_now + parseFloat(min_now / 60)) * 4);
-                                    //若现在时间比上次记录晚15分钟
-                                    if (temp_compare > last_f_t) {
-                                        last_t = temp_compare;
-                                        //上次至现在都是工作，蓝色
-                                        if (atWork) {
-                                            var n = last_f_t;
-                                            for (; n < last_t - 1; n++) {
-                                                if ((n + 1) % 4 == 0) {
-                                                    temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                                }
-                                                else {
-                                                    temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
-                                                }
-                                            }
-                                            if ((n + 1) % 4 == 0) {
-                                                temp += '<div id="tube_now" style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                            }
-                                            else {
-                                                temp += '<div id="tube_now" style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
-                                            }
-                                            setTubeNowBling()
-                                        }
-                                        //上次至现在都是休息，灰色
-                                        else {
-                                            for (var n = last_f_t; n < last_t; n++) {
-                                                if ((n + 1) % 4 == 0) {
-                                                    temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                                }
-                                                else {
-                                                    temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
-                                                }
-                                            }
-                                        }
-                                        //记录一下这次签到/签退时间
-                                        last_f_t = last_t;
-                                    }
-                                }
-                                //不是今天的记录，
-                                else if (last_f_t < 88) {
-                                    //上一个记录是签到
-                                    if (atWork) {
-                                        for (var n = last_f_t; n < 88; n++) {
-                                            if ((n + 1) % 4 == 0) {
-                                                temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                            }
-                                            else {
-                                                temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
-                                            }
-                                        }
-                                    }
-                                    //上一个记录是签退
-                                    else {
-                                        for (var n = last_f_t; n < 88; n++) {
-                                            if ((n + 1) % 4 == 0) {
-                                                temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                            }
-                                            else {
-                                                temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
-                                            }
-                                        }
-                                    }
-                                    last_f_t = 88;
-                                }
+            function setTubeChart(index, number) {
+                if (document.getElementById("weekly_check_record_" + number).innerHTML) {
+                    console.log("full")
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/GetSigninByStudentServlet",
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "id": target_id,
+                                "practiceId": target_pt_id,
+                                "index": index
                             }
-                            //没有签到记录 或 今天的剩余时间
-                            for (var n = last_f_t; n < 88; n++) {
-                                if ((n + 1) % 4 == 0) {
-                                    temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                }
-                                else {
-                                    temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
-                                }
-                            }
-
-                            //恢复数据
-                            temp += '<div style="font-style:1px;"><br/></div>'
-                            last_t = -1
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(index);
+                            var last_t = -1
                                 , last_f_t = 27
+                                , temp = ""
                                 , str = ""
                                 , strs0 = []
                                 , strs = []
                                 , temp_compare_float = 0.0
                                 , temp_compare = 0
-                                , scanned = false
                                 , atWork = false
-                                , more = false;
+                            //获取今天日期
+                            var date_now = new Date()
+                                , day_now = date_now.getDay();
+
+                            for (var i = 0; i < res.resData.length; i++) {
+                                temp += '<div style="width:100px; float:left; margin-right:10px;">' + res.resData[i].date + '</div>'
+
+                                /**
+                                 *  最长工作时间为7:00-22:00
+                                 *  每小时4刻钟
+                                 *  取值范围[27, 88]
+                                 *  故比较方法为 (hour + min / 4) * 4
+                                 */
+
+                                //有签到记录
+                                if (res.resData[i].signins.length > 0) {
+                                    //扫描记录
+                                    for (var j = 0; j < res.resData[i].signins.length; j++) {
+                                        strs0 = res.resData[i].signins[j].dateTime.split(" ");
+                                        str = strs0[1];
+                                        strs = str.split(":");
+
+                                        temp_compare_float = (parseFloat(strs[0]) + parseFloat(strs[1]) / 60) * 4;
+                                        temp_compare = parseInt(temp_compare_float);
+
+                                        //10:00后还有记录，否认，退出
+                                        if (temp_compare > 88) {
+                                            if (!res.resData[i].signins[j].atWork) {
+                                                end_t = "22:00:00"
+                                                work_time[index][i] += parseInt(arithTime(start_t, end_t))
+                                            }
+                                            break;
+                                        }
+                                        //10:00前的记录
+                                        else {
+                                            //true:签到   false:签退
+                                            atWork = res.resData[i].signins[j].atWork
+                                            if (atWork) {
+                                                start_t = str;
+                                            }
+                                            else {
+                                                end_t = str;
+                                                work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                            }
+                                        }
+
+                                        //若这次记录比上次记录晚15分钟
+                                        if (temp_compare > last_t) {
+                                            last_t = temp_compare;
+
+                                            //这次是签退，上次至现在都是工作，蓝色
+                                            if (!atWork) {
+                                                for (var n = last_f_t; n < last_t; n++) {
+                                                    if ((n + 1) % 4 == 0) {
+                                                        temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                    }
+                                                    else {
+                                                        temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                                                    }
+                                                }
+                                            }
+                                            //这次是签到，上次至现在都是休息，灰色
+                                            else {
+                                                for (var n = last_f_t; n < last_t; n++) {
+                                                    if ((n + 1) % 4 == 0) {
+                                                        temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                    }
+                                                    else {
+                                                        temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
+                                                    }
+                                                }
+                                            }
+                                            //记录一下这次的签到/签退时间
+                                            last_f_t = last_t;
+                                        }
+                                    }
+
+                                    //是今天的记录，且上一条扫描记录在22:00前，且是签到开始工作
+                                    if (day_now == strs0[0].split("-")[2] && atWork) {
+                                        //获取现在时间，生成伪记录
+                                        var date_now = new Date()
+                                            , hour_now = date_now.getHours()
+                                            , min_now = date_now.getMinutes();
+                                        temp_compare = parseFloat((hour_now + parseFloat(min_now / 60)) * 4);
+                                        //若现在时间比上次记录晚15分钟
+                                        if (temp_compare > last_f_t) {
+                                            last_t = temp_compare >= 88 ? 88 : temp_compare;
+                                            //上次至现在都是工作，蓝色
+                                            if (atWork) {
+                                                if (date_now.getHours() < 22 || (date_now.getHours() == 22 && date_now.getMinutes() == 0)) {
+                                                    end_t = date_now.getHours() + ":" + date_now.getMinutes()
+                                                    work_time[index][i] += parseInt(arithTime(start_t, end_t))
+                                                }
+                                                var n = last_f_t;
+                                                for (; n < last_t - 1; n++) {
+                                                    if ((n + 1) % 4 == 0) {
+                                                        temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                    }
+                                                    else {
+                                                        temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                                                    }
+                                                }
+                                                if ((n + 1) % 4 == 0) {
+                                                    temp += '<div id="tube_now" style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                }
+                                                else {
+                                                    temp += '<div id="tube_now" style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                                                }
+                                                //setTubeNowBling()
+                                            }
+                                            //上次至现在都是休息，灰色
+                                            else {
+                                                for (var n = last_f_t; n < last_t; n++) {
+                                                    if ((n + 1) % 4 == 0) {
+                                                        temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                    }
+                                                    else {
+                                                        temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
+                                                    }
+                                                }
+                                            }
+                                            //记录一下这次签到/签退时间
+                                            last_f_t = last_t;
+                                        }
+                                    }
+                                    //不是今天的记录，
+                                    else if (last_f_t < 88) {
+                                        //上一个记录是签到
+                                        if (atWork) {
+                                            for (var n = last_f_t; n < 88; n++) {
+                                                if ((n + 1) % 4 == 0) {
+                                                    temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                }
+                                                else {
+                                                    temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                                                }
+                                            }
+                                        }
+                                        //上一个记录是签退
+                                        else {
+                                            for (var n = last_f_t; n < 88; n++) {
+                                                if ((n + 1) % 4 == 0) {
+                                                    temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                }
+                                                else {
+                                                    temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
+                                                }
+                                            }
+                                        }
+                                        last_f_t = 88;
+                                    }
+                                }
+                                //没有签到记录 或 今天的剩余时间
+                                for (var n = last_f_t; n < 88; n++) {
+                                    if ((n + 1) % 4 == 0) {
+                                        temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                    }
+                                    else {
+                                        temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
+                                    }
+                                }
+
+                                //恢复数据
+                                temp += '<div style="font-style:1px;"><br/></div>'
+                                last_t = -1
+                                    , last_f_t = 27
+                                    , str = ""
+                                    , strs0 = []
+                                    , strs = []
+                                    , temp_compare_float = 0.0
+                                    , temp_compare = 0
+                                    , scanned = false
+                                    , atWork = false
+                                    , more = false;
+                            }
+                            document.getElementById("weekly_check_record_" + number).innerHTML = temp;
+                            setBarChart("chart_week_" + index, work_time[index]);
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
                         }
-                        document.getElementById("weekly_check_record").innerHTML += temp;
-                    },
-                    error: function (res) {
-                        console.log("error");
-                        console.log(res);
-                    }
-                });
+                    });
+                }
             }
         });
         function setBarChart(chartId, week_time) {
+            console.log(week_time)
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById(chartId));
 
@@ -343,7 +384,7 @@
                     data: ['时长']
                 },
                 xAxis: {
-                    data: ["Mon", "Tue", "Wed", "Thue", "Fri", "Sat", "Sun"]
+                    data: ["Mon", "Tue", "Wed", "Thue", "Fri", "Sat"]
                 },
                 yAxis: {},
                 series: [{
@@ -358,9 +399,25 @@
         }
         function setTubeNowBling() {
             if (document.getElementById("tube_now")) {
-                document.getElementById("tube_now").style.backgroundColor = "red";
+                if (document.getElementById("tube_now").style.backgroundColor == "#1E9FFF")
+                    document.getElementById("tube_now").style.backgroundColor = "red";
+                else
+                    document.getElementById("tube_now").style.backgroundColor = "#1E9FFF";
                 setTimeout("setTubeNowBling()", 1000);
             }
+        }
+        function arithTime(start_time, end_time) {
+            var strs1 = start_time.split(":")
+                , strs2 = end_time.split(":");
+
+            var hour_s = parseInt(strs1[0])     //10:25  17:02
+                , hour_e = parseInt(strs2[0])
+                , min_s = parseInt(strs1[1])
+                , min_e = parseInt(strs2[1]);
+            var whole_min = min_e - min_s >= 0 ? min_e - min_s + (hour_e - hour_s) * 60 : min_e + 60 - min_s + (hour_e - 1 - hour_s) * 60;
+            var whole_hour = (whole_min / 60).toFixed(2);
+            //console.log(whole_hour)
+            return whole_hour;
         }
     </script>
 </body>

@@ -86,7 +86,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 , target_school_name = res.resData.schoolName
                 , target_grade = res.resData.grade
                 , target_major = res.resData.major
-                , target_pt_id = res.resData.practiceId
                 , target_hd_img = res.resData.head ? res.resData.head : "";
 
             //设置签到
@@ -125,7 +124,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     "reqId": "",
                     "reqParam": {
                         "id": target_id,
-                        "practiceId": target_pt_id
+                        "practiceId": -1
                     }
                 }),
                 dataType: "json",
