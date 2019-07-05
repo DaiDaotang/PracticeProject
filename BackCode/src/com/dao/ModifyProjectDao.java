@@ -66,6 +66,13 @@ public class ModifyProjectDao {
                         statement.setInt(1,projectBean.getId());
                         statement.setInt(2,teacher);
                         statement.executeUpdate();
+                        String sql3 = "INSERT IGNORE INTO pracctrelation VALUES (?,?,?)";
+                        PreparedStatement state5;
+                        state3 = conn.prepareStatement(sql3);
+                        state3.setInt(1,practiceId);
+                        state3.setInt(2,teacher);
+                        state3.setBoolean(3,false);
+                        state3.executeUpdate();
                     }
                     conn.commit();
                     return 0;
