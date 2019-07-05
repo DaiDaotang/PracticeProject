@@ -36,5 +36,4 @@ public class GetAllProjectDao {
             DBConn.closeConn(conn);
         }
     }
-
 }

@@ -452,4 +452,13 @@
         <servlet-name>GetTeamInProjectServlet</servlet-name>
         <url-pattern>/GetTeamInProjectServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetAllPastInformationServlet</servlet-name>
+        <servlet-class>com.servlet.GetAllPastInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetAllPastInformationServlet</servlet-name>
+        <url-pattern>/GetAllPastInformationServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

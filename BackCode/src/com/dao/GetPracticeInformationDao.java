@@ -61,7 +61,7 @@ public class GetPracticeInformationDao {
         ResultSet resultSet;
         try {
             PreparedStatement state;
-            state = conn.prepareStatement("select practiceId,practiceName from pscrelation natural join practice natural join student where studentId = ? and endtime > ?;");
+            state = conn.prepareStatement("select practiceId,practiceName from pscrelation natural join practice natural join student where studentId = ? and endtime >= ?;");
             state.setInt(1, id);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             state.setString(2,dateFormat.format(new Date()));
