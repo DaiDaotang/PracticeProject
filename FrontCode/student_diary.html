@@ -85,39 +85,15 @@
                 </div>
                 <div style="width:auto; height: auto; margin: 20px 20px;">
                     <ul class="flow-default" id="diary_flow">
-                        <li>
-                            <div style="width:auto; height: auto; margin: 20px; background-color:#d4dadb; border-radius: 20px; border: 1px solid #d4dadb;">
-                                <div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;">
-                                    <div class="layui-row" style="height:auto;">
-                                        <div class="layui-col-md8" style="height:100px;">
-                                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                                <span style="font-size:30px;">不忘初心，方得始终</span>
-                                                <hr class="layui-bg-blue">
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-md4" style="height:auto; text-align:right;">
-                                            <div class="grid-demo grid-demo-bg1" style="margin: 20px;">
-                                                <a href="javascript:;" style="font-size:28px;"><span style="font-size:40px;">武大学子</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;">
-                                    <div class="layui-row" style="height:auto;">
-                                        <div class="layui-col-md7" style="height:100px;">
-                                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
 
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-md5" style="height:auto; text-align:right;">
-                                            <div class="grid-demo grid-demo-bg1" style="margin: 20px;">
-                                                <img src="./img/defaultHead.jpg" style="width: 300px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+<li><div style="width:auto; height: auto; margin: 20px; background-color:#d4dadb; border-radius: 20px; border: 1px solid #d4dadb;"><div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;"><div class="layui-row" style="height:auto;"><div class="layui-col-md8" style="height:100px;"><div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;"><span style="font-size:30px;">
+不忘初心，方得始终                                                    
+</span><hr class="layui-bg-blue"></div></div><div class="layui-col-md4" style="height:auto; text-align:right;"><div class="grid-demo grid-demo-bg1" style="margin-top:35px;"><span style="font-size:30px;">
+ 2019-07-04
+</span></div></div></div></div><div style="width:auto; height: auto; margin: 20px; padding:20px; font-size:24px;"><pre>
+aaa
+</pre></div></div></li>
+
                     </ul>
                 </div>
             </div>
@@ -155,16 +131,6 @@
                 return false;
             });
 
-            //监听写日志
-            $(document).on('click', '#write_diary_btn', function () {
-                layer.open({
-                    title: '签到情况',
-                    type: 2,
-                    area: ["500px", "500px"],
-                    content: WriteDiaryURL
-                });
-            });
-
             //监听置顶
             $(document).on('click', '#turntop', function () {
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -188,106 +154,6 @@
                         , target_grade = res.resData.grade
                         , target_major = res.resData.major
                         , target_hd_img = res.resData.head ? res.resData.head : "";
-
-                    //设置实训
-                    $.ajax({
-                        type: "POST",
-                        url: GetPTInfoURL,
-                        async: true,
-                        data: JSON.stringify({
-                            "reqId": "",
-                            "reqParam": target_id
-                        }),
-                        dataType: "json",
-                        success: function (res) {
-                            console.log(res);
-                            var temp = ""
-                            for (var i = 0; i < res.resData.length; i++) {
-                                temp += "<option value=" + res.resData[i].id + ">" + res.resData[i].name + "</option>";
-                            }
-                            document.getElementById("student_pt").innerHTML += temp;
-                            form.render('select')
-
-                            //获取参加的最新的实训和组队信息
-                            $.ajax({
-                                type: "POST",
-                                url: "http://localhost:8080/StudentCheckTeamServlet",
-                                async: true,
-                                data: JSON.stringify({
-                                    "reqId": "111",
-                                    "reqParam": {
-                                        "id": target_id,
-                                        "practiceId": -1
-                                    }
-                                }),
-                                dataType: "json",
-                                success: function (res) {
-                                    target_pt_id = res.resData.practiceId
-                                    form.val('student_pt', {
-                                        "student_pt": target_pt_id
-                                    })
-                                    form.render('select')
-
-                                    console.log(res);
-                                },
-                                error: function (res) {
-                                    console.log("error");
-                                    console.log(res);
-                                }
-                            });
-                            //显示团队信息
-                            $.ajax({
-                                type: "POST",
-                                url: GetStudentTeamURL,
-                                async: true,
-                                data: JSON.stringify({
-                                    "reqId": "",
-                                    "reqParam": {
-                                        "id": target_id,
-                                        "practiceId": target_pt_id
-                                    }
-                                }),
-                                dataType: "json",
-                                success: function (res) {
-                                    console.log(res);
-                                    if (res.isSuccess) {        //有团队
-                                        target_group_id = res.resData.teamId
-                                            , target_group_name = res.resData.teamName
-                                            , target_item_id = res.resData.projectId
-                                            , target_item_name = res.resData.projectName;
-                                        document.getElementById("group_name").innerText = target_group_name;
-                                        document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&team_id=" + target_group_id;
-                                        document.getElementById("item_name").innerText = target_item_name;
-                                        document.getElementById("item_a").href = ItemURL;
-                                    } else {              //没团队
-                                        target_group_id = -1
-                                            , target_group_name = ""
-                                            , target_item_id = -1
-                                            , target_item_name = "";
-
-                                        document.getElementById("group_name").innerText = "暂无";
-                                        document.getElementById("item_name").innerText = "暂无";
-                                        document.getElementById("item_a").href = "javascript:return false;";
-                                        if (target_authority == user_authority && target_id == user_id) {
-                                            document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_pt_id=" + target_pt_id;
-                                        }
-                                        else {
-                                            document.getElementById("group_a").href = "javascript:;";
-                                        }
-                                    }
-                                },
-                                error: function (res) {
-                                    console.log("获取团队信息失败");
-                                    console.log(res);
-                                }
-                            });
-
-                        },
-                        error: function (res) {
-                            console.log("error");
-                            console.log(res);
-                        }
-                    });
 
                     //设置签到
                     $.ajax({
@@ -325,10 +191,6 @@
                         , target_item_id = -1
                         , target_item_name = "";
 
-                    document.getElementById("group_name").innerText = "暂无";
-                    document.getElementById("item_name").innerText = "暂无";
-                    document.getElementById("item_a").href = "javascript:return false;";
-                    document.getElementById("group_a").href = "javascript:return false;";
                     document.getElementById("target_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
                     document.getElementById("target_head_img").style.border = "1px solid #6e7474";
 
@@ -361,21 +223,48 @@
             var flow = layui.flow
                 , $ = layui.jquery;
 
+            var diary_page = 0;
+
             flow.load({
                 elem: '#diary_flow' //流加载容器
                 , done: function (page, next) { //执行下一页的回调
 
-                    //模拟数据插入
-                    setTimeout(function () {
-                        var lis = [];
-                        for (var i = 0; i < 8; i++) {
-                            lis.push('<li><div style="width:auto; height: 200px; margin: 20px; background-color:#d4dadb; border-radius: 20px;"><p>' + ((page - 1) * 8 + i + 1) + '</p></div></li>')
-                        }
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/GetDiaryServlet",
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "studentId": target_id,
+                                "authority": "Student",
+                                "index": diary_page,
+                                "count": 8,
+                                "projectId": 
+                            }
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            diary_page += 1;
+                            //模拟数据插入
+                            setTimeout(function () {
+                                var lis = [];
+                                for (var i = 0; i < 8; i++) {
+                                    lis.push('<li><div style="width:auto; height: 200px; margin: 20px; background-color:#d4dadb; border-radius: 20px;"><p>' + ((page - 1) * 8 + i + 1) + '</p></div></li>')
+                                }
 
-                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                        //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-                        next(lis.join(''), page < 10); //假设总页数为 10
-                    }, 300);
+                                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                                next(lis.join(''), page < 10); //假设总页数为 10
+                            }, 300);
+
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
+                        }
+                    });
                 }
             });
         });
