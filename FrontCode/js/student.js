@@ -7,7 +7,8 @@ var HomepageURL = "homepage_student.html"
     , SchoolURL = "login.html"
     , CheckInOutURL = "http://localhost:8080/SigninServlet"
     , ChangeHeadURL = "login.html"
-    , WriteDiaryURL = "student_write_daily_diary.html";
+    , WriteDiaryURL = "student_write_daily_dairy.html"
+    , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet";
 
 //变量
 var user_hasChecked = false
@@ -20,7 +21,8 @@ var user_hasChecked = false
     , target_school_name = ""
     , target_grade = ""
     , target_major = ""
-    , target_pt_id = -1;
+    , target_pt_id = -1
+    , target_item_id = -1;
 
 //区
 layui.use(['form', 'jquery', 'layer'], function () {
@@ -114,6 +116,93 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 }
             });
 
+            //获取团队信息
+            $.ajax({
+                type: "POST",
+                url: GetStudentTeamURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": {
+                        "id": target_id,
+                        "practiceId": target_pt_id
+                    }
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    if (res.isSuccess) {        //有团队
+                        target_item_id = res.resData.projectId;
+
+                        $(document).on('click', '#write_diary_btn', function () {
+                            layer.open({
+                                title: '日志',
+                                type: 2,
+                                area: ["500px", "500px"],
+                                content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id,
+                                end: function () {
+
+                                },
+                                btn: '发布',
+                                btnAlign: 'c',
+                                yes: function () {
+                                    var diary_name = window.localStorage.diary_name
+                                        , diary_time = window.localStorage.diary_time
+                                        , diary_content = window.localStorage.diary_content;
+
+                                    console.log(diary_name)
+                                    console.log(diary_time)
+                                    console.log(diary_content)
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "http://localhost:8080/WriteDiaryServlet",
+                                        async: true,
+                                        data: JSON.stringify({
+                                            "reqId": "",
+                                            "reqParam": {
+                                                "studentId": user_id,
+                                                "authority": "Student",
+                                                "date": diary_time,
+                                                "title": diary_name,
+                                                "content": diary_content,
+                                                "projectId": target_pt_id
+                                            }
+                                        }),
+                                        dataType: "json",
+                                        success: function (res) {
+                                            if (res.isSuccess) {
+                                                layer.msg("发布成功！", { time: 1000 })
+                                                console.log(res);
+                                                setTimeout("layer.closeAll()", 1000)
+                                            }
+                                        },
+                                        error: function (res) {
+                                            console.log("error");
+                                            console.log(res);
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                    } else {              //没团队
+                        target_item_id = -1
+                        document.getElementById("write_diary_btn").style.display = "none";
+                    }
+
+                    var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&target_item_id=" + target_pt_id;
+                    document.getElementById("target_homepage").href = HomepageURL + basic_extra_url;
+                    document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url;
+                    document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url;
+                    document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url;
+                },
+                error: function (res) {
+                    console.log("获取团队信息失败");
+                    console.log(res);
+                }
+            });
+
             //监听签到情况
             $(document).on('click', '#checkrecord', function () {
                 layer.open({
@@ -139,13 +228,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("grade").innerText += target_grade;
             document.getElementById("major").href = "https://baike.baidu.com/item/" + major;
             document.getElementById("school_a").href = "https://baike.baidu.com/item/" + target_school_name;
-
-
-            var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
-            document.getElementById("target_homepage").href = HomepageURL + basic_extra_url;
-            document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url;
-            document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url;
-            document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url;
         },
         error: function (res) {
             console.log("获取用户基本信息失败");
