@@ -15,6 +15,7 @@ public class TeamBean {
     private String practiceName;
     private ArrayList<StudentBean> students;
     private int studentScores;
+    private int weeks;
 
     public int getteamId(){return teamId;}
 
@@ -90,5 +91,13 @@ public class TeamBean {
 
     public void setStudentScores(int studentScores) {
         this.studentScores = studentScores;
+    }
+
+    public int getWeeks() {
+        return weeks;
+    }
+
+    public void setWeeks(int weeks) {
+        this.weeks = weeks;
     }
 }
