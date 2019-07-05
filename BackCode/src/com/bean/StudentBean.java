@@ -15,6 +15,7 @@ public class StudentBean {
     private String schoolName;
     private int practiceId;
     private int projectId;
+    private int index;
 
     public String getTelephone() {
         return telephone;
@@ -126,5 +127,13 @@ public class StudentBean {
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

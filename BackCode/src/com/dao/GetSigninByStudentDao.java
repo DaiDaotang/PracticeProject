@@ -23,6 +23,7 @@ public class GetSigninByStudentDao {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date startTime = new Date();
         Date endTime = new Date();
+        int index = studentBean.getIndex();
         try{
             conn.setAutoCommit(false);
             String sql ="SELECT starttime,endtime FROM practice WHERE practiceId = ?";
@@ -32,10 +33,20 @@ public class GetSigninByStudentDao {
             if (rs.next()){
                 startTime = df.parse(rs.getString(1));
                 endTime = df.parse(rs.getString(2));
+            } else {
+                return null;
             }
+            Date now = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(startTime);
-            while (calendar.getTime().getTime() < endTime.getTime()){
+            calendar.add(Calendar.WEEK_OF_MONTH,index);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(startTime);
+            calendar2.add(Calendar.WEEK_OF_MONTH,index+1);
+            while (calendar.getTime().getTime() < calendar2.getTime().getTime()){
+                if (calendar.getTime().getTime() > now.getTime() || calendar.getTime().getTime() > endTime.getTime()){
+                    break;
+                }
                 String sql2 ="SELECT * FROM signin WHERE studentId = ? AND signinDate = ?";
                 state2 = conn.prepareStatement(sql2);
                 state2.setInt(1,studentBean.getId());
@@ -56,6 +67,9 @@ public class GetSigninByStudentDao {
                 oneDaySignins.setDate(df.format(calendar.getTime()));
                 allSignins.add(oneDaySignins);
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
+            }
+            if (allSignins.size()==0){
+                return null;
             }
             return allSignins;
         }catch (SQLException e){
