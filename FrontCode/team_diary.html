@@ -54,7 +54,7 @@
 
     <ins class="adsbygoogle" style="display:inline-block;width:970px; height: 0;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
 
-    <div class="test" style="width: auto; height: 100%; margin: 100px 150px 50px 150px;">
+    <div  style="width: auto; height: 100%; margin: 100px 150px 50px 150px;">
 
         <img id="target_team_head_img" src="./img/defaultHead.jpg" style="width:150px; height:150px; position:absolute; left: 210px; top: 240px; border-radius: 75px; border: 1px solid #6e7474;" />
 
@@ -80,56 +80,18 @@
                 <legend style="font-size:24px;">日志</legend>
             </fieldset>
             <div style="width: auto; height: auto; margin: 0 20px 20px 20px; border: 1px solid #e7f6f7; border-radius: 10px; background-color:#e7f6f7">
-                <div style="width:auto; height: auto; margin: 20px 40px;">
-                    <form class="layui-form" action="" lay-filter="diary_form" id="diary_form">
-                        <div class="layui-form-item" style="display:inline-flex; width: 100%;">
-                            <input type="text" name="search_diary_input" lay-filter="search_diary_input" id="search_diary_input" placeholder="搜索..." autocomplete="off" class="layui-input" style="width:40%; border-radius: 20px;">
-                            <input type="text" class="layui-input" name="search_diary_data" id="search_diary_data" lay-filter="search_diary_data" placeholder="Year-Month-Day" style="width:20%; margin-left:20px; border-radius: 20px;">
-                            <button class="layui-btn" lay-submit="" lay-filter="search_diary_btn" id="search_diary_btn" style="margin-left:20px; border-radius:20px;">
-                                <i class="layui-icon layui-icon-search" style="height:100px; color: #fff; font-size:25px;"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
                 <div style="width:auto; height: auto; margin: 20px 20px;">
-                    <ul class="flow-default" id="diary_flow">
-                        <li>
-                            <div style="width:auto; height: auto; margin: 20px; background-color:#d4dadb; border-radius: 20px; border: 1px solid #d4dadb;">
-                                <div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;">
-                                    <div class="layui-row" style="height:auto;">
-                                        <div class="layui-col-md8" style="height:100px;">
-                                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                                <span style="font-size:30px;">不忘初心，方得始终</span>
-                                                <hr class="layui-bg-blue">
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-md4" style="height:auto; text-align:right;">
-                                            <div class="grid-demo grid-demo-bg1" style="margin: 20px;">
-                                                <a href="javascript:;" style="font-size:28px;"><span style="font-size:40px;">武大学子</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="width:auto; height: auto; margin: 20px; border: 1px solid #000;">
-                                    <div class="layui-row" style="height:auto;">
-                                        <div class="layui-col-md7" style="height:100px;">
-                                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-md5" style="height:auto; text-align:right;">
-                                            <div class="grid-demo grid-demo-bg1" style="margin: 20px;">
-                                                <img src="./img/defaultHead.jpg" style="width: 300px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    <ul class="flow-default" id="diary_flow"></ul>
                 </div>
             </div>
         </div>
+
+        <button style="background:none; border:none; width: auto; height: auto; position:fixed; right: 50px; bottom:50px;" id="turntop">
+            <i class="layui-icon layui-icon-top" style="font-size: 70px; color: #000;"></i>
+        </button>
+        <button class="layui-btn" id="write_diary_btn" style="margin-left: 100px; border-radius:20px; background-color:#ff6a00; position:fixed; right: 50px; bottom:130px;">
+            <i class="layui-icon layui-icon-edit" style="height:100px; color: #fff; font-size:35px;"></i>
+        </button>
 
     </div>
 
@@ -137,6 +99,74 @@
     <script src="js/basic.js" charset="utf-8"></script>
     <script src="js/team.js" charset="utf-8"></script>
     <script>
+        //flow区
+        layui.use(['flow', 'jquery', 'layer'], function () {
+            var flow = layui.flow
+                , $ = layui.jquery
+                , layer = layui.layer;
+
+            var target_team_id = t_param[`team_id`]
+
+            var diary_page = 0
+
+            flow.load({
+                elem: '#diary_flow' //流加载容器
+                , done: function (page, next) { //执行下一页的回调
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/GetDiaryServlet",
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "teamId": target_team_id,
+                                "authority": "Team",
+                                "index": diary_page,
+                                "count": 8
+                            }
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            if (res.isSuccess) {
+                                diary_page += 1;
+                                //模拟数据插入
+                                setTimeout(function () {
+                                    var lis = [];
+                                    var str = ""
+                                    for (var i = 0; i < res.resData.length; i++) {
+                                        str = '<li><div style="width:auto; height: auto; margin: 20px; background-color:#d4dadb; border-radius: 20px; border: 1px solid #d4dadb;"><div style="width:auto; height: auto; margin: 20px;"><div class="layui-row" style="height:auto;"><div class="layui-col-md8" style="height:100px;"><div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;"><span style="font-size:30px;">'
+                                        str += res.resData[i].title
+                                        str += '</span><hr class="layui-bg-blue"></div></div > <div class="layui-col-md4" style="height:auto; text-align:right;"><div class="grid-demo grid-demo-bg1" style="margin-top:35px;"><span style="font-size:30px;">'
+                                        str += res.resData[i].date
+                                        str += '</span></div></div></div></div><div style="width:auto; height: auto; margin: 20px; padding:20px; font-size:24px;"><pre>'
+                                        str += res.resData[i].content;
+                                        str += '</pre></div></div></li>'
+                                        lis.push(str);
+                                    }
+
+                                    //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                                    //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                                    next(lis.join(''), page < 100); //假设总页数为 10
+                                }, 300);
+                            }
+                            else {
+                                layer.msg("已无更多日志！")
+                            }
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
+                        }
+                    });
+                }
+            });
+            //监听置顶
+            $(document).on('click', '#turntop', function () {
+                document.body.scrollTop = document.documentElement.scrollTop = 0;
+            });
+        });
     </script>
 </body>
 </html>

@@ -415,7 +415,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                 title: '编辑项目',
                 type: 2,
                 area: ["500px", "500px"],
-                content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=edit",
+                content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=edit",
                 end: function () {
                     table.render(param_item_existed(1));
                     table.render(param_pt_company_teacher(1));
@@ -582,11 +582,30 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
             console.log("delete")
             layer.confirm('真的删除这位老师吗？', function (index) {
                 obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                layer.close(index);
 
                 ////向服务端发送删除指令
-
-                table.render(param_item_existed);
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/DeleteTeacherFromPracticeServlet",
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": "",
+                        "reqParam": {
+                            "id": pt_id,
+                            "schoolTeacherId": data.id
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        layer.closeAll();
+                        table.render(param_pt_school_teacher(1));
+                    },
+                    error: function (res) {
+                        console.log("error");
+                        console.log(res);
+                    }
+                });
             });
         }
     });
@@ -601,14 +620,36 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
         }
         else if (layEvent === 'del') { //删除
             console.log("delete")
-            layer.confirm('真的删除这位老师吗？', function (index) {
-                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                layer.close(index);
-
-                ////向服务端发送删除指令
-
-                table.render(param_item_existed);
-            });
+            if (data.id == user_id) {
+                layer.msg("您不可以删除自己")
+            } else {
+                layer.confirm('真的删除这位老师吗？', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/DeleteTeacherFromPracticeServlet",
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "id": pt_id,
+                                "companyTeacherId": data.id
+                            }
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            layer.closeAll();
+                            table.render(param_pt_company_teacher(1));
+                            table.render(param_item_existed(1))
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
+                        }
+                    });
+                });
+            }
         }
         else if (layEvent === 'lookProjectInChargeDetail') {
             layer.open({

@@ -29,11 +29,6 @@ var user_id = t_param[`user_id`]
 
 var param_member_existed = "";
 
-var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&target_pt_id=" + t_param[`target_pt_id`]
-document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
-document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
-document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
-
 layui.use(['form', 'table', 'layer', 'jquery'], function () {
     var table = layui.table
         , layer = layui.layer
@@ -82,6 +77,12 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 temp += '<dd><a target="_blank"  href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
             }
             document.getElementById("team_list").innerHTML = temp;
+
+            var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&target_pt_id=" + t_param[`target_pt_id`] + "&target_item_id=" + target_item_id
+            document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
+            document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
+            document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
+
 
             param_member_existed = function (res) {
                 if (user_id == captain_id) {
@@ -173,6 +174,61 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
             $(document).on('click', '#editTeam', function () {
                 window.location.href = "team_edit.html" + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id + "&target_item_id=" + target_item_id;
             })
+
+            //监听写日志
+            $(document).on('click', '#write_diary_btn', function () {
+                layer.open({
+                    title: '日志',
+                    type: 2,
+                    area: ["500px", "500px"],
+                    content: "student_write_daily_dairy.html" + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&user_team_id=" + target_team_id,
+                    end: function () {
+
+                    },
+                    btn: '发布',
+                    btnAlign: 'c',
+                    yes: function () {
+                        var diary_name = window.localStorage.diary_name
+                            , diary_time = window.localStorage.diary_time
+                            , diary_content = window.localStorage.diary_content;
+
+                        console.log(diary_name)
+                        console.log(diary_time)
+                        console.log(diary_content)
+
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:8080/WriteDiaryServlet",
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": "",
+                                "reqParam": {
+                                    "teamId": target_team_id,
+                                    "authority": "Team",
+                                    "date": diary_time,
+                                    "title": diary_name,
+                                    "content": diary_content
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                console.log(res)
+                                if (res.isSuccess) {
+                                    layer.msg("发布成功！", { time: 1000 })
+                                    console.log(res);
+                                    setTimeout("layer.closeAll()", 500)
+                                    setTimeout("location.reload()", 500)
+                                }
+                            },
+                            error: function (res) {
+                                console.log("error");
+                                console.log(res);
+                            }
+                        });
+                    }
+                });
+            });
+
         },
         error: function (res) {
             console.log("error");
@@ -213,6 +269,8 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                         layer.close(index);
 
                         table.render(param_member_existed(1));
+
+
 
                         //更新导航栏
                         $.ajax({
