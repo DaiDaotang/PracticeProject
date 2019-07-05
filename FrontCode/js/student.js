@@ -134,6 +134,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     if (res.isSuccess) {        //有团队
                         target_item_id = res.resData.projectId;
 
+                        //监听写日志
                         $(document).on('click', '#write_diary_btn', function () {
                             layer.open({
                                 title: '日志',
@@ -174,7 +175,8 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                             if (res.isSuccess) {
                                                 layer.msg("发布成功！", { time: 1000 })
                                                 console.log(res);
-                                                setTimeout("layer.closeAll()", 1000)
+                                                setTimeout("layer.closeAll()", 500)
+                                                setTimeout("location.reload()", 500) 
                                             }
                                         },
                                         error: function (res) {
