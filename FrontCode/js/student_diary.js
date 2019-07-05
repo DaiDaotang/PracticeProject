@@ -9,13 +9,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
         "search_diary_input": ""
         , "search_diary_data": ""
     })
-
-    //监听搜索
-    form.on('submit(search_diary_btn)', function (data) {
-        console.log(data.field);
-        //layer.msg(JSON.stringify(data.field));
-        return false;
-    });
 });
 
 //laydate区

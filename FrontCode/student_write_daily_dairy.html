@@ -20,13 +20,13 @@
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
             <label class="layui-form-label">日志标题</label>
             <div class="layui-input-block">
-                <input type="text" required lay-verify="required" name="diary_name" lay-filter="diary_name" id="diary_name" autocomplete="off" placeholder="请输入项目名称" class="layui-input">
+                <input type="text" required lay-verify="required" name="diary_name" lay-filter="diary_name" id="diary_name" autocomplete="off" placeholder="请输入" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
             <label class="layui-form-label">时间</label>
             <div class="layui-input-block">
-                <input type="text" required lay-verify="required" name="diary_time" lay-filter="diary_time" id="diary_time" autocomplete="off" class="layui-input">
+                <input type="text" disabled name="diary_time" lay-filter="diary_time" id="diary_time" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
@@ -101,10 +101,10 @@
                 , hour_now = date_now.getHours()
                 , min_now = date_now.getMinutes()
                 , sec_now = date_now.getSeconds();
-            var str = year_now + "-" + month_now + "-" + day_now + " " + hour_now + ":" + min_now + ":" + sec_now;
+            var str = year_now + "-" + month_now + "-" + day_now;
             document.getElementById("diary_time").value = str;
             window.localStorage.diary_time = str
-            setTimeout("setDiaryTime()", 1000);
+            //setTimeout("setDiaryTime()", 1000);
         }
     </script>
 </body>
