@@ -21,7 +21,7 @@ public class StudentCheckTeamDao {
                 if(resultSet.next()) {
                     int teamId = resultSet.getInt(1);
                     teamBean.setteamId(teamId);
-                    state2 = conn.prepareStatement("select teamName,projectId,projectName,projectPracticeId,starttime,endtime from project NATURAL JOIN stprelation NATURAL JOIN team NATURAL JOIN practice where stprelation.teamId = ?;");
+                    state2 = conn.prepareStatement("select teamName,projectId,projectName,projectPracticeId,starttime,endtime from project NATURAL JOIN stprelation NATURAL JOIN team JOIN practice ON project.projectPracticeId = practice.practiceId where stprelation.teamId = ?;");
                     state2.setInt(1, teamId);
                     ResultSet resultSet2 = state2.executeQuery();
                     if (resultSet2.next()) {
@@ -35,15 +35,14 @@ public class StudentCheckTeamDao {
                         java.util.Date now = new Date();
                         int days;
                         if (now.getTime() < endTime.getTime()){
-                            days = (int)((now.getTime() - startTime.getTime())/(1000*3600*24));
+                            days = (int)Math.ceil((now.getTime() - startTime.getTime())/(1000*3600*24));
                         } else {
-                            days = (int)((endTime.getTime() - startTime.getTime())/(1000*3600*24));
+                            days = (int)Math.ceil((endTime.getTime() - startTime.getTime())/(1000*3600*24));
                         }
                         if (days < 0){
                             teamBean.setWeeks(0);
                         }else {
                             teamBean.setWeeks((int)Math.ceil(days/7.0));
-
                         }
                         return teamBean;
                     }
@@ -65,9 +64,9 @@ public class StudentCheckTeamDao {
                     java.util.Date now = new Date();
                     int days;
                     if (now.getTime() < endTime.getTime()){
-                        days = (int)((now.getTime() - startTime.getTime())/(1000*3600*24));
+                        days = (int)Math.ceil((now.getTime() - startTime.getTime())/(1000*3600*24));
                     } else {
-                        days = (int)((endTime.getTime() - startTime.getTime())/(1000*3600*24));
+                        days = (int)Math.ceil((endTime.getTime() - startTime.getTime())/(1000*3600*24));
                     }if (days < 0){
                         teamBean.setWeeks(0);
                     }else {
