@@ -436,11 +436,20 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>GetDiaryServlet</servlet-name>
-        <servlet-class>com.servlet.GetDiaryServlet</servlet-class>
-    </servlet>
+    <servlet-name>GetDiaryServlet</servlet-name>
+    <servlet-class>com.servlet.GetDiaryServlet</servlet-class>
+</servlet>
     <servlet-mapping>
         <servlet-name>GetDiaryServlet</servlet-name>
         <url-pattern>/GetDiaryServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetTeamInProjectServlet</servlet-name>
+        <servlet-class>com.servlet.GetTeamInProjectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetTeamInProjectServlet</servlet-name>
+        <url-pattern>/GetTeamInProjectServlet</url-pattern>
     </servlet-mapping>
 </web-app>

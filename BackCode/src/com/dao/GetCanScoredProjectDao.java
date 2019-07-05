@@ -22,13 +22,13 @@ public class GetCanScoredProjectDao {
         try{
             String sql;
             if (companyTeacherBean.isCanModify()){
-                sql = "select distinct projectId from projtrelation natural join project where companyTeacherId = ? and projectPracticeId = ?;";
+                sql = "select distinct projectId,projectName from projtrelation natural join project where companyTeacherId = ? and projectPracticeId = ?;";
                 state = conn.prepareStatement(sql);
                 state.setInt(1,companyTeacherBean.getId());
                 state.setInt(2,companyTeacherBean.getPractice());
             }
             else {
-                sql = "select projectId from project where projectPracticeId = ? and projectId not in (select distinct projectId from projtrelation natural join project where companyTeacherId = ? and projectPracticeId = ?);";
+                sql = "select projectId,projectName from project where projectPracticeId = ? and projectId not in (select distinct projectId from projtrelation natural join project where companyTeacherId = ? and projectPracticeId = ?);";
                 state = conn.prepareStatement(sql);
                 state.setInt(1,companyTeacherBean.getPractice());
                 state.setInt(2,companyTeacherBean.getId());
@@ -38,6 +38,7 @@ public class GetCanScoredProjectDao {
             while (rs.next()){
                 ProjectBean projectBean = new ProjectBean();
                 projectBean.setId(rs.getInt(1));
+                projectBean.setName(rs.getString(2));
                 projectBeans.add(projectBean);
             }
             return projectBeans;

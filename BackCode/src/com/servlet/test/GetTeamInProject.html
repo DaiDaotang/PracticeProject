@@ -11,14 +11,12 @@ $END$
 <script>
     $.ajax({
         type:"POST",
-        url:"http://localhost:8080/GetCanScoredProjectServlet",
+        url:"http://localhost:8080/GetTeamInProjectServlet",
         async:true,
         data:JSON.stringify({
-            "reqId":"",
+            "reqId":"111",
             "reqParam":{
-                "id":1,
-                "practice":20,
-                "canModify":false
+                "projectId":28
             }
         }),
         dataType:"json",
