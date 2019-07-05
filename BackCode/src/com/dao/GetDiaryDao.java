@@ -22,7 +22,7 @@ public class GetDiaryDao {
             switch (diaryBean.getAuthority())
             {
                 case "Student":
-                    statement1 = conn.prepareStatement("SELECT * FROM studentdiary WHERE studentId = ? limit ?,?;");
+                    statement1 = conn.prepareStatement("SELECT * FROM studentdiary WHERE studentId = ?  ORDER BY studentDiaryId DESC limit ?,?;");
                     statement1.setInt(1,diaryBean.getStudentId());
                     statement1.setInt(2,diaryBean.getIndex()*diaryBean.getCount());
                     statement1.setInt(3,diaryBean.getCount());
@@ -42,7 +42,7 @@ public class GetDiaryDao {
                     }
                     return diaryBeans;
                 case "CompanyTeacher":
-                    statement1 = conn.prepareStatement("SELECT * FROM teacherdiary WHERE teacherId = ? limit ?,?;");
+                    statement1 = conn.prepareStatement("SELECT * FROM teacherdiary WHERE teacherId = ? ORDER BY teacherDiaryId DESC limit ?,?;");
                     statement1.setInt(1,diaryBean.getCompanyTeacherId());
                     statement1.setInt(2,diaryBean.getIndex()*diaryBean.getCount());
                     statement1.setInt(3,diaryBean.getCount());
@@ -60,7 +60,7 @@ public class GetDiaryDao {
                     }
                     return diaryBeans;
                 case "Team":
-                    statement1 = conn.prepareStatement("SELECT * FROM teamdiary WHERE teamId = ? limit ?,?;");
+                    statement1 = conn.prepareStatement("SELECT * FROM teamdiary WHERE teamId = ? ORDER BY teamDiaryId DESC limit ?,?;");
                     statement1.setInt(1,diaryBean.getTeamId());
                     statement1.setInt(2,diaryBean.getIndex()*diaryBean.getCount());
                     statement1.setInt(3,diaryBean.getCount());
