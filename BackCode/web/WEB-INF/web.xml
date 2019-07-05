@@ -434,4 +434,13 @@
         <servlet-name>ScoreForStudentServlet</servlet-name>
         <url-pattern>/ScoreForStudentServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetDiaryServlet</servlet-name>
+        <servlet-class>com.servlet.GetDiaryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetDiaryServlet</servlet-name>
+        <url-pattern>/GetDiaryServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

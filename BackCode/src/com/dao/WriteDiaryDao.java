@@ -5,6 +5,7 @@ import com.bean.DiaryBean;
 import com.bean.RequestBean;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -19,12 +20,13 @@ public class WriteDiaryDao {
         Connection conn = DBConn.getConnection();
         try{
             PreparedStatement statement1;
+            Date date = new Date(new java.util.Date().getTime());
             switch (diaryBean.getAuthority())
             {
                 case "Student":
                     statement1 = conn.prepareStatement("insert into studentdiary (studentId,studentDiaryDate,studentDiaryTitle,studentDiaryContent,isweeklyreport,projectId) values (?,?,?,?,?,?);");
                     statement1.setInt(1,diaryBean.getStudentId());
-                    statement1.setDate(2,diaryBean.getDate());
+                    statement1.setDate(2,date);
                     statement1.setString(3,diaryBean.getTitle());
                     statement1.setString(4,diaryBean.getContent());
                     statement1.setInt(5,diaryBean.getIsWeeklyReport());
@@ -37,7 +39,7 @@ public class WriteDiaryDao {
                 case "CompanyTeacher":
                     statement1 = conn.prepareStatement("insert into teacherdiary (teacherId,teacherDiaryDate,teacherDiaryTitle,teacherDiaryContent) values (?,?,?,?);");
                     statement1.setInt(1,diaryBean.getCompanyTeacherId());
-                    statement1.setDate(2,diaryBean.getDate());
+                    statement1.setDate(2,date);
                     statement1.setString(3,diaryBean.getTitle());
                     statement1.setString(4,diaryBean.getContent());
                     int j = statement1.executeUpdate();
@@ -48,7 +50,7 @@ public class WriteDiaryDao {
                 case "Team":
                     statement1 = conn.prepareStatement("insert into teamdiary (teamId,teamDiaryDate,teamDiaryTitle,teamDiaryContent,isweeklyreport) values (?,?,?,?,?);");
                     statement1.setInt(1,diaryBean.getTeamId());
-                    statement1.setDate(2,diaryBean.getDate());
+                    statement1.setDate(2,date);
                     statement1.setString(3,diaryBean.getTitle());
                     statement1.setString(4,diaryBean.getContent());
                     statement1.setInt(5,diaryBean.getIsWeeklyReport());
