@@ -21,8 +21,8 @@ public class GetSigninByStudentDao {
         ArrayList<OneDaySignins> allSignins = new ArrayList<>();
         PreparedStatement state,state2;
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date startTime = new Date();
-        Date endTime = new Date();
+        Date startTime;
+        Date endTime;
         int index = studentBean.getIndex();
         try{
             conn.setAutoCommit(false);
