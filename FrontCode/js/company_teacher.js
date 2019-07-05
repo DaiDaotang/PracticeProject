@@ -51,8 +51,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             console.log(res);
             target_company_id = res.resData.company;
             document.getElementById("target_homepage").href = HomepageURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
-            document.getElementById("target_company_pt_doing").href = CompanyPTListURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&temp=doing" + "&target_company_id=" + target_company_id;
-            document.getElementById("target_company_pt_done").href = CompanyPTListURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&temp=done" + "&target_company_id=" + target_company_id;
+            document.getElementById("target_company_pt").href = CompanyPTListURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] +  "&target_company_id=" + target_company_id;
             document.getElementById("target_create_pt").href = CreateNewPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
             document.getElementById("target_modify_pt").href = ModifyPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
         },

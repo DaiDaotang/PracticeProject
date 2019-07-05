@@ -18,14 +18,9 @@
     <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:100;">
         <li class="layui-nav-item"><a href="" id="target_homepage">首页</a></li>
         <li class="layui-nav-item">
-            <a href="javascript:;">公司实训</a>
-            <dl class="layui-nav-child">
-                <dd><a href="" id="target_company_pt_doing">未完成</a></dd>
-                <dd><a href="" id="target_company_pt_done">已完成</a></dd>
-            </dl>
+            <a href="" id="target_company_pt">公司实训</a>
         </li>
-        <li class="layui-nav-item layui-this"><a href="" id="target_create_pt">创建实训</a></li>
-        <li class="layui-nav-item"><a href="" id="target_modify_pt">修改实训</a></li>
+        <li class="layui-nav-item"><a href="" id="target_modify_pt">我创建的实训</a></li>
         <li class="layui-nav-item" src="./img/defaultHead.jpg" lay-unselect="" style="position:absolute; right:30px;" id="me">
             <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
             <dl class="layui-nav-child">
@@ -35,6 +30,7 @@
                 <dd><a id="quit_a" href="login.html">退出登录</a></dd>
             </dl>
         </li>
+        <li class="layui-nav-item layui-this"><a href="" id="target_create_pt">创建实训</a></li>
     </ul>
 
     <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
@@ -96,7 +92,7 @@
     <script src="js/basic.js" charset="utf-8"></script>
     <script src="js/company_teacher.js" charset="utf-8"></script>
     <script src="js/company_teacher_publish_pt.js" charset="utf-8"></script>
-    
+
     <script>
         //变量
         var teacher_id = parseInt(t_param[`user_id`])
@@ -291,7 +287,7 @@
                     , day_now = data_now.getDay();
                 var strs1 = str1.split("-")
                 var strs2 = str2.split("-");
-                
+
                 if (parseInt(strs1[0]) < year_now || parseInt(strs2[0]) < parseInt(strs1[0])) {
                     return false;
                 } else if (parseInt(strs1[0]) >= year_now || parseInt(strs2[0]) >= parseInt(strs1[0])) {
