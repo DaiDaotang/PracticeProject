@@ -218,9 +218,9 @@
                                             if (!res.resData[i].signins[j].atWork) {
                                                 end_t = "22:00:00"
                                                 if (!first_week)
-                                                    work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                                    work_time[index][i] += parseFloat(arithTime(start_t, end_t)).toFixed(2)
                                                 else
-                                                    work_time[index][7 - res.resData.length + i ] += parseFloat(arithTime(start_t, end_t))
+                                                    work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t)).toFixed(2)
                                             }
                                             break;
                                         }
@@ -283,9 +283,9 @@
                                                 if (date_now.getHours() < 22 || (date_now.getHours() == 22 && date_now.getMinutes() == 0)) {
                                                     end_t = date_now.getHours() + ":" + date_now.getMinutes()
                                                     if (!first_week)
-                                                        work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                                        work_time[index][i] += parseFloat(arithTime(start_t, end_t)).toFixed(2)
                                                     else
-                                                        work_time[index][7 - res.resData.length + i ] += parseFloat(arithTime(start_t, end_t))
+                                                        work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t)).toFixed(2)
                                                 }
                                                 var n = last_f_t;
                                                 for (; n < last_t - 1; n++) {
