@@ -233,15 +233,16 @@
                                             }
                                             else {
                                                 end_t = str;
-                                                if (!first_week)
-                                                    work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                                if (!first_week) {
+                                                    work_time[index][i] += (parseFloat(arithTime(start_t, end_t)))
+                                                }
                                                 else
                                                     work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t))
                                             }
                                         }
 
                                         //若这次记录比上次记录晚15分钟
-                                        if (temp_compare > last_t ) {
+                                        if (temp_compare > last_t ) {8
                                             last_t = temp_compare;
 
                                             //这次是签退，上次至现在都是工作，蓝色
@@ -291,14 +292,16 @@
                                             if (atWork) {
                                                 if (date_now.getHours() < 22 || (date_now.getHours() == 22 && date_now.getMinutes() == 0)) {
                                                     end_t = date_now.getHours() + ":" + date_now.getMinutes()
-                                                    console.log(start_t)
-                                                    console.log(end_t)
-                                                    console.log(work_time[index])
-                                                    if (!first_week)
-                                                        work_time[index][i] += parseFloat(arithTime(start_t, end_t))
-                                                    else
-                                                        work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t))
-                                                    console.log(work_time[index])
+                                                    if (!first_week) {
+                                                        var xxx = work_time[index][i];
+                                                        xxx += parseFloat(arithTime(start_t, end_t))
+                                                        work_time[index][i] = xxx.toFixed(2);
+                                                    }
+                                                    else {
+                                                        var xxx = work_time[index][7 - res.resData.length + i];
+                                                        xxx += parseFloat(arithTime(start_t, end_t))
+                                                        work_time[index][7 - res.resData.length + i] = xxx.toFixed(2);
+                                                    }
                                                 }
                                                 var n = last_f_t;
                                                 for (; n < last_t - 1; n++) {
@@ -458,7 +461,7 @@
                 return whole_hour;
             }
             else
-                return 5;
+                return 5.0;
             //console.log(whole_hour)
         }
     </script>
