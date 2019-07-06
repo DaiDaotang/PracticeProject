@@ -84,7 +84,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
             document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
 
 
-            param_member_existed = function (res) {
+            param_member_existed = function (members) {
                 if (user_id == captain_id) {
                     return {
                         elem: '#team_member_table'

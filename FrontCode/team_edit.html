@@ -303,10 +303,10 @@
                             return '<div id="star_' + d.id + '"></div>'
                         }
                     }
-                    , { field: 'introduce', title: '项目概述' }
-                    , { field: 'baseContent', title: '基本功能', hide: true }
-                    , { field: 'extendContent', title: '扩展功能', hide: true }
-                    , { field: 'advanceContent', title: '高级功能', hide: true }
+                    , { field: 'introduce', title: '项目概述', event: 'lookIntroDetail' }
+                    , { field: 'baseContent', title: '基本功能', hide: true, event: 'lookBaseDetail' }
+                    , { field: 'extendContent', title: '扩展功能', hide: true, event: 'lookExtendDetail' }
+                    , { field: 'advanceContent', title: '高级功能', hide: true, event: 'lookAdvanceDetail' }
                     , {
                         field: 'teachers', title: '负责老师', templet: function (d) {
                             return '<div id="companyTeacher_' + d.id + '"></div>';
@@ -396,8 +396,68 @@
                         area: ["500px", "500px"],
                         content: "teacher_add_pt_new_item.html" + "?pt_id=" + target_pt_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=detail"
                     });
-
                 }
+                else if (layEvent === 'lookIntroDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , area: ['500px', '500px']
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.introduce + '</pre></div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }
+                else if (layEvent === 'lookBaseDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , area: ['500px', '500px']
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.baseContent + '</pre></div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }
+                else if (layEvent === 'lookExtendDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , area: ['500px', '500px']
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.extendContent + '</pre></div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }
+                else if (layEvent === 'lookAdvanceDetail') {
+                    layer.open({
+                        type: 1
+                        , title: '详情'
+                        , area: ['500px', '500px']
+                        , id: 'layerDemo'//防止重复弹出
+                        , content: '<div style="padding: 20px 20px;"><pre style="font-size:16px; font-family:\'Microsoft YaHei\'">' + data.advanceContent + '</pre></div>'
+                        , btn: '确定'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }
+
             });
 
             //监听单选
