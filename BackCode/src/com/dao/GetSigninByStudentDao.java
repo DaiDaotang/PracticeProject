@@ -38,11 +38,19 @@ public class GetSigninByStudentDao {
             }
             Date now = new Date();
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(startTime);
-            calendar.add(Calendar.WEEK_OF_MONTH,index);
             Calendar calendar2 = Calendar.getInstance();
+            calendar.setTime(startTime);
             calendar2.setTime(startTime);
-            calendar2.add(Calendar.WEEK_OF_MONTH,index+1);
+            int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            int firstWeeksDays = (9 - startDayOfWeek) % 7;
+            if (index == 0){
+                calendar2.add(Calendar.DAY_OF_MONTH,firstWeeksDays);
+            } else {
+                calendar.add(Calendar.DAY_OF_MONTH,firstWeeksDays);
+                calendar2.add(Calendar.DAY_OF_MONTH,firstWeeksDays);
+                calendar.add(Calendar.WEEK_OF_MONTH,index-1);
+                calendar2.add(Calendar.WEEK_OF_MONTH,index);
+            }
             while (calendar.getTime().getTime() < calendar2.getTime().getTime()){
                 if (calendar.getTime().getTime() > now.getTime() || calendar.getTime().getTime() > endTime.getTime()){
                     break;

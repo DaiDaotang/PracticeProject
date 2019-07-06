@@ -2,6 +2,8 @@ package com.dao;
 
 import com.DBConn;
 import com.bean.TeamBean;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.sql.*;
 
@@ -33,7 +35,10 @@ public class StudentCheckTeamDao {
                         Date startTime = resultSet2.getDate(5);
                         Date endTime = resultSet2.getDate(6);
                         java.util.Date now = new Date();
+                        Calendar startCal = Calendar.getInstance();
+                        startCal.setTime(startTime);
                         int days;
+                        int startDayOfWeek = startCal.get(Calendar.DAY_OF_WEEK);
                         if (now.getTime() < endTime.getTime()){
                             days = (int)Math.ceil((now.getTime() - startTime.getTime())/(1000*3600*24));
                         } else {
@@ -42,7 +47,8 @@ public class StudentCheckTeamDao {
                         if (days < 0){
                             teamBean.setWeeks(0);
                         }else {
-                            teamBean.setWeeks((int)Math.ceil(days/7.0));
+                            int restDays = days + (- 7 + startDayOfWeek - 2) % 7;
+                            teamBean.setWeeks((int)Math.ceil(restDays/7.0) + 1);
                         }
                         return teamBean;
                     }
@@ -62,15 +68,20 @@ public class StudentCheckTeamDao {
                     Date startTime = resultSet.getDate(6);
                     Date endTime = resultSet.getDate(7);
                     java.util.Date now = new Date();
+                    Calendar startCal = Calendar.getInstance();
+                    startCal.setTime(startTime);
                     int days;
+                    int startDayOfWeek = startCal.get(Calendar.DAY_OF_WEEK);
                     if (now.getTime() < endTime.getTime()){
                         days = (int)Math.ceil((now.getTime() - startTime.getTime())/(1000*3600*24));
                     } else {
                         days = (int)Math.ceil((endTime.getTime() - startTime.getTime())/(1000*3600*24));
-                    }if (days < 0){
+                    }
+                    if (days < 0){
                         teamBean.setWeeks(0);
                     }else {
-                        teamBean.setWeeks((int)Math.ceil(days/7.0));
+                        int restDays = days + (- 7 + startDayOfWeek - 2) % 7;
+                        teamBean.setWeeks((int)Math.ceil(restDays/7.0) + 1);
                     }
                     return teamBean;
                 }
