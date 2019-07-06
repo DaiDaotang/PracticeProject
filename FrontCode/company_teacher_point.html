@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
-
+    <script src="js/basic_url.js" charset="utf-8"></script>
     <style type="text/css">
         .layui-form-select dl dd:hover {
             background-color: #1E9FFF
@@ -17,13 +17,7 @@
 <body>
     <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:100;">
         <li class="layui-nav-item layui-this"><a href="" id="target_homepage">首页</a></li>
-        <li class="layui-nav-item layui-this">
-            <a href="javascript:;">公司实训</a>
-            <dl class="layui-nav-child">
-                <dd><a href="" id="target_company_pt_doing">未完成</a></dd>
-                <dd><a href="" id="target_company_pt_done">已完成</a></dd>
-            </dl>
-        </li>
+        <li class="layui-nav-item"><a href="" id="target_company_pt">公司实训</a></li>
         <li class="layui-nav-item"><a href="" id="target_modify_pt">我创建的实训</a></li>
         <li class="layui-nav-item" src="./img/defaultHead.jpg" lay-unselect="" style="position:absolute; right:30px;" id="me">
             <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
@@ -46,7 +40,7 @@
 
     <div style="width:auto; height:360px; margin: 0 10% 0 10%;">
         <div class="layui-tab layui-tab-card">
-            <ul class="layui-tab-title">
+            <ul class="layui-tab-title" >
                 <li class="layui-this">队伍0</li>
                 <li>队伍1</li>
                 <li>队伍2</li>
@@ -146,138 +140,24 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="layui-form-item" style="text-align:center;">
+                            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="upload" id="upload" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-bottom:50px;">Done!</button>
+                        </div>
                     </form>
                 </div>
                 <div class="layui-tab-item">
-                    <form class="layui-form" action="" lay-filter="team_score_form">
-                        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px; margin-bottom: 10px;">
-                            <legend style="font-size:32px;">团队</legend>
-                        </fieldset>
-                        <div class="layui-row" style="height:100px;">
-                            <div class="layui-col-md6" style="height:100px;">
-                                <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
-                                        <label class="layui-form-label">团队名称</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="team_name" lay-filter="team_name" required lay-verify="required" id="team_name" autocomplete="off" placeholder="请输入团队名" class="layui-input" style="width:270px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md6" style="height:100px;">
-                                <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
-                                        <label class="layui-form-label">得分</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="team_score" lay-filter="team_score" required lay-verify="required" id="team_score" autocomplete="off" placeholder="请输入分数" class="layui-input" style="width:270px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px; margin-bottom: 10px;">
-                            <legend style="font-size:32px;">队员</legend>
-                        </fieldset>
-                        <div class="layui-row" style="height:100px;">
-                            <div class="layui-col-md4" style="height:100px;">
-                                <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
-                                        <label class="layui-form-label">名称</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="member_name_0" lay-filter="member_name_0" required lay-verify="required" id="member_name_0" autocomplete="off" class="layui-input" style="width:270px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md4" style="height:100px;">
-                                <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
-                                        <label class="layui-form-label">学号</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="member_number_0" lay-filter="member_number_0" required lay-verify="required" id="member_number_0" autocomplete="off" class="layui-input" style="width:270px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md4" style="height:100px;">
-                                <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
-                                        <label class="layui-form-label">得分</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="member_score_0" lay-filter="member_score_0" required lay-verify="required" id="member_score_0" autocomplete="off" placeholder="请输入分数" class="layui-input" style="width:270px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-row" style="height:100px;">
-                            <div class="layui-col-md4" style="height:100px;">
-                                <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
-                                        <label class="layui-form-label">名称</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="member_name_1" lay-filter="member_name_1" required lay-verify="required" id="member_name_1" autocomplete="off" class="layui-input" style="width:270px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md4" style="height:100px;">
-                                <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
-                                        <label class="layui-form-label">学号</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="member_number_1" lay-filter="member_number_1" required lay-verify="required" id="member_number_1" autocomplete="off" class="layui-input" style="width:270px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md4" style="height:100px;">
-                                <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
-                                        <label class="layui-form-label">得分</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="member_score_1" lay-filter="member_score_1" required lay-verify="required" id="member_score_1" autocomplete="off" placeholder="请输入分数" class="layui-input" style="width:270px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    ddd
                 </div>
                 <div class="layui-tab-item">
                     sss
                 </div>
             </div>
         </div>
-
     </div>
 
     <script src="layui/layui.js" charset="utf-8"></script>
     <script src="js/basic.js" charset="utf-8"></script>
     <script src="js/company_teacher.js" charset="utf-8"></script>
-    <script>
-        //变量
-        var user_id = t_param[`user_id`]
-            , user_authority = t_param[`user_authority`]
-            , pt_id = t_param[`pt_id`]
-            , item_id = t_param[`item_id`];
-
-        //区
-        layui.use(['form', 'jquery', 'laydate', 'table'], function () {
-            var form = layui.form
-                , $ = layui.jquery
-                , laydate = layui.laydate
-                , table = layui.table;
-
-            //表单初始赋值
-            form.val('pt_create_form', {
-                "pt_name": ""
-                , "pt_school": teacher_school_id
-                , "pt_company": teacher_company_id
-            })
-
-        });
-    </script>
+    <script src="js/company_teacher_point.js" charset="utf-8"></script>
 </body>
 </html>

@@ -173,7 +173,7 @@
                         }),
                         dataType: "json",
                         success: function (res) {
-                            console.log(index);
+                            console.log(res);
                             var last_t = -1
                                 , last_f_t = 27
                                 , temp = ""
@@ -214,7 +214,7 @@
                                         if (temp_compare > 88) {
                                             if (!res.resData[i].signins[j].atWork) {
                                                 end_t = "22:00:00"
-                                                work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                                work_time[index][7 - res.resData.length + i - 1] += parseFloat(arithTime(start_t, end_t))
                                             }
                                             break;
                                         }
@@ -227,7 +227,7 @@
                                             }
                                             else {
                                                 end_t = str;
-                                                work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                                work_time[index][7 - res.resData.length + i - 1] += parseFloat(arithTime(start_t, end_t))
                                             }
                                         }
 
@@ -273,7 +273,7 @@
                                             if (atWork) {
                                                 if (date_now.getHours() < 22 || (date_now.getHours() == 22 && date_now.getMinutes() == 0)) {
                                                     end_t = date_now.getHours() + ":" + date_now.getMinutes()
-                                                    work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                                    work_time[index][7 - res.resData.length + i - 1] += parseFloat(arithTime(start_t, end_t))
                                                 }
                                                 var n = last_f_t;
                                                 for (; n < last_t - 1; n++) {
@@ -319,7 +319,7 @@
                                         //上一个记录是签到
                                         if (atWork) {
                                             end_t = parseInt(max / 4) + ":" + ((max - parseInt(max / 4) * 4) * 15);
-                                            work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                            work_time[index][7 - res.resData.length + i - 1] += parseFloat(arithTime(start_t, end_t))
                                             for (var n = last_f_t; n < max; n++) {
                                                 if ((n + 1) % 4 == 0) {
                                                     temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'

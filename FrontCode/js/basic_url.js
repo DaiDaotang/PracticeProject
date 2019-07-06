@@ -1,1 +1,1 @@
-﻿
+﻿var GetTeamInProjectURL = "http://localhost:8080/GetTeamInProjectServlet";
