@@ -236,34 +236,30 @@
                                                 if (!first_week)
                                                     work_time[index][i] += parseFloat(arithTime(start_t, end_t))
                                                 else
-                                                    work_time[index][7 - res.resData.length + i ] += parseFloat(arithTime(start_t, end_t))
+                                                    work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t))
                                             }
                                         }
 
                                         //若这次记录比上次记录晚15分钟
-                                        if (temp_compare > last_t) {
+                                        if (temp_compare > last_t ) {
                                             last_t = temp_compare;
 
                                             //这次是签退，上次至现在都是工作，蓝色
                                             if (!atWork) {
                                                 for (var n = last_f_t; n < last_t; n++) {
-                                                    if ((n + 1) % 4 == 0) {
+                                                    if ((n + 1) % 4 == 0) 
                                                         temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                                    }
-                                                    else {
+                                                    else 
                                                         temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
-                                                    }
                                                 }
                                             }
                                             //这次是签到，上次至现在都是休息，灰色
                                             else {
                                                 for (var n = last_f_t; n < last_t; n++) {
-                                                    if ((n + 1) % 4 == 0) {
+                                                    if ((n + 1) % 4 == 0)
                                                         temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
-                                                    }
-                                                    else {
+                                                    else
                                                         temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
-                                                    }
                                                 }
                                             }
                                             //记录一下这次的签到/签退时间
@@ -275,17 +271,34 @@
                                     if (day_now == strs0[0].split("-")[2] && atWork) {
                                         //获取现在时间，生成伪记录
                                         temp_compare = parseInt((hour_now + parseFloat(min_now / 60)) * 4);
+                                        //上次签到至今差5小时以上，记录工作时长为5hours
+                                        //if (temp_compare - last_f_t >= 20) {
+                                        //    end_t = date_now.getHours() + ":" + date_now.getMinutes()
+                                        //    console.log(start_t)
+                                        //    console.log(end_t)
+                                        //    console.log(work_time[index])
+                                        //    if (!first_week)
+                                        //        work_time[index][i] += parseFloat(arithTime(start_t, end_t).toFixed(2))
+                                        //    else
+                                        //        work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t).toFixed(2))
+                                        //    console.log(work_time[index])
+                                        //}
+
                                         //若现在时间比上次记录晚15分钟，且上次签到时间比现在早五小时或五小时以内
-                                        if (temp_compare > last_f_t && temp_compare - last_f_t <= 20) {
-                                            last_t = temp_compare >= 88 ? 88 : temp_compare;
+                                        if (temp_compare > last_f_t) {
+                                            last_t = temp_compare >= 88 ? 88 : (temp_compare - last_f_t <= 20 ? temp_compare : (last_t + 20));
                                             //上次至现在都是工作，蓝色
                                             if (atWork) {
                                                 if (date_now.getHours() < 22 || (date_now.getHours() == 22 && date_now.getMinutes() == 0)) {
                                                     end_t = date_now.getHours() + ":" + date_now.getMinutes()
+                                                    console.log(start_t)
+                                                    console.log(end_t)
+                                                    console.log(work_time[index])
                                                     if (!first_week)
-                                                        work_time[index][i] += parseFloat(arithTime(start_t, end_t)).toFixed(2)
+                                                        work_time[index][i] += parseFloat(arithTime(start_t, end_t))
                                                     else
-                                                        work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t)).toFixed(2)
+                                                        work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t))
+                                                    console.log(work_time[index])
                                                 }
                                                 var n = last_f_t;
                                                 for (; n < last_t - 1; n++) {
@@ -445,7 +458,7 @@
                 return whole_hour;
             }
             else
-                return 0.00;
+                return 5;
             //console.log(whole_hour)
         }
     </script>
