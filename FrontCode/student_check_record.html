@@ -308,10 +308,17 @@
                                         }
                                     }
                                     //不是今天的记录，
-                                    else if (88 - last_f_t <= 20) {
+                                    else if (last_f_t < 88) {
+                                        var max;
+                                        if (88 - last_f_t >= 20) {
+                                            max = last_f_t + 20;
+                                        }
+                                        else {
+                                            max = 88;
+                                        }
                                         //上一个记录是签到
                                         if (atWork) {
-                                            for (var n = last_f_t; n < 88; n++) {
+                                            for (var n = last_f_t; n < max; n++) {
                                                 if ((n + 1) % 4 == 0) {
                                                     temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
                                                 }
@@ -322,7 +329,7 @@
                                         }
                                         //上一个记录是签退
                                         else {
-                                            for (var n = last_f_t; n < 88; n++) {
+                                            for (var n = last_f_t; n < max; n++) {
                                                 if ((n + 1) % 4 == 0) {
                                                     temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
                                                 }
@@ -331,7 +338,7 @@
                                                 }
                                             }
                                         }
-                                        last_f_t = 88;
+                                        last_f_t = max;
                                     }
                                 }
                                 //没有签到记录 或 今天的剩余时间
