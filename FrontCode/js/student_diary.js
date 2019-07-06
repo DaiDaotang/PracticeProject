@@ -35,7 +35,7 @@ layui.use('flow', function () {
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/GetDiaryServlet",
+                url: GetStudentDiaryURL,
                 async: true,
                 data: JSON.stringify({
                     "reqId": "",

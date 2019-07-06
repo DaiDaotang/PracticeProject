@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>项目页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+
+    <style type="text/css">
+        .layui-form-select dl dd:hover {
+            background-color: #1E9FFF;
+            color: #d4dadb
+        }
+
+        .layui-table-cell .layui-rate {
+            padding: 0 5px;
+        }
+
+        .layui-table-cell .star_container {
+            margin-top: -5px;
+        }
+    </style>
+</head>
+<body id="body_whole">
+
+    <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:999;">
+        <li class="layui-nav-item"><a href="" id="target_homepage">首页</a></li>
+        <li class="layui-nav-item">
+            <a href="" id="target_company_pt">公司实训</a>
+        </li>
+        <li class="layui-nav-item"><a href="" id="target_modify_pt">我创建的实训</a></li>
+        <li class="layui-nav-item" src="./img/defaultHead.jpg" lay-unselect="" style="position:absolute; right:30px;" id="me">
+            <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
+            <dl class="layui-nav-child">
+                <dd><a id="user_homepage_a" href="">我的主页</a></dd>
+                <dd><a id="change_info_a" href="">修改信息</a></dd>
+                <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
+                <dd><a id="quit_a" href="login.html">退出登录</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item layui-this"><a href="" id="target_create_pt">创建实训</a></li>
+    </ul>
+
+    <ins class="adsbygoogle" style="display:inline-block;width:970px; height: 0;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+
+    <div style="width: auto; height: 100%; margin: 50px 150px 50px 150px;">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 80px; margin-bottom: 50px;">
+            <legend style="font-size:32px;">添加项目</legend>
+        </fieldset>
+
+        <div style="width:auto; height:auto; margin: 20px 50px;">
+            <div class="layui-row" style="height:100px;">
+                <div class="layui-col-md8" style="height:100px;">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                        <p style="font-size:30px; margin: 0 0 0 20px;">实训名称：<span id="pt_name"></span></p>
+                    </div>
+                </div>
+                <div class="layui-col-md4" style="height:100px;">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                        <p style="font-size:20px;">主办学校：<span id="school_name"></span></p>
+                        <p style="font-size:20px;">承包公司：<span id="company_name"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width:auto; height:auto; margin: 20px 50px;">
+            <div style="margin: 5px;">
+                <table class="layui-hide" id="item_table" lay-filter="item_table"></table>
+            </div>
+        </div>
+
+        <div style="width:auto; height:auto; margin: 20px 50px;">
+            <div class="layui-row">
+                <div class="layui-col-md5">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 5px;float:left;">
+                        <table class="layui-hide" id="school_teacher_table" lay-filter="school_teacher_table"></table>
+                    </div>
+                </div>
+                <div class="layui-col-md7">
+                    <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 5px; float:right;">
+                        <table class="layui-hide" id="company_teacher_table" lay-filter="company_teacher_table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="bar_change_delete">
+        <a class="layui-btn layui-btn-xs" style="background-color:green" lay-event="detail">详情</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <script type="text/html" id="bar_teacher_detail_delete">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <script type="text/html" id="toolbar_item">
+        <div>项目列表</div>
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addItem" style=" margin:5px; position:relative; left:970px;">添加项目</button>
+        </div>
+    </script>
+    <script type="text/html" id="toolbar_school_teacher">
+        <div>校园老师</div>
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addSchoolTeacher" style=" margin:5px; position:relative; left:230px;">添加校园老师</button>
+        </div>
+    </script>
+    <script type="text/html" id="toolbar_company_teacher">
+        <div>企业老师</div>
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-warm layui-btn-radius" lay-event="addCompanyTeacher" style=" margin:5px; position:relative; left:550px; display:none;">添加企业老师</button>
+        </div>
+    </script>
+    <script src="../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../js/basic_url.js" charset="utf-8"></script>
+    <script src="../../js/basic.js" charset="utf-8"></script>
+    <script src="../../js/company_teacher.js" charset="utf-8"></script>
+    <script src="../../js/company_teacher_add_pt_item.js" charset="utf-8"></script>
+</body>
+</html>

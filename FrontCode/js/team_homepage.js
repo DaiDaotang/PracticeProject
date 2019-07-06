@@ -1,20 +1,9 @@
 ﻿// JavaScript source code
-var HomepageURL = "homepage_team.html"
-    , TeamDiaryURL = "team_diary.html"
-    , TeamMemberURL = "team_list.html"
-    , TeamProgressURL = "team_progress.html"
-    , GetTeamInfoURL = "http://localhost:8080/GetStudentByTeamIdServlet"
-    , AddMemberURL = "http://localhost:8080/AddStudentServlet"
-    , DelMemberURL = "http://localhost:8080/DeleteStudentFromTeamServlet"
-    , ModifyCaptainURL = "http://localhost:8080/ModifyCaptainServlet"
-    , ItemDetailURL = "teacher_add_pt_new_item.html"
-    , GetCompanyTeacherURL = "http://localhost:8080/GetCompanyTeacherByCompanyIdServlet";
-
 var user_id = t_param[`user_id`]
     , user_authority = t_param[`user_authority`]
     , target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
-    , target_team_id = parseInt(t_param[`team_id`])
+    , target_team_id = parseInt(t_param[`target_team_id`])
     , target_pt_id = parseInt(t_param[`target_pt_id`])
     , target_team_name = ""
     , target_item_id = -1
@@ -23,7 +12,7 @@ var user_id = t_param[`user_id`]
     , target_team_scores = -1
     , user_is_captain = false
     , captain_id = -1
-    , target_hd_img = "./img/defaultHead.jpg"
+    , target_hd_img = "../../img/defaultHead.jpg"
     , target_team_members = []
     , target_github_link = "";
 
@@ -38,7 +27,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
     //基本信息
     $.ajax({
         type: "POST",
-        url: GetTeamInfoURL,
+        url: GetTeamMemberListURL,
         async: true,
         data: JSON.stringify({
             "reqId": "",
@@ -59,7 +48,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
             document.getElementById("target_team_name").innerText = target_team_name;
             document.getElementById("target_team_item").innerText += target_item_name;
-            document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+            document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_team_head_img").style.border = "1px solid #6e7474";
             document.getElementById("target_team_score").innerText = target_team_scores == 0 ? "暂无" : target_team_scores;
             if (target_github_link === "") {
@@ -74,12 +63,12 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
             var temp = ""
             for (var i = 0; i < target_team_members.length; i++) {
-                temp += '<dd><a target="_blank"  href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
+                temp += '<dd><a target="_blank"  href="' + MemberHomepageURL + '?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
             }
             document.getElementById("team_list").innerHTML = temp;
 
-            var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&target_pt_id=" + t_param[`target_pt_id`] + "&target_item_id=" + target_item_id
-            document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
+            var basic_extra_url = "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_team_id=" + target_team_id + "&target_pt_id=" + target_pt_id + "&target_item_id=" + target_item_id
+            document.getElementById("team_homepage").href = TeamHomepageURL + basic_extra_url;
             document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
             document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
 
@@ -88,7 +77,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 if (user_id == captain_id) {
                     return {
                         elem: '#team_member_table'
-                        , url: GetTeamInfoURL
+                        , url: GetTeamMemberListURL
                         , title: '队员列表'
                         , contentType: 'application/json'
                         , toolbar: "#toolbar_item"
@@ -121,7 +110,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 else {
                     return {
                         elem: '#team_member_table'
-                        , url: GetTeamInfoURL
+                        , url: GetTeamMemberListURL
                         , title: '队员列表'
                         , contentType: 'application/json'
                         , toolbar: "#toolbar_item"
@@ -172,7 +161,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
             //监听编辑信息
             $(document).on('click', '#editTeam', function () {
-                window.location.href = "team_edit.html" + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id + "&target_item_id=" + target_item_id;
+                window.location.href = EditTeamInfoURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_team_id=" + target_team_id + "&target_pt_id=" + target_pt_id + "&target_item_id=" + target_item_id;
             })
 
             //监听写日志
@@ -181,7 +170,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                     title: '日志',
                     type: 2,
                     area: ["500px", "500px"],
-                    content: "student_write_daily_dairy.html" + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&user_team_id=" + target_team_id,
+                    content: TeamerWriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&target_team_id=" + target_team_id,
                     end: function () {
 
                     },
@@ -192,13 +181,9 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                             , diary_time = window.localStorage.diary_time
                             , diary_content = window.localStorage.diary_content;
 
-                        console.log(diary_name)
-                        console.log(diary_time)
-                        console.log(diary_content)
-
                         $.ajax({
                             type: "POST",
-                            url: "http://localhost:8080/WriteDiaryServlet",
+                            url: UploadDiaryURL,
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
@@ -244,11 +229,6 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
             title: '请输入电话号',
             area: ['300px', '350px'], //自定义文本域宽高,
         }, function (value, index, elem) {
-            //alert(value); //得到value
-            console.log(target_team_id)
-            console.log(value);
-            console.log(target_pt_id)
-            console.log(target_item_id)
             $.ajax({
                 type: "POST",
                 url: AddMemberURL,
@@ -270,12 +250,10 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
                         table.render(param_member_existed(1));
 
-
-
                         //更新导航栏
                         $.ajax({
                             type: "POST",
-                            url: GetTeamInfoURL,
+                            url: GetTeamMemberListURL,
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
@@ -288,7 +266,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
                                 var temp = ""
                                 for (var i = 0; i < target_team_members.length; i++) {
-                                    temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
+                                    temp += '<dd><a href="' + MemberHomepageURL + '?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student">' + target_team_members[i].name + '</a></dd>';
                                 }
                                 document.getElementById("team_list").innerHTML = temp;
                             },
@@ -333,7 +311,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                     if (res.isSuccess) {
                         layer.msg("操作成功", { time: 1000 })
                         setTimeout(function sign_up_fun() {
-                            window.location.href = "homepage_student.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student";
+                            window.location.href = TeamHomepageURL + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student";
                         }, 1500);
                     }
                 },
@@ -379,7 +357,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                             if (res.isSuccess) {
                                 layer.msg("转让成功", { time: 1000 })
                                 setTimeout(function sign_up_fun() {
-                                    window.location.href = "homepage_team.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
+                                    window.location.href = TeamHomepageURL + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student&target_team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
                                 }, 1500);
                             }
                         },

@@ -12,28 +12,14 @@ function GetRequest() {
     }
     return theRequest;
 }
-var t_param = GetRequest();
-console.log(t_param);
+var t_param = GetRequest()
+    , user_id = t_param[`user_id`]
+    , user_authority = t_param[`user_authority`]
+    , user_hd_img = "../../img/defaultHead.jpg"
+    , target_id = t_param[`target_id`]
+    , target_authority = t_param[`target_authority`];
 
-//共有变量
-var user_hd_img = "./img/defaultHead.jpg"
-    , user_id = parseInt(t_param[`user_id`])
-    , user_authority = t_param[`user_authority`];
-
-//测试变量
-var test_style = "1px solid #000";
-
-//共有URL
-var HomepageURL = ""
-    , QuitURL = "login.html"
-    , ChangeInfoURL = "login.html"
-    , SafetyURL = "safety_info.html"
-    , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
-    , GetCompanyTeacherServletURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
-    , GetSchoolTeacherServletURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
-    , GetCompanyServletURL = "http://localhost:8080/GetCompanyInformationServlet"
-    , GetAnyUserServlet = ""
-    , GetHeadImgURL = "http://localhost:8080/DownloadServlet?head=";
+var basic_extra_url = "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority;
 
 //获取个人信息
 layui.use(['jquery', 'layer'], function () {
@@ -67,7 +53,7 @@ layui.use(['jquery', 'layer'], function () {
         success: function (res) {
             console.log(res);
             user_hd_img = res.resData.head ? res.resData.head : "";
-            document.getElementById("user_hd_img").src = (user_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + user_hd_img);
+            document.getElementById("user_hd_img").src = (user_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + user_hd_img);
         },
     });
 });
@@ -130,5 +116,3 @@ function Onclick() {
     //location.href = "/Activity/ActivityInformation?a_id=" + "1"; // Url中会带有参数
     new submitForm('basic.html', { a_id: "1" }).post(); // Url中的参数被隐藏
 }
-
-console.log(Request.QueryString)

@@ -1,16 +1,4 @@
-﻿// JavaScript source code
-var HomepageURL = "homepage_student.html"
-    , StudentDiaryURL = "student_diary.html"
-    , StudentHistoryURL = "student_history.html"
-    , StudentResumeURL = "student_resume.html"
-    , CheckRecordURL = "student_check_record.html"
-    , SchoolURL = "login.html"
-    , CheckInOutURL = "http://localhost:8080/SigninServlet"
-    , ChangeHeadURL = "login.html"
-    , WriteDiaryURL = "student_write_daily_dairy.html"
-    , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet";
-
-//变量
+﻿//变量
 var user_hasChecked = false
     , target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
@@ -91,7 +79,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             //设置签到
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/GetAtWorkServlet",
+                url: SetCheckInOutURL,
                 async: true,
                 data: JSON.stringify({
                     "reqId": "",
@@ -131,7 +119,8 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 success: function (res) {
                     console.log(res);
                     if (res.isSuccess) {        //有团队
-                        target_item_id = res.resData.projectId;
+                        target_item_id = res.resData.projectId
+                            , target_pt_id = res.resData.practiceId;
 
                         //监听写日志
                         $(document).on('click', '#write_diary_btn', function () {
@@ -156,7 +145,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
 
                                     $.ajax({
                                         type: "POST",
-                                        url: "http://localhost:8080/WriteDiaryServlet",
+                                        url: UploadDiaryURL,
                                         async: true,
                                         data: JSON.stringify({
                                             "reqId": "",
@@ -192,11 +181,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("write_diary_btn").style.display = "none";
                     }
 
-                    var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&target_item_id=" + target_pt_id;
-                    document.getElementById("target_homepage").href = HomepageURL + basic_extra_url;
-                    document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url;
-                    document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url;
-                    document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url;
+                    var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
+                    document.getElementById("target_homepage").href = StudentHomepageURL + basic_extra_url + extra_url;
+                    document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url + extra_url;
+                    document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url + extra_url;
+                    document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url + extra_url;
                 },
                 error: function (res) {
                     console.log("获取团队信息失败");
@@ -219,7 +208,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 document.getElementById("write_diary_btn").style.display = "none";
             }
 
-            document.getElementById("target_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+            document.getElementById("target_head_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_head_img").style.border = "1px solid #6e7474";
 
             document.getElementById("username").innerText = target_name;

@@ -1,14 +1,8 @@
 ﻿//// JavaScript source code
-var GetCompanyTeacherInfoURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
-    , GetCompanyNameURL = "http://localhost:8080/GetCompanyInformationServlet"
-    , ProjectInChargeURL = "company_teacher_project_in_charge.html"
-    , CreateNewPTURL = "company_teacher_publish_pt.html"
-    , ModifyPTURL = "company_teacher_modify_pt.html"
-    , HomepageURL = "homepage_company_teacher.html"
-    , CompanyPTListURL = "company_pt_list.html";
-
 //变量
-var target_id = parseInt(t_param[`target_id`])
+var user_id = parseInt(t_param[`user_id`])
+    , user_authority = t_param[`user_authority`]
+    , target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
     , target_name = ""
     , target_gender = ""
@@ -28,7 +22,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
     //监听搜索
     form.on('submit(search_diary_btn)', function (data) {
         console.log(data.field);
-        //layer.msg(JSON.stringify(data.field));
         return false;
     });
 
@@ -50,10 +43,10 @@ layui.use(['form', 'jquery', 'layer'], function () {
         success: function (res) {
             console.log(res);
             target_company_id = res.resData.company;
-            document.getElementById("target_homepage").href = HomepageURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
+            document.getElementById("target_homepage").href = CompanyTeacherHomepageURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
             document.getElementById("target_company_pt").href = CompanyPTListURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] +  "&target_company_id=" + target_company_id;
-            document.getElementById("target_create_pt").href = CreateNewPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
-            document.getElementById("target_modify_pt").href = ModifyPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
+            document.getElementById("target_create_pt").href = CompanyTeacherCreateNewPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
+            document.getElementById("target_modify_pt").href = CompanyTeacherModifyPTURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&user_company_id=" + target_company_id;
         },
         error: function (res) {
             console.log("获取用户基本信息失败");

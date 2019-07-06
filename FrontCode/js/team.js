@@ -14,16 +14,11 @@ function GetRequest() {
 var t_param = GetRequest();
 console.log(t_param);
 
-var HomepageURL = "homepage_team.html"
-    , TeamDiaryURL = "team_diary.html"
-    , TeamMemberURL = "team_list.html"
-    , TeamProgressURL = "team_progress.html"
-    , GetTeamInfoURL = "http://localhost:8080/GetStudentByTeamIdServlet"
-    , GetTeamMemberURL = "";
-
-var target_id = parseInt(t_param[`target_id`])
+var user_id = parseInt(t_param[`user_id`])
+    , user_authority = t_param[`user_authority`]
+    , target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
-    , target_team_id = parseInt(t_param[`team_id`])
+    , target_team_id = parseInt(t_param[`target_team_id`])
     , target_pt_id = parseInt(t_param[`target_pt_id`])
     , target_team_name = ""
     , target_item_id = -1
@@ -32,7 +27,7 @@ var target_id = parseInt(t_param[`target_id`])
     , target_team_scores = -1
     , user_is_captain = false
     , captain_id = -1
-    , target_hd_img = "./img/defaultHead.jpg"
+    , target_hd_img = "../../img/defaultHead.jpg"
     , target_team_members = []
     , target_github_link = "";
 
@@ -45,7 +40,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
     //补全基本信息
     $.ajax({
         type: "POST",
-        url: GetTeamInfoURL,
+        url: GetTeamMemberListURL,
         async: true,
         data: JSON.stringify({
             "reqId": "",
@@ -69,7 +64,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
 
             document.getElementById("target_team_name").innerText = target_team_name;
             document.getElementById("target_team_item").innerText += target_item_name;
-            document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+            document.getElementById("target_team_head_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_team_head_img").style.border = "1px solid #6e7474";
             document.getElementById("target_team_score").innerText = target_team_scores == 0 ? "暂无" : target_team_scores;
             if (target_github_link === "") {
@@ -83,12 +78,12 @@ layui.use(['form', 'jquery', 'layer'], function () {
 
             var temp = ""
             for (var i = 0; i < target_team_members.length; i++) {
-                temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student" target="_blank">' + target_team_members[i].name + '</a></dd>';
+                temp += '<dd><a href="' + MemberHomepageURL + '?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student" target="_blank">' + target_team_members[i].name + '</a></dd>';
             }
             document.getElementById("team_list").innerHTML = temp;
 
-            var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&target_pt_id=" + t_param[`target_pt_id`] + "&target_item_id=" + target_item_id
-            document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
+            var basic_extra_url = "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_team_id=" + target_team_id + "&target_pt_id=" + target_pt_id + "&target_item_id=" + target_item_id
+            document.getElementById("team_homepage").href = TeamHomepageURL + basic_extra_url;
             document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
             document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
 
@@ -98,7 +93,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     title: '日志',
                     type: 2,
                     area: ["500px", "500px"],
-                    content: "student_write_daily_dairy.html" + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&user_team_id=" + target_team_id,
+                    content: TeamerWriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&user_team_id=" + target_team_id,
                     end: function () {
 
                     },
@@ -109,13 +104,9 @@ layui.use(['form', 'jquery', 'layer'], function () {
                             , diary_time = window.localStorage.diary_time
                             , diary_content = window.localStorage.diary_content;
 
-                        console.log(diary_name)
-                        console.log(diary_time)
-                        console.log(diary_content)
-
                         $.ajax({
                             type: "POST",
-                            url: "http://localhost:8080/WriteDiaryServlet",
+                            url: UploadDiaryURL,
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
@@ -132,7 +123,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                 console.log(res)
                                 if (res.isSuccess) {
                                     layer.msg("发布成功！", { time: 1000 })
-                                    console.log(res);
                                     setTimeout("layer.closeAll()", 500)
                                     setTimeout("location.reload()", 500)
                                 }

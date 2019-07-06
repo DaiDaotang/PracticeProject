@@ -1,24 +1,5 @@
-﻿// JavaScript source code
-var GroupURL = "homepage_team.html"
-    , ItemURL = "login.html"
-    , CreateGroupURL = "student_create_team.html"
-    , WriteDiaryURL = "student_write_daily_dairy.html"
-    , GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
-    , GetPTInfoURL = "http://localhost:8080/GetPracticeByStudentIdServlet"
-    , HomepageURL = "homepage_student.html"
-    , StudentDiaryURL = "student_diary.html"
-    , StudentHistoryURL = "student_history.html"
-    , StudentResumeURL = "student_resume.html"
-    , CheckRecordURL = "student_check_record.html"
-    , SchoolURL = "login.html"
-    , CheckInOutURL = "http://localhost:8080/SigninServlet"
-    , ChangeHeadURL = "login.html"
-    , WriteDiaryURL = "student_write_daily_dairy.html";
-
-//变量
+﻿//变量
 var user_hasChecked = false
-    , target_id = parseInt(t_param[`target_id`])
-    , target_authority = t_param[`target_authority`]
     , target_name = ""
     , target_gender = ""
     , target_hd_img = ""
@@ -87,9 +68,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     document.getElementById("group_name").innerText = "暂无";
                     document.getElementById("item_name").innerText = "暂无";
                     document.getElementById("item_a").href = "javascript:return false;";
-                    if (target_authority == user_authority && target_id == user_id) {
 
-                    }
                     if (target_authority == user_authority && target_id == user_id) {
                         document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id;
                     }
@@ -139,10 +118,10 @@ layui.use(['form', 'jquery', 'layer'], function () {
         });
     });
 
-    //设置实训
+    //设置实训列表
     $.ajax({
         type: "POST",
-        url: GetPTInfoURL,
+        url: GetPTListByStudentIdURL,
         async: true,
         data: JSON.stringify({
             "reqId": "",
@@ -165,7 +144,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             //获取参加的最新的实训和组队信息
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/StudentCheckTeamServlet",
+                url: GetStudentTeamURL,
                 async: true,
                 data: JSON.stringify({
                     "reqId": "",
@@ -189,7 +168,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                             , target_item_id = res.resData.projectId
                             , target_item_name = res.resData.projectName;
                         document.getElementById("group_name").innerText = target_group_name;
-                        document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&target_pt_id=" + target_pt_id;
+                        document.getElementById("group_a").href = GroupURL + basic_extra_url + "&target_team_id=" + target_group_id + "&target_pt_id=" + target_pt_id;
                         document.getElementById("item_name").innerText = target_item_name;
                         document.getElementById("item_a").href = ItemURL;
 
@@ -210,13 +189,9 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                         , diary_time = window.localStorage.diary_time
                                         , diary_content = window.localStorage.diary_content;
 
-                                    console.log(diary_name)
-                                    console.log(diary_time)
-                                    console.log(diary_content)
-
                                     $.ajax({
                                         type: "POST",
-                                        url: "http://localhost:8080/WriteDiaryServlet",
+                                        url: UploadDiaryURL,
                                         async: true,
                                         data: JSON.stringify({
                                             "reqId": "",
@@ -255,8 +230,9 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("group_name").innerText = "暂无";
                         document.getElementById("item_name").innerText = "暂无";
                         document.getElementById("item_a").href = "javascript:return false;";
+                        document.getElementById("write_diary_btn").style.display = "none";
                         if (target_authority == user_authority && target_id == user_id && target_pt_id != -1) {
-                            document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id;
+                            document.getElementById("group_a").href = CreateGroupURL + basic_extra_url + "&target_pt_id=" + target_pt_id;
                         }
                         else {
                             document.getElementById("group_a").href = "javascript:;";
@@ -264,11 +240,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
 
                     }
 
-                    var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&target_item_id=" + target_pt_id;
-                    document.getElementById("target_homepage").href = HomepageURL + basic_extra_url;
-                    document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url;
-                    document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url;
-                    document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url;
+                    var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
+                    document.getElementById("target_homepage").href = StudentHomepageURL + basic_extra_url + extra_url;
+                    document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url + extra_url;
+                    document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url + extra_url;
+                    document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url + extra_url;
                 },
                 error: function (res) {
                     console.log("error");
@@ -304,7 +280,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             //设置签到
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/GetAtWorkServlet",
+                url: SetCheckInOutURL,
                 async: true,
                 data: JSON.stringify({
                     "reqId": "",
@@ -343,7 +319,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 document.getElementById("write_diary_btn").style.display = "none";
             }
 
-            document.getElementById("target_head_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+            document.getElementById("target_head_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_head_img").style.border = "1px solid #6e7474";
 
             document.getElementById("username").innerText = target_name;

@@ -1,0 +1,444 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>签到情况</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-form-select dl dd:hover {
+            background-color: #1E9FFF;
+            color: #cacaca
+        }
+    </style>
+</head>
+<body id="body_whole">
+
+    <div class="layui-tab layui-tab-card" lay-filter="record">
+        <ul class="layui-tab-title" id="ul_id"></ul>
+        <div class="layui-tab-content" id="div_id">
+        </div>
+    </div>
+
+    <script src="../../incubator-echarts-4.2.1/dist/echarts.min.js"></script>
+    <script src="../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../js/basic_url.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        function setToolBar(i) {
+            document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div style="width:85px; margin-right:10px; float:left;">One Week</div>';
+            for (var i = 7; i < 22; i++) {
+                if (i < 10)
+                    document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div style="width:56px;float:left;text-align:left;">0' + i + ':00</div>';
+                else
+                    document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div style="width:56px;float:left;text-align:left;">' + i + ':00</div>';
+            }
+            document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div style="float:left;text-align:left;">22:0</div>';
+            document.getElementById("weekly_check_record_up_" + i).innerHTML += '<div>0</div>';
+        }
+    </script>
+    <script type="text/javascript">
+        //获取传参
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+        var t_param = GetRequest();
+
+        var user_id = t_param[`user_id`]
+            , user_authority = t_param[`user_authority`]
+            , target_id = t_param[`target_id`]
+            , target_authority = t_param[`target_authority`]
+            , target_pt_id = t_param[`target_pt_id`];
+
+        var date_now = new Date();
+        var year_now = date_now.getFullYear()
+            , month_now = date_now.getMonth() + 1
+            , day_now = date_now.getDay()
+            , hour_now = date_now.getHours()
+            , min_now = date_now.getMinutes()
+            , sec_now = date_now.getSeconds();
+
+        var work_time = []
+            , work_time_d = 0
+            , week = -1
+            , start_t = ""
+            , end_t = "";
+
+        layui.use(['element', 'jquery'], function () {
+            var $ = layui.jquery
+                , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+            $('.site-demo-active').on('click', function () {
+                var othis = $(this), type = othis.data('type');
+                active[type] ? active[type].call(this, othis) : '';
+            });
+
+            $.ajax({
+                type: "POST",
+                url: GetStudentTeamURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": {
+                        "id": target_id,
+                        "practiceId": -1
+                    }
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res)
+                    week = res.resData.weeks;
+                    var str1 = ""
+                        , str2 = ""
+                    if (week > 0) {
+                        for (var i = 0; i < week; i++) {
+                            work_time.push([0, 0, 0, 0, 0, 0, 0])
+                            if (i == 0) {
+                                str1 += '<li class="layui-this" id="first">第' + (i + 1) + '周</li>';
+                                str2 += '<div class="layui-tab-item layui-show">'
+                            }
+                            else {
+                                str1 += '<li>第' + (i + 1) + '周</li>'
+                                str2 += '<div class="layui-tab-item">'
+                            }
+                            str2 += '<div style="width:85px; margin-right:10px; float:left;">One Week</div><div style = "width:56px;float:left;text-align:left;"> 07: 00</div><div style="width:56px;float:left;text-align:left;">08:00</div><div style="width:56px;float:left;text-align:left;">09:00</div><div style="width:56px;float:left;text-align:left;">10:00</div><div style="width:56px;float:left;text-align:left;">11:00</div><div style="width:56px;float:left;text-align:left;">12:00</div><div style="width:56px;float:left;text-align:left;">13:00</div><div style="width:56px;float:left;text-align:left;">14:00</div><div style="width:56px;float:left;text-align:left;">15:00</div><div style="width:56px;float:left;text-align:left;">16:00</div><div style="width:56px;float:left;text-align:left;">17:00</div><div style="width:56px;float:left;text-align:left;">18:00</div><div style="width:56px;float:left;text-align:left;">19:00</div><div style="width:56px;float:left;text-align:left;">20:00</div><div style="width:56px;float:left;text-align:left;">21:00</div><div style="width:56px;float:left;text-align:left;">22:00</div><div><br /></div>'
+                            str2 += '<div><div id="weekly_check_record_up_' + i + '"></div><div id="weekly_check_record_' + i + '"></div></div ><div id="chart_week_' + i + '" style="margin-top:50px; width: 500px;height:400px;"></div></div >'
+                        }
+                        document.getElementById("ul_id").innerHTML += str1
+                        document.getElementById("div_id").innerHTML += str2
+                        document.getElementById("first").click();
+                    }
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
+
+            element.on('tab(record)', function (data) {
+                setTubeChart(data.index, data.index);
+            });
+
+            function setTubeChart(index, number) {
+                var first_week = false;
+                if (index == 0)
+                    first_week = true;
+                if (document.getElementById("weekly_check_record_" + number).innerHTML) {
+                    console.log("full")
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: GetSignInsURL,
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "id": target_id,
+                                "practiceId": target_pt_id,
+                                "index": index
+                            }
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            var last_t = -1
+                                , last_f_t = 27
+                                , temp = ""
+                                , str = ""
+                                , strs0 = []
+                                , strs = []
+                                , temp_compare_float = 0.0
+                                , temp_compare = 0
+                                , atWork = false
+                            //获取今天日期
+                            var date_now = new Date()
+                                , day_now = date_now.getDay()
+                                , hour_now = date_now.getHours()
+                                , min_now = date_now.getMinutes();
+
+                            for (var i = 0; i < res.resData.length; i++) {
+                                temp += '<div style="width:100px; float:left; margin-right:10px;">' + res.resData[i].date + '</div>'
+
+                                /**
+                                 *  最长工作时间为7:00-22:00
+                                 *  每小时4刻钟
+                                 *  取值范围[27, 88)
+                                 *  故比较方法为 (hour + min / 4) * 4
+                                 */
+
+                                //有签到记录
+                                if (res.resData[i].signins.length > 0) {
+                                    //扫描记录
+                                    for (var j = 0; j < res.resData[i].signins.length; j++) {
+                                        strs0 = res.resData[i].signins[j].dateTime.split(" ");
+                                        str = strs0[1];
+                                        strs = str.split(":");
+
+                                        temp_compare_float = (parseFloat(strs[0]) + parseFloat(strs[1]) / 60) * 4;
+                                        temp_compare = parseInt(temp_compare_float);
+
+                                        //10:00后还有记录，否认，退出
+                                        if (temp_compare > 88) {
+                                            if (!res.resData[i].signins[j].atWork) {
+                                                end_t = "22:00:00"
+                                                if (!first_week)
+                                                    work_time[index][i] += parseFloat(arithTime(start_t, end_t)).toFixed(2)
+                                                else
+                                                    work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t)).toFixed(2)
+                                            }
+                                            break;
+                                        }
+                                        //10:00前的记录
+                                        else {
+                                            //true:签到   false:签退
+                                            atWork = res.resData[i].signins[j].atWork
+                                            if (atWork) {
+                                                start_t = str;
+                                            }
+                                            else {
+                                                end_t = str;
+                                                if (!first_week) {
+                                                    work_time[index][i] += (parseFloat(arithTime(start_t, end_t)))
+                                                }
+                                                else
+                                                    work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t))
+                                            }
+                                        }
+
+                                        //若这次记录比上次记录晚15分钟
+                                        if (temp_compare > last_t ) {8
+                                            last_t = temp_compare;
+
+                                            //这次是签退，上次至现在都是工作，蓝色
+                                            if (!atWork) {
+                                                for (var n = last_f_t; n < last_t; n++) {
+                                                    if ((n + 1) % 4 == 0) 
+                                                        temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                    else 
+                                                        temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                                                }
+                                            }
+                                            //这次是签到，上次至现在都是休息，灰色
+                                            else {
+                                                for (var n = last_f_t; n < last_t; n++) {
+                                                    if ((n + 1) % 4 == 0)
+                                                        temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                    else
+                                                        temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
+                                                }
+                                            }
+                                            //记录一下这次的签到/签退时间
+                                            last_f_t = last_t;
+                                        }
+                                    }
+
+                                    //是今天的记录，且上一条扫描记录在22:00前，且是签到开始工作
+                                    if (day_now == strs0[0].split("-")[2] && atWork) {
+                                        //获取现在时间，生成伪记录
+                                        temp_compare = parseInt((hour_now + parseFloat(min_now / 60)) * 4);
+                                        //上次签到至今差5小时以上，记录工作时长为5hours
+                                        //if (temp_compare - last_f_t >= 20) {
+                                        //    end_t = date_now.getHours() + ":" + date_now.getMinutes()
+                                        //    console.log(start_t)
+                                        //    console.log(end_t)
+                                        //    console.log(work_time[index])
+                                        //    if (!first_week)
+                                        //        work_time[index][i] += parseFloat(arithTime(start_t, end_t).toFixed(2))
+                                        //    else
+                                        //        work_time[index][7 - res.resData.length + i] += parseFloat(arithTime(start_t, end_t).toFixed(2))
+                                        //    console.log(work_time[index])
+                                        //}
+
+                                        //若现在时间比上次记录晚15分钟，且上次签到时间比现在早五小时或五小时以内
+                                        if (temp_compare > last_f_t) {
+                                            last_t = temp_compare >= 88 ? 88 : (temp_compare - last_f_t <= 20 ? temp_compare : (last_t + 20));
+                                            //上次至现在都是工作，蓝色
+                                            if (atWork) {
+                                                if (date_now.getHours() < 22 || (date_now.getHours() == 22 && date_now.getMinutes() == 0)) {
+                                                    end_t = date_now.getHours() + ":" + date_now.getMinutes()
+                                                    if (!first_week) {
+                                                        var xxx = work_time[index][i];
+                                                        xxx += parseFloat(arithTime(start_t, end_t))
+                                                        work_time[index][i] = xxx.toFixed(2);
+                                                    }
+                                                    else {
+                                                        var xxx = work_time[index][7 - res.resData.length + i];
+                                                        xxx += parseFloat(arithTime(start_t, end_t))
+                                                        work_time[index][7 - res.resData.length + i] = xxx.toFixed(2);
+                                                    }
+                                                }
+                                                var n = last_f_t;
+                                                for (; n < last_t - 1; n++) {
+                                                    if ((n + 1) % 4 == 0) {
+                                                        temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                    }
+                                                    else {
+                                                        temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                                                    }
+                                                }
+                                                if ((n + 1) % 4 == 0) {
+                                                    temp += '<div id="tube_now" style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                }
+                                                else {
+                                                    temp += '<div id="tube_now" style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                                                }
+                                                //setTubeNowBling()
+                                            }
+                                            //上次至现在都是休息，灰色
+                                            else {
+                                                for (var n = last_f_t; n < last_t; n++) {
+                                                    if ((n + 1) % 4 == 0) {
+                                                        temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                    }
+                                                    else {
+                                                        temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
+                                                    }
+                                                }
+                                            }
+                                            //记录一下这次签到/签退时间
+                                            last_f_t = last_t;
+                                        }
+                                    }
+                                    //不是今天的记录，
+                                    else if (last_f_t <= 88) {
+                                        var max;
+                                        if (88 - last_f_t >= 20) {
+                                            max = last_f_t + 20;
+                                        }
+                                        else {
+                                            max = 88;
+                                        }
+                                        //上一个记录是签到
+                                        if (atWork) {
+                                            end_t = parseInt(max / 4) + ":" + ((max - parseInt(max / 4) * 4) * 15);
+                                            if (!first_week)
+                                                work_time[index][i] += parseFloat(arithTime(start_t, end_t))
+                                            else
+                                                work_time[index][7 - res.resData.length + i ] += parseFloat(arithTime(start_t, end_t))
+                                            for (var n = last_f_t; n < max; n++) {
+                                                if ((n + 1) % 4 == 0) {
+                                                    temp += '<div style="width:10px; height:10px; background-color:#1E9FFF;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                }
+                                                else {
+                                                    temp += '<div style="width:12px; height:12px; background-color:#1E9FFF;margin:1px; float:left;"></div>'
+                                                }
+                                            }
+                                        }
+                                        //上一个记录是签退
+                                        else {
+                                            for (var n = last_f_t; n < max; n++) {
+                                                if ((n + 1) % 4 == 0) {
+                                                    temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                                }
+                                                else {
+                                                    temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
+                                                }
+                                            }
+                                        }
+                                        last_f_t = max;
+                                    }
+                                }
+                                //没有签到记录 或 今天的剩余时间
+                                for (var n = last_f_t; n < 88; n++) {
+                                    if ((n + 1) % 4 == 0) {
+                                        temp += '<div style="width:10px; height:10px; background-color:#cacaca;margin:1px; float:left; border: 1px solid #000;"></div>'
+                                    }
+                                    else {
+                                        temp += '<div style="width:12px; height:12px; background-color:#cacaca;margin:1px; float:left;"></div>'
+                                    }
+                                }
+
+                                //恢复数据
+                                temp += '<div style="font-style:1px;"><br/></div>'
+                                last_t = -1
+                                    , last_f_t = 27
+                                    , str = ""
+                                    , strs0 = []
+                                    , strs = []
+                                    , temp_compare_float = 0.0
+                                    , temp_compare = 0
+                                    , scanned = false
+                                    , atWork = false
+                                    , more = false;
+                            }
+                            document.getElementById("weekly_check_record_" + number).innerHTML = temp;
+                            setBarChart("chart_week_" + index, work_time[index]);
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
+                        }
+                    });
+                }
+            }
+        });
+        function setBarChart(chartId, week_time) {
+            console.log(week_time)
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById(chartId));
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '工作时长'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['时长']
+                },
+                xAxis: {
+                    data: ["Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '时长',
+                    type: 'bar',
+                    data: week_time
+                }]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+        function setTubeNowBling() {
+            if (document.getElementById("tube_now")) {
+                if (document.getElementById("tube_now").style.backgroundColor == "#1E9FFF")
+                    document.getElementById("tube_now").style.backgroundColor = "red";
+                else
+                    document.getElementById("tube_now").style.backgroundColor = "#1E9FFF";
+                setTimeout("setTubeNowBling()", 1000);
+            }
+        }
+        function arithTime(start_time, end_time) {
+            var strs1 = start_time.split(":")
+                , strs2 = end_time.split(":");
+
+            var hour_s = parseInt(strs1[0])     //10:25  17:02
+                , hour_e = parseInt(strs2[0])
+                , min_s = parseInt(strs1[1])
+                , min_e = parseInt(strs2[1]);
+
+            var whole_min = min_e - min_s + (hour_e - hour_s) * 60;
+
+            if (whole_min <= 300) {
+                var whole_hour = (whole_min / 60).toFixed(2);
+                return whole_hour;
+            }
+            else
+                return 5.0;
+            //console.log(whole_hour)
+        }
+    </script>
+</body>
+</html>

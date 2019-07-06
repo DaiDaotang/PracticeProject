@@ -6,9 +6,6 @@ else if (t_param[`temp`] === "done") {
     document.getElementById("legend_whole").innerText += "-已完成"
 }
 
-var GetCompanyTeacherInfoURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
-    , GetCompanyNameURL = "http://localhost:8080/GetCompanyInformationServlet";
-
 var target_name = ""
     , target_gender = ""
     , target_hd_img = ""
@@ -38,7 +35,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 , target_company_id = res.resData.company
                 , target_company_name = res.resData.companyName
                 , target_hd_img = res.resData.head ? res.resData.head : "";
-            document.getElementById("target_hd_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+            document.getElementById("target_hd_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_hd_img").style.border = "1px solid #6e7474";
 
             if (target_id != user_id || target_authority != user_authority) {

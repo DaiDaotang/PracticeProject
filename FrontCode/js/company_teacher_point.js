@@ -1,10 +1,10 @@
 ﻿//变量
 var user_id = t_param[`user_id`]
     , user_authority = t_param[`user_authority`]
-    , pt_id = t_param[`pt_id`]
-    , item_id = t_param[`item_id`];
+    , target_pt_id = t_param[`target_pt_id`]
+    , target_item_id = t_param[`target_item_id`];
 
-item_id = 33;
+target_item_id = 33;
 
 var all_team_id = []
     , all_team_member_id = [];
@@ -29,7 +29,7 @@ layui.use(['element', 'form', 'jquery', 'laydate', 'table', 'layer'], function (
         data: JSON.stringify({
             "reqId": "",
             "reqParam": {
-                "projectId": item_id
+                "projectId": target_item_id
             }
         }),
         dataType: "json",
@@ -175,6 +175,5 @@ layui.use(['element', 'form', 'jquery', 'laydate', 'table', 'layer'], function (
                 console.log(res);
             }
         });
-
     }
 });

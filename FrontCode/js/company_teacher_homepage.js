@@ -1,7 +1,4 @@
 ﻿// JavaScript source code
-var GetCompanyTeacherInfoURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
-    , GetCompanyNameURL = "http://localhost:8080/GetCompanyInformationServlet";
-
 var target_name = ""
     , target_gender = ""
     , target_hd_img = ""
@@ -31,20 +28,18 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 , target_company_id = res.resData.company
                 , target_company_name = res.resData.companyName
                 , target_hd_img = res.resData.head ? res.resData.head : "";
-            document.getElementById("target_hd_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+            document.getElementById("target_hd_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_hd_img").style.border = "1px solid #6e7474";
 
             document.getElementById("username").innerText = target_name;
             document.getElementById("gender").innerHTML = (target_gender == "男") ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
-            console.log(res.resData.sex)
-            console.log(res.resData.sex == "男")
             //监听写日志
             $(document).on('click', '#write_diary_btn', function () {
                 layer.open({
                     title: '日志',
                     type: 2,
                     area: ["500px", "500px"],
-                    content: "student_write_daily_dairy.html" + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&user_team_id=" + target_team_id,
+                    content: CompanyTeacherWriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&user_team_id=" + target_team_id,
                     end: function () {
 
                     },
@@ -55,13 +50,9 @@ layui.use(['form', 'jquery', 'layer'], function () {
                             , diary_time = window.localStorage.diary_time
                             , diary_content = window.localStorage.diary_content;
 
-                        console.log(diary_name)
-                        console.log(diary_time)
-                        console.log(diary_content)
-
                         $.ajax({
                             type: "POST",
-                            url: "http://localhost:8080/WriteDiaryServlet",
+                            url: UploadDiaryURL,
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
@@ -78,7 +69,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                 console.log(res)
                                 if (res.isSuccess) {
                                     layer.msg("发布成功！", { time: 1000 })
-                                    console.log(res);
                                     setTimeout("layer.closeAll()", 500)
                                     setTimeout("location.reload()", 500)
                                 }
