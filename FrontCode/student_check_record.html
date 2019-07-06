@@ -185,7 +185,9 @@
                                 , atWork = false
                             //获取今天日期
                             var date_now = new Date()
-                                , day_now = date_now.getDay();
+                                , day_now = date_now.getDay()
+                                , hour_now = date_now.getHours()
+                                , min_now = date_now.getMinutes();
 
                             for (var i = 0; i < res.resData.length; i++) {
                                 temp += '<div style="width:100px; float:left; margin-right:10px;">' + res.resData[i].date + '</div>'
@@ -193,7 +195,7 @@
                                 /**
                                  *  最长工作时间为7:00-22:00
                                  *  每小时4刻钟
-                                 *  取值范围[27, 88]
+                                 *  取值范围[27, 88)
                                  *  故比较方法为 (hour + min / 4) * 4
                                  */
 
@@ -263,12 +265,9 @@
                                     //是今天的记录，且上一条扫描记录在22:00前，且是签到开始工作
                                     if (day_now == strs0[0].split("-")[2] && atWork) {
                                         //获取现在时间，生成伪记录
-                                        var date_now = new Date()
-                                            , hour_now = date_now.getHours()
-                                            , min_now = date_now.getMinutes();
-                                        temp_compare = parseFloat((hour_now + parseFloat(min_now / 60)) * 4);
-                                        //若现在时间比上次记录晚15分钟
-                                        if (temp_compare > last_f_t) {
+                                        temp_compare = parseInt((hour_now + parseFloat(min_now / 60)) * 4);
+                                        //若现在时间比上次记录晚15分钟，且上次签到时间比现在早五小时或五小时以内
+                                        if (temp_compare > last_f_t && temp_compare - last_f_t <= 20) {
                                             last_t = temp_compare >= 88 ? 88 : temp_compare;
                                             //上次至现在都是工作，蓝色
                                             if (atWork) {
@@ -309,7 +308,7 @@
                                         }
                                     }
                                     //不是今天的记录，
-                                    else if (last_f_t < 88) {
+                                    else if (88 - last_f_t <= 20) {
                                         //上一个记录是签到
                                         if (atWork) {
                                             for (var n = last_f_t; n < 88; n++) {
@@ -414,10 +413,16 @@
                 , hour_e = parseInt(strs2[0])
                 , min_s = parseInt(strs1[1])
                 , min_e = parseInt(strs2[1]);
-            var whole_min = min_e - min_s >= 0 ? min_e - min_s + (hour_e - hour_s) * 60 : min_e + 60 - min_s + (hour_e - 1 - hour_s) * 60;
-            var whole_hour = (whole_min / 60).toFixed(2);
+
+            var whole_min = min_e - min_s + (hour_e - hour_s) * 60;
+
+            if (whole_min <= 300) {
+                var whole_hour = (whole_min / 60).toFixed(2);
+                return whole_hour;
+            }
+            else
+                return 0;
             //console.log(whole_hour)
-            return whole_hour;
         }
     </script>
 </body>
