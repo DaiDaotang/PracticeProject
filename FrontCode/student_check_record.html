@@ -112,7 +112,7 @@
                         , str2 = ""
                     if (week > 0) { //[]    [[0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0]]
                         for (var i = 0; i < week; i++) {
-                            work_time.push([0, 0, 0, 0, 0, 0])
+                            work_time.push([0, 0, 0, 0, 0, 0, 0])
                             if (i == 0) {
                                 str1 += '<li class="layui-this" id="first">第' + (i + 1) + '周</li>';
                                 str2 += '<div class="layui-tab-item layui-show">'
@@ -308,7 +308,7 @@
                                         }
                                     }
                                     //不是今天的记录，
-                                    else if (last_f_t < 88) {
+                                    else if (last_f_t <= 88) {
                                         var max;
                                         if (88 - last_f_t >= 20) {
                                             max = last_f_t + 20;
@@ -318,7 +318,7 @@
                                         }
                                         //上一个记录是签到
                                         if (atWork) {
-                                            end_t = parseInt(max / 4) + ":" + (max - parseInt(max / 4)); 
+                                            end_t = parseInt(max / 4) + ":" + ((max - parseInt(max / 4) * 4) * 15);
                                             work_time[index][i] += parseFloat(arithTime(start_t, end_t))
                                             for (var n = last_f_t; n < max; n++) {
                                                 if ((n + 1) % 4 == 0) {
@@ -392,7 +392,7 @@
                     data: ['时长']
                 },
                 xAxis: {
-                    data: ["Mon", "Tue", "Wed", "Thue", "Fri", "Sat"]
+                    data: ["Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"]
                 },
                 yAxis: {},
                 series: [{
