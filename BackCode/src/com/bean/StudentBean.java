@@ -16,6 +16,7 @@ public class StudentBean {
     private int practiceId;
     private int projectId;
     private int index;
+    private int score;
 
     public String getTelephone() {
         return telephone;
@@ -135,5 +136,13 @@ public class StudentBean {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

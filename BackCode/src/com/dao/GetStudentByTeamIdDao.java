@@ -21,7 +21,7 @@ public class GetStudentByTeamIdDao {
         int captainId = 0;
         try{
             conn.setAutoCommit(false);
-            String sql ="SELECT student.studentId,studentName,studentNumber,studentGrade,studentSex FROM student NATURAL JOIN stprelation WHERE teamId = ?;";
+            String sql ="SELECT student.studentId,studentName,studentNumber,studentGrade,studentSex,studentscores FROM student NATURAL JOIN stprelation WHERE teamId = ?;";
             state = conn.prepareStatement(sql);
             state.setInt(1,teamId);
             ResultSet rs = state.executeQuery();
@@ -33,6 +33,7 @@ public class GetStudentByTeamIdDao {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
                 studentBean.setGrade(dateFormat.format(rs.getDate(4)));
                 studentBean.setSex(rs.getString(5));
+                studentBean.setScore(rs.getInt(6));
                 studentBeans.add(studentBean);
             }
             state2 = conn.prepareStatement("SELECT team.*,projectId,projectName FROM team NATURAL JOIN stprelation NATURAL JOIN project WHERE teamId = ?;");
