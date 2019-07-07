@@ -38,7 +38,8 @@ layui.use(['form', 'jquery', 'layer'], function () {
             dataType: "json",
             success: function (res) {
                 console.log(res);
-                if (res.isSuccess) {        //有团队
+                //有团队
+                if (res.isSuccess) {       
                     target_group_id = res.resData.teamId
                         , target_group_name = res.resData.teamName
                         , target_item_id = res.resData.projectId
@@ -49,17 +50,9 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     document.getElementById("item_a").href = ItemURL;
                     console.log(document.getElementById("group_a").href)
 
-                    //监听写日志
-                    $(document).on('click', '#write_diary_btn', function () {
-                        layer.open({
-                            title: '日志',
-                            type: 2,
-                            area: ["500px", "500px"],
-                            content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id
-                        });
-                    });
-
-                } else {              //没团队
+                }
+                //没团队
+                else {
                     target_group_id = -1
                         , target_group_name = ""
                         , target_item_id = -1
@@ -156,23 +149,13 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 dataType: "json",
                 success: function (res) {
                     console.log(res)
-                    if (res.isSuccess) {        //有团队
+                    //有团队
+                    if (res.isSuccess) {
                         target_pt_id = res.resData.practiceId
                         form.val('student_pt', {
                             "student_pt": target_pt_id
                         })
                         form.render('select')
-
-                        target_group_id = res.resData.teamId
-                            , target_group_name = res.resData.teamName
-                            , target_item_id = res.resData.projectId
-                            , target_item_name = res.resData.projectName;
-                        document.getElementById("group_name").innerText = target_group_name;
-                        document.getElementById("group_a").href = GroupURL + basic_extra_url + "&target_team_id=" + target_group_id + "&target_pt_id=" + target_pt_id;
-                        document.getElementById("item_name").innerText = target_item_name;
-                        document.getElementById("item_a").href = ItemURL;
-
-                    } else {              //没团队
                         target_group_id = -1
                             , target_group_name = ""
                             , target_item_id = -1
@@ -187,7 +170,23 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         else {
                             document.getElementById("group_a").href = "javascript:;";
                         }
+                    }
+                    //没团队
+                    else {
+                        target_group_id = -1
+                            , target_group_name = ""
+                            , target_item_id = -1
+                            , target_item_name = "";
 
+                        document.getElementById("group_name").innerText = "暂无";
+                        document.getElementById("item_name").innerText = "暂无";
+                        document.getElementById("item_a").href = "javascript:return false;";
+                        if (target_authority == user_authority && target_id == user_id && target_pt_id != -1) {
+                            document.getElementById("group_a").href = CreateGroupURL + basic_extra_url + "&target_pt_id=" + target_pt_id;
+                        }
+                        else {
+                            document.getElementById("group_a").href = "javascript:;";
+                        }
                     }
 
                     var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
