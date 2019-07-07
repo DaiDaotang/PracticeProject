@@ -33,6 +33,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
 
             document.getElementById("username").innerText = target_name;
             document.getElementById("gender").innerHTML = (target_gender == "男") ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
+
             //监听写日志
             $(document).on('click', '#write_diary_btn', function () {
                 layer.open({
@@ -104,10 +105,30 @@ layui.use(['form', 'jquery', 'layer'], function () {
             });
 
             //获取负责项目
-
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/GetCanScoredProjectServlet",
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": {
+                        "id": user_id,
+                        "practice": 20,
+                        "canModify": false
+                    }
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
         },
         error: function (res) {
-            console.log("获取用户基本信息失败");
+            console.log("获取用户基本W信息失败");
         }
     });
 });
