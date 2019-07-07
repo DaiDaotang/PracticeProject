@@ -63,6 +63,8 @@
             , user_authority = t_param[`user_authority`]
             , item_id = t_param[`user_item_id`];
 
+        console.log(item_id)
+
         var date_now = new Date();
         var year_now = date_now.getFullYear()
             , month_now = date_now.getMonth() + 1
@@ -90,13 +92,13 @@
             var date_now = new Date();
             var year_now = date_now.getFullYear()
                 , month_now = date_now.getMonth() + 1
-                , day_now = date_now.getDay()
+                , day_now = date_now.getDate()
                 , hour_now = date_now.getHours()
                 , min_now = date_now.getMinutes()
                 , sec_now = date_now.getSeconds();
             var str = year_now + "-" + month_now + "-" + day_now;
             document.getElementById("diary_time").value = str;
-            window.localStorage.diary_time = str
+            window.localStorage.diary_time = str;
             //setTimeout("setDiaryTime()", 1000);
         }
     </script>

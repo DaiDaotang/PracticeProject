@@ -1,19 +1,14 @@
 ﻿// JavaScript source code
-var GetModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeBySchoolTeacherIdServlet"
-    , ModifyPTDetailURL = "school_teacher_add_pt_item.html";
-
 var target_name = ""
     , target_gender = ""
     , target_hd_img = ""
     , target_company_id = -1
     , target_company_name = "";
 
-console.log(parseInt(t_param[`user_id`]))
-
 var param_item_existed = function (res0) {
     return {
         elem: '#pt_table'
-        , url: GetModifyItemURL
+        , url: GetSchoolTeacherModifyItemURL
         , title: '项目列表'
         , contentType: 'application/json'
         , toolbar: "#toolbar_item"
@@ -21,7 +16,7 @@ var param_item_existed = function (res0) {
         , where: {
             "reqId": ""
             , "reqParam": {
-                "id": parseInt(t_param[`user_id`])
+                "id": user_id
                 , "canModify": true
             }
         }
@@ -59,7 +54,7 @@ var param_item_existed = function (res0) {
     , param_item_past = function (res0) {
         return {
             elem: '#pt_table_past'
-            , url: GetModifyItemURL
+            , url: GetSchoolTeacherModifyItemURL
             , title: '项目列表'
             , contentType: 'application/json'
             , toolbar: "#toolbar_item_past"
@@ -67,7 +62,7 @@ var param_item_existed = function (res0) {
             , where: {
                 "reqId": ""
                 , "reqParam": {
-                    "id": parseInt(t_param[`user_id`])
+                    "id": user_id
                     , "canModify": false
                 }
             }
@@ -115,7 +110,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         async: true,
         data: JSON.stringify({
             "reqId": "",
-            "reqParam": t_param[`user_id`]
+            "reqParam": user_id
         }),
         dataType: "json",
         success: function (res) {
@@ -125,7 +120,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 , target_hd_img = res.resData.head ? res.resData.head : ""
                 , target_school_name = res.resData.schoolName;
 
-            document.getElementById("target_hd_img").src = (target_hd_img == "" ? "./img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+            document.getElementById("target_hd_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
             document.getElementById("target_hd_img").style.border = "1px solid #6e7474";
 
             document.getElementById("username").innerText = target_name;
@@ -153,7 +148,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 ////向服务端发送删除指令
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/DeletePracticeServlet",
+                    url: DeletePTURL,
                     async: true,
                     data: JSON.stringify({
                         "reqId": "",
@@ -176,7 +171,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         }
         else if (layEvent === 'edit') { //编辑
             console.log(data)
-            window.location.href = ModifyPTDetailURL + "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&pt_id=" + parseInt(data.id) + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
+            window.location.href = SchoolTeacherModifyPTDetailURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_pt_id=" + parseInt(data.id) + "&target_id=" + target_id + "&target_authority=" + target_authority;
         }
         else if (layEvent === 'lookIntroDetail') {
             layer.open({

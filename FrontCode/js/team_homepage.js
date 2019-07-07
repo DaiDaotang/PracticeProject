@@ -311,7 +311,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                     if (res.isSuccess) {
                         layer.msg("操作成功", { time: 1000 })
                         setTimeout(function sign_up_fun() {
-                            window.location.href = TeamHomepageURL + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student";
+                            window.location.href = "../Student/" + StudentHomepageURL + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student";
                         }, 1500);
                     }
                 },

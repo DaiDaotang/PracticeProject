@@ -8,7 +8,7 @@ var target_name = ""
 var param_item_existed = function (res0) {
     return {
         elem: '#pt_table'
-        , url: GetModifyItemURL
+        , url: GetCompanyTeacherModifyItemURL
         , title: '项目列表'
         , contentType: 'application/json'
         , toolbar: "#toolbar_item"
@@ -54,7 +54,7 @@ var param_item_existed = function (res0) {
     , param_item_past = function (res0) {
         return {
             elem: '#pt_table_past'
-            , url: GetModifyItemURL
+            , url: GetCompanyTeacherModifyItemURL
             , title: '项目列表'
             , contentType: 'application/json'
             , toolbar: "#toolbar_item_past"

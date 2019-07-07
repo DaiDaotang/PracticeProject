@@ -1,10 +1,7 @@
 ﻿//变量
 var user_id = t_param[`user_id`]
     , user_authority = t_param[`user_authority`]
-    , target_pt_id = t_param[`target_pt_id`]
     , target_item_id = t_param[`target_item_id`];
-
-target_item_id = 33;
 
 var all_team_id = []
     , all_team_member_id = [];
@@ -110,9 +107,51 @@ layui.use(['element', 'form', 'jquery', 'laydate', 'table', 'layer'], function (
 
     //监听提交
     form.on('submit(upload)', function (data) {
-        console.log(data.field);
-        console.log(all_team_id[checked_team_index])
-        console.log(all_team_member_id[checked_team_index])
+        if (data.field.team_score != "") {
+            $.ajax({
+                type: "POST",
+                url: ScoreForTeamURL,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": {
+                        "teamScores": data.field.team_score,
+                        "teamId": all_team_id[checked_team_index]
+                    }
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    for (var i = 0; i < all_team_member_id[checked_team_index].length; i++) {
+                        var member_score = "data.field.member_score_" + i;
+                        $.ajax({
+                            type: "POST",
+                            url: ScoreForStudentURL,
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": "",
+                                "reqParam": {
+                                    "studentScores": eval(member_score),
+                                    "teamId": all_team_id[checked_team_index],
+                                    "studentId": all_team_member_id[checked_team_index][i]
+
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                console.log(res);
+                                if (res.isSuccess) {
+                                    layer.msg("打分成功！")
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        else {
+            layer.msg('请注意打分')
+        }
         return false;
     })
 
@@ -160,7 +199,7 @@ layui.use(['element', 'form', 'jquery', 'laydate', 'table', 'layer'], function (
                                     <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 50px;">
                                         <label class="layui-form-label">得分</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="member_score_` + j + `" lay-filter="member_score_` + j + `" required lay-verify="required" id="member_score_` + j + `" autocomplete="off" placeholder="请输入分数" class="layui-input" style="width:270px;" value=` + (res.resData.students[j].score ? res.resData.students[j].score : "") + `>
+                                            <input type="text" name="member_score_` + j + `" lay-filter="member_score_` + j + `" required lay-verify="required" id="member_score_` + j + `" autocomplete="off" placeholder="请输入分数" class="layui-input" style="width:270px;" value=` + (res.resData.students[j].score != 0 ? res.resData.students[j].score : "") + `>
                                         </div>
                                     </div>
                                 </div>

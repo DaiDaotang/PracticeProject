@@ -72,13 +72,13 @@ layui.use('element', function () {
 //»ù´¡Çø
 switch (user_authority) {
     case "Student":
-        HomepageURL = "homepage_student.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
+        HomepageURL = "../Student/" + StudentHomepageURL + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
         break;
     case "Teacher":
-        HomepageURL = "homepage_company_teacher.html?user_id=" + user_id + "&user_authority=Teacher&target_id=" + user_id + "&target_authority=Teacher"
+        HomepageURL = "../CompanyTeacher/" + CompanyTeacherHomepageURL + "?user_id=" + user_id + "&user_authority=Teacher&target_id=" + user_id + "&target_authority=Teacher"
         break;
     case "School":
-        HomepageURL = "homepage_school_teacher.html?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
+        HomepageURL = "../SchoolTeacher/" + SchoolTeacherHomepageURL + "?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
         break;
     case "Company":
         break;

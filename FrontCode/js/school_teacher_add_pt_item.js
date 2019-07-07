@@ -17,7 +17,7 @@ function renderStar(id, score) {
     })
 }
 
-var pt_id = t_param[`pt_id`]
+var target_pt_id = t_param[`target_pt_id`]
     , pt_name = ""
     , pt_school_id = -1
     , pt_school_name = ""
@@ -25,20 +25,10 @@ var pt_id = t_param[`pt_id`]
     , pt_company_name = ""
     , user_id = t_param[`user_id`];
 
-var GetExistedItemURL = "http://localhost:8080/GetProjectinPracticeServlet"
-    , GetSchoolTeacherURL = "http://localhost:8080/GetSchoolTeacherByPracticeIdServlet"
-    , GetCompanyTeacherURL = "http://localhost:8080/GetCompanyTeacherByPracticeIdServlet"
-    , ItemDetailURL = "teacher_add_pt_new_item.html"
-    , TeacherHomePageURL = "login.html"
-    , AddItemURL = "teacher_add_pt_new_item.html"
-    , GetPTInfoURL = "http://localhost:8080/GetPracticeInformationServlet"
-    , AddCompanyTeacherURL = "teacher_add_pt_teacher.html?authority=CompanyTeacher&companyId=" + pt_company_id
-    , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority=SchoolTeacher";
-
 var param_item_existed = function (res) {
     return {
         elem: '#item_table'
-        , url: GetExistedItemURL
+        , url: GetItemListURL
         , title: '项目列表'
         , toolbar: "#toolbar_item"
         , contentType: 'application/json'
@@ -47,7 +37,7 @@ var param_item_existed = function (res) {
         , height: 500
         , where: {
             "reqId": ""
-            , "reqParam": pt_id
+            , "reqParam": target_pt_id
         }
         , deal: function (res) {
             return {
@@ -93,7 +83,7 @@ var param_item_existed = function (res) {
     , param_pt_school_teacher = function (res) {
         return {
             elem: '#school_teacher_table'
-            , url: GetSchoolTeacherURL
+            , url: GetSchoolTeacherInPTURL
             , title: '校园老师'
             , toolbar: "#toolbar_school_teacher"
             , contentType: 'application/json'
@@ -101,7 +91,7 @@ var param_item_existed = function (res) {
             , width: 380
             , where: {
                 "reqId": "",
-                "reqParam": pt_id
+                "reqParam": target_pt_id
             }
             , deal: function (res) {
                 return {
@@ -123,7 +113,7 @@ var param_item_existed = function (res) {
     , param_pt_company_teacher = function (res) {
         return {
             elem: '#company_teacher_table'
-            , url: GetCompanyTeacherURL
+            , url: GetCompanyTeacherInPTURL
             , title: '企业老师'
             , toolbar: "#toolbar_company_teacher"
             , contentType: 'application/json'
@@ -131,7 +121,7 @@ var param_item_existed = function (res) {
             , width: 700
             , where: {
                 "reqId": "",
-                "reqParam": pt_id
+                "reqParam": target_pt_id
             }
             , deal: function (res) {
                 return {
@@ -185,7 +175,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
         async: true,
         data: JSON.stringify({
             "reqId": "",
-            "reqParam": pt_id
+            "reqParam": target_pt_id
         }),
         dataType: "json",
         success: function (res) {
@@ -213,7 +203,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     title: '添加项目',
                     type: 2,
                     area: ["500px", "500px"],
-                    content: AddItemURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id,
+                    content: TeacherAddNewItemURL + "?pt_id=" + target_pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id,
                     end: function () {
                         table.render(param_item_existed(1));
                         table.render(param_pt_company_teacher(1));
@@ -258,7 +248,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                         else {
                             $.ajax({
                                 type: "POST",
-                                url: "http://localhost:8080/CreateProjectServlet",
+                                url: CreateItemURL,
                                 async: true,
                                 data: JSON.stringify({
                                     "reqId": "",
@@ -270,7 +260,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                                         "baseContent": new_item_base_content,
                                         "extendContent": new_item_extend_content,
                                         "advanceContent": new_item_advance_content,
-                                        "practiceId": pt_id,
+                                        "practiceId": target_pt_id,
                                         "teachers": new_item_teachers
                                     }
                                 }),
@@ -305,7 +295,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     title: '添加学校老师',
                     type: 2,
                     area: ["500px", "500px"],
-                    content: AddSchoolTeacherURL + "&pt_school_id=" + pt_school_id + "&pt_id=" + pt_id + "&user_id=" + user_id,
+                    content: AddSchoolTeacherURL + "&pt_school_id=" + pt_school_id + "&pt_id=" + target_pt_id + "&user_id=" + user_id,
                     end: function () {
                         table.render(param_pt_school_teacher);
                     },
@@ -327,12 +317,12 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                         else {
                             $.ajax({
                                 type: "POST",
-                                url: "http://localhost:8080/AddSchoolTeacherToPracticeServlet",
+                                url: AddSchoolTeacherToItemURL,
                                 async: true,
                                 data: JSON.stringify({
                                     "reqId": "",
                                     "reqParam": {
-                                        "id": pt_id,
+                                        "id": target_pt_id,
                                         "schoolTeachers": new_school_teachers
                                     }
                                 }),
@@ -377,7 +367,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                 title: data.projectName,
                 type: 2,
                 area: ["500px", "500px"],
-                content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=detail"
+                content: ItemDetailURL + "?pt_id=" + target_pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=detail"
             });
         }
         else if (layEvent === 'del') { //删除
@@ -388,7 +378,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                 ////向服务端发送删除指令
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/DeleteProjectServlet",
+                    url: DeleteItemURL,
                     async: true,
                     data: JSON.stringify({
                         "reqId": "",
@@ -415,7 +405,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                 title: '编辑项目',
                 type: 2,
                 area: ["500px", "500px"],
-                content: ItemDetailURL + "?pt_id=" + pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=edit",
+                content: ItemDetailURL + "?pt_id=" + target_pt_id + "&pt_company_id=" + pt_company_id + "&pt_user_id=" + user_id + "&item_id=" + data.id + "&temp=edit",
                 end: function () {
                     table.render(param_item_existed(1));
                     table.render(param_pt_company_teacher(1));
@@ -460,7 +450,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     else {
                         $.ajax({
                             type: "POST",
-                            url: "http://localhost:8080/ModifyProjectServlet",
+                            url: ModifyItemURL,
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
@@ -473,7 +463,7 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                                     "baseContent": new_item_base_content,
                                     "extendContent": new_item_extend_content,
                                     "advanceContent": new_item_advance_content,
-                                    "practiceId": pt_id,
+                                    "practiceId": target_pt_id,
                                     "teachers": new_item_teachers,
                                     "schoolTeacherId": user_id
                                 }
@@ -589,12 +579,12 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                     ////向服务端发送删除指令
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost:8080/DeleteTeacherFromPracticeServlet",
+                        url: DeleteTeacherFromPTURL,
                         async: true,
                         data: JSON.stringify({
                             "reqId": "",
                             "reqParam": {
-                                "id": pt_id,
+                                "id": target_pt_id,
                                 "schoolTeacherId": data.id
                             }
                         }),
@@ -629,12 +619,12 @@ layui.use(['form', 'jquery', 'layer', 'table'], function () {
                 obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/DeleteTeacherFromPracticeServlet",
+                    url: DeleteTeacherFromPTURL,
                     async: true,
                     data: JSON.stringify({
                         "reqId": "",
                         "reqParam": {
-                            "id": pt_id,
+                            "id": target_pt_id,
                             "companyTeacherId": data.id
                         }
                     }),

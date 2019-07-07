@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
 
     <style type="text/css">
         .layui-form-select dl dd:hover {
@@ -25,10 +25,9 @@
             <button class="layui-btn layui-btn-sm" lay-event="getCheckLength" style="">获取选中人数</button>
         </div>
     </script>
-    <script src="layui/layui.js" charset="utf-8"></script>
+    <script src="../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../js/basic_url.js" charset="utf-8"></script>
     <script>
-        var GetSchoolTeacherListURL = "http://localhost:8080/GetSchoolTeacherBySchoolIdServlet";
-
         var school_teacher_len = -1;
         var school_teacher_id = [];
 
@@ -88,8 +87,6 @@
 
         var checked_school_teacher = [];
 
-        var AddSchoolTeacherURL = "http://localhost:8080/AddSchoolTeacherToPracticeServlet"
-
         //区
         layui.use(['form', 'jquery', 'layer', 'table'], function () {
             var form = layui.form
@@ -112,9 +109,6 @@
 
             //监听复选框
             table.on('checkbox(teacher_table)', function (obj) {
-                //console.log(obj.checked); //当前是否选中状态
-                //console.log(obj.data); //选中行的相关数据
-                //console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
                 if (obj.type == "all") {
                     if (obj.checked) {
                         checked_school_teacher = []
@@ -142,50 +136,6 @@
                 window.localStorage.checked_school_teacher = checked_school_teacher;
                 console.log(window.localStorage.checked_school_teacher)
             });
-
-            ////监听添加按钮
-            //form.on('submit(upload)', function (obj) {
-            //    console.log('upload')
-
-            //    $.ajax({
-            //        type: "POST",
-            //        url: AddSchoolTeacherURL,
-            //        async: true,
-            //        data: JSON.stringify({
-            //            "reqId": "",
-            //            "reqParam": {
-            //                "id": pt_id,
-            //                "schoolTeachers": checked_school_teacher
-            //            }
-            //        }),
-            //        dataType: "json",
-            //        success: function (res) {
-            //            console.log(res);
-            //            layer.msg('添加成功', { time: 1000 })
-            //            setTimeout(function sign_up_fun() {
-            //                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-            //                parent.layer.close(index); //再执行关闭
-            //            }, 1000);
-            //        }
-            //    });
-
-            //    return false;
-            //});
-
-            ////success回调函数
-            //function sign_up_btn_success(res) {
-            //    if (res.isSuccess) {
-            //        layer.msg('添加成功', { time: 1000 })
-            //        setTimeout(function sign_up_fun() {
-            //            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-            //            parent.layer.close(index); //再执行关闭
-            //        }, 1000);
-            //    }
-            //    else {
-            //        layer.msg("添加失败", { time: 1000 })
-            //    }
-            //    return false;
-            //}
         });
     </script>
 </body>

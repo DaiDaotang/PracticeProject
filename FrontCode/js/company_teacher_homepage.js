@@ -81,6 +81,8 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     }
                 });
             });
+
+            //获取公司名称
             $.ajax({
                 type: "POST",
                 url: GetCompanyNameURL,
@@ -100,6 +102,9 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     console.log(res);
                 }
             });
+
+            //获取负责项目
+
         },
         error: function (res) {
             console.log("获取用户基本信息失败");

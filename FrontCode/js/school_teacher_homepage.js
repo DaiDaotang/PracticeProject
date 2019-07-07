@@ -1,11 +1,5 @@
 // JavaScript source code
 //Çø 
-var CreateNewPTURL = "school_teacher_publish_pt.html"
-    , SchoolPTListURL = "school_pt_list.html"
-    , ModifyPTURL = "school_teacher_modify_pt.html"
-    , HomepageURL = "homepage_school_teacher.html"
-    , GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet";
-
 var target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
     , target_name = ""
@@ -32,7 +26,7 @@ layui.use(['layer', 'jquery', 'form'], function () {
             console.log(res);
             target_name = res.resData.name
                 , target_gender = res.resData.sex
-                , target_hd_img = res.resData.head ? res.resData.head : ""
+                , target_hd_img = res.resData.head ? GetHeadImgURL + target_hd_img : "../../img/defaultHead.jpg"
                 , target_school_id = res.resData.school
                 , target_school_name = res.resData.schoolName;
 
@@ -63,7 +57,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
     //¼àÌýËÑË÷
     form.on('submit(search_diary_btn)', function (data) {
         console.log(data.field);
-        //layer.msg(JSON.stringify(data.field));
         return false;
     });
 

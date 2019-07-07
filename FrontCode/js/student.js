@@ -139,10 +139,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                         , diary_time = window.localStorage.diary_time
                                         , diary_content = window.localStorage.diary_content;
 
-                                    console.log(diary_name)
-                                    console.log(diary_time)
-                                    console.log(diary_content)
-
                                     $.ajax({
                                         type: "POST",
                                         url: UploadDiaryURL,
@@ -164,7 +160,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                                 layer.msg("发布成功！", { time: 1000 })
                                                 console.log(res);
                                                 setTimeout("layer.closeAll()", 500)
-                                                setTimeout("location.reload()", 500) 
+                                                setTimeout("location.reload()", 500)
+                                            }
+                                            else {
+                                                layer.msg("还未到时间，不可以发布")
+                                                setTimeout("layer.closeAll()", 1000);
                                             }
                                         },
                                         error: function (res) {

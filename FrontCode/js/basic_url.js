@@ -34,6 +34,7 @@ var GroupURL = "../Team/homepage_team.html"
 var GetTeamMemberListURL = "http://localhost:8080/GetStudentByTeamIdServlet"
     , AddMemberURL = "http://localhost:8080/AddStudentServlet"
     , ModifyCaptainURL = "http://localhost:8080/ModifyCaptainServlet"
+    , DelMemberURL = "http://localhost:8080/DeleteStudentFromTeamServlet"
     , GetCompanyTeacherURL = "http://localhost:8080/GetCompanyTeacherByCompanyIdServlet";
 
 var TeamHomepageURL = "homepage_team.html"
@@ -45,7 +46,15 @@ var TeamHomepageURL = "homepage_team.html"
     , EditTeamInfoURL = "team_edit.html";
 
 //School Teacher
-var GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet";
+var GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
+    , GetSchoolTeacherModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeBySchoolTeacherIdServlet";
+
+var CreateNewPTURL = "school_teacher_publish_pt.html"
+    , SchoolPTListURL = "school_pt_list.html"
+    , ModifyPTURL = "school_teacher_modify_pt.html"
+    , SchoolTeacherHomepageURL = "homepage_school_teacher.html"
+    , SchoolTeacherAddPTItemURL = "school_teacher_add_pt_item.html"
+    , SchoolTeacherModifyPTDetailURL = "school_teacher_add_pt_item.html";
 
 //CompanyTeacher
 var GetTeamInProjectURL = "http://localhost:8080/GetTeamInProjectServlet"
@@ -53,7 +62,7 @@ var GetTeamInProjectURL = "http://localhost:8080/GetTeamInProjectServlet"
     , GetCompanyNameURL = "http://localhost:8080/GetCompanyInformationServlet"
     , GetSchoolTeacherInPTURL = "http://localhost:8080/GetSchoolTeacherByPracticeIdServlet"
     , GetCompanyTeacherInPTURL = "http://localhost:8080/GetCompanyTeacherByPracticeIdServlet"
-    , GetModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeByCompanyTeacherIdServlet"
+    , GetCompanyTeacherModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeByCompanyTeacherIdServlet"
     , DeletePTURL = "http://localhost:8080/DeletePracticeServlet"
     , CreatePTURL = "http://localhost:8080/CreatePracticeServlet"
     , ModifyItemURL = "http://localhost:8080/ModifyProjectServlet"
@@ -61,7 +70,9 @@ var GetTeamInProjectURL = "http://localhost:8080/GetTeamInProjectServlet"
     , GetPTInfoURL = "http://localhost:8080/GetPracticeInformationServlet"
     , CreateItemURL = "http://localhost:8080/CreateProjectServlet"
     , AddSchoolTeacherToItemURL = "http://localhost:8080/AddSchoolTeacherToPracticeServlet"
-    , DeleteTeacherFromPTURL = "http://localhost:8080/DeleteTeacherFromPracticeServlet";
+    , DeleteTeacherFromPTURL = "http://localhost:8080/DeleteTeacherFromPracticeServlet"
+    , ScoreForTeamURL = "http://localhost:8080/ScoreForTeamServlet"
+    , ScoreForStudentURL = "http://localhost:8080/ScoreForStudentServlet";
 
 var ProjectInChargeURL = "company_teacher_project_in_charge.html"
     , CompanyTeacherCreateNewPTURL = "company_teacher_publish_pt.html"
@@ -71,7 +82,11 @@ var ProjectInChargeURL = "company_teacher_project_in_charge.html"
     , CompanyTeacherWriteDiaryURL = "../Student" + WriteDiaryURL
     , CompanyTeacherModifyPTDetailURL = "company_teacher_add_pt_item.html"
     , TeacherAddNewItemURL = "../Teacher/teacher_add_pt_new_item.html"
-    , AddSchoolTeacherURL = "teacher_add_pt_teacher.html?authority=SchoolTeacher";
+    , AddSchoolTeacherURL = "../Teacher/teacher_add_pt_teacher.html?authority=SchoolTeacher";
+
+//Teacher
+var GetSchoolTeacherListURL = "http://localhost:8080/GetSchoolTeacherBySchoolIdServlet"
+    , AddSchoolTeacherToPTURL = "http://localhost:8080/AddSchoolTeacherToPracticeServlet";
 
 //Company
 
