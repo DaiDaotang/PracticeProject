@@ -116,3 +116,16 @@ function Onclick() {
     //location.href = "/Activity/ActivityInformation?a_id=" + "1"; // Url中会带有参数
     new submitForm('basic.html', { a_id: "1" }).post(); // Url中的参数被隐藏
 }
+
+function getIndex(time) {
+    var strs = time.split(" ")
+        , hms = strs[1]
+        , h = hms.split(":")[0]
+        , m = hms.split(":")[1]
+        , a = parseInt(h * 4 + m / 15);
+
+    return a;
+}
+
+var t = getIndex("2019-07-29 08:29:00")
+console.log(t)

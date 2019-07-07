@@ -156,14 +156,15 @@ layui.use(['form', 'jquery', 'layer'], function () {
                             "student_pt": target_pt_id
                         })
                         form.render('select')
-                        target_group_id = -1
-                            , target_group_name = ""
-                            , target_item_id = -1
-                            , target_item_name = "";
-
-                        document.getElementById("group_name").innerText = "暂无";
-                        document.getElementById("item_name").innerText = "暂无";
-                        document.getElementById("item_a").href = "javascript:return false;";
+                        target_group_id = res.resData.teamId
+                            , target_group_name = res.resData.teamName
+                            , target_item_id = res.resData.projectId
+                            , target_item_name = res.resData.projectName;
+                        document.getElementById("group_name").innerText = target_group_name;
+                        document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&target_pt_id=" + target_pt_id;
+                        document.getElementById("item_name").innerText = target_item_name;
+                        document.getElementById("item_a").href = ItemURL;
+                        console.log(document.getElementById("group_a").href)
                         if (target_authority == user_authority && target_id == user_id && target_pt_id != -1) {
                             document.getElementById("group_a").href = CreateGroupURL + basic_extra_url + "&target_pt_id=" + target_pt_id;
                         }
