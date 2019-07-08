@@ -461,4 +461,13 @@
         <servlet-name>GetAllPastInformationServlet</servlet-name>
         <url-pattern>/GetAllPastInformationServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetPracticeNowByCompanyTeacherIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetPracticeNowByCompanyTeacherIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetPracticeNowByCompanyTeacherIdServlet</servlet-name>
+        <url-pattern>/GetPracticeNowByCompanyTeacherIdServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
