@@ -142,7 +142,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         "reqParam": {
                             "id": target_id,
                             "practice": target_pt_id[index],
-                            "canModify": false
+                            "canModify": true
                         }
                     }),
                     dataType: "json",
