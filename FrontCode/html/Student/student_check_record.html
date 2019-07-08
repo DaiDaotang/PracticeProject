@@ -13,7 +13,7 @@
             color: #cacaca
         }
     </style>
-</head>
+</head> 
 <body id="body_whole">
 
     <div class="layui-tab layui-tab-card" lay-filter="record">
@@ -103,7 +103,7 @@
                     if (week > 0) {
                         for (var i = 0; i < week; i++) {
                             work_time.push([0, 0, 0, 0, 0, 0, 0])
-                            if (i == 0) {
+                            if (i == week-1) {
                                 str1 += '<li class="layui-this" id="first">第' + (i + 1) + '周</li>';
                                 str2 += '<div class="layui-tab-item layui-show">'
                             }

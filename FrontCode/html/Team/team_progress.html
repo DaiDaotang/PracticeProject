@@ -29,7 +29,7 @@
 </head>
 <body id="body_whole">
 
-    <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:100;">
+    <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:999;">
         <li class="layui-nav-item"><a href="" id="team_homepage">团队信息</a></li>
         <li class="layui-nav-item"><a href="" id="team_diary">团队日志</a></li>
         <li class="layui-nav-item layui-this"><a href="" id="team_progress">团队流程</a></li>
@@ -86,12 +86,19 @@
                 </ul>
                 <div class="layui-tab-content" style="height: auto;">
                     <div class="layui-tab-item layui-show">
-                        <div id="test9" class="demo-tree demo-tree-box" style="width: 300px; height: 500px; overflow: scroll;"></div>
+                        <div class="layui-row">
+                            <div class="layui-col-md4">
+                                <div class="grid-demo grid-demo-bg1">
+                                    <table class="layui-hide" id="task_table" lay-filter="task_table"></table>
+                                </div>
+                            </div>
+                            <div class="layui-col-md8">
+                                <div class="grid-demo grid-demo-bg1">
+                                    <div id="task_container" style="height: 550px"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="site-demo-button" style="margin-bottom: 0;">
-                    <button class="layui-btn site-demo-active" data-type="tabAddOneWeek">新增Tab项</button>
-                    <button class="layui-btn site-demo-active" data-type="tabDeleteThisWeek">删除</button>
                 </div>
             </div>
         </div>
@@ -101,6 +108,7 @@
 
     </div>
 
+    <script src="../../incubator-echarts-4.2.1/dist/echarts.min.js"></script>
     <script src="../../layui/layui.js" charset="utf-8"></script>
     <script src="../../js/basic_url.js" charset="utf-8"></script>
     <script src="../../js/basic.js" charset="utf-8"></script>

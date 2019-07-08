@@ -55,6 +55,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
                             content: ItemDetailURL + "?pt_id=" + target_pt_id + "&pt_user_id=" + user_id + "&item_id=" + target_item_id + "&temp=detail"
                         });
                     })
+                    var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
+                    document.getElementById("target_homepage").href = StudentHomepageURL + basic_extra_url + extra_url;
+                    document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url + extra_url;
+                    document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url + extra_url;
+                    document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url + extra_url;
                 }
                 //没团队
                 else {
@@ -71,6 +76,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     else {
                         document.getElementById("group_a").href = "javascript:;";
                     }
+                    var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
+                    document.getElementById("target_homepage").href = StudentHomepageURL + basic_extra_url + extra_url;
+                    document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url + extra_url;
+                    document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url + extra_url;
+                    document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url + extra_url;
                 }
             },
             error: function (res) {
@@ -174,6 +184,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                 content: ItemDetailURL + "?pt_id=" + target_pt_id + "&pt_user_id=" + user_id + "&item_id=" + target_item_id + "&temp=detail"
                             });
                         })
+                        var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
+                        document.getElementById("target_homepage").href = StudentHomepageURL + basic_extra_url + extra_url;
+                        document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url + extra_url;
+                        document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url + extra_url;
+                        document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url + extra_url;
                     }
                     //没团队
                     else {
@@ -190,13 +205,12 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         else {
                             document.getElementById("group_a").href = "javascript:;";
                         }
+                        var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
+                        document.getElementById("target_homepage").href = StudentHomepageURL + basic_extra_url + extra_url;
+                        document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url + extra_url;
+                        document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url + extra_url;
+                        document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url + extra_url;
                     }
-
-                    var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
-                    document.getElementById("target_homepage").href = StudentHomepageURL + basic_extra_url + extra_url;
-                    document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url + extra_url;
-                    document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url + extra_url;
-                    document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url + extra_url;
                 },
                 error: function (res) {
                     console.log("error");

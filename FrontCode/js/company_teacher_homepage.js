@@ -154,7 +154,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                 <li>
                                     <div style="height:auto; margin: 20px 0 20px 20px;">
                                         <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:24px; margin-right: 20px;"></i>
-                                        <a id="group_a" href="company_teacher_point.html?user_id=` + user_id + `&user_authority=` + user_authority + `&target_id=` + target_id + `&target_authority=` + target_authority + `&target_item_id=` + res.resData[i].id + `" target="_blank" title="项目名称">
+                                        <a id="group_a" href="company_teacher_point.html?user_id=` + user_id + `&user_authority=` + user_authority + `&target_id=` + target_id + `&target_authority=` + target_authority + `&target_item_id=` + res.resData[i].id + `&target_pt_id=` + target_pt_id[index] + `" target="_blank" title="项目名称">
                                             <span style="font-size: 24px;" id="pt_item_name_now">` + res.resData[i].name + `</span>
                                         </a>
                                     </div>

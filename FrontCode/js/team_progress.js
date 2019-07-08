@@ -1,12 +1,14 @@
 ﻿// JavaScript source code
 var max = 3
-    , checked_tab_id = 0;
+    , checked_tab_id = 0
+    , task_res = [];
 
-layui.use(['element', 'jquery'], function () {
+layui.use(['element', 'jquery', 'table'], function () {
     var $ = layui.jquery
+        , table = layui.table
         , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-    //添加
+    //添加周数
     for (var i = 0; i < max; i++) {
         element.tabAdd('tabTeamProcess', {
             title: '第' + (i + 1) + '周' //用于演示
@@ -47,63 +49,83 @@ layui.use(['element', 'jquery'], function () {
 
         checked_tab_id = data.index;
     });
+
+    var param_task_existed = function (res) {
+        return {
+            elem: '#task_table'
+            , url: "../../json/task_table.json"
+            , title: '项目列表'
+            , toolbar: "#toolbar_item"
+            , contentType: 'application/json'
+            , method: "POST"
+            , height: 550
+            , where: {
+                "reqId": ""
+                , "reqParam": ""
+            }
+            , deal: function (res) {
+                return {
+                    code: 0
+                    , msg: ""
+                    , count: 1000
+                    , data: res.resData
+                }
+            }
+            , cols: [[
+                { type: 'checkbox' }
+                , { field: 'id', title: 'ID', hide: true }
+                , { field: 'name', title: '名称' }
+                , { field: 'week', title: '周数', hide: true, sort: true }
+                , { field: 'content', title: '概述', hide: true }
+                , { field: 'amount',title: '任务量',sort: true }
+                , { field: 'priority',title: '优先级', sort: true }
+            ]]
+            , done: function (res) {
+                console.log(res.data);
+            }
+        }
+    }
+
+    console.log(task_res)
+
+    table.render(param_task_existed(1))
+
+    //监听复选框选中
+    table.on('checkbox(test)', function (obj) {
+        console.log(obj.checked); //当前是否选中状态
+        console.log(obj.data); //选中行的相关数据
+        console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+
+
+    });
 });
 
-layui.use(['tree', 'util'], function () {
-    var tree = layui.tree
-        , layer = layui.layer
-        , util = layui.util;
-
-    var data1 = [{
-        title: '江西'
-        , id: 1
-        , children: [{
-            title: '南昌'
-            , id: 1000
-            , children: [{
-                title: '青山湖区'
-                , id: 10001
-            }, {
-                title: '高新区'
-                , id: 10002
-            }]
-        }, {
-            title: '九江'
-            , id: 1001
-        }, {
-            title: '赣州'
-            , id: 1002
-        }]
-    }, {
-        title: '广西'
-        , id: 2
-        , children: [{
-            title: '南宁'
-            , id: 2000
-        }, {
-            title: '桂林'
-            , id: 2001
-        }]
-    }, {
-        title: '陕西'
-        , id: 3
-        , children: [{
-            title: '西安'
-            , id: 3000
-        }, {
-            title: '延安'
-            , id: 3001
-        }]
+var dom = document.getElementById("task_container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line',
+        areaStyle: {}
     }]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
 
-    //开启节点操作图标
-    tree.render({
-        elem: '#test9'
-        , data: data1
-        , showCheckbox: true  //是否显示复选框
-        , edit: ['add', 'update', 'del'] //操作节点的图标
-        , click: function (obj) {
-            layer.msg(JSON.stringify(obj.data));
-        }
-    });
+myChart.on('click', function (params) {
+    console.log(params)
+    console.log(params.data)
+    console.log(params.name)
 });
