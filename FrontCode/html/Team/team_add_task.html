@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加新任务</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+
+    <style type="text/css">
+    </style>
+</head>
+<body id="body_whole">
+    <form class="layui-form" action="" lay-filter="task_info" style="margin: 20px;" id="task_info">
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">任务名称</label>
+            <div class="layui-input-block">
+                <input type="text" required lay-verify="required" name="task_name" lay-filter="task_name" id="task_name" autocomplete="off" placeholder="请输入任务名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">周数</label>
+            <div class="layui-input-block">
+                <input type="text" required lay-verify="required" name="new_item_type" lay-filter="new_item_type" id="new_item_type" autocomplete="off" placeholder="请输入项目类型" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">任务量</label>
+            <div class="layui-input-block">
+                <input type="text" required lay-verify="required" name="task_difficulty" lay-filter="task_difficulty" id="task_difficulty" autocomplete="off" placeholder="请输入任务量" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">任务优先度</label>
+            <div class="layui-input-block">
+                <input type="text" required lay-verify="required" name="task_priority" lay-filter="task_priority" id="task_priority" autocomplete="off" placeholder="请输入任务优先度" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+            <label class="layui-form-label">任务概述</label>
+            <div class="layui-input-block">
+                <textarea name="new_item_base_content" required lay-verify="required" lay-filter="new_item_base_content" id="new_item_base_content" placeholder="任务概述..." autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </form>
+
+    <script src="../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../js/basic_url.js" charset="utf-8"></script>
+</body>
+</html>

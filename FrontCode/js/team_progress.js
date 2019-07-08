@@ -3,9 +3,10 @@ var max = 3
     , checked_tab_id = 0
     , task_res = [];
 
-layui.use(['element', 'jquery', 'table'], function () {
+layui.use(['element', 'jquery', 'table', 'layer'], function () {
     var $ = layui.jquery
         , table = layui.table
+        , layer = layui.layer
         , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
     //添加周数
@@ -45,17 +46,17 @@ layui.use(['element', 'jquery', 'table'], function () {
         //console.log(data.index); //得到当前Tab的所在下标
         //console.log(data.elem); //得到当前的Tab大容器
 
-        console.log($(".layui-tab-title .layui-this").attr("lay-id"));
-
         checked_tab_id = data.index;
+        table.render(param_task_existed(data.index))
+        setCategory(data.index)
     });
 
-    var param_task_existed = function (res) {
+    var param_task_existed = function (res0) {
         return {
-            elem: '#task_table'
+            elem: '#task_table_' + res0
             , url: "../../json/task_table.json"
             , title: '项目列表'
-            , toolbar: "#toolbar_item"
+            , toolbar: "#toolbar_task"
             , contentType: 'application/json'
             , method: "POST"
             , height: 550
@@ -73,12 +74,13 @@ layui.use(['element', 'jquery', 'table'], function () {
             }
             , cols: [[
                 { type: 'checkbox' }
-                , { field: 'id', title: 'ID', hide: true }
-                , { field: 'name', title: '名称' }
-                , { field: 'week', title: '周数', hide: true, sort: true }
-                , { field: 'content', title: '概述', hide: true }
-                , { field: 'amount',title: '任务量',sort: true }
-                , { field: 'priority',title: '优先级', sort: true }
+                , { field: 'id', title: 'ID', hide: true , edit:'text'}
+                , { field: 'name', title: '名称', edit: 'text'}
+                , { field: 'week', title: '周数', hide: true, sort: true, edit: 'text'}
+                , { field: 'content', title: '概述', hide: true, edit: 'text'}
+                , { field: 'amount', title: '任务量', sort: true, edit: 'text'}
+                , { field: 'priority', title: '优先级', sort: true, edit: 'text'}
+                , { field: 'finishTime', title: '完成时间', sort: true, edit: 'text'}
             ]]
             , done: function (res) {
                 console.log(res.data);
@@ -88,44 +90,79 @@ layui.use(['element', 'jquery', 'table'], function () {
 
     console.log(task_res)
 
-    table.render(param_task_existed(1))
-
     //监听复选框选中
     table.on('checkbox(test)', function (obj) {
         console.log(obj.checked); //当前是否选中状态
         console.log(obj.data); //选中行的相关数据
         console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
 
-
     });
+
+    //头工具栏事件
+    table.on('toolbar(task_table_0)', function (obj) {
+        switch (obj.event) {
+            case 'addTask':
+                console.log("add task")
+                layer.open({
+                    title: '添加任务',
+                    type: 2,
+                    area: ["500px", "500px"],
+                    content: AddTaskURL,
+                    end: function () {
+                        table.render(param_task_existed(checked_tab_id));
+                        setCategory(checked_tab_id)
+                    },
+                    btn: '添加任务',
+                    btnAlign: 'c', //按钮居中,
+                    yes: function () {
+                        console.log("yes")
+                    }
+                });
+                break;
+        };
+    });
+
+    //编辑单元格
+    table.on('edit(task_table_0)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+        console.log(obj.value); //得到修改后的值
+        console.log(obj.field); //当前编辑的字段名
+        console.log(obj.data); //所在行的所有相关数据  
+    });
+
+    document.getElementById("first").click();
 });
 
-var dom = document.getElementById("task_container");
-var myChart = echarts.init(dom);
-var app = {};
-option = null;
-option = {
-    xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line',
-        areaStyle: {}
-    }]
-};
-;
-if (option && typeof option === "object") {
-    myChart.setOption(option, true);
+function setCategory(index) {
+    var dom = document.getElementById("task_container_" + index);
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        title: {
+            text: "任务流程图"
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line',
+            areaStyle: {}
+        }]
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+    myChart.on('click', function (params) {
+        console.log(params)
+        console.log(params.data)
+        console.log(params.name)
+    });
 }
-
-myChart.on('click', function (params) {
-    console.log(params)
-    console.log(params.data)
-    console.log(params.name)
-});

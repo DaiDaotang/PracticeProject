@@ -44,7 +44,8 @@ var TeamHomepageURL = "homepage_team.html"
     , TeamProgressURL = "team_progress.html"
     , MemberHomepageURL = "../Student/" + StudentHomepageURL
     , TeamerWriteDiaryURL = "../Student/" + WriteDiaryURL
-    , EditTeamInfoURL = "team_edit.html";
+    , EditTeamInfoURL = "team_edit.html"
+    , AddTaskURL = "team_add_task.html";
 
 //School Teacher
 var GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
