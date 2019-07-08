@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 04/07/2019 09:56:58
+ Date: 08/07/2019 17:20:10
 */
 
 SET NAMES utf8mb4;
@@ -95,7 +95,6 @@ INSERT INTO `pracctrelation` VALUES (19, 3, '0');
 INSERT INTO `pracctrelation` VALUES (19, 4, '0');
 INSERT INTO `pracctrelation` VALUES (19, 5, '0');
 INSERT INTO `pracctrelation` VALUES (20, 1, '1');
-INSERT INTO `pracctrelation` VALUES (20, 2, '0');
 INSERT INTO `pracctrelation` VALUES (20, 3, '0');
 INSERT INTO `pracctrelation` VALUES (20, 4, '0');
 INSERT INTO `pracctrelation` VALUES (20, 5, '0');
@@ -104,6 +103,16 @@ INSERT INTO `pracctrelation` VALUES (21, 2, '0');
 INSERT INTO `pracctrelation` VALUES (21, 3, '0');
 INSERT INTO `pracctrelation` VALUES (21, 4, '0');
 INSERT INTO `pracctrelation` VALUES (21, 5, '0');
+INSERT INTO `pracctrelation` VALUES (23, 1, '1');
+INSERT INTO `pracctrelation` VALUES (24, 1, '1');
+INSERT INTO `pracctrelation` VALUES (24, 2, '0');
+INSERT INTO `pracctrelation` VALUES (24, 3, '0');
+INSERT INTO `pracctrelation` VALUES (24, 4, '0');
+INSERT INTO `pracctrelation` VALUES (25, 1, '0');
+INSERT INTO `pracctrelation` VALUES (25, 2, '0');
+INSERT INTO `pracctrelation` VALUES (25, 3, '0');
+INSERT INTO `pracctrelation` VALUES (25, 4, '0');
+INSERT INTO `pracctrelation` VALUES (25, 5, '0');
 
 -- ----------------------------
 -- Table structure for pracstrelation
@@ -122,16 +131,21 @@ CREATE TABLE `pracstrelation`  (
 -- ----------------------------
 -- Records of pracstrelation
 -- ----------------------------
-INSERT INTO `pracstrelation` VALUES (19, 1, '1');
+INSERT INTO `pracstrelation` VALUES (19, 1, '0');
 INSERT INTO `pracstrelation` VALUES (19, 2, '0');
+INSERT INTO `pracstrelation` VALUES (19, 3, '0');
+INSERT INTO `pracstrelation` VALUES (19, 4, '0');
 INSERT INTO `pracstrelation` VALUES (20, 1, '1');
-INSERT INTO `pracstrelation` VALUES (20, 2, '0');
 INSERT INTO `pracstrelation` VALUES (20, 3, '0');
 INSERT INTO `pracstrelation` VALUES (20, 4, '0');
 INSERT INTO `pracstrelation` VALUES (21, 1, '1');
 INSERT INTO `pracstrelation` VALUES (21, 2, '0');
 INSERT INTO `pracstrelation` VALUES (21, 3, '0');
 INSERT INTO `pracstrelation` VALUES (21, 4, '0');
+INSERT INTO `pracstrelation` VALUES (24, 2, '0');
+INSERT INTO `pracstrelation` VALUES (24, 3, '0');
+INSERT INTO `pracstrelation` VALUES (24, 4, '0');
+INSERT INTO `pracstrelation` VALUES (25, 1, '1');
 
 -- ----------------------------
 -- Table structure for practice
@@ -152,14 +166,17 @@ CREATE TABLE `practice`  (
   INDEX `practiceId_3`(`practiceId`) USING BTREE,
   INDEX `practiceId_4`(`practiceId`) USING BTREE,
   INDEX `practiceId_5`(`practiceId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of practice
 -- ----------------------------
-INSERT INTO `practice` VALUES (19, '2017级第一次实训', '第一次实训', '2019-07-10', '2019-07-20', NULL);
-INSERT INTO `practice` VALUES (20, '2017级第二次实训', '第二次', '2019-06-30', '2019-07-17', NULL);
-INSERT INTO `practice` VALUES (21, '2017级第三次实训', '啊啊啊', '2019-06-30', '2019-07-16', NULL);
+INSERT INTO `practice` VALUES (19, '2017级第一次实训', '第一次实训', '2019-07-05', '2019-07-20', NULL);
+INSERT INTO `practice` VALUES (20, '2017级第二次实训', '第二次', '2019-07-01', '2019-07-20', NULL);
+INSERT INTO `practice` VALUES (21, '2017级第三次实训', '啊啊啊', '2019-07-01', '2019-07-16', NULL);
+INSERT INTO `practice` VALUES (23, '发电方式大', '撒旦发射点发大水发射点发', '2019-01-18', '2019-02-09', NULL);
+INSERT INTO `practice` VALUES (24, '2019八月实训', '八月实训', '2019-08-01', '2019-08-10', NULL);
+INSERT INTO `practice` VALUES (25, '2019九月实训', '九月实训', '2019-09-06', '2019-09-30', NULL);
 
 -- ----------------------------
 -- Table structure for project
@@ -182,8 +199,11 @@ CREATE TABLE `project`  (
   INDEX `projectId_3`(`projectId`) USING BTREE,
   INDEX `projectId_4`(`projectId`) USING BTREE,
   INDEX `projectId_5`(`projectId`) USING BTREE,
+  INDEX `projectId_6`(`projectId`) USING BTREE,
+  INDEX `projectId_7`(`projectId`) USING BTREE,
+  INDEX `projectId_8`(`projectId`) USING BTREE,
   CONSTRAINT `practiceId` FOREIGN KEY (`projectPracticeId`) REFERENCES `practice` (`practiceid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of project
@@ -193,8 +213,14 @@ INSERT INTO `project` VALUES (18, '大学公共课程共享资源管理平台', 
 INSERT INTO `project` VALUES (19, '高校实训实习管理平台', 'Web，数据分析，移动应用', 10, '高校学生的实习和实训，涉及到学生，实训公司，实习公司和校方多个单位。学生在企业实训实习时，一般采用企业管理制度，和学校的管理方法不一致。很多实习都在外地进行，校方很难直接对学生管理。这样学生在实习和实训期间就脱离了校方老师的管理，容易出现问题。学生的实习和实训流程，都由企业负责，学校只能到最后才能得到结果。所以需要一个平台，可以把企业，学生和学校三者联系在一起。企业可以通过该平台创建和管理实训项目，学习加入实训实习项目后，在该平台提交各个文档和资料，学校可以实时查看每个学生的实习实训进度，有任何问题，可以直接通过该平台沟通三方。\n（该项目为实际需求的商业项目，学生完成后如果通过验收，瑞通公司可以购买或者推荐给类似实习企业使用，或者可以帮助学生直接建立一个第三方平台，为有需求的学校和企业使用。）\n', '1 企业管理功能：\n实训/实习管理：注册和企业管理员指定；创建实训项目，定义实训内容和实训验收标准，制定实训流程和资源库，创建实训学校和团队。创建实训文档模板。团队实训结果评分，个人实训成绩评分。\n2 教师管理功能：\n实现学生动态全掌握，控制学生外出安全风险\n通过实习日志、总结，全面了解学生实习进程和状态\n在线指导、评价评分，快速便捷指导学生\n记录工作，实习数据生成，随时查看学生的进度和工作情况\n2 学生管理功能：\n加入实训团队，选择实训项目，选择和下载实训资源。日志提交，交流反馈，实训代码提交，实训模板下载。实训总结提交，团队记录查看，团队其他人流程查看等\n3 学校管理功能：\n实训/实习指导老师注册和登录。查看实训团队和成员信息，查看每个团队/个人的日志以及实训提交资料。直接与团队或者学生沟通。查看实训结果，对实训成果评分和评价；实现学生动态全掌握，控制学生外出安全风险；多角色在线实时协同，解决沟通不畅效率低下问题\n多维度数据统计报告，为评优、学科建设、招生就业等提供科学决策依据\n\n', '1提供学生和教师的APP版本。\n2 提供数据统计分析功能，实时数据流程图\n3 提供企业招聘入口\n4 提供学生简历生成和职位自动投递功能\n\n\n', '1 风险预警：学生签到异常或者日志提交异常时，自动触发风险预警机制。 \n2 人脸识别和GPS定位签到功能\n\n', 20);
 INSERT INTO `project` VALUES (20, '自创项目', 'Web', 1, '暂无', '暂无', '暂无', '暂无', 20);
 INSERT INTO `project` VALUES (21, '课程资源共享平台', 'web', 6, '啊啊啊', '啊啊啊啊', '', '', 21);
-INSERT INTO `project` VALUES (28, '第一项目', '第一', 4, '啊但是发射点发射点', '', '', '', 19);
+INSERT INTO `project` VALUES (28, '第一项目啊', '数据', 2, '第一个项目啊范德萨发文丰富的第三方巅峰赛阿斯蒂芬撒旦阀手动发顺丰暗室逢灯', '基本地方就爱上了放假啦违法解耦i有偶是法兰克福吉林省地方就啊', '扩展爱上发动机昂克赛拉', '高级', 19);
 INSERT INTO `project` VALUES (29, '第二项目', '第二', 10, '式打法是', '士大夫阿斯蒂芬阿斯蒂芬', '阿斯蒂芬阿斯蒂阀手动', '啊沙发沙发大苏打阀手动阀手动发', 19);
+INSERT INTO `project` VALUES (33, '萨芬的发', '撒旦发生第三方', 6, '士大夫的发射点阀手动发', '', '暂无', '暂无', 19);
+INSERT INTO `project` VALUES (34, '我对你们的', '数据分析', 10, '的撒法撒旦发生', '士大夫手动阀手动发', '1、	专家高级知识图谱\n2、	专家索引系统\n3、	根据用户搜索记录，自动推荐对应学者专家\n', '1、	对话式专家问答系统\n2、	基于知识图谱系统的模糊搜索功能\n3、	专家学术圈人脉分析\n', 24);
+INSERT INTO `project` VALUES (35, '我带你们打', '平台', 10, '手动阀手动阀手动阀', '撒旦飞洒阀手动阀手动撒旦发', '暂无', '暂无', 24);
+INSERT INTO `project` VALUES (36, '梵蒂冈梵蒂冈地方官地方官', '覆盖豆腐干反对', 1, '手动阀手动阀', '士大夫阿斯蒂芬', '', '', 24);
+INSERT INTO `project` VALUES (37, '第一', '安安', 6, '安安 ', '士大夫', '暂无', '暂无', 25);
+INSERT INTO `project` VALUES (38, '第四个项目', '安安', 6, '第三方', '手动阀手动', '1提供学生和教师的APP版本。\n2 提供数据统计分析功能，实时数据流程图\n3 提供企业招聘入口\n4 提供学生简历生成和职位自动投递功能\n\n\n', '1 风险预警：学生签到异常或者日志提交异常时，自动触发风险预警机制。 \n2 人脸识别和GPS定位签到功能\n\n', 24);
 
 -- ----------------------------
 -- Table structure for projtrelation
@@ -217,19 +243,29 @@ INSERT INTO `projtrelation` VALUES (19, 1);
 INSERT INTO `projtrelation` VALUES (20, 1);
 INSERT INTO `projtrelation` VALUES (21, 1);
 INSERT INTO `projtrelation` VALUES (28, 1);
-INSERT INTO `projtrelation` VALUES (17, 2);
-INSERT INTO `projtrelation` VALUES (19, 2);
-INSERT INTO `projtrelation` VALUES (28, 2);
+INSERT INTO `projtrelation` VALUES (37, 1);
+INSERT INTO `projtrelation` VALUES (29, 2);
+INSERT INTO `projtrelation` VALUES (33, 2);
+INSERT INTO `projtrelation` VALUES (34, 2);
+INSERT INTO `projtrelation` VALUES (36, 2);
+INSERT INTO `projtrelation` VALUES (37, 2);
 INSERT INTO `projtrelation` VALUES (18, 3);
 INSERT INTO `projtrelation` VALUES (19, 3);
-INSERT INTO `projtrelation` VALUES (28, 3);
 INSERT INTO `projtrelation` VALUES (29, 3);
+INSERT INTO `projtrelation` VALUES (34, 3);
+INSERT INTO `projtrelation` VALUES (35, 3);
+INSERT INTO `projtrelation` VALUES (37, 3);
+INSERT INTO `projtrelation` VALUES (38, 3);
 INSERT INTO `projtrelation` VALUES (18, 4);
 INSERT INTO `projtrelation` VALUES (19, 4);
-INSERT INTO `projtrelation` VALUES (28, 4);
 INSERT INTO `projtrelation` VALUES (29, 4);
+INSERT INTO `projtrelation` VALUES (33, 4);
+INSERT INTO `projtrelation` VALUES (34, 4);
+INSERT INTO `projtrelation` VALUES (37, 4);
 INSERT INTO `projtrelation` VALUES (19, 5);
-INSERT INTO `projtrelation` VALUES (28, 5);
+INSERT INTO `projtrelation` VALUES (29, 5);
+INSERT INTO `projtrelation` VALUES (33, 5);
+INSERT INTO `projtrelation` VALUES (37, 5);
 
 -- ----------------------------
 -- Table structure for pscrelation
@@ -253,6 +289,9 @@ CREATE TABLE `pscrelation`  (
 INSERT INTO `pscrelation` VALUES (19, 1, 1);
 INSERT INTO `pscrelation` VALUES (20, 1, 1);
 INSERT INTO `pscrelation` VALUES (21, 1, 1);
+INSERT INTO `pscrelation` VALUES (23, 1, 1);
+INSERT INTO `pscrelation` VALUES (24, 1, 1);
+INSERT INTO `pscrelation` VALUES (25, 1, 1);
 
 -- ----------------------------
 -- Table structure for school
@@ -320,15 +359,32 @@ CREATE TABLE `signin`  (
   PRIMARY KEY (`signinId`) USING BTREE,
   INDEX `signStudentId_idx`(`studentId`) USING BTREE,
   CONSTRAINT `signStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 70 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of signin
 -- ----------------------------
 INSERT INTO `signin` VALUES (1, 1, '2019-07-01', '14:17:48', 1);
-INSERT INTO `signin` VALUES (2, 1, '2019-07-01', '14:17:51', 0);
-INSERT INTO `signin` VALUES (58, 37, '2019-07-03', '18:49:27', 1);
-INSERT INTO `signin` VALUES (59, 37, '2019-07-03', '18:49:32', 0);
+INSERT INTO `signin` VALUES (2, 1, '2019-07-01', '17:17:51', 0);
+INSERT INTO `signin` VALUES (60, 1, '2019-07-05', '14:22:28', 1);
+INSERT INTO `signin` VALUES (61, 1, '2019-07-06', '09:13:28', 1);
+INSERT INTO `signin` VALUES (62, 1, '2019-07-06', '09:14:06', 0);
+INSERT INTO `signin` VALUES (65, 1, '2019-07-04', '14:20:20', 1);
+INSERT INTO `signin` VALUES (66, 1, '2019-07-04', '14:20:22', 0);
+INSERT INTO `signin` VALUES (67, 1, '2019-07-04', '14:22:48', 1);
+INSERT INTO `signin` VALUES (68, 1, '2019-07-06', '14:30:15', 1);
+INSERT INTO `signin` VALUES (69, 1, '2019-07-08', '09:19:05', 1);
+INSERT INTO `signin` VALUES (70, 1, '2019-07-06', '17:27:56', 0);
+INSERT INTO `signin` VALUES (71, 1, '2019-07-07', '08:29:03', 1);
+INSERT INTO `signin` VALUES (72, 1, '2019-07-07', '12:05:47', 0);
+INSERT INTO `signin` VALUES (73, 1, '2019-07-07', '14:31:04', 1);
+INSERT INTO `signin` VALUES (74, 1, '2019-07-07', '17:31:18', 0);
+INSERT INTO `signin` VALUES (77, 1, '2019-07-08', '13:27:40', 0);
+INSERT INTO `signin` VALUES (78, 1, '2019-07-08', '13:27:42', 1);
+INSERT INTO `signin` VALUES (79, 1, '2019-07-08', '13:27:50', 0);
+INSERT INTO `signin` VALUES (80, 1, '2019-07-08', '13:31:41', 1);
+INSERT INTO `signin` VALUES (81, 1, '2019-07-08', '13:31:42', 0);
+INSERT INTO `signin` VALUES (82, 1, '2019-07-08', '14:19:06', 1);
 
 -- ----------------------------
 -- Table structure for stprelation
@@ -350,14 +406,13 @@ CREATE TABLE `stprelation`  (
 -- ----------------------------
 -- Records of stprelation
 -- ----------------------------
-INSERT INTO `stprelation` VALUES (1, 13, 28, NULL);
-INSERT INTO `stprelation` VALUES (2, 12, 19, NULL);
-INSERT INTO `stprelation` VALUES (2, 13, 28, NULL);
-INSERT INTO `stprelation` VALUES (3, 12, 19, NULL);
-INSERT INTO `stprelation` VALUES (3, 13, 28, NULL);
-INSERT INTO `stprelation` VALUES (4, 12, 19, NULL);
+INSERT INTO `stprelation` VALUES (1, 12, 19, 100);
+INSERT INTO `stprelation` VALUES (2, 12, 19, 100);
+INSERT INTO `stprelation` VALUES (3, 12, 19, 100);
+INSERT INTO `stprelation` VALUES (4, 12, 19, 100);
 INSERT INTO `stprelation` VALUES (36, 6, 17, NULL);
-INSERT INTO `stprelation` VALUES (37, 12, 19, NULL);
+INSERT INTO `stprelation` VALUES (37, 12, 19, 100);
+INSERT INTO `stprelation` VALUES (44, 16, 37, NULL);
 
 -- ----------------------------
 -- Table structure for student
@@ -391,6 +446,9 @@ CREATE TABLE `student`  (
   INDEX `studentId_12`(`studentId`) USING BTREE,
   INDEX `studentId_13`(`studentId`) USING BTREE,
   INDEX `studentId_14`(`studentId`) USING BTREE,
+  INDEX `studentId_15`(`studentId`) USING BTREE,
+  INDEX `studentId_16`(`studentId`) USING BTREE,
+  INDEX `studentId_17`(`studentId`) USING BTREE,
   CONSTRAINT `studentSchoolId` FOREIGN KEY (`schoolId`) REFERENCES `school` (`schoolid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -415,13 +473,46 @@ CREATE TABLE `studentdiary`  (
   `studentDiaryDate` date NOT NULL,
   `studentDiaryTitle` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `studentDiaryContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `isweeklyreport` tinyint(1) NOT NULL,
   `projectId` int(11) NOT NULL,
+  `week` int(11) NOT NULL,
   PRIMARY KEY (`studentdiaryId`) USING BTREE,
   INDEX `sdStudentId_idx`(`studentId`) USING BTREE,
   INDEX `sdProjectId`(`projectId`) USING BTREE,
   CONSTRAINT `sdProjectId` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `sdStudentId` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of studentdiary
+-- ----------------------------
+INSERT INTO `studentdiary` VALUES (1, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (2, 1, '2019-07-05', '2', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (3, 1, '2019-07-05', '3', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (4, 1, '2019-07-05', '4', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (5, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (6, 1, '2019-07-05', '6', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (7, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (8, 1, '2019-07-05', '2', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (9, 1, '2019-07-05', '3', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (10, 1, '2019-07-05', '4', '十九分零四大家flask积分', 19, 1);
+
+-- ----------------------------
+-- Table structure for task
+-- ----------------------------
+DROP TABLE IF EXISTS `task`;
+CREATE TABLE `task`  (
+  `taskId` int(11) NOT NULL AUTO_INCREMENT,
+  `taskName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `taskContent` varchar(1023) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `taskAmount` int(11) NOT NULL,
+  `tastPriority` int(11) NOT NULL,
+  `taskWeek` int(11) NOT NULL,
+  `isFinished` tinyint(4) NOT NULL,
+  `teamId` int(11) NOT NULL,
+  `finishTime` date NULL DEFAULT NULL,
+  PRIMARY KEY (`taskId`) USING BTREE,
+  INDEX `taskTeamId_idx`(`teamId`) USING BTREE,
+  CONSTRAINT `taskTeamId` FOREIGN KEY (`teamId`) REFERENCES `team` (`teamid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -437,7 +528,41 @@ CREATE TABLE `teacherdiary`  (
   PRIMARY KEY (`teacherdiaryId`) USING BTREE,
   INDEX `tdTeacherId_idx`(`teacherId`) USING BTREE,
   CONSTRAINT `tdTeacherId` FOREIGN KEY (`teacherId`) REFERENCES `companyteacher` (`teacherid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of teacherdiary
+-- ----------------------------
+INSERT INTO `teacherdiary` VALUES (1, 1, '2019-07-05', '第一天', '1');
+INSERT INTO `teacherdiary` VALUES (2, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (3, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (4, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (5, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (6, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (7, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (8, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (9, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (10, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (11, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (12, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (13, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (14, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (15, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (16, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (17, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (18, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (19, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (20, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (21, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (22, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (23, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (24, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (25, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (26, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (27, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (28, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (29, 1, '2019-07-05', '第三方', '手动阀手动阀');
+INSERT INTO `teacherdiary` VALUES (30, 1, '2019-07-05', '第三方', '手动阀手动阀');
 
 -- ----------------------------
 -- Table structure for team
@@ -455,16 +580,22 @@ CREATE TABLE `team`  (
   INDEX `teamId_2`(`teamId`) USING BTREE,
   INDEX `teamId_3`(`teamId`) USING BTREE,
   INDEX `teamId_4`(`teamId`) USING BTREE,
+  INDEX `teamId_5`(`teamId`) USING BTREE,
+  INDEX `teamId_6`(`teamId`) USING BTREE,
+  INDEX `teamId_7`(`teamId`) USING BTREE,
+  INDEX `teamId_8`(`teamId`) USING BTREE,
+  INDEX `teamId_9`(`teamId`) USING BTREE,
+  INDEX `teamId_10`(`teamId`) USING BTREE,
   CONSTRAINT `teamCaptainId` FOREIGN KEY (`captainId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of team
 -- ----------------------------
-INSERT INTO `team` VALUES (5, '王者四缺一队', 1, NULL, 'www.baiduaaa.com');
-INSERT INTO `team` VALUES (6, '王者四缺一队', 36, NULL, 'www.baiduaaa.com');
-INSERT INTO `team` VALUES (12, '王者四缺一', 37, NULL, '');
-INSERT INTO `team` VALUES (13, '手动阀手动阀', 1, NULL, '');
+INSERT INTO `team` VALUES (5, '王者四缺一队大锅饭大概', 1, 100, 'www.87987987.com');
+INSERT INTO `team` VALUES (6, '王者四缺一队', 36, 100, 'www.baiduaaa.com');
+INSERT INTO `team` VALUES (12, '王者四缺一', 2, 100, 'https://github.com/DaiDaotang/PracticeProject');
+INSERT INTO `team` VALUES (16, '释放空间为了', 44, NULL, '');
 
 -- ----------------------------
 -- Table structure for teamdiary
@@ -474,12 +605,16 @@ CREATE TABLE `teamdiary`  (
   `teamdiaryId` int(11) NOT NULL AUTO_INCREMENT,
   `teamId` int(11) NOT NULL,
   `teamDiaryDate` date NOT NULL,
-  `isweeklyreport` tinyint(1) NOT NULL,
   `teamDiaryTitle` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `teamDiaryContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`teamdiaryId`) USING BTREE,
   INDEX `tdTeamId_idx`(`teamId`) USING BTREE,
   CONSTRAINT `tdTeamId` FOREIGN KEY (`teamId`) REFERENCES `team` (`teamid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of teamdiary
+-- ----------------------------
+INSERT INTO `teamdiary` VALUES (1, 12, '2019-07-06', '我带你们打王者', '哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈\n上王者了\n哈哈哈哈');
 
 SET FOREIGN_KEY_CHECKS = 1;

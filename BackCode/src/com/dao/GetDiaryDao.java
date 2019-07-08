@@ -33,8 +33,7 @@ public class GetDiaryDao {
                         diary.setDate(resultSet.getDate(3));
                         diary.setTitle(resultSet.getString(4));
                         diary.setContent(resultSet.getString(5));
-                        diary.setIsWeeklyReport(resultSet.getInt(6));
-                        diary.setProjectId(resultSet.getInt(7));
+                        diary.setProjectId(resultSet.getInt(6));
                         diaryBeans.add(diary);
                     }
                     if (diaryBeans.size() == 0){
