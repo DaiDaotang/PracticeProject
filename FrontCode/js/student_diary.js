@@ -57,7 +57,7 @@ layui.use('flow', function () {
                             var lis = [];
                             var str = ""
                             for (var i = 0; i < res.resData.length; i++) {
-                                str = '<li><div style="width:auto; height: auto; margin: 20px; background-color:#d4dadb; border-radius: 20px; border: 1px solid #d4dadb;"><div style="width:auto; height: auto; margin: 20px;"><div class="layui-row" style="height:auto;"><div class="layui-col-md8" style="height:100px;"><div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;"><span style="font-size:30px;">'
+                                str = '<li><div style="width:auto; height: auto; margin: 20px; background-color:#e7f6f7; border-radius: 20px; border: 1px solid #d4dadb;"><div style="width:auto; height: auto; margin: 20px;"><div class="layui-row" style="height:auto;"><div class="layui-col-md8" style="height:100px;"><div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;"><span style="font-size:30px;">'
                                 str += res.resData[i].title
                                 str += '</span><hr class="layui-bg-blue"></div></div > <div class="layui-col-md4" style="height:auto; text-align:right;"><div class="grid-demo grid-demo-bg1" style="margin-top:35px;"><span style="font-size:30px;">'
                                 str += res.resData[i].date
