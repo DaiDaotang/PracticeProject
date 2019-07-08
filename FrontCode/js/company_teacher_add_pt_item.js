@@ -33,7 +33,6 @@ var param_item_existed = function (res) {
         , contentType: 'application/json'
         , method: "POST"
         , width: 1100
-        , height: 500
         , where: {
             "reqId": ""
             , "reqParam": target_pt_id
