@@ -11,10 +11,13 @@ public class DiaryBean {
     private String title;
     private String content;
     private int projectId;
-    private int isWeeklyReport;
+    private int week;
     private Date date;
     private int index;
     private int count;
+    private int score;
+    private String comment;
+    private boolean isReviewed;
 
     public int getStudentId() {
         return studentId;
@@ -72,14 +75,6 @@ public class DiaryBean {
         this.projectId = projectId;
     }
 
-    public int getIsWeeklyReport() {
-        return isWeeklyReport;
-    }
-
-    public void setIsWeeklyReport(int isWeeklyReport) {
-        this.isWeeklyReport = isWeeklyReport;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -110,5 +105,37 @@ public class DiaryBean {
 
     public void setId(int id) {
         Id = id;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public boolean isReviewed() {
+        return isReviewed;
+    }
+
+    public void setReviewed(boolean reviewed) {
+        isReviewed = reviewed;
     }
 }

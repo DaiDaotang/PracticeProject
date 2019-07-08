@@ -12,13 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class GetStudentByTeamIdDao {
-    public TeamBean GetSchoolTeacher(int teamId)
+    public TeamBean GetStudent(int teamId)
     {
         TeamBean teamBean = new TeamBean();
         ArrayList<StudentBean> studentBeans = new ArrayList<>();
         Connection conn = DBConn.getConnection();
         PreparedStatement state,state2;
-        int captainId = 0;
+        int captainId;
         try{
             conn.setAutoCommit(false);
             String sql ="SELECT student.studentId,studentName,studentNumber,studentGrade,studentSex,studentscores FROM student NATURAL JOIN stprelation WHERE teamId = ?;";

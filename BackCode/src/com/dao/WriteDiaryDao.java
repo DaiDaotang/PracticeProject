@@ -24,13 +24,13 @@ public class WriteDiaryDao {
             switch (diaryBean.getAuthority())
             {
                 case "Student":
-                    statement1 = conn.prepareStatement("insert into studentdiary (studentId,studentDiaryDate,studentDiaryTitle,studentDiaryContent,isweeklyreport,projectId) values (?,?,?,?,?,?);");
+                    statement1 = conn.prepareStatement("insert into studentdiary (studentId,studentDiaryDate,studentDiaryTitle,studentDiaryContent,projectId,week) values (?,?,?,?,?,?);");
                     statement1.setInt(1,diaryBean.getStudentId());
                     statement1.setDate(2,date);
                     statement1.setString(3,diaryBean.getTitle());
                     statement1.setString(4,diaryBean.getContent());
-                    statement1.setInt(5,diaryBean.getIsWeeklyReport());
-                    statement1.setInt(6,diaryBean.getProjectId());
+                    statement1.setInt(5,diaryBean.getProjectId());
+                    statement1.setInt(6,diaryBean.getWeek());
                     int i = statement1.executeUpdate();
                     if(i > 0)
                     {
@@ -48,12 +48,11 @@ public class WriteDiaryDao {
                         return 0;
                     }
                 case "Team":
-                    statement1 = conn.prepareStatement("insert into teamdiary (teamId,teamDiaryDate,teamDiaryTitle,teamDiaryContent,isweeklyreport) values (?,?,?,?,?);");
+                    statement1 = conn.prepareStatement("insert into teamdiary (teamId,teamDiaryDate,teamDiaryTitle,teamDiaryContent) values (?,?,?,?,?);");
                     statement1.setInt(1,diaryBean.getTeamId());
                     statement1.setDate(2,date);
                     statement1.setString(3,diaryBean.getTitle());
                     statement1.setString(4,diaryBean.getContent());
-                    statement1.setInt(5,diaryBean.getIsWeeklyReport());
                     int t = statement1.executeUpdate();
                     if(t > 0)
                     {

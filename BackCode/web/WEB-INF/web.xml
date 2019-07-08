@@ -497,4 +497,22 @@
         <servlet-name>ModifyTaskServlet</servlet-name>
         <url-pattern>/ModifyTaskServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetStudentsByProjectIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetStudentsByProjectIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetStudentsByProjectIdServlet</servlet-name>
+        <url-pattern>/GetStudentsByProjectIdServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetDiaryByStudentProjectWeekServlet</servlet-name>
+        <servlet-class>com.servlet.GetDiaryByStudentProjectWeekServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetDiaryByStudentProjectWeekServlet</servlet-name>
+        <url-pattern>/GetDiaryByStudentProjectWeekServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -34,6 +34,9 @@ public class GetDiaryDao {
                         diary.setTitle(resultSet.getString(4));
                         diary.setContent(resultSet.getString(5));
                         diary.setProjectId(resultSet.getInt(6));
+                        diary.setWeek(resultSet.getInt(7));
+                        diary.setScore(resultSet.getInt(8));
+                        diary.setComment(resultSet.getString(9));
                         diaryBeans.add(diary);
                     }
                     if (diaryBeans.size() == 0){
@@ -68,7 +71,6 @@ public class GetDiaryDao {
                         DiaryBean diary = new DiaryBean();
                         diary.setId(resultSet.getInt(1));
                         diary.setDate(resultSet.getDate(3));
-                        diary.setIsWeeklyReport(resultSet.getInt(4));
                         diary.setTitle(resultSet.getString(5));
                         diary.setContent(resultSet.getString(6));
                         diaryBeans.add(diary);

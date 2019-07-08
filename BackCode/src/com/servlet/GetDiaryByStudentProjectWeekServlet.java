@@ -1,10 +1,9 @@
 package com.servlet;
 
+import com.bean.DiaryBean;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.bean.StudentBean;
-import com.bean.TeamBean;
-import com.dao.GetStudentByTeamIdDao;
+import com.dao.GetDiaryByStudentProjectWeekDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -20,8 +19,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-@WebServlet(name = "GetStudentByTeamIdServlet")
-public class GetStudentByTeamIdServlet extends HttpServlet {
+@WebServlet(name = "GetDiaryByStudentProjectWeekServlet")
+public class GetDiaryByStudentProjectWeekServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -32,23 +31,23 @@ public class GetStudentByTeamIdServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
-        Gson gson = new Gson();
-        Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
-        RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
-        ResponseBean<TeamBean> resBean = new ResponseBean<>();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Type requestType = new TypeToken<RequestBean<DiaryBean>>(){}.getType();
+        RequestBean<DiaryBean> reqBean = gson.fromJson(content,requestType);
+        ResponseBean<ArrayList<DiaryBean>> resBean = new ResponseBean<>();
         try{
-            GetStudentByTeamIdDao dao = new GetStudentByTeamIdDao();
-            TeamBean teamBean = dao.GetStudent(reqBean.getReqParam());
-            if (teamBean == null){
+            GetDiaryByStudentProjectWeekDao dao = new GetDiaryByStudentProjectWeekDao();
+            ArrayList<DiaryBean> diaryBeans = dao.getDiary(reqBean);
+            if (diaryBeans == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
-                resBean.setResData(teamBean);
+                resBean.setResData(diaryBeans);
             }
-            Type respType = new TypeToken<ResponseBean<TeamBean>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<ArrayList<DiaryBean>>>(){}.getType();
             String s = gson.toJson(resBean,respType);
             out.print(s);
         }catch (Exception e){

@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 08/07/2019 17:20:10
+ Date: 08/07/2019 18:58:51
 */
 
 SET NAMES utf8mb4;
@@ -202,6 +202,7 @@ CREATE TABLE `project`  (
   INDEX `projectId_6`(`projectId`) USING BTREE,
   INDEX `projectId_7`(`projectId`) USING BTREE,
   INDEX `projectId_8`(`projectId`) USING BTREE,
+  INDEX `projectId_9`(`projectId`) USING BTREE,
   CONSTRAINT `practiceId` FOREIGN KEY (`projectPracticeId`) REFERENCES `practice` (`practiceid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -449,6 +450,7 @@ CREATE TABLE `student`  (
   INDEX `studentId_15`(`studentId`) USING BTREE,
   INDEX `studentId_16`(`studentId`) USING BTREE,
   INDEX `studentId_17`(`studentId`) USING BTREE,
+  INDEX `studentId_18`(`studentId`) USING BTREE,
   CONSTRAINT `studentSchoolId` FOREIGN KEY (`schoolId`) REFERENCES `school` (`schoolid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -475,6 +477,8 @@ CREATE TABLE `studentdiary`  (
   `studentDiaryContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `projectId` int(11) NOT NULL,
   `week` int(11) NOT NULL,
+  `score` int(11) NULL DEFAULT NULL,
+  `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`studentdiaryId`) USING BTREE,
   INDEX `sdStudentId_idx`(`studentId`) USING BTREE,
   INDEX `sdProjectId`(`projectId`) USING BTREE,
@@ -485,16 +489,16 @@ CREATE TABLE `studentdiary`  (
 -- ----------------------------
 -- Records of studentdiary
 -- ----------------------------
-INSERT INTO `studentdiary` VALUES (1, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (2, 1, '2019-07-05', '2', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (3, 1, '2019-07-05', '3', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (4, 1, '2019-07-05', '4', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (5, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (6, 1, '2019-07-05', '6', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (7, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (8, 1, '2019-07-05', '2', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (9, 1, '2019-07-05', '3', '十九分零四大家flask积分', 19, 1);
-INSERT INTO `studentdiary` VALUES (10, 1, '2019-07-05', '4', '十九分零四大家flask积分', 19, 1);
+INSERT INTO `studentdiary` VALUES (1, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (2, 1, '2019-07-05', '2', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (3, 1, '2019-07-05', '3', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (4, 1, '2019-07-05', '4', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (5, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (6, 1, '2019-07-05', '6', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (7, 1, '2019-07-05', '第一篇日志', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (8, 1, '2019-07-05', '2', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (9, 1, '2019-07-05', '3', '十九分零四大家flask积分', 19, 1, NULL, NULL);
+INSERT INTO `studentdiary` VALUES (10, 1, '2019-07-05', '4', '十九分零四大家flask积分', 19, 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for task
@@ -505,14 +509,14 @@ CREATE TABLE `task`  (
   `taskName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `taskContent` varchar(1023) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `taskAmount` int(11) NOT NULL,
-  `tastPriority` int(11) NOT NULL,
+  `taskPriority` int(11) NOT NULL,
   `taskWeek` int(11) NOT NULL,
   `isFinished` tinyint(4) NOT NULL,
   `teamId` int(11) NOT NULL,
   `finishTime` date NULL DEFAULT NULL,
   PRIMARY KEY (`taskId`) USING BTREE,
   INDEX `taskTeamId_idx`(`teamId`) USING BTREE,
-  CONSTRAINT `taskTeamId` FOREIGN KEY (`teamId`) REFERENCES `team` (`teamid`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `taskTeamId` FOREIGN KEY (`teamId`) REFERENCES `team` (`teamid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -586,6 +590,8 @@ CREATE TABLE `team`  (
   INDEX `teamId_8`(`teamId`) USING BTREE,
   INDEX `teamId_9`(`teamId`) USING BTREE,
   INDEX `teamId_10`(`teamId`) USING BTREE,
+  INDEX `teamId_11`(`teamId`) USING BTREE,
+  INDEX `teamId_12`(`teamId`) USING BTREE,
   CONSTRAINT `teamCaptainId` FOREIGN KEY (`captainId`) REFERENCES `student` (`studentid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
