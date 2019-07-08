@@ -9,7 +9,7 @@
 $END$
 </body>
 <script>
-    var CreatPracticeURL = "http://localhost:8080/CreateTaskServlet";
+    var CreatPracticeURL = "http://localhost:8080/ModifyTaskServlet";
     $.ajax({
         type:"POST",
         url:CreatPracticeURL,
@@ -22,12 +22,18 @@ $END$
                 "taskAmount":4,
                 "taskPriority":5,
                 "taskWeek":1,
-                "isFinished":false,
-                "teamId":5
+                "isFinished":true,
+                "teamId":5,
+                "finishTime":"2019-07-13",
+                "taskId":2
             }
         }),
         dataType:"json",
         success:function(res){
+            console.log(res);
+        },
+        error:function(res){
+            console.log("error");
             console.log(res);
         }
     });

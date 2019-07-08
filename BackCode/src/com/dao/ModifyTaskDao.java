@@ -3,12 +3,12 @@ package com.dao;
 import com.DBConn;
 import com.bean.RequestBean;
 import com.bean.TaskBean;
-import javafx.concurrent.Task;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -29,18 +29,19 @@ public class ModifyTaskDao {
             state.setInt(5,taskBean.getTaskWeek());
             state.setBoolean(6,taskBean.isFinished());
             state.setInt(7,taskBean.getTeamId());
-            state.setDate(8,taskBean.getFinishTime());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            state.setString(8,simpleDateFormat.format(taskBean.getFinishTime()));
             state.setInt(9,taskBean.getTaskId());
             int i = state.executeUpdate();
             if(i > 0)
             {
+                conn.commit();
                 ArrayList<TaskBean> arrayList = getTotalWork(taskBean.getTeamId());
                 if(arrayList != null)
                 {
                     return arrayList;
                 }
             }
-            conn.commit();
             return null;
         }catch (SQLException e){
             e.printStackTrace();
