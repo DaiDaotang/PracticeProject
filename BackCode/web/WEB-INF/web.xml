@@ -470,4 +470,13 @@
         <servlet-name>GetPracticeNowByCompanyTeacherIdServlet</servlet-name>
         <url-pattern>/GetPracticeNowByCompanyTeacherIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetPracticeNowBySchoolTeacherIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetPracticeNowBySchoolTeacherIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetPracticeNowBySchoolTeacherIdServlet</servlet-name>
+        <url-pattern>/GetPracticeNowBySchoolTeacherIdServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
