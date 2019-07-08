@@ -323,52 +323,57 @@
 
             //监听创建按钮
             form.on('submit(create_team)', function (data) {
-
-                $.ajax({
-                    type: "POST",
-                    url: CreateTeamURL,
-                    async: true,
-                    data: JSON.stringify({
-                        "reqId": "",
-                        "reqParam": {
-                            "teamName": data.field.team_name,
-                            "captainId": user_id,
-                            "projectId": selected_item,
-                            "githubLink": data.field.team_github
-                        }
-                    }),
-                    dataType: "json",
-                    success: function (res) {
-                        //监听写日志
-                        $.ajax({
-                            type: "POST",
-                            url: UploadDiaryURL,
-                            async: true,
-                            data: JSON.stringify({
-                                "reqId": "",
-                                "reqParam": {
-                                    "studentId": user_id,
-                                    "authority": "Team",
-                                    "title": "欢迎使用高校实训平台！",
-                                    "content": "欢迎使用高校实训管理平台网页！在这里您将会有机会渗入后台并修改自己的成绩，以获得最高的成绩！",
-                                    "projectId": target_pt_id
-                                }
-                            }),
-                            dataType: "json",
-                            success: function (res) {
-                                sign_up_btn_success(res)
-                            },
-                            error: function (res) {
-                                console.log("error");
-                                console.log(res);
+                if (selected_item == "") {
+                    layer.msg("请选择项目")
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: CreateTeamURL,
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "teamName": data.field.team_name,
+                                "captainId": user_id,
+                                "projectId": selected_item,
+                                "githubLink": data.field.team_github
                             }
-                        });
-                    },
-                    error: function (res) {
-                        console.log("error");
-                        console.log(res);
-                    }
-                });
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            console.log(res)
+                            var temp_id = res.resData;
+                            //监听写日志
+                            $.ajax({
+                                type: "POST",
+                                url: UploadDiaryURL,
+                                async: true,
+                                data: JSON.stringify({
+                                    "reqId": "",
+                                    "reqParam": {
+                                        "teamId": temp_id,
+                                        "authority": "Team",
+                                        "title": "欢迎使用高校实训平台！",
+                                        "content": "欢迎使用高校实训管理平台网页！在这里您将会有机会渗入后台并修改自己的成绩，以获得最高的成绩！",
+                                        "projectId": target_pt_id
+                                    }
+                                }),
+                                dataType: "json",
+                                success: function (res) {
+                                    sign_up_btn_success(res)
+                                },
+                                error: function (res) {
+                                    console.log("error");
+                                    console.log(res);
+                                }
+                            });
+                        },
+                        error: function (res) {
+                            console.log("error");
+                            console.log(res);
+                        }
+                    });
+                }
                 return false;
             });
 
