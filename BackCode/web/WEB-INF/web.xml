@@ -479,4 +479,13 @@
         <servlet-name>GetPracticeNowBySchoolTeacherIdServlet</servlet-name>
         <url-pattern>/GetPracticeNowBySchoolTeacherIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreateTaskServlet</servlet-name>
+        <servlet-class>com.servlet.CreateTaskServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateTaskServlet</servlet-name>
+        <url-pattern>/CreateTaskServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
