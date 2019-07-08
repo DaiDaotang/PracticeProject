@@ -339,7 +339,30 @@
                     }),
                     dataType: "json",
                     success: function (res) {
-                        sign_up_btn_success(res)
+                        //监听写日志
+                        $.ajax({
+                            type: "POST",
+                            url: UploadDiaryURL,
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": "",
+                                "reqParam": {
+                                    "studentId": user_id,
+                                    "authority": "Team",
+                                    "title": "欢迎使用高校实训平台！",
+                                    "content": "欢迎使用高校实训管理平台网页！在这里您将会有机会渗入后台并修改自己的成绩，以获得最高的成绩！",
+                                    "projectId": target_pt_id
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                sign_up_btn_success(res)
+                            },
+                            error: function (res) {
+                                console.log("error");
+                                console.log(res);
+                            }
+                        });
                     },
                     error: function (res) {
                         console.log("error");
@@ -351,15 +374,10 @@
 
             //创建成功回调函数
             function sign_up_btn_success(res) {
-                if (res.isSuccess) {
-                    layer.msg('创建成功', { time: 1000 })
-                    setTimeout(function sign_up_fun() {
-                        window.location.href = StudentHomepageURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority;
-                    }, 1000);
-                }
-                else {
-                    layer.msg("创建失败", { time: 1000 })
-                }
+                layer.msg('创建成功', { time: 1000 })
+                setTimeout(function sign_up_fun() {
+                    window.location.href = StudentHomepageURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority;
+                }, 1000);
                 return false;
             }
         });
