@@ -164,13 +164,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("group_a").href = GroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&team_id=" + target_group_id + "&target_pt_id=" + target_pt_id;
                         document.getElementById("item_name").innerText = target_item_name;
                         document.getElementById("item_a").href = ItemURL;
-                        console.log(document.getElementById("group_a").href)
-                        if (target_authority == user_authority && target_id == user_id && target_pt_id != -1) {
-                            document.getElementById("group_a").href = CreateGroupURL + basic_extra_url + "&target_pt_id=" + target_pt_id;
-                        }
-                        else {
-                            document.getElementById("group_a").href = "javascript:;";
-                        }
                     }
                     //没团队
                     else {
