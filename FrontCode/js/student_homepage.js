@@ -261,7 +261,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 layer.open({
                     title: '签到情况',
                     type: 2,
-                    area: ["1100px", "500px"],
+                    area: ["1100px", "710px"],
                     content: CheckRecordURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id
                 });
             });
