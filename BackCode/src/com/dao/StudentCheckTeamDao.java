@@ -3,9 +3,12 @@ package com.dao;
 import com.DBConn;
 import com.bean.TeamBean;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.sql.*;
+import java.util.TimeZone;
 
 public class StudentCheckTeamDao {
 
@@ -32,17 +35,20 @@ public class StudentCheckTeamDao {
                         teamBean.setprojectId(resultSet2.getInt(2));
                         teamBean.setprojectName(resultSet2.getString(3));
                         teamBean.setpracticeId(resultSet2.getInt(4));
-                        Date startTime = resultSet2.getDate(5);
-                        Date endTime = resultSet2.getDate(6);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+                        Date startTime = simpleDateFormat.parse(simpleDateFormat1.format(resultSet2.getDate(5)));
+                        Date endTime = simpleDateFormat.parse(simpleDateFormat1.format(resultSet2.getDate(6)));
                         java.util.Date now = new Date();
                         Calendar startCal = Calendar.getInstance();
                         startCal.setTime(startTime);
                         int days;
                         int startDayOfWeek = startCal.get(Calendar.DAY_OF_WEEK);
                         if (now.getTime() < endTime.getTime()){
-                            days = (int)Math.ceil((now.getTime() - startTime.getTime())/(1000*3600*24));
+                            days = (int)Math.ceil((now.getTime() - startTime.getTime())/(1000*3600*24.0));
                         } else {
-                            days = (int)Math.ceil((endTime.getTime() - startTime.getTime())/(1000*3600*24));
+                            days = (int)Math.ceil((endTime.getTime() - startTime.getTime())/(1000*3600*24.0));
                         }
                         if (days < 0){
                             teamBean.setWeeks(0);
@@ -65,17 +71,19 @@ public class StudentCheckTeamDao {
                     teamBean.setprojectId(resultSet.getInt(3));
                     teamBean.setprojectName(resultSet.getString(4));
                     teamBean.setpracticeId(resultSet.getInt(5));
-                    Date startTime = resultSet.getDate(6);
-                    Date endTime = resultSet.getDate(7);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                    Date startTime = simpleDateFormat.parse(simpleDateFormat1.format(resultSet.getDate(6)));
+                    Date endTime = simpleDateFormat.parse(simpleDateFormat1.format(resultSet.getDate(7)));
                     java.util.Date now = new Date();
                     Calendar startCal = Calendar.getInstance();
                     startCal.setTime(startTime);
                     int days;
                     int startDayOfWeek = startCal.get(Calendar.DAY_OF_WEEK);
                     if (now.getTime() < endTime.getTime()){
-                        days = (int)Math.ceil((now.getTime() - startTime.getTime())/(1000*3600*24));
+                        days = (int)Math.ceil((now.getTime() - startTime.getTime())/(1000*3600*24.0));
                     } else {
-                        days = (int)Math.ceil((endTime.getTime() - startTime.getTime())/(1000*3600*24));
+                        days = (int)Math.ceil((endTime.getTime() - startTime.getTime())/(1000*3600*24.0));
                     }
                     if (days < 0){
                         teamBean.setWeeks(0);
@@ -90,7 +98,9 @@ public class StudentCheckTeamDao {
             e.printStackTrace();
             DBConn.rollback(conn);
             return null;
-        }finally {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
             DBConn.closeConn(conn);
         }
         return null;
