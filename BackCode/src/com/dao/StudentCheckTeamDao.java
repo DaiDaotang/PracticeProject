@@ -54,7 +54,12 @@ public class StudentCheckTeamDao {
                             teamBean.setWeeks(0);
                         }else {
                             int restDays = days + (- 7 + startDayOfWeek - 2) % 7;
-                            teamBean.setWeeks((int)Math.ceil(restDays/7.0) + 1);
+                            if (startDayOfWeek == 2){
+                                teamBean.setWeeks((int)Math.ceil(restDays/7.0));
+                            }
+                            else{
+                                teamBean.setWeeks((int)Math.ceil(restDays/7.0)+1);
+                            }
                         }
                         return teamBean;
                     }
@@ -89,7 +94,12 @@ public class StudentCheckTeamDao {
                         teamBean.setWeeks(0);
                     }else {
                         int restDays = days + (- 7 + startDayOfWeek - 2) % 7;
-                        teamBean.setWeeks((int)Math.ceil(restDays/7.0) + 1);
+                        if (startDayOfWeek == 2) {
+                            teamBean.setWeeks((int)Math.ceil(restDays/7.0));
+                        }
+                        else {
+                            teamBean.setWeeks((int)Math.ceil(restDays/7.0) + 1);
+                        }
                     }
                     return teamBean;
                 }
