@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
 
     <style type="text/css">
         .layui-form-select dl dd:hover {
@@ -106,10 +106,10 @@
     <script type="text/html" id="toolbar_item">
         <div>项目列表</div>
     </script>
-    <script src="layui/layui.js" charset="utf-8"></script>
+    <script src="../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../js/basic_url.js" charset="utf-8"></script>
     <script>
         //basic
-
         function GetRequest() {
             var url = location.search; //获取url中"?"符后的字串
             var theRequest = new Object();
@@ -132,18 +132,6 @@
 
         //测试变量
         var test_style = "1px solid #000";
-
-        //共有URL
-        var HomepageURL = ""
-            , QuitURL = "login.html"
-            , ChangeInfoURL = "login.html"
-            , SafetyURL = "safety_info.html"
-            , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
-            , GetCompanyTeacherServletURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
-            , GetSchoolTeacherServletURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
-            , GetCompanyServletURL = "http://localhost:8080/GetCompanyInformationServlet"
-            , GetAnyUserServlet = ""
-            , GetHeadImgURL = "http://localhost:8080/DownloadServlet?head=";
 
         //获取个人信息
         layui.use(['jquery', 'layer'], function () {
@@ -196,13 +184,13 @@
         //基础区
         switch (user_authority) {
             case "Student":
-                HomepageURL = "homepage_student.html?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
+                HomepageURL = "../Student/" + StudentHomepageURL + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
                 break;
             case "Teacher":
-                HomepageURL = "homepage_company_teacher.html?user_id=" + user_id + "&user_authority=Teacher&target_id=" + user_id + "&target_authority=Teacher"
+                HomepageURL = "../CompanyTeacher/" + CompanyTeacherHomepageURL + "?user_id=" + user_id + "&user_authority=Teacher&target_id=" + user_id + "&target_authority=Teacher"
                 break;
             case "School":
-                HomepageURL = "homepage_school_teacher.html?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
+                HomepageURL = "../SchoolTeacher/" + SchoolTeacherHomepageURL + "?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
                 break;
             case "Company":
                 break;
@@ -241,33 +229,19 @@
             , target_id = parseInt(t_param[`target_id`])
             , target_authority = t_param[`target_authority`]
             , target_pt_id = parseInt(t_param[`target_pt_id`])
-            , target_team_id = parseInt(t_param[`team_id`])
+            , target_team_id = parseInt(t_param[`target_team_id`])
             , target_item_id = parseInt(t_param[`target_item_id`])
             , target_github_link = "";
-        //console.log('user_id=' + user_id + 'user_school_id=' + user_school_id + 'target_pt_id=' + target_pt_id)
 
-        var GetPTItemListURL = "http://localhost:8080/GetProjectinPracticeServlet"
-            , ItemDetailURL = "login.html"
-            , ModifyTeamURL = "http://localhost:8080/ModifyTeamInformationServlet"
-            , HomePageURL = "homepage_student.html"
-            , GetPTListURL = "http://localhost:8080/GetPracticeByStudentIdServlet";
-
-        var HomepageURL = "homepage_team.html"
-            , TeamDiaryURL = "team_diary.html"
-            , TeamMemberURL = "team_list.html"
-            , TeamProgressURL = "team_progress.html"
-            , GetTeamMemberListURL = "http://localhost:8080/GetStudentByTeamIdServlet"
-            , GetTeamMemberURL = "";
-
-        var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`] + "&team_id=" + t_param[`team_id`] + "&target_pt_id=" + t_param[`target_pt_id`]
-        document.getElementById("team_homepage").href = HomepageURL + basic_extra_url;
+        var basic_extra_url = "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_team_id=" + target_team_id + "&target_pt_id=" + target_pt_id
+        document.getElementById("team_homepage").href = TeamHomepageURL + basic_extra_url;
         document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
         document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
 
         var param_item_existed = function (res) {
             return {
                 elem: '#item_table'
-                , url: GetPTItemListURL
+                , url: GetItemListURL
                 , title: '项目列表'
                 , toolbar: "#toolbar_item"
                 , contentType: 'application/json'
@@ -339,7 +313,7 @@
             //获取可参加项目
             $.ajax({
                 type: "POST",
-                url: GetPTListURL,
+                url:  GetPTListByStudentIdURL,
                 async: true,
                 data: JSON.stringify({
                     "reqId": "",
@@ -462,19 +436,12 @@
 
             //监听单选
             table.on('radio(item_table)', function (obj) {
-                //console.log(obj.checked); //当前是否选中状态
-                //console.log(obj.data); //选中行的相关数据
                 selected_item = obj.data.id
                 console.log(selected_item)
             });
 
             //监听修改按钮
             form.on('submit(modify_team)', function (data) {
-                console.log('Modify')
-                console.log(data)
-                console.log(selected_item)
-                console.log(user_id)
-
                 $.ajax({
                     type: "POST",
                     url: ModifyTeamURL,
@@ -501,17 +468,17 @@
                 return false;
             });
 
-            //创建成功回调函数
+            //修改成功回调函数
             function sign_up_btn_success(res) {
                 if (res.isSuccess) {
                     console.log(res)
                     layer.msg('修改成功', { time: 1000 })
                     setTimeout(function sign_up_fun() {
-                        window.location.href = "homepage_team.html" + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student" + "&team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
+                        window.location.href = "homepage_team.html" + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student" + "&target_team_id=" + target_team_id + "&target_pt_id=" + target_pt_id;
                     }, 1000);
                 }
                 else {
-                    layer.msg("创建失败", { time: 1000 })
+                    layer.msg("修改失败", { time: 1000 })
                 }
                 return false;
             }
@@ -541,7 +508,7 @@
 
                     var temp = ""
                     for (var i = 0; i < target_team_members.length; i++) {
-                        temp += '<dd><a href="homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student" target="_blank">' + target_team_members[i].name + '</a></dd>';
+                        temp += '<dd><a href="../Student/homepage_student.html?user_id=' + user_id + '&user_authority=' + user_authority + '&target_id=' + target_team_members[i].id + '&target_authority=Student" target="_blank">' + target_team_members[i].name + '</a></dd>';
                     }
                     document.getElementById("team_list").innerHTML = temp;
 
