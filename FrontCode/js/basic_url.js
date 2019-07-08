@@ -86,7 +86,8 @@ var ProjectInChargeURL = "company_teacher_project_in_charge.html"
     , CompanyTeacherWriteDiaryURL = "../Student" + WriteDiaryURL
     , CompanyTeacherModifyPTDetailURL = "company_teacher_add_pt_item.html"
     , TeacherAddNewItemURL = "../Teacher/teacher_add_pt_new_item.html"
-    , AddSchoolTeacherURL = "../Teacher/teacher_add_pt_teacher.html?authority=SchoolTeacher";
+    , AddSchoolTeacherURL = "../Teacher/teacher_add_pt_teacher.html?authority=SchoolTeacher"
+    , CompanyTeacherScoreURL = "company_teacher_point.html";
 
 //Teacher
 var GetSchoolTeacherListURL = "http://localhost:8080/GetSchoolTeacherBySchoolIdServlet"

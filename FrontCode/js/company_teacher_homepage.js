@@ -157,29 +157,28 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                             <div class="grid-demo grid-demo-bg1">
                                                 <div style="height:auto; margin: 20px 0 20px 20px;">
                                                     <i class="layui-icon layui-icon-form" style="font-size:26px;color: #1E9FFF;"></i>
-                                                    <span style="font-size: 26px; color= #000" id="pt_item_name_now">` + res.resData[i].name + `</span>
+                                                    <span style="font-size: 26px; color= #000">` + res.resData[i].name + `</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="layui-col-md2">
                                             <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
-                                                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="team_process_` + i + `" id="team_process_` + i + `" style="font-size:26px;">团队进程</button>
+                                                <input type='button' class="layui-btn layui-btn-normal" onclick='team_progress(this)' id="team_process_` + target_pt_id[index] + `_` + res.resData[i].id + `" id="team_process_` + target_pt_id[index] + `_` + res.resData[i].id + `" style="font-size:26px;" value="团队进程"/>
                                             </div>
                                         </div>
                                         <div class="layui-col-md2">
                                             <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
-                                                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="check_diary_` + i + `" id="check_diary_` + i + `" style="font-size:26px;">评阅日志</button>
+                                                <input type='button' class="layui-btn layui-btn-normal" onclick='check_diary(this)' id="check_diary_` + target_pt_id[index] + `_` + res.resData[i].id + `" id="team_process_` + target_pt_id[index] + `_` + res.resData[i].id + `" style="font-size:26px;" value="评阅日志"/>
                                             </div>
                                         </div>
                                         <div class="layui-col-md1">
                                             <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
-                                                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="score_` + i + `" id="score_` + i + `" style="font-size:26px;">评分</button>
+                                                <input type='button' class="layui-btn layui-btn-normal" onclick='score_team(this)' id="score_team_` + target_pt_id[index] + `_` + res.resData[i].id + `" id="score_team_` + target_pt_id[index] + `_` + res.resData[i].idi + `" style="font-size:26px;" value="评分"/>
                                             </div>
                                         </div>
                                     </div>
                                 </li>`;
                         }
-
                         index += 1;
                         if (index >= target_pt_id.length) {
                             document.getElementById("pt_item_in_charge_now").innerHTML += temp;
@@ -201,3 +200,19 @@ layui.use(['form', 'jquery', 'layer'], function () {
         }
     });
 });
+
+function team_progress(obj) {
+    var strs = obj.id.split("_");
+    console.log(strs)
+    //window.open()
+}
+function check_diary(obj) {
+    console.log(obj.id)
+    var strs = obj.id.split("_");
+}
+function score_team(obj){
+    console.log(obj.id)
+    var strs = obj.id.split("_");
+    var extra_url = "&target_item_id=" + strs[3] + "&target_pt_id=" + strs[2];
+    window.open(CompanyTeacherScoreURL + basic_extra_url + extra_url)
+}
