@@ -3,7 +3,10 @@ var target_name = ""
     , target_gender = ""
     , target_hd_img = ""
     , target_company_id = -1
-    , target_company_name = "";
+    , target_company_name = ""
+    , target_pt_id = []
+    , target_pt_name = []
+    , temp_code = "";
 
 //form区 + 大区
 layui.use(['form', 'jquery', 'layer'], function () {
@@ -104,28 +107,75 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 }
             });
 
-            //获取负责项目
+            //获取负责的实训ID
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/GetCanScoredProjectServlet",
+                url: GetPTInChargeURL,
                 async: true,
                 data: JSON.stringify({
                     "reqId": "",
-                    "reqParam": {
-                        "id": user_id,
-                        "practice": 20,
-                        "canModify": false
-                    }
+                    "reqParam": target_id
                 }),
                 dataType: "json",
                 success: function (res) {
                     console.log(res);
+                    for (var i = 0; i < res.resData.length; i++) {
+                        target_pt_id.push(res.resData[i].id);
+                        target_pt_name.push(res.resData[i].name);
+                    }
+                    temp_code = addItemInCharge(0, temp_code)
                 },
                 error: function (res) {
                     console.log("error");
                     console.log(res);
                 }
             });
+
+            //添加负责项目栏
+            function addItemInCharge(index, temp) {
+                $.ajax({
+                    type: "POST",
+                    url: GetItemInChargeURL,
+                    async: true,
+                    data: JSON.stringify({
+                        "reqId": "",
+                        "reqParam": {
+                            "id": target_id,
+                            "practice": target_pt_id[index],
+                            "canModify": false
+                        }
+                    }),
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+
+                        for (var i = 0; i < res.resData.length; i++) {
+                            temp += `
+                                <li>
+                                    <div style="height:auto; margin: 20px 0 20px 20px;">
+                                        <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:50px; margin-right: 20px;"></i>
+                                        <a id="group_a" href="company_teacher_point.html?user_id=` + user_id + `&user_authority=` + user_authority + `&target_id=` + target_id + `&target_authority=` + target_authority + `&target_item_id=` + res.resData[i].id + `" target="_blank" title="项目名称">
+                                            <span style="font-size: 40px; font-family:STXingkai" id="pt_item_name_now">` + res.resData[i].name + `</span>
+                                        </a>
+                                    </div>
+                                </li>`;
+                        }
+
+                        index += 1;
+                        if (index >= target_pt_id.length) {
+                            document.getElementById("pt_item_in_charge_now").innerHTML = temp;
+                            return false;
+                        }
+                        temp = addItemInCharge(index, temp);
+                        return temp;
+                    },
+                    error: function (res) {
+                        console.log("error");
+                        console.log(res);
+                    }
+                });
+
+            }
         },
         error: function (res) {
             console.log("获取用户基本W信息失败");

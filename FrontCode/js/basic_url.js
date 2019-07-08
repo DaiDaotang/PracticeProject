@@ -73,7 +73,9 @@ var GetTeamInProjectURL = "http://localhost:8080/GetTeamInProjectServlet"
     , AddSchoolTeacherToItemURL = "http://localhost:8080/AddSchoolTeacherToPracticeServlet"
     , DeleteTeacherFromPTURL = "http://localhost:8080/DeleteTeacherFromPracticeServlet"
     , ScoreForTeamURL = "http://localhost:8080/ScoreForTeamServlet"
-    , ScoreForStudentURL = "http://localhost:8080/ScoreForStudentServlet";
+    , ScoreForStudentURL = "http://localhost:8080/ScoreForStudentServlet"
+    , GetPTInChargeURL = "http://localhost:8080/GetPracticeNowByCompanyTeacherIdServlet"
+    , GetItemInChargeURL = "http://localhost:8080/GetCanScoredProjectServlet";
 
 var ProjectInChargeURL = "company_teacher_project_in_charge.html"
     , CompanyTeacherCreateNewPTURL = "company_teacher_publish_pt.html"
