@@ -152,18 +152,37 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         for (var i = 0; i < res.resData.length; i++) {
                             temp += `
                                 <li>
-                                    <div style="height:auto; margin: 20px 0 20px 20px;">
-                                        <i class="layui-icon layui-icon-form" style="height:100px; color: #1E9FFF; font-size:24px; margin-right: 20px;"></i>
-                                        <a id="group_a" href="company_teacher_point.html?user_id=` + user_id + `&user_authority=` + user_authority + `&target_id=` + target_id + `&target_authority=` + target_authority + `&target_item_id=` + res.resData[i].id + `&target_pt_id=` + target_pt_id[index] + `" target="_blank" title="项目名称">
-                                            <span style="font-size: 24px;" id="pt_item_name_now">` + res.resData[i].name + `</span>
-                                        </a>
+                                    <div class="layui-row" style="height:100px;  font-size:24px; margin-right: 20px;">
+                                        <div class="layui-col-md7">
+                                            <div class="grid-demo grid-demo-bg1">
+                                                <div style="height:auto; margin: 20px 0 20px 20px;">
+                                                    <i class="layui-icon layui-icon-form" style="font-size:26px;color: #1E9FFF;"></i>
+                                                    <span style="font-size: 26px; color= #000" id="pt_item_name_now">` + res.resData[i].name + `</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md2">
+                                            <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
+                                                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="team_process_` + i + `" id="team_process_` + i + `" style="font-size:26px;">团队进程</button>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md2">
+                                            <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
+                                                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="check_diary_` + i + `" id="check_diary_` + i + `" style="font-size:26px;">评阅日志</button>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md1">
+                                            <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
+                                                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="score_` + i + `" id="score_` + i + `" style="font-size:26px;">评分</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </li>`;
                         }
 
                         index += 1;
                         if (index >= target_pt_id.length) {
-                            document.getElementById("pt_item_in_charge_now").innerHTML = temp;
+                            document.getElementById("pt_item_in_charge_now").innerHTML += temp;
                             return false;
                         }
                         temp = addItemInCharge(index, temp);
