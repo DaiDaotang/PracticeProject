@@ -37,11 +37,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     if (user_hasChecked) {
                         layer.msg('辛苦啦！');
                         user_hasChecked = false;
-                        document.getElementById("checkin").innerText = "Check In";
+                        document.getElementById("checkin").innerText = "上班打卡";
                     } else {
                         layer.msg('签到成功！');
                         user_hasChecked = true;
-                        document.getElementById("checkin").innerText = "Check Out";
+                        document.getElementById("checkin").innerText = "下班打卡";
                     }
                 }
                 else {
@@ -90,11 +90,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     console.log(res);
                     if (res.resData) {
                         user_hasChecked = true;
-                        document.getElementById("checkin").innerText = "Check Out";
+                        document.getElementById("checkin").innerText = "下班打卡";
                     }
                     else {
                         user_hasChecked = false;
-                        document.getElementById("checkin").innerText = "Check In";
+                        document.getElementById("checkin").innerText = "上班打卡";
                     }
                 },
                 error: function (res) {
