@@ -268,7 +268,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
 
             if (target_id != user_id || target_authority != user_authority) {
                 document.getElementById("checkin").style.display = "none";
-                document.getElementById("write_diary_btn").style.display = "none";
             }
 
             document.getElementById("target_head_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
