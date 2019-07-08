@@ -232,6 +232,7 @@
                                 //如果是今天且上次记录是签到记录且上一个记录没有超过十点
                                 if (signins[0].dateTime.split(" ")[0] == date_today_to_compare && atWork_pre && !work_over) {
                                     block_this = getIndex(time_now_to_arith);
+                                    console.log(block_this)
                                     if (block_this - block_pre > most_work_hours * 4) {
                                         block_this = block_pre + most_work_hours * 4;
                                         work_time_day += most_work_hours;
