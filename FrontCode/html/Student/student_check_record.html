@@ -229,16 +229,20 @@
                                     if (work_over)
                                         break;
                                 }
+                                var temp1 = signins[0].dateTime.split(" ")[0].split("-")
+                                    , temp2 = date_today_to_compare.split("-");
+                                if (parseInt(temp1[0]) == parseInt(temp2[0]) && parseInt(temp1[1]) == parseInt(temp2[1]) && parseInt(temp1[2]) == parseInt(temp2[2]))
+                                    console.log(true)
                                 //如果是今天且上次记录是签到记录且上一个记录没有超过十点
-                                if (signins[0].dateTime.split(" ")[0] == date_today_to_compare && atWork_pre && !work_over) {
-                                    block_this = getIndex(time_now_to_arith);
+                                if (parseInt(temp1[0]) == parseInt(temp2[0]) && parseInt(temp1[1]) == parseInt(temp2[1]) && parseInt(temp1[2]) == parseInt(temp2[2]) && atWork_pre && !work_over) {
+                                    block_this = getIndex(date_today_to_compare + " " + time_now_to_arith);
                                     console.log(block_this)
                                     if (block_this - block_pre > most_work_hours * 4) {
                                         block_this = block_pre + most_work_hours * 4;
                                         work_time_day += most_work_hours;
                                     }
                                     else {
-                                        work_time_day += arithTime(start_t, time_now_to_arith)
+                                        work_time_day += arithTime(start_t, date_today_to_compare + " " + time_now_to_arith)
                                     }
                                     temp += drawBlock(block_pre, block_this, atWork_pre);
                                     atWork_pre = false;
@@ -262,10 +266,10 @@
                             }
                             temp += '<div style="font-style:1px;"><br/></div>';
                             if (first_week) {
-                                work_time_week.splice(7 - res.resData.length + i, 1, work_time_day);
+                                work_time_week.splice(7 - res.resData.length + i, 1, work_time_day.toFixed(2));
                             }
                             else {
-                                work_time_week.splice(i, 1, work_time_day);
+                                work_time_week.splice(i, 1, work_time_day.toFixed(2));
                             }
                             //一次循环后恢复数据
                             atWork_pre = false
