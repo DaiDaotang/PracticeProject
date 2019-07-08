@@ -488,4 +488,13 @@
         <servlet-name>CreateTaskServlet</servlet-name>
         <url-pattern>/CreateTaskServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifyTaskServlet</servlet-name>
+        <servlet-class>com.servlet.ModifyTaskServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifyTaskServlet</servlet-name>
+        <url-pattern>/ModifyTaskServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

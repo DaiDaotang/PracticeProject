@@ -2,6 +2,7 @@ package com.bean;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class TaskBean {
 
@@ -14,6 +15,7 @@ public class TaskBean {
     private boolean isFinished;
     private int teamId;
     private Date finishTime;
+    private int totalWork;
 
 
     public int getTaskId() {
@@ -86,5 +88,13 @@ public class TaskBean {
 
     public void setFinishTime(Date finishTime) {
         this.finishTime = finishTime;
+    }
+
+    public int getTotalWork() {
+        return totalWork;
+    }
+
+    public void setTotalWork(int totalWork) {
+        this.totalWork = totalWork;
     }
 }
