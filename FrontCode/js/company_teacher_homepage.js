@@ -202,14 +202,17 @@ layui.use(['form', 'jquery', 'layer'], function () {
 });
 
 function team_progress(obj) {
+    console.log(obj.id)
     var strs = obj.id.split("_");
     var extra_url = "&target_item_id=" + strs[3] + "&target_pt_id=" + strs[2];
 }
 function check_diary(obj) {
+    console.log(obj.id)
     var strs = obj.id.split("_");
     var extra_url = "&target_item_id=" + strs[3] + "&target_pt_id=" + strs[2];
 }
-function score_team(obj){
+function score_team(obj) {
+    console.log(obj.id)
     var strs = obj.id.split("_");
     var extra_url = "&target_item_id=" + strs[3] + "&target_pt_id=" + strs[2];
     window.open(CompanyTeacherScoreURL + basic_extra_url + extra_url)

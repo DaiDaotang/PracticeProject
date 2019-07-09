@@ -4,11 +4,101 @@ layui.use(['form', 'jquery', 'layer'], function () {
         , $ = layui.jquery
         , layer = layui.layer;
 
+    var target_item_id = t_param[`target_item_id`]
+        , target_pt_id = t_param[`target_pt_id`]
+        , week = -1;
+
     //表单初始赋值
     form.val('diary_form', {
         "search_diary_input": ""
         , "search_diary_data": ""
     })
+
+    //获取周数
+    $.ajax({
+        type: "POST",
+        url: GetStudentTeamURL,
+        async: true,
+        data: JSON.stringify({
+            "reqId": "",
+            "reqParam": {
+                "id": target_id,
+                "practiceId": target_pt_id
+            }
+        }),
+        dataType: "json",
+        success: function (res) {
+            console.log(res)
+            week = res.resData.weeks;
+            //监听写日志
+            $(document).on('click', '#write_diary_btn', function () {
+                layer.open({
+                    title: '日志',
+                    type: 2,
+                    area: ["500px", "500px"],
+                    content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&week=" + week,
+                    btn: '发布',
+                    btnAlign: 'c',
+                    yes: function () {
+                        var diary_name = window.localStorage.diary_name
+                            , diary_week = window.localStorage.diary_time
+                            , diary_content = window.localStorage.diary_content;
+
+                        if (diary_week == "") {
+                            layer.msg("请选择周数")
+                            return false;
+                        } else if (diary_content.length < 100) {
+                            layer.msg("至少填写100字")
+                            return false;
+                        } else if (diary_name == "") {
+                            layer.msg("请填写标题")
+                            return false;
+                        } else {
+                            console.log(target_item_id)
+                            $.ajax({
+                                type: "POST",
+                                url: UploadDiaryURL,
+                                async: true,
+                                data: JSON.stringify({
+                                    "reqId": "",
+                                    "reqParam": {
+                                        "studentId": user_id,
+                                        "authority": "Student",
+                                        "title": diary_name,
+                                        "content": diary_content,
+                                        "projectId": target_item_id,
+                                        "week": diary_week
+                                    }
+                                }),
+                                dataType: "json",
+                                success: function (res) {
+                                    console.log(res)
+                                    if (res.isSuccess) {
+                                        layer.msg("发布成功！", { time: 1000 })
+                                        console.log(res);
+                                        setTimeout("layer.closeAll()", 500)
+                                        setTimeout("location.reload()", 500)
+                                    }
+                                    else {
+                                        layer.msg("还未到时间，不可以发布")
+                                        setTimeout("layer.closeAll()", 1000);
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log("error");
+                                    console.log(res);
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        },
+        error: function (res) {
+            console.log("error");
+            console.log(res);
+        }
+    });
 });
 
 //laydate区
@@ -22,9 +112,10 @@ layui.use('laydate', function () {
 });
 
 //flow区
-layui.use('flow', function () {
+layui.use(['flow', 'layer'], function () {
     var flow = layui.flow
-        , $ = layui.jquery;
+        , $ = layui.jquery
+        , layer = layui.layer;
 
     var diary_page = 0
         , target_item_id = t_param[`target_item_id`];
@@ -59,11 +150,16 @@ layui.use('flow', function () {
                             for (var i = 0; i < res.resData.length; i++) {
                                 str = '<li><div style="width:auto; height: auto; margin: 20px; background-color:#e7f6f7; border-radius: 20px; border: 1px solid #d4dadb;"><div style="width:auto; height: auto; margin: 20px;"><div class="layui-row" style="height:auto;"><div class="layui-col-md8" style="height:100px;"><div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;"><span style="font-size:30px;">'
                                 str += res.resData[i].title
-                                str += '</span><hr class="layui-bg-blue"></div></div > <div class="layui-col-md4" style="height:auto; text-align:right;"><div class="grid-demo grid-demo-bg1" style="margin-top:35px;"><span style="font-size:30px;">'
+                                str += '</span><hr class="layui-bg-blue"></div></div><div class="layui-col-md4" style="height:auto; text-align:right;"><div class="grid-demo grid-demo-bg1" style="margin-top:35px;"><span style="font-size:30px;">'
                                 str += res.resData[i].date
                                 str += '</span></div></div></div></div><div style="width:auto; height: auto; margin: 20px; padding:20px; font-size:24px;"><pre>'
                                 str += res.resData[i].content;
-                                str += '</pre></div></div></li>'
+                                str += '</pre>'
+                                if (user_id == target_id && user_authority == target_authority) {
+                                    str += '<hr class="layui-bg-blue">'
+                                    str += `<div style="width:auto; height: auto;font-size:18px;"><p>评分:` + (res.resData[i].score == "" ? "暂未批阅" : res.resData[i].score) + `</p><p>评语:` + (!res.resData[i].isReviewed ? "暂无" : res.resData[i].comment) + `</div>`;
+                                }
+                                str += '</div ></div ></li > '
                                 lis.push(str);
                             }
 

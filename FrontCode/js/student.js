@@ -121,61 +121,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     if (res.isSuccess) {        //有团队
                         target_item_id = res.resData.projectId
                             , target_pt_id = res.resData.practiceId;
-
-                        //监听写日志
-                        $(document).on('click', '#write_diary_btn', function () {
-                            layer.open({
-                                title: '日志',
-                                type: 2,
-                                area: ["500px", "500px"],
-                                content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id,
-                                end: function () {
-
-                                },
-                                btn: '发布',
-                                btnAlign: 'c',
-                                yes: function () {
-                                    var diary_name = window.localStorage.diary_name
-                                        , diary_time = window.localStorage.diary_time
-                                        , diary_content = window.localStorage.diary_content;
-
-                                    $.ajax({
-                                        type: "POST",
-                                        url: UploadDiaryURL,
-                                        async: true,
-                                        data: JSON.stringify({
-                                            "reqId": "",
-                                            "reqParam": {
-                                                "studentId": user_id,
-                                                "authority": "Student",
-                                                "date": diary_time,
-                                                "title": diary_name,
-                                                "content": diary_content,
-                                                "projectId": target_pt_id
-                                            }
-                                        }),
-                                        dataType: "json",
-                                        success: function (res) {
-                                            if (res.isSuccess) {
-                                                layer.msg("发布成功！", { time: 1000 })
-                                                console.log(res);
-                                                setTimeout("layer.closeAll()", 500)
-                                                setTimeout("location.reload()", 500)
-                                            }
-                                            else {
-                                                layer.msg("还未到时间，不可以发布")
-                                                setTimeout("layer.closeAll()", 1000);
-                                            }
-                                        },
-                                        error: function (res) {
-                                            console.log("error");
-                                            console.log(res);
-                                        }
-                                    });
-                                }
-                            });
-                        });
-
                     } else {              //没团队
                         target_item_id = -1
                         document.getElementById("write_diary_btn").style.display = "none";
