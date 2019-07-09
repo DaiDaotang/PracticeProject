@@ -542,4 +542,13 @@
         <servlet-name>GetWeekByPracticeIdServlet</servlet-name>
         <url-pattern>/GetWeekByPracticeIdServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetTaskServlet</servlet-name>
+        <servlet-class>com.servlet.GetTaskServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetTaskServlet</servlet-name>
+        <url-pattern>/GetTaskServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
