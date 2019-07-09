@@ -524,4 +524,13 @@
         <servlet-name>ReviewDiaryServlet</servlet-name>
         <url-pattern>/ReviewDiaryServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteTaskServlet</servlet-name>
+        <servlet-class>com.servlet.DeleteTaskServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteTaskServlet</servlet-name>
+        <url-pattern>/DeleteTaskServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
