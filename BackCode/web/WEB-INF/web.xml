@@ -560,4 +560,13 @@
         <servlet-name>GetTotalWorkServlet</servlet-name>
         <url-pattern>/GetTotalWorkServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetTotalWorkAWeekServlet</servlet-name>
+        <servlet-class>com.servlet.GetTotalWorkAWeekServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetTotalWorkAWeekServlet</servlet-name>
+        <url-pattern>/GetTotalWorkAWeekServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

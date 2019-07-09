@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class ModifyTaskDao {
@@ -28,7 +29,7 @@ public class ModifyTaskDao {
             state.setBoolean(6,taskBean.isFinished());
             state.setInt(7,taskBean.getTeamId());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            state.setString(8,simpleDateFormat.format(taskBean.getFinishTime()));
+            state.setString(8,simpleDateFormat.format(new Date()));
             state.setInt(9,taskBean.getTaskId());
             int i = state.executeUpdate();
             if(i > 0)
