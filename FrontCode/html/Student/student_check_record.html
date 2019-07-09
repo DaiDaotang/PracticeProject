@@ -265,7 +265,7 @@
                                 temp += drawBlock(block_pre, 89, atWork_pre);
                             }
                             temp += '<div style="font-style:1px;"><br/></div>';
-                            if (first_week) {
+                            if (first_week && week != 1) {
                                 work_time_week.splice(7 - res.resData.length + i, 1, work_time_day.toFixed(2));
                             }
                             else {
