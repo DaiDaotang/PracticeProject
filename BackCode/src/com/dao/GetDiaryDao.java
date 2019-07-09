@@ -22,7 +22,7 @@ public class GetDiaryDao {
             switch (diaryBean.getAuthority())
             {
                 case "Student":
-                    statement1 = conn.prepareStatement("SELECT * FROM studentdiary WHERE studentId = ?  ORDER BY studentDiaryId DESC limit ?,?;");
+                    statement1 = conn.prepareStatement("SELECT studentdiary.*,projectName FROM studentdiary NATURAL JOIN project WHERE studentId = ? ORDER BY studentDiaryId DESC limit ?,?;");
                     statement1.setInt(1,diaryBean.getStudentId());
                     statement1.setInt(2,diaryBean.getIndex()*diaryBean.getCount());
                     statement1.setInt(3,diaryBean.getCount());
@@ -37,6 +37,7 @@ public class GetDiaryDao {
                         diary.setWeek(resultSet.getInt(7));
                         diary.setScore(resultSet.getInt(8));
                         diary.setComment(resultSet.getString(9));
+                        diary.setProjectName(resultSet.getString(10));
                         diaryBeans.add(diary);
                     }
                     if (diaryBeans.size() == 0){

@@ -533,4 +533,13 @@
         <servlet-name>DeleteTaskServlet</servlet-name>
         <url-pattern>/DeleteTaskServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetWeekByPracticeIdServlet</servlet-name>
+        <servlet-class>com.servlet.GetWeekByPracticeIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetWeekByPracticeIdServlet</servlet-name>
+        <url-pattern>/GetWeekByPracticeIdServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

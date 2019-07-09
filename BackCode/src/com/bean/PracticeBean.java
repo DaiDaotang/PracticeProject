@@ -18,6 +18,8 @@ public class PracticeBean {
     private int schoolTeacherId;
     private ArrayList<Integer> schoolTeachers;
     private boolean isFinished;
+    private int DaysOfFirstWeek;
+    private int week;
 
     public int getId() {
         return id;
@@ -128,5 +130,21 @@ public class PracticeBean {
 
     public void setFinished(boolean finished) {
         isFinished = finished;
+    }
+
+    public int getDaysOfFirstWeek() {
+        return DaysOfFirstWeek;
+    }
+
+    public void setDaysOfFirstWeek(int daysOfFirstWeek) {
+        DaysOfFirstWeek = daysOfFirstWeek;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
     }
 }

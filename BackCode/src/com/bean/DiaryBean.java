@@ -11,6 +11,7 @@ public class DiaryBean {
     private String title;
     private String content;
     private int projectId;
+    private String projectName;
     private int week;
     private Date date;
     private int index;
@@ -137,5 +138,13 @@ public class DiaryBean {
 
     public void setReviewed(boolean reviewed) {
         isReviewed = reviewed;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }
