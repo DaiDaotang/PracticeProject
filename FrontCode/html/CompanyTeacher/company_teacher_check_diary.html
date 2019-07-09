@@ -24,24 +24,49 @@
     </style>
 </head>
 <body id="body_whole">
+    <div id="div_whole" >
+        <div class="layui-header">
+            <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:999;">
+                <li class="layui-nav-item layui-this"><a href="" id="target_homepage">首页</a></li>
+                <li class="layui-nav-item"><a href="" id="target_modify_pt">我创建的实训</a></li>
+                <li class="layui-nav-item" src="" lay-unselect="" style="position:absolute; right:30px;" id="me">
+                    <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
+                    <dl class="layui-nav-child">
+                        <dd><a id="user_homepage_a" href="">我的主页</a></dd>
+                        <dd><a id="change_info_a" href="">修改信息</a></dd>
+                        <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
+                        <dd><a id="quit_a" href="login.html">退出登录</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="" id="target_create_pt">创建实训</a></li>
+            </ul>
+        </div>
 
-    <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:100;">
-        <li class="layui-nav-item layui-this"><a href="" id="target_homepage">首页</a></li>
-        <li class="layui-nav-item">
-            <a href="" id="target_company_pt">公司实训</a>
-        </li>
-        <li class="layui-nav-item"><a href="" id="target_modify_pt">我创建的实训</a></li>
-        <li class="layui-nav-item" src="" lay-unselect="" style="position:absolute; right:30px;" id="me">
-            <a href="javascript:;" style="font-size:28px;"><img src="" class="layui-nav-img" style="width: 28px; height: 28px;" id="user_hd_img">Me</a>
-            <dl class="layui-nav-child">
-                <dd><a id="user_homepage_a" href="">我的主页</a></dd>
-                <dd><a id="change_info_a" href="">修改信息</a></dd>
-                <dd><a id="safety_info_a" href="safety_info.html">安全管理</a></dd>
-                <dd><a id="quit_a" href="login.html">退出登录</a></dd>
-            </dl>
-        </li>
-        <li class="layui-nav-item"><a href="" id="target_create_pt">创建实训</a></li>
-    </ul>
+        <div class="layui-side layui-bg-black" style="position:fixed; top: 58px;">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="member_list">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">未批阅</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a>
+                                    <input type='button' class="kayui-this" onclick='change_diary(this)' id="score_team" style="font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="百度" />
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">已批阅</a>
+                        <dl class="layui-nav-child"></dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+        </div>
+    </div>
 
     <ins class="adsbygoogle" style="display:inline-block;width:970px;" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
 
@@ -49,5 +74,6 @@
     <script src="../../js/basic_url.js" charset="utf-8"></script>
     <script src="../../js/basic.js" charset="utf-8"></script>
     <script src="../../js/company_teacher.js" charset="utf-8"></script>
+    <script src="../../js/company_teacher_check_diary.js" charset="utf-8"></script>
 </body>
 </html>

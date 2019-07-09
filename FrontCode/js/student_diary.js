@@ -150,9 +150,13 @@ layui.use(['flow', 'layer'], function () {
                             for (var i = 0; i < res.resData.length; i++) {
                                 str = '<li><div style="width:auto; height: auto; margin: 20px; background-color:#e7f6f7; border-radius: 20px; border: 1px solid #d4dadb;"><div style="width:auto; height: auto; margin: 20px;"><div class="layui-row" style="height:auto;"><div class="layui-col-md8" style="height:100px;"><div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;"><span style="font-size:30px;">'
                                 str += res.resData[i].title
-                                str += '</span><hr class="layui-bg-blue"></div></div><div class="layui-col-md4" style="height:auto; text-align:right;"><div class="grid-demo grid-demo-bg1" style="margin-top:35px;"><span style="font-size:30px;">'
+                                str += '</span><hr class="layui-bg-blue"></div></div><div class="layui-col-md4" style="height:auto; text-align:right;"><div class="grid-demo grid-demo-bg1" style="margin-top:5px;"><p style="font-size:20px;">'
+                                str += '项目:' + res.resData[i].projectName
+                                str += '</p><p style="font-size:20px;">'
+                                str += '第' + res.resData[i].week + '周'
+                                str += '</p><p style="font-size:20px;">'
                                 str += res.resData[i].date
-                                str += '</span></div></div></div></div><div style="width:auto; height: auto; margin: 20px; padding:20px; font-size:24px;"><pre>'
+                                str += '</p></div></div></div></div><div style="width:auto; height: auto; margin: 20px; padding:20px; font-size:24px;"><pre>'
                                 str += res.resData[i].content;
                                 str += '</pre>'
                                 if (user_id == target_id && user_authority == target_authority) {

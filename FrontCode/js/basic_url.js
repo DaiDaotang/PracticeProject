@@ -19,7 +19,6 @@ var GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
     , GetStudentDiaryURL = "http://localhost:8080/GetDiaryServlet";
 
 var GroupURL = "../Team/homepage_team.html"
-    , ItemURL = ""
     , CreateGroupURL = "student_create_team.html"
     , WriteDiaryURL = "student_write_daily_dairy.html"
     , StudentHomepageURL = "homepage_student.html"
@@ -87,7 +86,8 @@ var ProjectInChargeURL = "company_teacher_project_in_charge.html"
     , CompanyTeacherModifyPTDetailURL = "company_teacher_add_pt_item.html"
     , TeacherAddNewItemURL = "../Teacher/teacher_add_pt_new_item.html"
     , AddSchoolTeacherURL = "../Teacher/teacher_add_pt_teacher.html?authority=SchoolTeacher"
-    , CompanyTeacherScoreURL = "company_teacher_point.html";
+    , CompanyTeacherScoreURL = "company_teacher_point.html"
+    , CompanyTeacherCheckDiaryURL = "company_teacher_check_diary.html";
 
 //Teacher
 var GetSchoolTeacherListURL = "http://localhost:8080/GetSchoolTeacherBySchoolIdServlet"
