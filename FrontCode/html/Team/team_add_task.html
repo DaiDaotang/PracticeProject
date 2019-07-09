@@ -22,13 +22,16 @@
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
             <label class="layui-form-label">周数</label>
             <div class="layui-input-block">
-                <input type="text" required lay-verify="required" name="new_item_type" lay-filter="new_item_type" id="new_item_type" autocomplete="off" placeholder="请输入项目类型" class="layui-input">
+                <select name="task_week" id="task_week" lay-filter="task_week">
+                    <option value=""></option>
+                    <option value=1>第一周</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
             <label class="layui-form-label">任务量</label>
             <div class="layui-input-block">
-                <input type="text" required lay-verify="required" name="task_difficulty" lay-filter="task_difficulty" id="task_difficulty" autocomplete="off" placeholder="请输入任务量" class="layui-input">
+                <input type="text" required lay-verify="required" name="task_amount" lay-filter="task_amount" id="task_amount" autocomplete="off" placeholder="请输入任务量" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
@@ -40,12 +43,42 @@
         <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
             <label class="layui-form-label">任务概述</label>
             <div class="layui-input-block">
-                <textarea name="new_item_base_content" required lay-verify="required" lay-filter="new_item_base_content" id="new_item_base_content" placeholder="任务概述..." autocomplete="off" class="layui-textarea"></textarea>
+                <textarea name="task_content" required lay-verify="required" lay-filter="task_content" id="task_content" placeholder="任务概述..." autocomplete="off" class="layui-textarea"></textarea>
             </div>
         </div>
     </form>
 
     <script src="../../layui/layui.js" charset="utf-8"></script>
     <script src="../../js/basic_url.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        window.localStorage.task_name = "";
+        window.localStorage.task_week = "";
+        window.localStorage.task_amount = -1;
+        window.localStorage.task_priority = -1;
+        window.localStorage.task_content = "";
+        document.getElementById('task_name').onchange = function () {
+            console.log(document.getElementById('task_name').value)
+            window.localStorage.task_name = document.getElementById('task_name').value
+        };
+        document.getElementById('task_amount').onchange = function () {
+            console.log(document.getElementById('task_amount').value)
+            window.localStorage.task_amount = document.getElementById('task_amount').value
+        };
+        document.getElementById('task_priority').onchange = function () {
+            console.log(document.getElementById('task_priority').value)
+            window.localStorage.task_priority = document.getElementById('task_priority').value
+        };
+        document.getElementById('task_content').onchange = function () {
+            console.log(document.getElementById('task_content').value)
+            window.localStorage.task_content = document.getElementById('task_content').value
+        };
+        layui.use('form', function () {
+            var form = layui.form;
+
+            form.on('select(task_week)', function (data) {
+                window.localStorage.task_week = data.value
+            });      
+        })
+    </script>
 </body>
 </html>

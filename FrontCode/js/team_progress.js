@@ -1,7 +1,8 @@
 ﻿// JavaScript source code
 var max = 3
     , checked_tab_id = 0
-    , task_res = [];
+    , task_res = []
+    , target_team_id = t_param[`target_team_id`];
 
 layui.use(['element', 'jquery', 'table', 'layer'], function () {
     var $ = layui.jquery
@@ -9,45 +10,14 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         , layer = layui.layer
         , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-    //添加周数
-    for (var i = 0; i < max; i++) {
-        element.tabAdd('tabTeamProcess', {
-            title: '第' + (i + 1) + '周' //用于演示
-            , content: '<div class="layui-tab-item layui-show">你可以监听tab事件（阅读下文档就是了）</div>'
-            , id: (i + 1) //实际使用一般是规定好的id，这里以时间戳模拟下
-        })
-    }
-
-    //触发事件
-    var active = {
-        tabAddOneWeek: function () {
-            //新增一个Tab项
-            element.tabAdd('tabTeamProcess', {
-                title: '第' + 1 + '周' //用于演示
-                , content: '内容'
-                , id: new Date().getSeconds //实际使用一般是规定好的id，这里以时间戳模拟下
-            })
-
-        }
-        , tabDeleteThisWeek: function (othis) {
-            element.tabDelete('tabTeamProcess', checked_tab_id); //删除被选中一栏
-            //othis.addClass('layui-btn-disabled');
-            console.log(checked_tab_id)
-        }
-    };
-
     $('.site-demo-active').on('click', function () {
         var othis = $(this), type = othis.data('type');
         active[type] ? active[type].call(this, othis) : '';
     });
 
     element.on('tab(tabTeamProcess)', function (data) {
-        //console.log(this); //当前Tab标题所在的原始DOM元素
-        //console.log(data.index); //得到当前Tab的所在下标
-        //console.log(data.elem); //得到当前的Tab大容器
-
         checked_tab_id = data.index;
-        table.render(param_task_existed(data.index))
+        table.render(param_task_existed(checked_tab_id))
         setCategory(data.index)
     });
 
@@ -115,9 +85,44 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     btn: '添加任务',
                     btnAlign: 'c', //按钮居中,
                     yes: function () {
-                        console.log("yes")
+                        if (window.localStorage.task_name == "") {
+                            layer.msg("请输入任务名称")
+                        } else if (window.localStorage.task_week == -1) {
+                            layer.msg("请选择周数")
+                        } else if (window.localStorage.task_amount == -1) {
+                            layer.msg("请填写任务量")
+                        } else if (window.localStorage.task_priority == -1) {
+                            layer.msg("请填写优先级")
+                        } else {
+                            $.ajax({
+                                type: "POST",
+                                url: CreateTaskURL,
+                                async: true,
+                                data: JSON.stringify({
+                                    "reqId": "",
+                                    "reqParam": {
+                                        "taskName": window.localStorage.task_name,
+                                        "taskContent": window.localStorage.task_content,
+                                        "taskAmount": window.localStorage.task_amount,
+                                        "taskPriority": window.localStorage.task_priority,
+                                        "taskWeek": window.localStorage.task_week,
+                                        "isFinished": false,
+                                        "teamId": target_team_id
+                                    }
+                                }),
+                                dataType: "json",
+                                success: function (res) {
+                                    console.log(res);
+                                    layer.msg("添加成功！", { time: 750 })
+                                    setTimeout("layer.closeAll()", 500);
+                                }
+                            });
+                        }
                     }
                 });
+                break;
+            case 'finishTask':
+                console.log("finish")
                 break;
         };
     });

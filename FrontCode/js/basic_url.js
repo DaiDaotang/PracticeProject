@@ -35,7 +35,8 @@ var GetTeamMemberListURL = "http://localhost:8080/GetStudentByTeamIdServlet"
     , ModifyCaptainURL = "http://localhost:8080/ModifyCaptainServlet"
     , DelMemberURL = "http://localhost:8080/DeleteStudentFromTeamServlet"
     , GetCompanyTeacherURL = "http://localhost:8080/GetCompanyTeacherByCompanyIdServlet"
-    , ModifyTeamURL = "http://localhost:8080/ModifyTeamInformationServlet";
+    , ModifyTeamURL = "http://localhost:8080/ModifyTeamInformationServlet"
+    , CreateTaskURL = "http://localhost:8080/CreateTaskServlet";
 
 var TeamHomepageURL = "homepage_team.html"
     , TeamDiaryURL = "team_diary.html"
