@@ -10,9 +10,10 @@ var checked_week = -1
     , checked_studetn_diary_id = -1
     , checked_student_sort = "";
 
+var last_team_id = "";
+
 function change_week(obj) {
     checked_week = obj.id.split("_")[1]
-
     layui.use('jquery', function () {
         var $ = layui.jquery;
         var t1 = false, t2 = false;
@@ -37,7 +38,7 @@ function change_week(obj) {
                     for (var i = 0; i < res.resData.length; i++) {
                         temp += `
                             <dd>
-                                <a>
+                                <a id="a_nr_` + res.resData[i].id + `">
                                     <input type='button' onclick='change_diary(this)' id="nr_` + res.resData[i].id + `" style="font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="` + res.resData[i].name + `" />
                                 </a>
                             </dd>`
@@ -52,6 +53,7 @@ function change_week(obj) {
                     document.getElementById("student_diary_content").innerText = '';
                     document.getElementById("score").value = '';
                     document.getElementById("content").innerText = '';
+                    document.getElementById("not_reviewed_dl").innerHTML = "";
                 }
                 t1 = true;
             },
@@ -80,7 +82,7 @@ function change_week(obj) {
                     for (var i = 0; i < res.resData.length; i++) {
                         temp += `
                             <dd>
-                                <a>
+                                <a id="a_r_` + res.resData[i].id + `">
                                     <input type='button' onclick='change_diary(this)' id="r_` + res.resData[i].id + `" style="font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="` + res.resData[i].name + `" />
                                 </a>
                             </dd>`
@@ -95,6 +97,7 @@ function change_week(obj) {
                     document.getElementById("student_diary_content").innerText = '';
                     document.getElementById("score").value = '';
                     document.getElementById("content").innerText = '';
+                    document.getElementById("reviewed_dl").innerHTML = ""
                 }
                 t2 = true;
             },
@@ -112,6 +115,12 @@ function change_week(obj) {
 
 function change_diary(obj) {
     console.log(obj.id)
+    if (last_team_id != "") {
+        document.getElementById(last_team_id).classList.remove("layui-this")
+    }
+    document.getElementById("a_" + obj.id).classList.add("layui-this");
+    console.log(document.getElementById(obj.id).classList)
+    last_team_id = "a_" + obj.id;
     checked_student_sort = obj.id.split("_")[0];
     checked_student_id = obj.id.split("_")[1];
     layui.use('jquery', function () {
