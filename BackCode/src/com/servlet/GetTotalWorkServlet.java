@@ -3,7 +3,8 @@ package com.servlet;
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
 import com.bean.TaskBean;
-import com.dao.ModifyTaskDao;
+import com.dao.GetTaskDao;
+import com.dao.GetTotalWorkDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -19,8 +20,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-@WebServlet(name = "ModifyTaskServlet")
-public class ModifyTaskServlet extends HttpServlet {
+@WebServlet(name = "GetTotalWorkServlet")
+public class GetTotalWorkServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -32,21 +33,22 @@ public class ModifyTaskServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Type requestType = new TypeToken<RequestBean<TaskBean>>(){}.getType();
-        RequestBean<TaskBean> reqBean = gson.fromJson(content,requestType);
+        Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
+        RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
         ResponseBean<ArrayList<TaskBean>> resBean = new ResponseBean<>();
         try{
-            ModifyTaskDao dao = new ModifyTaskDao();
-            int a = dao.modifyTask(reqBean);
-            if (a == -1){
+            GetTotalWorkDao dao = new GetTotalWorkDao();
+            ArrayList<TaskBean> arrayList = dao.getTotalWork(reqBean.getReqParam());
+            if (arrayList == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);
+                resBean.setResData(arrayList);
             }
-            Type respType = new TypeToken<ResponseBean>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<ArrayList<TaskBean>>>(){}.getType();
             out.print(gson.toJson(resBean,respType));
         }catch (Exception e){
             out.print(e.toString());

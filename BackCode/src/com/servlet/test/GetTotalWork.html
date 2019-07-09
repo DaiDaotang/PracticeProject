@@ -9,24 +9,13 @@
 $END$
 </body>
 <script>
-    var CreatPracticeURL = "http://localhost:8080/ModifyTaskServlet";
     $.ajax({
         type:"POST",
-        url:CreatPracticeURL,
+        url:"http://localhost:8080/GetTotalWorkServlet",
         async:true,
         data:JSON.stringify({
             "reqId":"",
-            "reqParam":{
-                "taskName":"写日志",
-                "taskContent":"写啊写啊",
-                "taskAmount":4,
-                "taskPriority":5,
-                "taskWeek":1,
-                "isFinished":true,
-                "teamId":5,
-                "finishTime":"2019-07-13",
-                "taskId":4
-            }
+            "reqParam":5
         }),
         dataType:"json",
         success:function(res){

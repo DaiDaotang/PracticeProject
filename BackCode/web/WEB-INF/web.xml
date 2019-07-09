@@ -551,4 +551,13 @@
         <servlet-name>GetTaskServlet</servlet-name>
         <url-pattern>/GetTaskServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetTotalWorkServlet</servlet-name>
+        <servlet-class>com.servlet.GetTotalWorkServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetTotalWorkServlet</servlet-name>
+        <url-pattern>/GetTotalWorkServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
