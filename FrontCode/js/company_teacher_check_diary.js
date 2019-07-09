@@ -7,6 +7,7 @@ var target_item_id = t_param[`target_item_id`]
 
 var checked_week = -1
     , checked_student_id = -1
+    , checked_studetn_diary_id = -1
     , checked_student_sort = "";
 
 function change_week(obj) {
@@ -14,7 +15,7 @@ function change_week(obj) {
 
     layui.use('jquery', function () {
         var $ = layui.jquery;
-
+        var t1 = false, t2 = false;
         //刷新左导航
         $.ajax({
             type: "POST",
@@ -42,9 +43,17 @@ function change_week(obj) {
                             </dd>`
                     }
                     document.getElementById("not_reviewed_dl").innerHTML = temp;
-                } else {
-                    layer.msg("暂无学生等待批阅", { time: 750 })
+                } 
+                else {
+                    checked_studetn_diary_id = -1;
+                    document.getElementById("student_diary_title").innerText = '';
+                    document.getElementById("student_diary_week").innerText = '';
+                    document.getElementById("student_diary_time").innerText = '';
+                    document.getElementById("student_diary_content").innerText = '';
+                    document.getElementById("score").value = '';
+                    document.getElementById("content").innerText = '';
                 }
+                t1 = true;
             },
             error: function (res) {
                 console.log("error");
@@ -77,9 +86,17 @@ function change_week(obj) {
                             </dd>`
                     }
                     document.getElementById("reviewed_dl").innerHTML = temp;
-                } else {
-                    layer.msg("暂无学生批阅完毕", { time: 750 })
                 }
+                else {
+                    checked_studetn_diary_id = -1;
+                    document.getElementById("student_diary_title").innerText = '';
+                    document.getElementById("student_diary_week").innerText = '';
+                    document.getElementById("student_diary_time").innerText = '';
+                    document.getElementById("student_diary_content").innerText = '';
+                    document.getElementById("score").value = '';
+                    document.getElementById("content").innerText = '';
+                }
+                t2 = true;
             },
             error: function (res) {
                 layer.msg("暂无学生")
@@ -87,6 +104,9 @@ function change_week(obj) {
                 console.log(res);
             }
         });
+
+        while (t1 || t2);
+        layer.msg("加载学生名单成功", { time: 750 })
     });
 }
 
@@ -114,9 +134,25 @@ function change_diary(obj) {
             success: function (res) {
                 console.log(res);
                 if (res.isSuccess) {
-                    //document.getElementById("not_reviewed_dl").innerHTML = temp;
+                    var temp = res.resData[res.resData.length - 1]
+                    checked_studetn_diary_id = temp.Id;
+                    document.getElementById("student_diary_title").innerText = temp.title;
+                    document.getElementById("student_diary_week").innerText = "第" + (temp.week + 1) + "周";
+                    document.getElementById("student_diary_time").innerText = temp.date;
+                    document.getElementById("student_diary_content").innerText = temp.content;
+                    if (checked_student_sort == "r") {
+                        document.getElementById("score").value = temp.score;
+                        document.getElementById("content").innerText = temp.comment;
+                    }
                 } else {
                     layer.msg("暂未提交", { time: 750 })
+                    checked_studetn_diary_id = -1;
+                    document.getElementById("student_diary_title").innerText = '';
+                    document.getElementById("student_diary_week").innerText = '';
+                    document.getElementById("student_diary_time").innerText = '';
+                    document.getElementById("student_diary_content").innerText = '';
+                    document.getElementById("score").value = '';
+                    document.getElementById("content").innerText = '';
                 }
             },
             error: function (res) {
@@ -132,16 +168,46 @@ layui.use(['form', 'jquery', 'layer'], function () {
         , $ = layui.jquery
         , layer = layui.layer;
 
-    var checked_student_id = -1
-        , checked_student_diary_id = -1
-        , checked_week = -1;
-
     form.on('submit(upload)', function (data) {
         console.log(data.field);
-        if (checked_student_id == -1) {
-            layer.msg('暂未选择学生')
+        if (checked_student_id == -1 || checked_week == -1 || checked_studetn_diary_id == -1) {
+            layer.msg('请选择周数、学生')
             return false;
         }
+        $.ajax({
+            type: "POST",
+            url: CompanyTeacherReviewDiaryURL,
+            async: true,
+            data: JSON.stringify({
+                "reqId": "",
+                "reqParam": {
+                    "Id": checked_studetn_diary_id,
+                    "score": data.field.score,
+                    "comment": data.field.content
+                }
+            }),
+            dataType: "json",
+            success: function (res) {
+                console.log(res);
+                if (res.isSuccess) {
+                    layer.msg("批阅成功！", { time: 750 })
+                    document.getElementById("week_" + checked_week).click();
+                    setTimeout(function restore() {
+                        checked_studetn_diary_id = -1;
+                        document.getElementById("student_diary_title").innerText = '';
+                        document.getElementById("student_diary_week").innerText = '';
+                        document.getElementById("student_diary_time").innerText = '';
+                        document.getElementById("student_diary_content").innerText = '';
+                        document.getElementById("score").value = '';
+                        document.getElementById("content").innerText = '';
+                    }, 750)
+                }
+            },
+            error: function (res) {
+                console.log("error");
+                console.log(res);
+            }
+        });
         return false;
     });
 

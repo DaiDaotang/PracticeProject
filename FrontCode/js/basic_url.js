@@ -78,7 +78,8 @@ var GetTeamInProjectURL = "http://localhost:8080/GetTeamInProjectServlet"
     , GetItemInChargeURL = "http://localhost:8080/GetCanScoredProjectServlet"
     , GetStudentInItemURL = "http://localhost:8080/GetStudentsByProjectIdServlet"
     , GetPTWeekURL = "http://localhost:8080/GetWeekByPracticeIdServlet"
-    , GetStudentDiaryByPTandWeekURL = "http://localhost:8080/GetDiaryByStudentProjectWeekServlet";
+    , GetStudentDiaryByPTandWeekURL = "http://localhost:8080/GetDiaryByStudentProjectWeekServlet"
+    , CompanyTeacherReviewDiaryURL = "http://localhost:8080/ReviewDiaryServlet";
 
 var ProjectInChargeURL = "company_teacher_project_in_charge.html"
     , CompanyTeacherCreateNewPTURL = "company_teacher_publish_pt.html"
