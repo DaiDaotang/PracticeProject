@@ -46,38 +46,89 @@
                 <textarea name="task_content" required lay-verify="required" lay-filter="task_content" id="task_content" placeholder="任务概述..." autocomplete="off" class="layui-textarea"></textarea>
             </div>
         </div>
+        <div class="layui-form-item" style="width:auto; position:relative;right:20px;" id="finish_time">
+        </div>
     </form>
 
     <script src="../../layui/layui.js" charset="utf-8"></script>
     <script src="../../js/basic_url.js" charset="utf-8"></script>
     <script type="text/javascript">
-        window.localStorage.task_name = "";
-        window.localStorage.task_week = "";
-        window.localStorage.task_amount = -1;
-        window.localStorage.task_priority = -1;
-        window.localStorage.task_content = "";
-        document.getElementById('task_name').onchange = function () {
-            console.log(document.getElementById('task_name').value)
-            window.localStorage.task_name = document.getElementById('task_name').value
-        };
-        document.getElementById('task_amount').onchange = function () {
-            console.log(document.getElementById('task_amount').value)
-            window.localStorage.task_amount = document.getElementById('task_amount').value
-        };
-        document.getElementById('task_priority').onchange = function () {
-            console.log(document.getElementById('task_priority').value)
-            window.localStorage.task_priority = document.getElementById('task_priority').value
-        };
-        document.getElementById('task_content').onchange = function () {
-            console.log(document.getElementById('task_content').value)
-            window.localStorage.task_content = document.getElementById('task_content').value
-        };
-        layui.use('form', function () {
-            var form = layui.form;
+        layui.use(['form', 'jquery'], function () {
+            var form = layui.form
+                , $ = layui.jquery;
+            //获取传参
+            function GetRequest() {
+                var url = location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            }
+            var t_param = GetRequest()
+                , select = t_param[`select`];
 
-            form.on('select(task_week)', function (data) {
-                window.localStorage.task_week = data.value
-            });      
+            if (select == "add") {
+                window.localStorage.task_name = "";
+                window.localStorage.task_week = "";
+                window.localStorage.task_amount = -1;
+                window.localStorage.task_priority = -1;
+                window.localStorage.task_content = "";
+                document.getElementById('task_name').onchange = function () {
+                    console.log(document.getElementById('task_name').value)
+                    window.localStorage.task_name = document.getElementById('task_name').value
+                };
+                document.getElementById('task_amount').onchange = function () {
+                    console.log(document.getElementById('task_amount').value)
+                    window.localStorage.task_amount = document.getElementById('task_amount').value
+                };
+                document.getElementById('task_priority').onchange = function () {
+                    console.log(document.getElementById('task_priority').value)
+                    window.localStorage.task_priority = document.getElementById('task_priority').value
+                };
+                document.getElementById('task_content').onchange = function () {
+                    console.log(document.getElementById('task_content').value)
+                    window.localStorage.task_content = document.getElementById('task_content').value
+                };
+                layui.use('form', function () {
+                    var form = layui.form;
+
+                    form.on('select(task_week)', function (data) {
+                        window.localStorage.task_week = data.value
+                    });
+                })
+            }
+            else if (select == "edit") {
+                document.getElementById('task_name').value = window.localStorage.taskName;
+                document.getElementById('task_amount').value = window.localStorage.taskAmount;
+                document.getElementById('task_priority').value = window.localStorage.taskPriority;
+                document.getElementById('task_content').value = window.localStorage.taskContent;
+                document.getElementById('task_week').value = window.localStorage.taskWeek;
+                form.render('select');
+                if (window.localStorage.finishTime != "" && window.localStorage.finishTime != "undefined") {
+                    console.log(window.localStorage.finishTime)
+                    document.getElementById("finish_time").innerHTML += `
+                        <label class="layui-form-label">完成时间</label>
+                        <div style="padding-top:11px;">
+                           ` + window.localStorage.finishTime + `
+                        </div>`
+                    $('#task_name').attr("readonly", true);
+                    $('#task_amount').attr("readonly", true);
+                    $('#task_priority').attr("readonly", true);
+                    $('#task_content').attr("readonly", true);
+                    $('#task_week').attr("disabled", "disabled");
+                }
+                window.localStorage.taskName = ""
+                window.localStorage.taskAmount = ""
+                window.localStorage.taskContent = ""
+                window.localStorage.taskPriority = ""
+                window.localStorage.taskWeek = ""
+                window.localStorage.finishTime =""
+            }
         })
     </script>
 </body>

@@ -17,14 +17,14 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
 
     element.on('tab(tabTeamProcess)', function (data) {
         checked_tab_id = data.index;
-        table.render(param_task_existed(checked_tab_id))
-        setCategory(data.index)
+        setTaskTable(checked_tab_id);
+        setCategory(checked_tab_id);
     });
 
     var param_task_existed = function (res0) {
         return {
             elem: '#task_table_' + res0
-            , url: "../../json/task_table.json"
+            , url: GetTaskURL
             , title: '项目列表'
             , toolbar: "#toolbar_task"
             , contentType: 'application/json'
@@ -32,9 +32,10 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             , height: 550
             , where: {
                 "reqId": ""
-                , "reqParam": ""
+                , "reqParam": target_team_id
             }
             , deal: function (res) {
+                console.log(res)
                 return {
                     code: 0
                     , msg: ""
@@ -44,29 +45,25 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             }
             , cols: [[
                 { type: 'checkbox' }
-                , { field: 'id', title: 'ID', hide: true , edit:'text'}
-                , { field: 'name', title: '名称', edit: 'text'}
-                , { field: 'week', title: '周数', hide: true, sort: true, edit: 'text'}
-                , { field: 'content', title: '概述', hide: true, edit: 'text'}
-                , { field: 'amount', title: '任务量', sort: true, edit: 'text'}
-                , { field: 'priority', title: '优先级', sort: true, edit: 'text'}
-                , { field: 'finishTime', title: '完成时间', sort: true, edit: 'text'}
+                , { field: 'taskId', title: 'ID', hide: true}
+                , { field: 'taskName', title: '名称'}
+                , { field: 'taskWeek', title: '周数', sort: true}
+                , { field: 'taskContent', title: '概述', hide: true}
+                , { field: 'taskAmount', title: '任务量', sort: true}
+                , { field: 'taskPriority', title: '优先级', sort: true}
+                , { field: 'finishTime', title: '完成时间', sort: true, hide: true }
             ]]
             , done: function (res) {
                 console.log(res.data);
+                //选中
+                //$('xxx').attr('checked', true);
+                //form.render();
+                //取消
+                //$('xxx').removeAttr('checked');
+                //form.render();
             }
         }
     }
-
-    console.log(task_res)
-
-    //监听复选框选中
-    table.on('checkbox(test)', function (obj) {
-        console.log(obj.checked); //当前是否选中状态
-        console.log(obj.data); //选中行的相关数据
-        console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
-
-    });
 
     //头工具栏事件
     table.on('toolbar(task_table_0)', function (obj) {
@@ -77,7 +74,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     title: '添加任务',
                     type: 2,
                     area: ["500px", "500px"],
-                    content: AddTaskURL,
+                    content: AddTaskURL + "?select=add",
                     end: function () {
                         table.render(param_task_existed(checked_tab_id));
                         setCategory(checked_tab_id)
@@ -124,17 +121,70 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             case 'finishTask':
                 console.log("finish")
                 break;
+            case 'drawbackTask':
+                setTaskTable(checked_tab_id);
+                break;
         };
     });
 
-    //编辑单元格
-    table.on('edit(task_table_0)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
-        console.log(obj.value); //得到修改后的值
-        console.log(obj.field); //当前编辑的字段名
-        console.log(obj.data); //所在行的所有相关数据  
-    });
-
     document.getElementById("first").click();
+
+    function setTaskTable(index) {
+        table = $.extend(table, { config: { checkName: 'isFinished' } });
+        table.render(param_task_existed(index))
+        //监听行双击事件
+        table.on('rowDouble(task_table_' + index + ')', function (obj) {
+            console.log(obj.tr)     //得到当前行元素对象
+            console.log(obj.data)   //得到当前行数据
+            console.log(obj)
+
+            window.localStorage.taskName = obj.data.taskName;
+            window.localStorage.taskAmount = obj.data.taskAmount;
+            window.localStorage.taskContent = obj.data.taskContent;
+            window.localStorage.taskPriority = obj.data.taskPriority;
+            window.localStorage.taskWeek = obj.data.taskWeek;
+            window.localStorage.finishTime = obj.data.finishTime
+
+            layer.open({
+                title: '任务详情',
+                type: 2,
+                area: ["500px", "500px"],
+                content: AddTaskURL + "?select=edit",
+                btn: ['确定修改', '删除任务', '关闭'],
+                btnAlign: 'c', //按钮居中,
+                yes: function (index, layero) {
+                    if (window.localStorage.finishTime == "" || window.localStorage.finishTime == "undefined" || window.localStorage.taskWeek == ) {
+                        layer.msg("任务已完成或已过期，不可修改")
+                    }
+                    else {
+                        
+                    }
+                },
+                btn2: function (index, layero) {
+
+                },
+                btn3: function (index, layero) {
+                    layer.closeAll();
+                },
+                end: function () {
+                }
+            });
+
+            //obj.del();            //删除当前行
+            //obj.update(fields)    //修改当前行数据
+        });
+
+        //监听复选框选中
+        table.on('checkbox(task_table_' + index + ')', function (obj) {
+            console.log(obj.checked); //当前是否选中状态
+            console.log(obj.data); //选中行的相关数据
+            console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+            if (obj.data.taskWeek < 10) {
+                layer.msg("时间未到")
+                obj.checked = !obj.checked;
+            }
+        });
+    }
 });
 
 function setCategory(index) {
