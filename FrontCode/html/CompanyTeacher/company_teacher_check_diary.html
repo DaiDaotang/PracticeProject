@@ -23,7 +23,7 @@
         }
     </style>
 </head>
-<body id="body_whole">
+<body id="body_whole" style="height:770px;">
     <div id="div_whole" >
         <div class="layui-header">
             <ul class="layui-nav" style="position:fixed; top: 0; right:0; left:0; z-index:999;">
@@ -64,7 +64,49 @@
         </div>
 
         <div class="layui-body">
-            <!-- 内容主体区域 -->
+            <div style="width:auto; height: auto; margin:80px 80px 0px 80px; background-color:#e7f6f7; border-radius: 20px; border: 1px solid #d4dadb;">
+                <div style="width:auto; height: auto; margin: 20px;">
+                    <div class="layui-row" style="height:auto;">
+                        <div class="layui-col-md8" style="height:100px;">
+                            <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
+                                <span style="font-size:30px;">aaa</span>
+                                <hr class="layui-bg-blue">
+                            </div>
+                        </div>
+                        <div class="layui-col-md4" style="height:auto; text-align:right;">
+                            <div class="grid-demo grid-demo-bg1" style="margin-top:5px;">
+                                <p style="font-size:20px;">bbb</p>
+                                <p style="font-size:20px;">ccc</p>
+                                <p style="font-size:20px;">ddd</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:auto; height: auto; margin: 20px; padding:20px; font-size:24px;">
+                    <pre>eee</pre>
+                </div>
+            </div>
+            <div style="width:auto; height: auto; margin: 20px 80px 20px 80px; background-color:#e7f6f7; border-radius: 20px; border: 1px solid #d4dadb;">
+                <div style="width:auto; height: auto; margin: 20px;">
+                    <form class="layui-form" action="" lay-filter="score_info">
+                        <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 40px; width:210px;">
+                            <label class="layui-form-label">评分</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="score" lay-filter="score" id="score" autocomplete="off" placeholder="请输入分数" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="width:auto; position:relative;right:20px;">
+                            <label class="layui-form-label">评语</label>
+                            <div class="layui-input-block">
+                                <textarea name="content" required lay-verify="required" lay-filter="content" id="content" placeholder="评语..." autocomplete="off" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="upload" id="upload" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-right:30px;">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

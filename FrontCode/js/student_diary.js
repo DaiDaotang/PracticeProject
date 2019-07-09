@@ -161,7 +161,7 @@ layui.use(['flow', 'layer'], function () {
                                 str += '</pre>'
                                 if (user_id == target_id && user_authority == target_authority) {
                                     str += '<hr class="layui-bg-blue">'
-                                    str += `<div style="width:auto; height: auto;font-size:18px;"><p>评分:` + (res.resData[i].score == "" ? "暂未批阅" : res.resData[i].score) + `</p><p>评语:` + (!res.resData[i].isReviewed ? "暂无" : res.resData[i].comment) + `</div>`;
+                                    str += `<div style="width:auto; height: auto;font-size:18px;"><p>评分:` + (res.resData[i].score == "" ? "暂未批阅" : res.resData[i].score) + `</p><p>评语:` + (res.resData[i].score == 0 ? "暂无" : res.resData[i].comment) + `</div>`;
                                 }
                                 str += '</div ></div ></li > '
                                 lis.push(str);
