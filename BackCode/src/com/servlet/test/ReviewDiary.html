@@ -1,0 +1,33 @@
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>$Title$</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+$END$
+</body>
+<script>
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/ReviewDiaryServlet",
+        async:true,
+        data:JSON.stringify({
+            "reqId":"",
+            "reqParam":{
+                "Id":1,
+                "score":"99",
+                "comment":"写得真好，给99怕你骄傲"
+            }
+        }),
+        dataType:"json",
+        success:function(res){
+            console.log(res);
+        },
+        error:function(res){
+            console.log("error");
+            console.log(res);
+        }
+    });
+</script>
+</html>

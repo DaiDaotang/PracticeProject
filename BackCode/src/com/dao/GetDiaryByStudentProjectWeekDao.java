@@ -30,6 +30,9 @@ public class GetDiaryByStudentProjectWeekDao {
                 diary.setTitle(resultSet.getString(4));
                 diary.setContent(resultSet.getString(5));
                 diary.setProjectId(resultSet.getInt(6));
+                diary.setWeek(resultSet.getInt(7));
+                diary.setScore(resultSet.getInt(8));
+                diary.setComment(resultSet.getString(9));
                 diaryBeans.add(diary);
             }
             if (diaryBeans.size() == 0) {

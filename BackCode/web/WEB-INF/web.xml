@@ -515,4 +515,13 @@
         <servlet-name>GetDiaryByStudentProjectWeekServlet</servlet-name>
         <url-pattern>/GetDiaryByStudentProjectWeekServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReviewDiaryServlet</servlet-name>
+        <servlet-class>com.servlet.ReviewDiaryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReviewDiaryServlet</servlet-name>
+        <url-pattern>/ReviewDiaryServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
