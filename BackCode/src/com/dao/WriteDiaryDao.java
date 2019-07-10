@@ -4,12 +4,7 @@ import com.DBConn;
 import com.bean.DiaryBean;
 import com.bean.RequestBean;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-
+import java.sql.*;
 
 
 public class WriteDiaryDao {
@@ -24,6 +19,23 @@ public class WriteDiaryDao {
             switch (diaryBean.getAuthority())
             {
                 case "Student":
+                    PreparedStatement statement = conn.prepareStatement("SELECT score FROM studentdiary WHERE studentId = ? AND projectId = ? AND week = ?;");
+                    statement.setInt(1,diaryBean.getStudentId());
+                    statement.setInt(2,diaryBean.getProjectId());
+                    statement.setInt(3,diaryBean.getWeek());
+                    ResultSet rs = statement.executeQuery();
+                    if (rs.next()){
+                        if (rs.getInt(1) == 0){
+                            PreparedStatement statement2 = conn.prepareStatement("DELETE FROM studentdiary WHERE studentId = ? AND projectId = ? AND week = ?;");
+                            statement2.setInt(1,diaryBean.getStudentId());
+                            statement2.setInt(2,diaryBean.getProjectId());
+                            statement2.setInt(3,diaryBean.getWeek());
+                            statement2.executeUpdate();
+                        }
+                        else {
+                            return -2;
+                        }
+                    }
                     statement1 = conn.prepareStatement("insert into studentdiary (studentId,studentDiaryDate,studentDiaryTitle,studentDiaryContent,projectId,week) values (?,?,?,?,?,?);");
                     statement1.setInt(1,diaryBean.getStudentId());
                     statement1.setDate(2,date);

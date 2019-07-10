@@ -39,6 +39,11 @@ public class WriteDiaryServlet extends HttpServlet {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
             }
+            if (i == -2){
+                resBean.setResId(reqBean.getReqId());
+                resBean.setSuccess(false);
+                resBean.setMessage("-1");
+            }
             else {
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(true);

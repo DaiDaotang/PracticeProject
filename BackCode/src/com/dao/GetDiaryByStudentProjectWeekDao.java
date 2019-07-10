@@ -23,7 +23,7 @@ public class GetDiaryByStudentProjectWeekDao {
             statement1.setInt(2, diaryBean.getProjectId());
             statement1.setInt(3,diaryBean.getWeek());
             resultSet = statement1.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 DiaryBean diary = new DiaryBean();
                 diary.setId(resultSet.getInt(1));
                 diary.setDate(resultSet.getDate(3));
