@@ -115,7 +115,7 @@ function change_week(obj) {
 
 function change_diary(obj) {
     console.log(obj.id)
-    if (last_team_id != "") {
+    if (last_team_id != "" && document.getElementById(last_team_id).classList) {
         document.getElementById(last_team_id).classList.remove("layui-this")
     }
     document.getElementById("a_" + obj.id).classList.add("layui-this");
@@ -233,11 +233,11 @@ layui.use(['form', 'jquery', 'layer'], function () {
             console.log(res);
             week = res.resData.week;
             var temp = "";
-            for (var i = 0; i < week; i++) {
+            for (var i = 1; i <= week; i++) {
                 temp += `
                             <dd>
                                 <a>
-                                    <input type='button' onclick='change_week(this)' id="week_` + i + `" style="font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="第` + (i + 1) + `周" />
+                                    <input type='button' onclick='change_week(this)' id="week_` + i + `" style="font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="第` + i + `周" />
                                 </a>
                             </dd>`;
             }

@@ -2,7 +2,10 @@
 var max = 3
     , checked_tab_id = 0
     , task_res = []
-    , target_team_id = t_param[`target_team_id`];
+    , target_team_id = t_param[`target_team_id`]
+    , target_pt_id = t_param[`target_pt_id`]
+    , week_now = -1
+    , week_total = -1;
 
 layui.use(['element', 'jquery', 'table', 'layer'], function () {
     var $ = layui.jquery
@@ -19,6 +22,29 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         checked_tab_id = data.index;
         setTaskTable(checked_tab_id);
         setCategory(checked_tab_id);
+    });
+
+    $.ajax({
+        type: "POST",
+        url:"",
+        async: true,
+        data: JSON.stringify({
+            "reqId": "",
+            "reqParam": ""
+        }),
+        dataType: "json",
+        success: function (res) {
+            console.log(res)
+            week_now = res.resData.weeks;
+            if (week_now)
+            var str1 = ""
+                , str2 = ""
+
+        },
+        error: function (res) {
+            console.log("error");
+            console.log(res);
+        }
     });
 
     var param_task_existed = function (res0) {
@@ -136,6 +162,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         table.on('rowDouble(task_table_' + index + ')', function (obj) {
             console.log(obj.tr)     //得到当前行元素对象
             console.log(obj.data)   //得到当前行数据
+            console.log(obj.checked)
             console.log(obj)
 
             window.localStorage.taskName = obj.data.taskName;
@@ -153,15 +180,20 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 btn: ['确定修改', '删除任务', '关闭'],
                 btnAlign: 'c', //按钮居中,
                 yes: function (index, layero) {
-                    if (window.localStorage.finishTime == "" || window.localStorage.finishTime == "undefined" || window.localStorage.taskWeek == ) {
+                    if (window.localStorage.finishTime != "" || window.localStorage.finishTime != "undefined" || window.localStorage.taskWeek < week_now) {
                         layer.msg("任务已完成或已过期，不可修改")
                     }
                     else {
-                        
+                        //修改任务信息
+                        //obj.update(fields)    //修改当前行数据
                     }
                 },
                 btn2: function (index, layero) {
-
+                    layer.confirm('确定要删除吗？',function (index) {
+                        //删除任务接口
+                        obj.del();
+                        layer.close(index);
+                    });
                 },
                 btn3: function (index, layero) {
                     layer.closeAll();
@@ -169,9 +201,6 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 end: function () {
                 }
             });
-
-            //obj.del();            //删除当前行
-            //obj.update(fields)    //修改当前行数据
         });
 
         //监听复选框选中
