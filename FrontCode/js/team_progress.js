@@ -160,9 +160,6 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         table.render(param_task_existed(index))
         //监听行双击事件
         table.on('rowDouble(task_table_' + index + ')', function (obj) {
-            console.log(obj.tr)     //得到当前行元素对象
-            console.log(obj.data)   //得到当前行数据
-            console.log(obj.checked)
             console.log(obj)
 
             window.localStorage.taskName = obj.data.taskName;
@@ -180,8 +177,11 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 btn: ['确定修改', '删除任务', '关闭'],
                 btnAlign: 'c', //按钮居中,
                 yes: function (index, layero) {
-                    if (window.localStorage.finishTime != "" || window.localStorage.finishTime != "undefined" || window.localStorage.taskWeek < week_now) {
-                        layer.msg("任务已完成或已过期，不可修改")
+                    if (window.localStorage.finishTime != "" || window.localStorage.finishTime != "undefined") {
+                        layer.msg("任务已完成，不可修改")
+                    }
+                    else if (window.localStorage.taskWeek < week_now) {
+                        layer.msg("任务已逾期，不可修改(已添加到下一周任务中)")
                     }
                     else {
                         //修改任务信息
@@ -208,7 +208,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             console.log(obj.checked); //当前是否选中状态
             console.log(obj.data); //选中行的相关数据
             console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
-            if (obj.data.taskWeek < 10) {
+            if (obj.data.taskWeek > week_now) {
                 layer.msg("时间未到")
                 obj.checked = !obj.checked;
             }

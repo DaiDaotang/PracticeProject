@@ -10,9 +10,16 @@ var checked_week = -1
     , checked_studetn_diary_id = -1
     , checked_student_sort = "";
 
-var last_team_id = "";
+var last_team_id = ""
+    , last_week_id = "";
 
 function change_week(obj) {
+    if (last_week_id != "" && document.getElementById(last_week_id).classList) {
+        document.getElementById(last_week_id).classList.remove("layui-this")
+    }
+    document.getElementById("a_" + obj.id).classList.add("layui-this");
+    last_week_id = "a_" + obj.id;
+    last_team_id = ""
     checked_week = obj.id.split("_")[1]
     layui.use('jquery', function () {
         var $ = layui.jquery;
@@ -39,7 +46,7 @@ function change_week(obj) {
                         temp += `
                             <dd>
                                 <a id="a_nr_` + res.resData[i].id + `">
-                                    <input type='button' onclick='change_diary(this)' id="nr_` + res.resData[i].id + `" style="font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="` + res.resData[i].name + `" />
+                                    <input type='button' onclick='change_diary(this)' id="nr_` + res.resData[i].id + `" style="cursor:pointer;font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="` + res.resData[i].name + `" />
                                 </a>
                             </dd>`
                     }
@@ -83,7 +90,7 @@ function change_week(obj) {
                         temp += `
                             <dd>
                                 <a id="a_r_` + res.resData[i].id + `">
-                                    <input type='button' onclick='change_diary(this)' id="r_` + res.resData[i].id + `" style="font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="` + res.resData[i].name + `" />
+                                    <input type='button' onclick='change_diary(this)' id="r_` + res.resData[i].id + `" style="cursor:pointer;font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="` + res.resData[i].name + `" />
                                 </a>
                             </dd>`
                     }
@@ -115,11 +122,10 @@ function change_week(obj) {
 
 function change_diary(obj) {
     console.log(obj.id)
+    document.getElementById("a_" + obj.id).classList.add("layui-this");
     if (last_team_id != "" && document.getElementById(last_team_id).classList) {
         document.getElementById(last_team_id).classList.remove("layui-this")
     }
-    document.getElementById("a_" + obj.id).classList.add("layui-this");
-    console.log(document.getElementById(obj.id).classList)
     last_team_id = "a_" + obj.id;
     checked_student_sort = obj.id.split("_")[0];
     checked_student_id = obj.id.split("_")[1];
@@ -236,8 +242,8 @@ layui.use(['form', 'jquery', 'layer'], function () {
             for (var i = 1; i <= week; i++) {
                 temp += `
                             <dd>
-                                <a>
-                                    <input type='button' onclick='change_week(this)' id="week_` + i + `" style="font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="第` + i + `周" />
+                                <a id="a_week_` + i + `">
+                                    <input type='button' onclick='change_week(this)' id="week_` + i + `" style="cursor:pointer;font-size:16px; background:none;border:none; color:#d4dadb; text-align: left; width:190px; padding-top:7px;" value="第` + i + `周" />
                                 </a>
                             </dd>`;
             }
