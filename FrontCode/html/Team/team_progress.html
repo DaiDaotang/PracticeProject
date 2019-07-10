@@ -81,19 +81,15 @@
             </fieldset>
 
             <div class="layui-tab layui-tab-brief" lay-filter="tabTeamProcess" style="margin: 20px 20px;">
-                <ul class="layui-tab-title">
+                <ul class="layui-tab-title" id="tab_ul">
                     <li class="layui-this" lay-id="0" id="first">任务流程</li>
-                    <li>第一周</li>
                 </ul>
-                <div class="layui-tab-content" style="height: auto;">
+                <div class="layui-tab-content" style="height: auto;" id="tab_div">
                     <div class="layui-tab-item layui-show">
                         <table class="layui-hide" id="task_table_0" lay-filter="task_table_0"></table>
                         <div id="task_container_0" style="width:100%;height: 550px"></div>
                     </div>
-                    <div class="layui-tab-item layui-show">
-                        <table class="layui-hide" id="task_table_1" lay-filter="task_table_1"></table>
                         <div id="task_container_1" style="width:100%;height: 550px"></div>
-                    </div>
                 </div>
             </div>
         </div>

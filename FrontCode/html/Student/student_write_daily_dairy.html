@@ -100,6 +100,7 @@
             function setDiaryTime(week) {
                 var temp = ""
                     , time = "";
+                console.log(week)
                 for (var i = 1; i < week + 1; i++) 
                     temp += '<option value=' + i + '>第' + i + '周</option>'
                 document.getElementById('diary_time').innerHTML += temp;

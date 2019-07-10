@@ -52,16 +52,6 @@ function change_week(obj) {
                     }
                     document.getElementById("not_reviewed_dl").innerHTML = temp;
                 } 
-                else {
-                    checked_studetn_diary_id = -1;
-                    document.getElementById("student_diary_title").innerText = '';
-                    document.getElementById("student_diary_week").innerText = '';
-                    document.getElementById("student_diary_time").innerText = '';
-                    document.getElementById("student_diary_content").innerText = '';
-                    document.getElementById("score").value = '';
-                    document.getElementById("content").innerText = '';
-                    document.getElementById("not_reviewed_dl").innerHTML = "";
-                }
                 t1 = true;
             },
             error: function (res) {
@@ -96,16 +86,6 @@ function change_week(obj) {
                     }
                     document.getElementById("reviewed_dl").innerHTML = temp;
                 }
-                else {
-                    checked_studetn_diary_id = -1;
-                    document.getElementById("student_diary_title").innerText = '';
-                    document.getElementById("student_diary_week").innerText = '';
-                    document.getElementById("student_diary_time").innerText = '';
-                    document.getElementById("student_diary_content").innerText = '';
-                    document.getElementById("score").value = '';
-                    document.getElementById("content").innerText = '';
-                    document.getElementById("reviewed_dl").innerHTML = ""
-                }
                 t2 = true;
             },
             error: function (res) {
@@ -114,6 +94,14 @@ function change_week(obj) {
                 console.log(res);
             }
         });
+        checked_studetn_diary_id = -1;
+        document.getElementById("student_diary_title").innerText = '';
+        document.getElementById("student_diary_week").innerText = '';
+        document.getElementById("student_diary_time").innerText = '';
+        document.getElementById("student_diary_content").innerText = '';
+        document.getElementById("score").value = '';
+        document.getElementById("content").innerText = '';
+        document.getElementById("not_reviewed_dl").innerHTML = "";
 
         while (t1 || t2);
         layer.msg("加载学生名单成功", { time: 750 })

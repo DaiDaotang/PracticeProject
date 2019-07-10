@@ -24,22 +24,52 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         setCategory(checked_tab_id);
     });
 
+    //加载标签页模板
     $.ajax({
         type: "POST",
-        url:"",
+        url: GetTotalWeek,
         async: true,
         data: JSON.stringify({
-            "reqId": "",
-            "reqParam": ""
+            "reqId": 0,
+            "reqParam": target_pt_id
         }),
         dataType: "json",
         success: function (res) {
             console.log(res)
-            week_now = res.resData.weeks;
-            if (week_now)
-            var str1 = ""
-                , str2 = ""
-
+            week_total = res.resData.week;
+            $.ajax({
+                type: "POST",
+                url: GetTotalWeek,
+                async: true,
+                data: JSON.stringify({
+                    "reqId": "",
+                    "reqParam": target_pt_id
+                }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res)
+                    week_now = res.resData.week;
+                    var temp = "";
+                    for (var i = 1; i < week_now + 1; i++) {
+                        temp += `<li>第` + i + `周</li>`
+                    }
+                    document.getElementById("tab_ul").innerHTML += temp;
+                    temp = "";
+                    for (var i = 1; i < week_now + 1; i++) {
+                        temp += `
+                    <div class="layui-tab-item layui-show">
+                        <table class="layui-hide" id="task_table_` + i + `" lay-filter="task_table_` + i + `"></table>
+                        <div id="task_container_` + i + `" style="width:100%;height: 550px"></div>
+                    </div>`
+                    }
+                    document.getElementById("tab_div").innerHTML += temp;
+                    document.getElementById("first").click();
+                },
+                error: function (res) {
+                    console.log("error");
+                    console.log(res);
+                }
+            });
         },
         error: function (res) {
             console.log("error");
@@ -47,9 +77,9 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         }
     });
 
-    var param_task_existed = function (res0) {
+    var param_task_existed = function (index) {
         return {
-            elem: '#task_table_' + res0
+            elem: '#task_table_' + index
             , url: GetTaskURL
             , title: '项目列表'
             , toolbar: "#toolbar_task"
@@ -62,6 +92,16 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             }
             , deal: function (res) {
                 console.log(res)
+                if (index > 0) {
+                    var i = 0;
+                    while (i < res.resData.length) {
+                        if (res.resData[i].taskWeek != index) {
+                            res.resData.splice(i, 1);
+                            continue;
+                        }
+                        i++;
+                    }
+                }
                 return {
                     code: 0
                     , msg: ""
@@ -81,12 +121,14 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             ]]
             , done: function (res) {
                 console.log(res.data);
-                //选中
-                //$('xxx').attr('checked', true);
-                //form.render();
-                //取消
-                //$('xxx').removeAttr('checked');
-                //form.render();
+                if (index > 0) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        if (res.data[i].taskWeek < week_now) {
+                            $(".layui-table tr[data-index=" + i + "] input[type='checkbox']").prop('disabled', true);
+                            $(".layui-table tr[data-index=" + i + "] input[type='checkbox']").next().addClass('layui-btn-disabled');
+                        }
+                    }
+                }
             }
         }
     }
@@ -153,11 +195,10 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         };
     });
 
-    document.getElementById("first").click();
-
     function setTaskTable(index) {
         table = $.extend(table, { config: { checkName: 'isFinished' } });
         table.render(param_task_existed(index))
+
         //监听行双击事件
         table.on('rowDouble(task_table_' + index + ')', function (obj) {
             console.log(obj)
@@ -177,11 +218,9 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 btn: ['确定修改', '删除任务', '关闭'],
                 btnAlign: 'c', //按钮居中,
                 yes: function (index, layero) {
-                    if (window.localStorage.finishTime != "" || window.localStorage.finishTime != "undefined") {
-                        layer.msg("任务已完成，不可修改")
-                    }
-                    else if (window.localStorage.taskWeek < week_now) {
-                        layer.msg("任务已逾期，不可修改(已添加到下一周任务中)")
+                    console.log(window.localStorage.finishTime)
+                    if (window.localStorage.finishTime != "" || window.localStorage.finishTime != "undefined" || window.localStorage.taskWeek < week_now) {
+                        layer.msg("任务已完成或已逾期，不可修改")
                     }
                     else {
                         //修改任务信息
