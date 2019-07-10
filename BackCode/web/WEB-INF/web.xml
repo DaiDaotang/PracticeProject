@@ -569,4 +569,13 @@
         <servlet-name>GetTotalWorkAWeekServlet</servlet-name>
         <url-pattern>/GetTotalWorkAWeekServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetDateByPracticeServlet</servlet-name>
+        <servlet-class>com.servlet.GetDateByPracticeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetDateByPracticeServlet</servlet-name>
+        <url-pattern>/GetDateByPracticeServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
