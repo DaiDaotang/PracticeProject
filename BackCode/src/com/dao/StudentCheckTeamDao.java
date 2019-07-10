@@ -66,7 +66,7 @@ public class StudentCheckTeamDao {
                 }
             }else{
                 PreparedStatement state;
-                state = conn.prepareStatement("select teamId,teamName,projectId,projectName,projectPracticeId,starttime,endtime from stprelation NATURAL JOIN project NATURAL JOIN team NATURAL JOIN practice where studentId = ? and projectPracticeId = ?;");
+                state = conn.prepareStatement("select teamId,teamName,projectId,projectName,projectPracticeId,starttime,endtime from stprelation NATURAL JOIN project NATURAL JOIN team JOIN practice ON projectPracticeId = practiceId where studentId = ? and projectPracticeId = ?;");
                 state.setInt(1,id);
                 state.setInt(2,practiceId);
                 ResultSet resultSet = state.executeQuery();
