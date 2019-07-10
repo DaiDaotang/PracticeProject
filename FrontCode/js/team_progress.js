@@ -66,7 +66,6 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                         temp += `<li>第` + i + `周</li>`
                         whole_tab_count++;
                     }
-                    temp += `<li>燃尽图</li>`
                     document.getElementById("tab_ul").innerHTML += temp;
                     temp = "";
                     for (var i = 1; i < week_now + 1; i++) {
@@ -76,11 +75,6 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                                 <div id="task_container_` + i + `" style="width:100%;height: 550px"></div>
                             </div>`
                     }
-                    temp += `
-                        <div class="layui-tab-item">
-                            <table class="layui-hide" id="team_time" lay-filter="team_time"></table>
-                            <div id="team_time_container" style="width:100%;height: 550px"></div>
-                        </div>`
                     document.getElementById("tab_div").innerHTML += temp;
                     document.getElementById("first").click();
                 },
@@ -394,6 +388,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     break;
                 case 'drawbackTask':
                     setTaskTable(checked_tab_id);
+                    setCategory(checked_tab_id)
                     break;
             };
         });
@@ -420,6 +415,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             dataType: "json",
             success: function (res) {
                 //console.log(res);
+                setCategory(checked_tab_id)
             },
             error: function (res) {
                 //console.log("error");
@@ -429,90 +425,86 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
     }
 
     function setCategory(index) {
-
-        var work_total = -1;
-        var x_v = ["2019-07-07", "2019-07-08", "2019-07-09", "2019-07-10", "2019-07-11", "2019-07-12"]
-            , y_v = [0,0,0,0,0,0];
-        var gotten = false;
-
-        if (index == 0) {
-            $.ajax({
-                type: "POST",
-                url: GetTotalWorkURL,
-                async: true,
-                data: JSON.stringify({
-                    "reqId": "",
-                    "reqParam": target_team_id
-                }),
-                dataType: "json",
-                success: function (res) {
-                    //console.log(res);
-                },
-                error: function (res) {
-                    //console.log("error");
-                    //console.log(res);
+        $.ajax({
+            type: "POST",
+            url: GetXYURL,
+            async: true,
+            data: JSON.stringify({
+                "reqId": "",
+                "reqParam": {
+                    "teamId": target_team_id,
+                    "practiceId": target_pt_id
                 }
-            });
-        }
-        else {
-            $.ajax({
-                type: "POST",
-                url: GetWeekTotalWorkURL,
-                async: true,
-                data: JSON.stringify({
-                    "reqId": "",
-                    "reqParam": {
-                        "teamId": target_team_id,
-                        "taskWeek": index
-                    }
-                }),
-                dataType: "json",
-                success: function (res) {
-                    //console.log(res);
+            }),
+            dataType: "json",
+            success: function (res) {
+                var temp_x = []
+                    , temp_y = [];
+
+                if (res.resData.length < 5 && index == 0) {
+                    var x = [], y = [], x_t = [], y_t = [];
                     for (var i = 0; i < res.resData.length; i++) {
-
+                        x.push(res.resData[i].dates);
+                        y.push(res.resData[i].works);
+                        x[i][0] = "总"
+                        if (i == 0) {
+                            x_t.push("总");
+                            y_t.push(0);
+                        }
+                        for (var j = 1; j < res.resData[i].dates.length; j++) {
+                            x_t.push(res.resData[i].dates[j])
+                            y_t.push(0)
+                        }
                     }
-                },
-                error: function (res) {
-                    //console.log("error");
-                    //console.log(res);
+                    console.log(x)
+                    console.log(y)
+                    console.log(x_t)
+                    console.log(y_t)
+                    var temp_index = y_t.length - 1
+                        , temp_value = 0;
+                    console.log(temp_index)
+                    for (var i = y.length - 1; i >= 0; i--) {
+                        for (var j = y[i].length - 1; j >= 0; j--) {
+                            console.log(temp_index)
+                            console.log(y[i][j])
+                            y_t[temp_index] = temp_value + y[i][j];
+                            if(j > 0)
+                                temp_index -= 1;
+                        }
+                        temp_value = y_t[temp_index + 1];
+                    }
+                    console.log(x_t)
+                    console.log(y_t)
+                    temp_x = x_t
+                        , temp_y = y_t;
                 }
-            });
-        }
+                else {
+                    var x = [], y = [], x_t = [], y_t = [];
+                    for (var i = 0; i < res.resData.length; i++) {
+                        x.push(res.resData[i].dates);
+                        y.push(res.resData[i].works);
+                        x[i][0] = "总"
+                        if (i == 0) {
+                            x_t.push("总");
+                            y_t.push(0);
+                        }
+                        x_t.push("第" + (i + 1) + "周")
+                        y_t.push(0)
+                        y_t[0] += y[i][0]
+                    }
+                    for (var i = 0; i < y.length; i++) {
+                        y_t[i + 1] = y_t[i] - y[i][0] + y[i][y[i].length - 1]
+                    }
+                    temp_x = index == 0 ? x_t : x[index - 1]
+                        , temp_y = index == 0 ? y_t : y[index - 1];
+                }
 
-        //while (!gotten);
-
-        var dom = document.getElementById("task_container_" + index);
-        var myChart = echarts.init(dom);
-        var app = {};
-        option = null;
-        option = {
-            title: {
-                text: "任务流程图"
+                setCategoryDetail(temp_x, temp_y, index);
             },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line',
-                areaStyle: {}
-            }]
-        };
-        ;
-        if (option && typeof option === "object") {
-            myChart.setOption(option, true);
-        }
-
-        myChart.on('click', function (params) {
-            //console.log(params)
-            //console.log(params.data)
-            //console.log(params.name)
+            error: function (res) {
+                console.log("error");
+                console.log(res);
+            }
         });
     }
 
@@ -526,44 +518,36 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         window.localStorage.finishTime = ""
     }
 
-    function setTimeTable(index) {
-        var param_task_existed = function (index) {
-            return {
-                elem: '#task_table_' + index
-                , url: GetTaskURL
-                , title: '项目列表'
-                , toolbar: "#toolbar_task"
-                , contentType: 'application/json'
-                , method: "POST"
-                , where: {
-                    "reqId": ""
-                    , "reqParam": target_team_id
-                }
-                , deal: function (res) {
-                    return {
-                        code: 0
-                        , msg: ""
-                        , count: 1000
-                        , data: res.resData
-                    }
-                }
-                , cols: [[
-                    { type: 'checkbox' }
-                    , { field: 'taskId', title: 'ID', hide: true }
-                    , { field: 'taskName', title: '名称' }
-                    , { field: 'taskWeek', title: '周数', sort: true }
-                    , { field: 'taskContent', title: '概述', hide: true }
-                    , { field: 'taskAmount', title: '任务量', sort: true }
-                    , { field: 'taskPriority', title: '优先级', sort: true }
-                    , { field: 'finishTime', title: '完成时间', sort: true, hide: true }
-                ]]
-                , done: function (res) {
-                    
-                }
-            }
+    function setCategoryDetail(x, y, index) {
+        var dom = document.getElementById("task_container_" + index);
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        option = {
+            title: {
+                text: "任务流程图"
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: x
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: y,
+                type: 'line',
+                areaStyle: {}
+            }]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
         }
-    }
-    function setTimeCategory(index) {
-
+        myChart.on('click', function (params) {
+            console.log(params)
+            console.log(params.data)
+            console.log(params.name)
+        });
     }
 });

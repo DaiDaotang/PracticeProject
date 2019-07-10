@@ -135,7 +135,7 @@ layui.use(['flow', 'layer'], function () {
                         "authority": "Student",
                         "index": diary_page,
                         "count": 8,
-                        "projectId": target_item_id
+                        "projectId": -1 //target_item_id
                     }
                 }),
                 dataType: "json",
