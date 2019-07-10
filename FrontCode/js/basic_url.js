@@ -38,7 +38,11 @@ var GetTeamMemberListURL = "http://localhost:8080/GetStudentByTeamIdServlet"
     , ModifyTeamURL = "http://localhost:8080/ModifyTeamInformationServlet"
     , CreateTaskURL = "http://localhost:8080/CreateTaskServlet"
     , GetTaskURL = "http://localhost:8080/GetTaskServlet"
-    , GetTotalWeek = "http://localhost:8080/GetWeekByPracticeIdServlet";
+    , GetTotalWeek = "http://localhost:8080/GetWeekByPracticeIdServlet"
+    , ModifyTaskURL = "http://localhost:8080/ModifyTaskServlet"
+    , DeleteTaskURL = "http://localhost:8080/DeleteTaskServlet"
+    , GetTotalWorkURL = "http://localhost:8080/GetTotalWorkServlet"
+    , GetWeekTotalWorkURL = "http://localhost:8080/GetTotalWorkAWeekServlet";
 
 var TeamHomepageURL = "homepage_team.html"
     , TeamDiaryURL = "team_diary.html"

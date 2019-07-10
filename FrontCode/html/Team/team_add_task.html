@@ -24,7 +24,6 @@
             <div class="layui-input-block">
                 <select name="task_week" id="task_week" lay-filter="task_week">
                     <option value=""></option>
-                    <option value=1>第一周</option>
                 </select>
             </div>
         </div>
@@ -70,96 +69,98 @@
                 return theRequest;
             }
             var t_param = GetRequest()
-                , select = t_param[`select`];
+                , select = t_param[`select`]
+                , week_total = t_param[`week`];
 
             if (select == "add") {
-                window.localStorage.task_name = "";
-                window.localStorage.task_week = "";
-                window.localStorage.task_amount = -1;
-                window.localStorage.task_priority = -1;
-                window.localStorage.task_content = "";
+                var temp = "";
+                for (var i = 0; i < week_total; i++) {
+                    temp += `<option value=` + (i + 1) + `>第` + (i + 1) + `周</option>`
+                }
+                document.getElementById("task_week").innerHTML += temp;
+                form.render('select')
+                resetLocalStorage();
+                listenToChange();
+            }
+            else if (select == "edit") {
+                if (window.localStorage.finishTime != "" && window.localStorage.finishTime != "undefined") {
+                    console.log(window.localStorage.finishTime)
+                    document.getElementById("finish_time").innerHTML += `
+                        <label class="layui-form-label">完成时间</label>
+                        <div style="padding-top:11px;">
+                           ` + window.localStorage.finishTime + `
+                        </div>`
+                    setCantEdit();
+                } else {
+                    listenToChange();
+                }
+                setValue();
+            }
+            else if (select == "detail") {
+                setCantEdit();
+                if (window.localStorage.finishTime != "" && window.localStorage.finishTime != "undefined") {
+                    console.log(window.localStorage.finishTime)
+                    document.getElementById("finish_time").innerHTML += `
+                        <label class="layui-form-label">完成时间</label>
+                        <div style="padding-top:11px;">
+                           ` + window.localStorage.finishTime + `
+                        </div>`
+                }
+                setValue();
+                resetLocalStorage();
+            }
+
+            function setValue() {
+                document.getElementById('task_name').value = window.localStorage.taskName;
+                document.getElementById('task_amount').value = window.localStorage.taskAmount;
+                document.getElementById('task_priority').value = window.localStorage.taskPriority;
+                document.getElementById('task_content').value = window.localStorage.taskContent;
+                var temp = "";
+                for (var i = 0; i < week_total; i++) {
+                    temp += `<option value=` + (i + 1) + `>第` + (i + 1) + `周</option>`
+                }
+                document.getElementById("task_week").innerHTML += temp;
+                document.getElementById('task_week').value = window.localStorage.taskWeek;
+                form.render('select');
+            }
+            function setCantEdit() {
+                $('#task_name').attr("readonly", true);
+                $('#task_amount').attr("readonly", true);
+                $('#task_priority').attr("readonly", true);
+                $('#task_content').attr("readonly", true);
+                $('#task_week').attr("disabled", "disabled");
+            }
+            function resetLocalStorage() {
+                window.localStorage.taskName = ""
+                window.localStorage.taskAmount = ""
+                window.localStorage.taskContent = ""
+                window.localStorage.taskPriority = ""
+                window.localStorage.taskWeek = ""
+                window.localStorage.finishTime = ""
+            }
+            function listenToChange() {
                 document.getElementById('task_name').onchange = function () {
                     console.log(document.getElementById('task_name').value)
-                    window.localStorage.task_name = document.getElementById('task_name').value
+                    window.localStorage.taskName = document.getElementById('task_name').value
                 };
                 document.getElementById('task_amount').onchange = function () {
                     console.log(document.getElementById('task_amount').value)
-                    window.localStorage.task_amount = document.getElementById('task_amount').value
+                    window.localStorage.taskAmount = document.getElementById('task_amount').value
                 };
                 document.getElementById('task_priority').onchange = function () {
                     console.log(document.getElementById('task_priority').value)
-                    window.localStorage.task_priority = document.getElementById('task_priority').value
+                    window.localStorage.taskPriority = document.getElementById('task_priority').value
                 };
                 document.getElementById('task_content').onchange = function () {
                     console.log(document.getElementById('task_content').value)
-                    window.localStorage.task_content = document.getElementById('task_content').value
+                    window.localStorage.taskContent = document.getElementById('task_content').value
                 };
                 layui.use('form', function () {
                     var form = layui.form;
-
                     form.on('select(task_week)', function (data) {
-                        window.localStorage.task_week = data.value
+                        window.localStorage.taskWeek = data.value
                     });
                 })
-            }
-            else if (select == "edit") {
-                document.getElementById('task_name').value = window.localStorage.taskName;
-                document.getElementById('task_amount').value = window.localStorage.taskAmount;
-                document.getElementById('task_priority').value = window.localStorage.taskPriority;
-                document.getElementById('task_content').value = window.localStorage.taskContent;
-                document.getElementById('task_week').value = window.localStorage.taskWeek;
-                form.render('select');
-                if (window.localStorage.finishTime != "" && window.localStorage.finishTime != "undefined") {
-                    console.log(window.localStorage.finishTime)
-                    document.getElementById("finish_time").innerHTML += `
-                        <label class="layui-form-label">完成时间</label>
-                        <div style="padding-top:11px;">
-                           ` + window.localStorage.finishTime + `
-                        </div>`
-                    $('#task_name').attr("readonly", true);
-                    $('#task_amount').attr("readonly", true);
-                    $('#task_priority').attr("readonly", true);
-                    $('#task_content').attr("readonly", true);
-                    $('#task_week').attr("disabled", "disabled");
-                }
-                window.localStorage.taskName = ""
-                window.localStorage.taskAmount = ""
-                window.localStorage.taskContent = ""
-                window.localStorage.taskPriority = ""
-                window.localStorage.taskWeek = ""
-                window.localStorage.finishTime = ""
-            }
-            else if (select == "detail") {
-                document.getElementById('task_name').value = window.localStorage.taskName;
-                document.getElementById('task_amount').value = window.localStorage.taskAmount;
-                document.getElementById('task_priority').value = window.localStorage.taskPriority;
-                document.getElementById('task_content').value = window.localStorage.taskContent;
-                document.getElementById('task_week').value = window.localStorage.taskWeek;
-                document.getElementById('task_name').diabled = "disabled";
-                document.getElementById('task_amount').diabled = "disabled";
-                document.getElementById('task_priority').diabled = "disabled";
-                document.getElementById('task_content').diabled = "disabled";
-                document.getElementById('task_week').diabled = "disabled";
-                form.render('select');
-                if (window.localStorage.finishTime != "" && window.localStorage.finishTime != "undefined") {
-                    console.log(window.localStorage.finishTime)
-                    document.getElementById("finish_time").innerHTML += `
-                        <label class="layui-form-label">完成时间</label>
-                        <div style="padding-top:11px;">
-                           ` + window.localStorage.finishTime + `
-                        </div>`
-                    $('#task_name').attr("readonly", true);
-                    $('#task_amount').attr("readonly", true);
-                    $('#task_priority').attr("readonly", true);
-                    $('#task_content').attr("readonly", true);
-                    $('#task_week').attr("disabled", "disabled");
-                }
-                window.localStorage.taskName = ""
-                window.localStorage.taskAmount = ""
-                window.localStorage.taskContent = ""
-                window.localStorage.taskPriority = ""
-                window.localStorage.taskWeek = ""
-                window.localStorage.finishTime = ""
             }
         })
     </script>
