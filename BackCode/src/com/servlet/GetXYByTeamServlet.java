@@ -2,7 +2,9 @@ package com.servlet;
 
 import com.bean.RequestBean;
 import com.bean.ResponseBean;
-import com.dao.GetDateByPracticeDao;
+import com.bean.TeamBean;
+import com.bean.XYBean;
+import com.dao.GetXYByTeamDao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -17,10 +19,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
 
-@WebServlet(name = "GetDateByPracticeServlet")
-public class GetDateByPracticeServlet extends HttpServlet {
+@WebServlet(name = "GetXYByTeamServlet")
+public class GetXYByTeamServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -32,12 +33,12 @@ public class GetDateByPracticeServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         String content = reader.readLine();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Type requestType = new TypeToken<RequestBean<Integer>>(){}.getType();
-        RequestBean<Integer> reqBean = gson.fromJson(content,requestType);
-        ResponseBean<ArrayList<ArrayList<Date>>> resBean = new ResponseBean<>();
+        Type requestType = new TypeToken<RequestBean<TeamBean>>(){}.getType();
+        RequestBean<TeamBean> reqBean = gson.fromJson(content,requestType);
+        ResponseBean<ArrayList<XYBean>> resBean = new ResponseBean<>();
         try{
-            GetDateByPracticeDao dao = new GetDateByPracticeDao();
-            ArrayList<ArrayList<Date>> arrayList = dao.getSignin(reqBean);
+            GetXYByTeamDao dao = new GetXYByTeamDao();
+            ArrayList<XYBean> arrayList = dao.getXY(reqBean);
             if (arrayList == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
@@ -47,7 +48,7 @@ public class GetDateByPracticeServlet extends HttpServlet {
                 resBean.setSuccess(true);
                 resBean.setResData(arrayList);
             }
-            Type respType = new TypeToken<ResponseBean<ArrayList<ArrayList<Date>>>>(){}.getType();
+            Type respType = new TypeToken<ResponseBean<ArrayList<XYBean>>>(){}.getType();
             String s = gson.toJson(resBean,respType);
             out.print(s);
         }catch (Exception e){

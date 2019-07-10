@@ -571,11 +571,11 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>GetDateByPracticeServlet</servlet-name>
-        <servlet-class>com.servlet.GetDateByPracticeServlet</servlet-class>
+        <servlet-name>GetXYByTeamServlet</servlet-name>
+        <servlet-class>com.servlet.GetXYByTeamServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GetDateByPracticeServlet</servlet-name>
-        <url-pattern>/GetDateByPracticeServlet</url-pattern>
+        <servlet-name>GetXYByTeamServlet</servlet-name>
+        <url-pattern>/GetXYByTeamServlet</url-pattern>
     </servlet-mapping>
 </web-app>
