@@ -27,17 +27,13 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
 
     element.on('tab(tabTeamProcess)', function (data) {
         checked_tab_id = data.index;
-        //展示燃尽图
-        if (checked_tab_id == whole_tab_count) {
 
-        }
-        else {
-            setTaskTable(checked_tab_id);
-            setCategory(checked_tab_id);
-            checked_task_id = [];
-            checked_task_is_tq = [];
-            checked_task_is_done = [];
-        }
+        setTaskTable(checked_tab_id);
+        setCategory(checked_tab_id);
+
+        checked_task_id = [];
+        checked_task_is_tq = [];
+        checked_task_is_done = [];
     });
 
     //加载标签页模板
@@ -51,7 +47,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         }),
         dataType: "json",
         success: function (res) {
-            console.log(res)
+            //console.log(res)
             week_total = res.resData.week;
             $.ajax({
                 type: "POST",
@@ -63,7 +59,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 }),
                 dataType: "json",
                 success: function (res) {
-                    console.log(res)
+                    //console.log(res)
                     week_now = res.resData.week;
                     var temp = "";
                     for (var i = 1; i < week_now + 1; i++) {
@@ -89,14 +85,14 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     document.getElementById("first").click();
                 },
                 error: function (res) {
-                    console.log("error");
-                    console.log(res);
+                    //console.log("error");
+                    //console.log(res);
                 }
             });
         },
         error: function (res) {
-            console.log("error");
-            console.log(res);
+            //console.log("error");
+            //console.log(res);
         }
     });
 
@@ -113,7 +109,8 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 , "reqParam": target_team_id
             }
             , deal: function (res) {
-                console.log(res)
+                //console.log(res)
+                //获取每一周总的工作量
                 if (index > 0) {
                     work_total_week = 0;
                     var i = 0;
@@ -125,7 +122,9 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                         work_total_week += res.resData[i].taskAmount;
                         i++;
                     }
-                } else {
+                }
+                //获取实训总的工作量
+                else {
                     work_total_max = 0;
                     for (var i = 0; i < res.resData.length; i++) {
                         work_total_max += res.resData[i].taskAmount;
@@ -149,7 +148,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 , { field: 'finishTime', title: '完成时间', sort: true, hide: true }
             ]]
             , done: function (res) {
-                console.log(res.data);
+                //console.log(res.data);
                 if (index > 0) {
                     for (var i = 0; i < res.data.length; i++) {
                         if (res.data[i].taskWeek < week_now) {
@@ -168,7 +167,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
 
         //监听行双击事件
         table.on('rowDouble(task_table_' + index + ')', function (obj) {
-            console.log(obj)
+            //console.log(obj)
 
             window.localStorage.taskName = obj.data.taskName;
             window.localStorage.taskAmount = obj.data.taskAmount;
@@ -188,7 +187,8 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     btn: ['确定修改', '删除任务', '关闭'],
                     btnAlign: 'c', //按钮居中,
                     yes: function (index, layero) {
-                        if (window.localStorage.finishTime == "" || window.localStorage.finishTime == "undefine") {
+                        //console.log(window.localStorage.finishTime)
+                        if (window.localStorage.finishTime == "" || window.localStorage.finishTime == "undefined") {
                             $.ajax({
                                 type: "POST",
                                 url: ModifyTaskURL,
@@ -207,7 +207,8 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                                 }),
                                 dataType: "json",
                                 success: function (res) {
-                                    console.log(res);
+                                    //console.log(res);
+                                    //console.log(window.localStorage)
                                     if (res.isSuccess) {
                                         layer.msg("修改成功！", { time: 500 })
                                         obj.update({
@@ -222,13 +223,15 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                                     }
                                 },
                                 error: function (res) {
-                                    console.log("error");
-                                    console.log(res);
+                                    //console.log("error");
+                                    //console.log(res);
                                 }
                             });
                         }
                         else {
                             layer.msg("任务已完成，不可修改", { time: 750 })
+                            layer.close(index);
+                            resetLocalStorage();
                         }
                     },
                     btn2: function (index, layero) {
@@ -244,13 +247,12 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                                 }),
                                 dataType: "json",
                                 success: function (res) {
-                                    console.log(res);
-                                    layer.msg("删除成功！", { time: 750 })
                                     resetLocalStorage();
+                                    layer.msg("删除成功！", { time: 750 })
                                 },
                                 error: function (res) {
-                                    console.log("error");
-                                    console.log(res);
+                                    //console.log("error");
+                                    //console.log(res);
                                 }
                             });
                             obj.del();
@@ -261,6 +263,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                         layer.closeAll();
                     },
                     end: function () {
+                        //console.log(window.localStorage)
                     }
                 });
             }
@@ -285,9 +288,6 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
 
         //监听复选框选中
         table.on('checkbox(task_table_' + index + ')', function (obj) {
-            console.log(obj.checked); //当前是否选中状态
-            console.log(obj.data); //选中行的相关数据
-            console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
             if (obj.checked) {
                 //选中任务的周数是这周之前还是之后
                 if (obj.data.taskWeek > index) {
@@ -322,6 +322,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     checked_task_is_done.push(false);
                 }
             }
+            //console.log(checked_task_id)
         });
 
         //头工具栏事件
@@ -340,6 +341,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                         btn: '添加任务',
                         btnAlign: 'c', //按钮居中,
                         yes: function () {
+                            //console.log(window.localStorage)
                             if (window.localStorage.task_name == "") {
                                 layer.msg("请输入任务名称")
                             } else if (window.localStorage.task_week == -1) {
@@ -356,19 +358,20 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                                     data: JSON.stringify({
                                         "reqId": "",
                                         "reqParam": {
-                                            "taskName": window.localStorage.task_name,
-                                            "taskContent": window.localStorage.task_content,
-                                            "taskAmount": window.localStorage.task_amount,
-                                            "taskPriority": window.localStorage.task_priority,
-                                            "taskWeek": window.localStorage.task_week,
+                                            "taskName": window.localStorage.taskName,
+                                            "taskContent": window.localStorage.taskContent,
+                                            "taskAmount": window.localStorage.taskAmount,
+                                            "taskPriority": window.localStorage.taskPriority,
+                                            "taskWeek": window.localStorage.taskWeek,
                                             "isFinished": false,
                                             "teamId": target_team_id
                                         }
                                     }),
                                     dataType: "json",
                                     success: function (res) {
-                                        console.log(res);
+                                        //console.log(res);
                                         layer.msg("添加成功！", { time: 750 })
+                                        //console.log(window.localStorage)
                                         resetLocalStorage();
                                         table.render(param_task_existed(checked_tab_id));
                                         setCategory(checked_tab_id)
@@ -383,7 +386,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     //根据数组完成任务
                     if (checked_task_id.length > 0) {
                         for (var i = 0; i < checked_task_id.length; i++) {
-                            if (checked_task_is_done[index])
+                            if (checked_task_is_done[i])
                                 modifyFinishedOrNot(checked_task_id[i], i);
                         }
                         layer.msg("提交成功！", { time: 750 });
@@ -416,11 +419,11 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             }),
             dataType: "json",
             success: function (res) {
-                console.log(res);
+                //console.log(res);
             },
             error: function (res) {
-                console.log("error");
-                console.log(res);
+                //console.log("error");
+                //console.log(res);
             }
         });
     }
@@ -443,11 +446,11 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 }),
                 dataType: "json",
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                 },
                 error: function (res) {
-                    console.log("error");
-                    console.log(res);
+                    //console.log("error");
+                    //console.log(res);
                 }
             });
         }
@@ -465,14 +468,14 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 }),
                 dataType: "json",
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                     for (var i = 0; i < res.resData.length; i++) {
 
                     }
                 },
                 error: function (res) {
-                    console.log("error");
-                    console.log(res);
+                    //console.log("error");
+                    //console.log(res);
                 }
             });
         }
@@ -507,20 +510,60 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
         }
 
         myChart.on('click', function (params) {
-            console.log(params)
-            console.log(params.data)
-            console.log(params.name)
+            //console.log(params)
+            //console.log(params.data)
+            //console.log(params.name)
         });
     }
+
+    function resetLocalStorage() {
+        window.localStorage.taskId = ""
+        window.localStorage.taskName = ""
+        window.localStorage.taskAmount = ""
+        window.localStorage.taskContent = ""
+        window.localStorage.taskPriority = ""
+        window.localStorage.taskWeek = ""
+        window.localStorage.finishTime = ""
+    }
+
+    function setTimeTable(index) {
+        var param_task_existed = function (index) {
+            return {
+                elem: '#task_table_' + index
+                , url: GetTaskURL
+                , title: '项目列表'
+                , toolbar: "#toolbar_task"
+                , contentType: 'application/json'
+                , method: "POST"
+                , where: {
+                    "reqId": ""
+                    , "reqParam": target_team_id
+                }
+                , deal: function (res) {
+                    return {
+                        code: 0
+                        , msg: ""
+                        , count: 1000
+                        , data: res.resData
+                    }
+                }
+                , cols: [[
+                    { type: 'checkbox' }
+                    , { field: 'taskId', title: 'ID', hide: true }
+                    , { field: 'taskName', title: '名称' }
+                    , { field: 'taskWeek', title: '周数', sort: true }
+                    , { field: 'taskContent', title: '概述', hide: true }
+                    , { field: 'taskAmount', title: '任务量', sort: true }
+                    , { field: 'taskPriority', title: '优先级', sort: true }
+                    , { field: 'finishTime', title: '完成时间', sort: true, hide: true }
+                ]]
+                , done: function (res) {
+                    
+                }
+            }
+        }
+    }
+    function setTimeCategory(index) {
+
+    }
 });
-
-
-function resetLocalStorage() {
-    window.localStorage.taskId = ""
-    window.localStorage.taskName = ""
-    window.localStorage.taskAmount = ""
-    window.localStorage.taskContent = ""
-    window.localStorage.taskPriority = ""
-    window.localStorage.taskWeek = ""
-    window.localStorage.finishTime = ""
-}

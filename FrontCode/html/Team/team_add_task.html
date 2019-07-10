@@ -159,6 +159,7 @@
                     var form = layui.form;
                     form.on('select(task_week)', function (data) {
                         window.localStorage.taskWeek = data.value
+                        console.log(window.localStorage.taskWeek)
                     });
                 })
             }
