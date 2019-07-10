@@ -36,7 +36,7 @@ public class GetWeekByPracticeIdServlet extends HttpServlet {
         ResponseBean<PracticeBean> resBean = new ResponseBean<>();
         try{
             GetWeekByPracticeIdDao dao = new GetWeekByPracticeIdDao();
-            PracticeBean res = dao.getWeek(reqBean.getReqParam());
+            PracticeBean res = dao.getWeek(reqBean);
             if (res == null){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
