@@ -36,7 +36,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     title: '日志',
                     type: 2,
                     area: ["500px", "500px"],
-                    content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&week=" + week,
+                    content: WriteDiaryURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&user_item_id=" + target_item_id + "&week=" + (week + 1),
                     btn: '发布',
                     btnAlign: 'c',
                     yes: function () {
