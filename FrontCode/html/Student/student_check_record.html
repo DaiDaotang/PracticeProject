@@ -204,8 +204,12 @@
                                 var signins = res.resData[i].signins;
                                 //扫描记录
                                 for (var j = 0; j < signins.length; j++) {
+                                    if (res.resData[i].date == "2019-07-11") {
+                                        console.log(getIndex(signins[j].dateTime))
+                                        console.log(j)
+                                    }
                                     //若22:00后还有签到，则视22:00为最后一次签到
-                                    if ((block_this = getIndex(signins[j].dateTime)) > 88) {
+                                    if ((block_this = getIndex(signins[j].dateTime)) > 88 || (block_this = getIndex(signins[j].dateTime)) < 28) {
                                         block_this = 89;
                                         work_over = true;
                                     }
