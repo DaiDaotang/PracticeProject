@@ -127,7 +127,39 @@
                 window.localStorage.taskContent = ""
                 window.localStorage.taskPriority = ""
                 window.localStorage.taskWeek = ""
-                window.localStorage.finishTime =""
+                window.localStorage.finishTime = ""
+            }
+            else if (select == "detail") {
+                document.getElementById('task_name').value = window.localStorage.taskName;
+                document.getElementById('task_amount').value = window.localStorage.taskAmount;
+                document.getElementById('task_priority').value = window.localStorage.taskPriority;
+                document.getElementById('task_content').value = window.localStorage.taskContent;
+                document.getElementById('task_week').value = window.localStorage.taskWeek;
+                document.getElementById('task_name').diabled = "disabled";
+                document.getElementById('task_amount').diabled = "disabled";
+                document.getElementById('task_priority').diabled = "disabled";
+                document.getElementById('task_content').diabled = "disabled";
+                document.getElementById('task_week').diabled = "disabled";
+                form.render('select');
+                if (window.localStorage.finishTime != "" && window.localStorage.finishTime != "undefined") {
+                    console.log(window.localStorage.finishTime)
+                    document.getElementById("finish_time").innerHTML += `
+                        <label class="layui-form-label">完成时间</label>
+                        <div style="padding-top:11px;">
+                           ` + window.localStorage.finishTime + `
+                        </div>`
+                    $('#task_name').attr("readonly", true);
+                    $('#task_amount').attr("readonly", true);
+                    $('#task_priority').attr("readonly", true);
+                    $('#task_content').attr("readonly", true);
+                    $('#task_week').attr("disabled", "disabled");
+                }
+                window.localStorage.taskName = ""
+                window.localStorage.taskAmount = ""
+                window.localStorage.taskContent = ""
+                window.localStorage.taskPriority = ""
+                window.localStorage.taskWeek = ""
+                window.localStorage.finishTime = ""
             }
         })
     </script>

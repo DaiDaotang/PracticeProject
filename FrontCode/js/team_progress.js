@@ -210,36 +210,71 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             window.localStorage.taskWeek = obj.data.taskWeek;
             window.localStorage.finishTime = obj.data.finishTime
 
-            layer.open({
-                title: '任务详情',
-                type: 2,
-                area: ["500px", "500px"],
-                content: AddTaskURL + "?select=edit",
-                btn: ['确定修改', '删除任务', '关闭'],
-                btnAlign: 'c', //按钮居中,
-                yes: function (index, layero) {
-                    console.log(window.localStorage.finishTime)
-                    if (window.localStorage.finishTime != "" || window.localStorage.finishTime != "undefined" || window.localStorage.taskWeek < week_now) {
-                        layer.msg("任务已完成或已逾期，不可修改")
-                    }
-                    else {
-                        //修改任务信息
-                        //obj.update(fields)    //修改当前行数据
-                    }
-                },
-                btn2: function (index, layero) {
-                    layer.confirm('确定要删除吗？',function (index) {
-                        //删除任务接口
-                        obj.del();
+            if (index > 0) {
+                layer.open({
+                    title: '任务详情',
+                    type: 2,
+                    area: ["500px", "500px"],
+                    content: AddTaskURL + "?select=detail",
+                    btn: ['确定修改', '删除任务', '关闭'],
+                    btnAlign: 'c', //按钮居中,
+                    yes: function (index, layero) {
+                        if (index > 0) {
+                            console.log("只可修改任务总览中的任务")
+                        }
                         layer.close(index);
-                    });
-                },
-                btn3: function (index, layero) {
-                    layer.closeAll();
-                },
-                end: function () {
-                }
-            });
+                    },
+                    btn2: function (index, layero) {
+                        if (window.localStorage.finishTime != "" || window.localStorage.finishTime != "undefined" || window.localStorage.taskWeek < week_now) {
+                            layer.msg("<p>任务已完成或已逾期，不可修改<br/>可在任务总览中修改周数</p>")
+                        }
+                        else {
+                            layer.confirm('确定要删除吗？', function (index) {
+                                //删除任务接口
+                                obj.del();
+                            });
+                        }
+                        layer.close(index);
+                    },
+                    btn3: function (index, layero) {
+                        layer.closeAll();
+                    },
+                    end: function () {
+                    }
+                });
+            } else {
+                layer.open({
+                    title: '任务详情',
+                    type: 2,
+                    area: ["500px", "500px"],
+                    content: AddTaskURL + "?select=edit",
+                    btn: ['确定修改', '删除任务', '关闭'],
+                    btnAlign: 'c', //按钮居中,
+                    yes: function (index, layero) {
+                        if (index > 0) {
+                            console.log("只可修改任务总览中的任务")
+                        }
+                        layer.close(index);
+                    },
+                    btn2: function (index, layero) {
+                        if (window.localStorage.finishTime != "" || window.localStorage.finishTime != "undefined" || window.localStorage.taskWeek < week_now) {
+                            layer.msg("<p>任务已完成或已逾期，不可修改<br/>可在任务总览中修改周数</p>")
+                        }
+                        else {
+                            layer.confirm('确定要删除吗？', function (index) {
+                                //删除任务接口
+                                obj.del();
+                            });
+                        }
+                        layer.close(index);
+                    },
+                    btn3: function (index, layero) {
+                        layer.closeAll();
+                    },
+                    end: function () {
+                    }
+                });
+            }
         });
 
         //监听复选框选中
