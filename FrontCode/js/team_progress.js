@@ -456,22 +456,20 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                             y_t.push(0)
                         }
                     }
-                    console.log(x)
-                    console.log(y)
-                    console.log(x_t)
-                    console.log(y_t)
                     var temp_index = y_t.length - 1
                         , temp_value = 0;
-                    console.log(temp_index)
                     for (var i = y.length - 1; i >= 0; i--) {
                         for (var j = y[i].length - 1; j >= 0; j--) {
-                            console.log(temp_index)
-                            console.log(y[i][j])
+                            if (j == y[i].length - 1 && y[i][j] > 0) {
+                                for (var k = temp_index; k < y_t.length; k++) {
+                                    y_t[k] += y[i][j];
+                                }
+                            }
                             y_t[temp_index] = temp_value + y[i][j];
                             if(j > 0)
                                 temp_index -= 1;
                         }
-                        temp_value = y_t[temp_index + 1];
+                        temp_value = y_t[temp_index];
                     }
                     console.log(x_t)
                     console.log(y_t)
