@@ -21,7 +21,6 @@ var param_item_existed = function (res0) {
             }
         }
         , deal: function (res) {
-            console.log(res)
             return {
                 code: 0
                 , msg: ""
@@ -32,7 +31,6 @@ var param_item_existed = function (res0) {
         , cols: [[
             { field: 'id', title: '实训ID', sort: true, hide: true }
             , { field: 'name', title: '实训名称' }
-            , { field: 'schoolName', title: '主办学校' }
             , {
                 field: 'type', title: '承包公司', templet: function (d) {
                     return '<div id="company_' + d.id + '"></div>'
@@ -44,9 +42,8 @@ var param_item_existed = function (res0) {
             , { fixed: 'right', title: '操作', toolbar: '#bar_change_delete', width: 120 }
         ]]
         , done: function (res) {
-            console.log(res.data)
             for (var i = 0; i < res.data.length; i++) {
-                document.getElementById('company_' + res.data[i].id).innerText = target_company_name;
+                document.getElementById('company_' + res.data[i].id).innerText = res.data[i].companyName;
             }
         }
     }
@@ -78,7 +75,6 @@ var param_item_existed = function (res0) {
             , cols: [[
                 { field: 'id', title: '实训ID', sort: true, hide: true }
                 , { field: 'name', title: '实训名称' }
-                , { field: 'schoolName', title: '主办学校' }
                 , {
                     field: 'type', title: '承包公司', templet: function (d) {
                         return '<div id="company_' + d.id + '"></div>'
@@ -89,9 +85,8 @@ var param_item_existed = function (res0) {
                 , { field: 'endTime', title: '结束时间', event: 'lookIntroDetail' }
             ]]
             , done: function (res) {
-                console.log(res.data)
                 for (var i = 0; i < res.data.length; i++) {
-                    document.getElementById('company_' + res.data[i].id).innerText = target_company_name;
+                    document.getElementById('company_' + res.data[i].id).innerText = res.data[i].companyName;
                 }
             }
         }

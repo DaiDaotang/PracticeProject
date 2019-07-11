@@ -140,6 +140,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 , { field: 'taskAmount', title: '任务量', sort: true}
                 , { field: 'taskPriority', title: '优先级', sort: true}
                 , { field: 'finishTime', title: '完成时间', sort: true, hide: true }
+                , { fixed: 'right', title: '操作', toolbar: '#bar_detail', width: 65 }
             ]]
             , done: function (res) {
                 //console.log(res.data);
@@ -391,6 +392,131 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     setCategory(checked_tab_id)
                     break;
             };
+        });
+
+        //监听工作条
+        table.on('tool(task_table_' + index +')', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            if (layEvent === 'detail') { //查看
+                window.localStorage.taskName = obj.data.taskName;
+                window.localStorage.taskAmount = obj.data.taskAmount;
+                window.localStorage.taskContent = obj.data.taskContent;
+                window.localStorage.taskPriority = obj.data.taskPriority;
+                window.localStorage.taskWeek = obj.data.taskWeek;
+                window.localStorage.finishTime = obj.data.finishTime;
+                window.localStorage.taskId = obj.data.taskId;
+
+                //任务总览
+                if (index == 0) {
+                    layer.open({
+                        title: '任务详情',
+                        type: 2,
+                        area: ["500px", "500px"],
+                        content: AddTaskURL + "?select=edit" + "&week=" + week_total,
+                        btn: ['确定修改', '删除任务', '关闭'],
+                        btnAlign: 'c', //按钮居中,
+                        yes: function (index, layero) {
+                            //console.log(window.localStorage.finishTime)
+                            if (window.localStorage.finishTime == "" || window.localStorage.finishTime == "undefined") {
+                                $.ajax({
+                                    type: "POST",
+                                    url: ModifyTaskURL,
+                                    async: true,
+                                    data: JSON.stringify({
+                                        "reqId": "",
+                                        "reqParam": {
+                                            "taskName": window.localStorage.taskName,
+                                            "taskContent": window.localStorage.taskContent,
+                                            "taskAmount": window.localStorage.taskAmount,
+                                            "taskPriority": window.localStorage.taskPriority,
+                                            "taskWeek": window.localStorage.taskWeek,
+                                            "teamId": target_team_id,
+                                            "taskId": obj.data.taskId
+                                        }
+                                    }),
+                                    dataType: "json",
+                                    success: function (res) {
+                                        //console.log(res);
+                                        //console.log(window.localStorage)
+                                        if (res.isSuccess) {
+                                            layer.msg("修改成功！", { time: 500 })
+                                            obj.update({
+                                                taskName: window.localStorage.taskName,
+                                                taskContent: window.localStorage.taskContent,
+                                                taskAmount: window.localStorage.taskAmount,
+                                                taskPriority: window.localStorage.taskPriority,
+                                                taskWeek: window.localStorage.taskWeek
+                                            })
+                                            resetLocalStorage();
+                                            layer.close(index);
+                                        }
+                                    },
+                                    error: function (res) {
+                                        //console.log("error");
+                                        //console.log(res);
+                                    }
+                                });
+                            }
+                            else {
+                                layer.msg("任务已完成，不可修改", { time: 750 })
+                                layer.close(index);
+                                resetLocalStorage();
+                            }
+                        },
+                        btn2: function (index, layero) {
+                            layer.confirm('确定要删除吗？', function () {
+                                //删除任务接口
+                                $.ajax({
+                                    type: "POST",
+                                    url: DeleteTaskURL,
+                                    async: true,
+                                    data: JSON.stringify({
+                                        "reqId": "",
+                                        "reqParam": window.localStorage.taskId
+                                    }),
+                                    dataType: "json",
+                                    success: function (res) {
+                                        resetLocalStorage();
+                                        layer.msg("删除成功！", { time: 750 })
+                                    },
+                                    error: function (res) {
+                                        //console.log("error");
+                                        //console.log(res);
+                                    }
+                                });
+                                obj.del();
+                                layer.closeAll();
+                            });
+                        },
+                        btn3: function (index, layero) {
+                            layer.closeAll();
+                        },
+                        end: function () {
+                            //console.log(window.localStorage)
+                        }
+                    });
+                }
+                //周
+                else {
+                    layer.open({
+                        title: '任务详情',
+                        type: 2,
+                        area: ["500px", "500px"],
+                        content: AddTaskURL + "?select=detail" + "&week=" + week_total,
+                        btn: ['关闭'],
+                        btnAlign: 'c', //按钮居中,
+                        yes: function (index, layero) {
+                            layer.close(index);
+                        },
+                        end: function () {
+                            resetLocalStorage();
+                        }
+                    });
+                }
+            }
         });
     }
 
