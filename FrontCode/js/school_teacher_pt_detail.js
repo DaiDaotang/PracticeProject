@@ -2,8 +2,6 @@ var target_pt_id = t_param[`target_pt_id`]
     , last_item_id = ""
     , target_item_id = -1;
 
-target_pt_id = 20;
-
 layui.use(['form', 'jquery', 'layer', 'table'], function () {
     var form = layui.form
         , $ = layui.jquery

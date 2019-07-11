@@ -1,5 +1,5 @@
-// JavaScript source code
-//Çø 
+ï»¿// JavaScript source code
+//åŒº 
 var target_id = parseInt(t_param[`target_id`])
     , target_authority = t_param[`target_authority`]
     , target_name = ""
@@ -31,7 +31,7 @@ layui.use(['layer', 'jquery', 'form'], function () {
                 , target_school_name = res.resData.schoolName;
 
             document.getElementById("username").innerText = target_name;
-            document.getElementById("gender").innerHTML = (target_gender == "ÄĞ") ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
+            document.getElementById("gender").innerHTML = (target_gender == "ç”·") ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
             document.getElementById("school_name").innerText = target_school_name;
         },
         error: function (res) {
@@ -40,19 +40,19 @@ layui.use(['layer', 'jquery', 'form'], function () {
         }
     });
 
-    //¼àÌıÖÃ¶¥
+    //ç›‘å¬ç½®é¡¶
     $(document).on('click', '#turntop', function () {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
 
-    //»ñÈ¡¸ºÔğµÄÊµÑµIDÃû³Æ
+    //è·å–è´Ÿè´£çš„å®è®­IDåç§°
     $.ajax({
         type: "POST",
-        url: GetPTInChargeURL,
+        url: GetPTListInSTChargeURL,
         async: true,
         data: JSON.stringify({
             "reqId": "",
-            "reqParam": ""
+            "reqParam": user_id
         }),
         dataType: "json",
         success: function (res) {
@@ -72,35 +72,26 @@ layui.use(['layer', 'jquery', 'form'], function () {
                                         </div>
                                         <div class="layui-col-md2">
                                             <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
-                                                <input type='button' class="layui-btn layui-btn-normal" onclick='check_detail(this)' id="check_detail_` + target_pt_id[index] + `_` + res.resData[i].id + `" id="check_detail_` + target_pt_id[index] + `_` + res.resData[i].idi + `" style="font-size:20px;" value="ÊµÑµÏêÇé"/>
+                                                <input type='button' class="layui-btn layui-btn-normal" onclick='check_detail(this)' id="check_detail_` + res.resData[i].id + `" id="check_detail_` + res.resData[i].id + `" style="font-size:20px;" value="å®è®­è¯¦æƒ…"/>
                                             </div>
                                         </div>
                                     </div>
                                 </li>`;
-
             }
+            document.getElementById("pt_in_charge_now").innerHTML = temp;
         },
         error: function (res) {
             console.log("error");
             console.log(res);
         }
     });
-
-    //µã»÷°´Å¥³ö·¢ÊÂ¼ş
-    function score_team(obj) {
-        console.log(obj.id)
-        var strs = obj.id.split("_");
-        var extra_url = "&target_item_id=" + strs[3] + "&target_pt_id=" + strs[2];
-        window.open(CompanyTeacherScoreURL + basic_extra_url + extra_url)
-    }
 })
 
-//laydateÇø
-layui.use('laydate', function () {
-    var laydate = layui.laydate;
 
-    //Ö´ĞĞÒ»¸ölaydateÊµÀı
-    laydate.render({
-        elem: '#search_diary_data'
-    });
-});
+//ç‚¹å‡»æŒ‰é’®å‡ºå‘äº‹ä»¶
+function check_detail(obj) {
+    console.log(obj.id)
+    var strs = obj.id.split("_");
+    var extra_url = "&target_pt_id=" + strs[2];
+    window.open(SchoolTeacherPTInChargeURL + basic_extra_url + extra_url)
+}

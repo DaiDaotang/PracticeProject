@@ -57,14 +57,16 @@ var TeamHomepageURL = "homepage_team.html"
 
 //School Teacher
 var GetSchoolTeacherInfoURL = "http://localhost:8080/GetSchoolTeacherInformationServlet"
-    , GetSchoolTeacherModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeBySchoolTeacherIdServlet";
+    , GetSchoolTeacherModifyItemURL = "http://localhost:8080/GetCanModifiedPracticeBySchoolTeacherIdServlet"
+    , GetPTListInSTChargeURL = "http://localhost:8080/GetPracticeNowBySchoolTeacherIdServlet";
 
 var CreateNewPTURL = "school_teacher_publish_pt.html"
     , SchoolPTListURL = "school_pt_list.html"
     , ModifyPTURL = "school_teacher_modify_pt.html"
     , SchoolTeacherHomepageURL = "homepage_school_teacher.html"
     , SchoolTeacherAddPTItemURL = "school_teacher_add_pt_item.html"
-    , SchoolTeacherModifyPTDetailURL = "school_teacher_add_pt_item.html";
+    , SchoolTeacherModifyPTDetailURL = "school_teacher_add_pt_item.html"
+    , SchoolTeacherPTInChargeURL = "school_teacher_pt_detail.html";
 
 //CompanyTeacher
 var GetTeamInProjectURL = "http://localhost:8080/GetTeamInProjectServlet"
