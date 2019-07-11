@@ -18,6 +18,10 @@ var user_id = t_param[`user_id`]
 
 var param_member_existed = "";
 
+if (user_authority != "Student") {
+    document.getElementById("delTeam").style.display = "none";
+}
+
 layui.use(['form', 'table', 'layer', 'jquery'], function () {
     var table = layui.table
         , layer = layui.layer
