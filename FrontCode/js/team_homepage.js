@@ -69,7 +69,6 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
 
             var basic_extra_url = "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_team_id=" + target_team_id + "&target_pt_id=" + target_pt_id + "&target_item_id=" + target_item_id
             document.getElementById("team_homepage").href = TeamHomepageURL + basic_extra_url;
-            document.getElementById("team_diary").href = TeamDiaryURL + basic_extra_url;
             document.getElementById("team_progress").href = TeamProgressURL + basic_extra_url;
 
 
