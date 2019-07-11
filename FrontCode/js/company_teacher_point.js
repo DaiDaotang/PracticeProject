@@ -74,7 +74,7 @@ layui.use(['element', 'form', 'jquery', 'laydate', 'table', 'layer'], function (
                                     <div class="layui-col-md2" style="height:100px;">
                                         <div class="grid-demo grid-demo-bg1" style="height:auto; margin: 20px 0 20px 20px;">
                                             <div class="layui-form-item" style="margin: 0 auto 15px auto;">
-                                                <span style="font-size:24px;"><a href="../Team/homepage_team.html?user_id=` + user_id + `&user_authority=` + user_authority + `&target_id=` + target_id + `&target_authority=` + target_authority + `&target_team_id=` + all_team_id[i] + `&target_item_id=` + target_item_id + `&target_pt_id=` + target_pt_id + `" target="_blank">
+                                                <span style="font-size:24px;"><a href="../Team/team_progress.html?user_id=` + user_id + `&user_authority=` + user_authority + `&target_id=` + target_id + `&target_authority=` + target_authority + `&target_team_id=` + all_team_id[i] + `&target_item_id=` + target_item_id + `&target_pt_id=` + target_pt_id + `" target="_blank">
                                                     主页→
                                                 </a></span>
                                             </div>

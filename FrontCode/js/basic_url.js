@@ -16,7 +16,8 @@ var GetStudentTeamURL = "http://localhost:8080/StudentCheckTeamServlet"
     , GetSignInsURL = "http://localhost:8080/GetSigninByStudentServlet"
     , GetItemListURL = "http://localhost:8080/GetProjectinPracticeServlet"
     , CreateTeamURL = "http://localhost:8080/CreateTeamServlet"
-    , GetStudentDiaryURL = "http://localhost:8080/GetDiaryServlet";
+    , GetStudentDiaryURL = "http://localhost:8080/GetDiaryServlet"
+    , GetHistoryPTURL = "http://localhost:8080/GetAllPastInformationServlet";
 
 var GroupURL = "../Team/homepage_team.html"
     , CreateGroupURL = "student_create_team.html"
