@@ -38,6 +38,10 @@ public class SigninServlet extends HttpServlet {
             if (res == -1){
                 resBean.setResId(reqBean.getReqId());
                 resBean.setSuccess(false);
+            }else if (res == -2){
+                resBean.setResId(reqBean.getReqId());
+                resBean.setSuccess(false);
+                resBean.setMessage("-1");
             }
             else {
                 resBean.setResId(reqBean.getReqId());
