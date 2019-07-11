@@ -13,6 +13,7 @@ public class CompanyTeacherBean {
     private int practice;
     private ArrayList<ProjectBean> projects;
     private boolean canModify;
+    private boolean isPas;
 
     public String getTelephone() {
         return telephone;
@@ -92,5 +93,13 @@ public class CompanyTeacherBean {
 
     public void setCanModify(boolean canModify) {
         this.canModify = canModify;
+    }
+
+    public boolean isPas() {
+        return isPas;
+    }
+
+    public void setPas(boolean pas) {
+        isPas = pas;
     }
 }

@@ -17,6 +17,7 @@ public class StudentBean {
     private int projectId;
     private int index;
     private int score;
+    private boolean isPas;
 
     public String getTelephone() {
         return telephone;
@@ -144,5 +145,13 @@ public class StudentBean {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public boolean isPas() {
+        return isPas;
+    }
+
+    public void setPas(boolean pas) {
+        isPas = pas;
     }
 }

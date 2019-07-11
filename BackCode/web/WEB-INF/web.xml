@@ -578,4 +578,22 @@
         <servlet-name>GetXYByTeamServlet</servlet-name>
         <url-pattern>/GetXYByTeamServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifyStudentServlet</servlet-name>
+        <servlet-class>com.servlet.ModifyStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifyStudentServlet</servlet-name>
+        <url-pattern>/ModifyStudentServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifySchoolTeacherServlet</servlet-name>
+        <servlet-class>com.servlet.ModifySchoolTeacherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifySchoolTeacherServlet</servlet-name>
+        <url-pattern>/ModifySchoolTeacherServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

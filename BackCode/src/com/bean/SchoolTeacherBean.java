@@ -10,6 +10,7 @@ public class SchoolTeacherBean {
     private String head;
     private String schoolName;
     private boolean canModify;
+    private boolean isPas;
 
     public String getTelephone() {
         return telephone;
@@ -81,5 +82,13 @@ public class SchoolTeacherBean {
 
     public void setCanModify(boolean canModify) {
         this.canModify = canModify;
+    }
+
+    public boolean isPas() {
+        return isPas;
+    }
+
+    public void setPas(boolean pas) {
+        isPas = pas;
     }
 }
