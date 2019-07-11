@@ -40,32 +40,60 @@ layui.use(['layer', 'jquery', 'form'], function () {
         }
     });
 
-})
-
-//form区 + 大区
-layui.use(['form', 'jquery', 'layer'], function () {
-    var form = layui.form
-        , $ = layui.jquery
-        , layer = layui.layer;
-
-    //表单初始赋值
-    form.val('diary_form', {
-        "search_diary_input": ""
-        , "search_diary_data": ""
-    })
-
-    //监听搜索
-    form.on('submit(search_diary_btn)', function (data) {
-        console.log(data.field);
-        return false;
-    });
-
     //监听置顶
     $(document).on('click', '#turntop', function () {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
 
-});
+    //获取负责的实训ID名称
+    $.ajax({
+        type: "POST",
+        url: GetPTInChargeURL,
+        async: true,
+        data: JSON.stringify({
+            "reqId": "",
+            "reqParam": ""
+        }),
+        dataType: "json",
+        success: function (res) {
+            console.log(res);
+            var temp = "";
+            for (var i = 0; i < res.resData.length; i++) {
+                temp += `
+                                <li>
+                                    <div class="layui-row" style="height:100px;  font-size:24px; margin-right: 20px;">
+                                        <div class="layui-col-md10">
+                                            <div class="grid-demo grid-demo-bg1">
+                                                <div style="height:auto; margin: 20px 0 20px 20px;">
+                                                    <i class="layui-icon layui-icon-form" style="font-size:26px;color: #1E9FFF;"></i>
+                                                    <span style="font-size: 26px; color= #000">` + res.resData[i].name + `</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md2">
+                                            <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
+                                                <input type='button' class="layui-btn layui-btn-normal" onclick='check_detail(this)' id="check_detail_` + target_pt_id[index] + `_` + res.resData[i].id + `" id="check_detail_` + target_pt_id[index] + `_` + res.resData[i].idi + `" style="font-size:20px;" value="实训详情"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>`;
+
+            }
+        },
+        error: function (res) {
+            console.log("error");
+            console.log(res);
+        }
+    });
+
+    //点击按钮出发事件
+    function score_team(obj) {
+        console.log(obj.id)
+        var strs = obj.id.split("_");
+        var extra_url = "&target_item_id=" + strs[3] + "&target_pt_id=" + strs[2];
+        window.open(CompanyTeacherScoreURL + basic_extra_url + extra_url)
+    }
+})
 
 //laydate区
 layui.use('laydate', function () {
@@ -76,28 +104,3 @@ layui.use('laydate', function () {
         elem: '#search_diary_data'
     });
 });
-
-//flow区
-layui.use('flow', function () {
-    var flow = layui.flow
-        , $ = layui.jquery;
-
-    flow.load({
-        elem: '#diary_flow' //流加载容器
-        , done: function (page, next) { //执行下一页的回调
-
-            //模拟数据插入
-            setTimeout(function () {
-                var lis = [];
-                for (var i = 0; i < 8; i++) {
-                    lis.push('<li><div style="width:auto; height: 200px; margin: 20px; background-color:#d4dadb; border-radius: 20px;"><p>' + ((page - 1) * 8 + i + 1) + '</p></div></li>')
-                }
-
-                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-                next(lis.join(''), page < 10); //假设总页数为 10
-            }, 300);
-        }
-    });
-});
-

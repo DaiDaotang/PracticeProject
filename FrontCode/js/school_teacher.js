@@ -32,7 +32,6 @@ layui.use(['layer', 'jquery', 'form'], function () {
 
             var basic_extra_url = "?user_id=" + t_param[`user_id`] + "&user_authority=" + t_param[`user_authority`] + "&target_id=" + t_param[`target_id`] + "&target_authority=" + t_param[`target_authority`];
             document.getElementById("target_homepage").href = SchoolTeacherHomepageURL + basic_extra_url;
-            document.getElementById("target_school_pt").href = SchoolPTListURL + basic_extra_url;
             document.getElementById("target_create_pt").href = CreateNewPTURL + basic_extra_url + "&user_school_id=" + target_school_id;
             document.getElementById("target_modify_pt").href = ModifyPTURL + basic_extra_url + "&user_school_id=" + target_school_id;
         },
