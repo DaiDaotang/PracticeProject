@@ -113,7 +113,7 @@ var GetSchoolTeacherListURL = "http://localhost:8080/GetSchoolTeacherBySchoolIdS
 //共有URL
 var HomepageURL = ""
     , QuitURL = "../login.html"
-    , ChangeInfoURL = "../login.html"
+    , ChangeInfoURL = "../change_info.html"
     , SafetyURL = "../safety_info.html"
     , GetStudentServletURL = "http://localhost:8080/GetStudentInformationServlet"
     , GetCompanyTeacherServletURL = "http://localhost:8080/GetCompanyTeacherInformationServlet"
