@@ -25,7 +25,7 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px; margin-bottom: 50px;">
             <legend style="font-size:32px;">修改信息</legend>
         </fieldset>
-        <form class="layui-form" action="" lay-filter="signup_info" id="signup_form">
+        <form class="layui-form" action="" lay-filter="change_info" id="change_info">
             <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 40px; width:450px;">
                 <label class="layui-form-label">头像</label>
                 <img id="target_hd_img" style="width:150px; height:150px; position:absolute; left: 210px; top: 240px; border-radius: 75px;" />
@@ -39,13 +39,13 @@
             <div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px; position:relative; right:40px;">
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <input type="radio" name="sex" value="男" title="男">
                     <input type="radio" name="sex" value="女" title="女">
                 </div>
             </div>
             <div id="extra_input"></div>
             <div class="layui-form-item">
-                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="change_info" id="change_info" style="font-size:22px; border-radius: 20px; margin-top:50px; margin-left:30px;">Sign Up</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="change_info" id="change_info" style="font-size:22px; border-radius: 20px; margin-top:50px; margin-left:30px;">确认修改</button>
             </div>
         </form>
     </center>
@@ -95,24 +95,68 @@
                         success: function (res) {
                             if (res.isSuccess) {
                                 temp = `
-                                    <div class="layui-form-item" id="school-div" style="margin: 0 auto 15px auto; width: 450px;">
+                                    <div class="layui-form-item" id="school-div" style="margin: 0 auto 15px auto; width: 450px;position:relative; right: 40px; ">
                                         <label class="layui-form-label">所属学校</label>
                                         <div class="layui-input-block">
-                                            <select name="school_sort" lay-filter="school_sort" id="school_sort">
-                                                <option value=""></option>`;
-                                for (var i = 0; i < res.resData.length; i++) {
-                                    var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
-                                    temp += temptemp;
-                                }
-
-                                temp += '</select></div></div><div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">学号</label><div class="layui-input-block"><input type="text" name="student_number" lay-filter="student_number" id="student_number" autocomplete="off" placeholder="请输入学号" class="layui-input"></div></div><div class="layui-form-item" id="student_major-div" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">专业</label><div class="layui-input-block"><input type="text" name="student_major" lay-filter="student_major" id="student_major" autocomplete="off" placeholder="请输入专业" class="layui-input"></div></div>';
-                                temp += '<div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;"><label class="layui-form-label">年级</label><div class="layui-input-block"><select name="grade" lay-filter="grade" id="grade"><option value=""></option>';
-                                temp += '<option value="2013">2013级</option><option value="2014">2014级</option><option value="2015">2015级</option><option value="2016">2016级</option><option value="2017" selected="">2017级</option><option value="2018">2018级</option><option value="2019">2019级</option>';
-                                temp += '</div ></div > '
-                                document.getElementById('extra-input').innerHTML = temp;
-                                document.getElementById('signup').style.marginBottom = "80px";
-                                form.render('radio');
-                                form.render('select');
+                                            <input type="text" name="student_sort" lay-filter="student_sort" id="student_sort" autocomplete="off" placeholder="请输入学校" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;position:relative; right: 40px; ">
+                                        <label class="layui-form-label">学号</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="student_number" lay-filter="student_number" id="student_number" autocomplete="off" placeholder="请输入学号" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item" id="student_major-div" style="margin: 0 auto 15px auto; width: 450px;position:relative; right: 40px; ">    
+                                        <label class="layui-form-label">专业</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="student_major" lay-filter="student_major" id="student_major" autocomplete="off" placeholder="请输入专业" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;position:relative; right: 40px; ">
+                                        <label class="layui-form-label">年级</label>
+                                        <div class="layui-input-block">
+                                            <select name="grade" lay-filter="grade" id="grade">
+                                                <option value=""></option>';
+                                                <option value="2013">2013级</option>
+                                                <option value="2014">2014级</option>
+                                                <option value="2015">2015级</option>
+                                                <option value="2016">2016级</option>
+                                                <option value="2017">2017级</option>
+                                                <option value="2018">2018级</option>
+                                                <option value="2019">2019级</option>
+                                            </select>
+                                        </div>
+                                    </div > `
+                                document.getElementById('extra_input').innerHTML = temp;
+                                //获取学生信息
+                                $.ajax({
+                                    type: "POST",
+                                    url: GetStudentServletURL,
+                                    async: true,
+                                    data: JSON.stringify({
+                                        "reqId": "",
+                                        "reqParam": target_id
+                                    }),
+                                    dataType: "json",
+                                    success: function (res) {
+                                        console.log(res);
+                                        form.val('change_info', {
+                                            "username": res.resData.name,
+                                            "sex": res.resData.sex,
+                                            "student_number": res.resData.number,
+                                            "student_major": res.resData.major,
+                                            "grade": res.resData.grade,
+                                            "student_sort": res.resData.schoolName
+                                        })
+                                        document.getElementById("student_sort").disabled = "disabled";
+                                        form.render('radio');
+                                        form.render('select');
+                                    },
+                                    error: function (res) {
+                                        console.log("获取用户基本信息失败");
+                                    }
+                                });
                             }
                         },
                         error: function (res) {
@@ -120,12 +164,6 @@
                             console.log(res);
                         }
                     });
-
-                    document.getElementById('extra-input').innerHTML = temp;
-                    document.getElementById('signup').style.marginBottom = "80px";
-                    form.render('radio');
-                    form.render('select');
-
                     break;
                 case "Teacher":
                     //获取企业名称
@@ -151,7 +189,29 @@
 
                                 temp += '</select></div></div> ';
                                 document.getElementById('extra_input').innerHTML = temp;
-                                form.render('select');
+
+                                //获取信息
+                                $.ajax({
+                                    type: "POST",
+                                    url: GetCompanyTeacherInfoURL,
+                                    async: true,
+                                    data: JSON.stringify({
+                                        "reqId": "",
+                                        "reqParam": target_id
+                                    }),
+                                    dataType: "json",
+                                    success: function (res) {
+                                        console.log(res);
+                                        form.val('change_info', {
+                                            "username": res.resData.name,
+                                            "sex": res.resData.sex,
+                                            "company_sort": res.resData.company
+                                        })
+                                    },
+                                    error: function (res) {
+                                        console.log("获取用户基本W信息失败");
+                                    }
+                                });
                             }
                         },
                         error: function (res) {
@@ -181,11 +241,31 @@
                                     var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
                                     temp += temptemp;
                                 }
-
                                 temp += '</select></div></div> ';
                                 document.getElementById('extra_input').innerHTML = temp;
-                                form.render('radio');
-                                form.render('select');
+                                form.render('select')
+                                $.ajax({
+                                    type: "POST",
+                                    url: GetSchoolTeacherInfoURL,
+                                    async: true,
+                                    data: JSON.stringify({
+                                        "reqId": "",
+                                        "reqParam": target_id
+                                    }),
+                                    dataType: "json",
+                                    success: function (res) {
+                                        console.log(res);
+                                        form.val('change_info', {
+                                            "username": res.resData.name,
+                                            "sex": res.resData.sex,
+                                            "school_sort": res.resData.school
+                                        })
+                                    },
+                                    error: function (res) {
+                                        console.log("error");
+                                        console.log(res);
+                                    }
+                                });
                             }
                         },
                         error: function (res) {
@@ -195,16 +275,23 @@
                     });
                     break;
             }
-            document.getElementById("extra_input").innerHTML += temp;
 
             //表单初始赋值
             form.val('signup_info', {
                 "company_name": ""
             })
 
-            //监听注册
+            //监听确认修改
             form.on('submit(change_info)', function (data) {
                 console.log(data.field)
+                switch (user_authority) {
+                    case "Student":
+                        break;
+                    case "Teacher":
+                        break;
+                    case "School":
+                        break;
+                }
                 return false;
             });
 
@@ -223,8 +310,6 @@
                                 break;
                             case "School":
                                 HomepageURL = "SchoolTeacher/" + SchoolTeacherHomepageURL + "?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
-                                break;
-                            case "Company":
                                 break;
                             default:
                                 HomepageURL = "login.html"
