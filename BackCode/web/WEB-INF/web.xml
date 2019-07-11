@@ -596,4 +596,13 @@
         <servlet-name>ModifySchoolTeacherServlet</servlet-name>
         <url-pattern>/ModifySchoolTeacherServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ModifyCompanyTeacherServlet</servlet-name>
+        <servlet-class>com.servlet.ModifyCompanyTeacherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModifyCompanyTeacherServlet</servlet-name>
+        <url-pattern>/ModifyCompanyTeacherServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

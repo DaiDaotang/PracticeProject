@@ -28,12 +28,6 @@
         </fieldset>
         <form class="layui-form" action="" lay-filter="safety_info_form">
             <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 40px; width:450px;">
-                <label class="layui-form-label">手机号</label>
-                <div class="layui-input-block">
-                    <input type="text" disabled name="telephone" lay-filter="telephone" id="telephone" autocomplete="off" placeholder="请输入手机号" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 40px; width:450px;">
                 <label class="layui-form-label">原密码</label>
                 <div class="layui-input-block">
                     <input type="password" name="password_old" lay-filter="password_old" lay-verify="password" id="password_old" autocomplete="off" placeholder="请输入密码" class="layui-input">
@@ -60,7 +54,109 @@
     <script src="../layui/layui.js" charset="utf-8"></script>
     <script src="../js/basic_url.js" charset="utf-8"></script>
     <script type="text/javascript">
+        layui.use(['form', 'layer', 'jquery'], function () {
+            var form = layui.form
+                , layer = layui.layer
+                , $ = layui.jquery
+                , password_patter = /\S{6,18}/;
 
+            //获取传参
+            function GetRequest() {
+                var url = location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            }
+            var t_param = GetRequest()
+                , user_id = t_param[`user_id`]
+                , user_authority = t_param[`user_authority`]
+                , target_id = t_param[`target_id`]
+                , target_authority = t_param[`target_authority`];
+
+
+            //监听修改
+            form.on('submit(change_btn)', function (data) {
+                console.log(data.field.password_new)
+                //验证共同属性是否有效
+                if (!password_patter.test(data.field.password_new)) {
+                    layer.msg("密码格式有误，应有6-18位字符组成")
+                    return false;
+                }
+                else if (data.field.password_new != data.field.password_new_again) {
+                    layer.msg("密码不一致")
+                    return false;
+                }
+                else {
+                    var temp_url = "";
+                    switch (user_authority) {
+                        case "Student":
+                            temp_url = "http://localhost:8080/ModifyStudentServlet";
+                            break;
+                        case "Teacher":
+                            temp_url = "http://localhost:8080/ModifyCompanyTeacherServlet";
+                            break;
+                        case "School":
+                            temp_url = "http://localhost:8080/ModifySchoolTeacherServlet";
+                            break;
+                    }
+                    console.log(temp_url)
+                    $.ajax({
+                        type: "POST",
+                        url: temp_url,
+                        async: true,
+                        data: JSON.stringify({
+                            "reqId": "",
+                            "reqParam": {
+                                "id": user_id
+                                , "password": data.field.password_new
+                                , "isPas": true
+                            }
+                        }),
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.isSuccess) {
+                                layer.msg("修改成功！", { time: 750 })
+                                setTimeout(function returnTo() {
+                                    var HomepageURL = "";
+                                    switch (user_authority) {
+                                        case "Student":
+                                            HomepageURL = "Student/" + StudentHomepageURL + "?user_id=" + user_id + "&user_authority=Student&target_id=" + user_id + "&target_authority=Student"
+                                            break;
+                                        case "Teacher":
+                                            HomepageURL = "CompanyTeacher/" + CompanyTeacherHomepageURL + "?user_id=" + user_id + "&user_authority=Teacher&target_id=" + user_id + "&target_authority=Teacher"
+                                            break;
+                                        case "School":
+                                            HomepageURL = "SchoolTeacher/" + SchoolTeacherHomepageURL + "?user_id=" + user_id + "&user_authority=School&target_id=" + user_id + "&target_authority=School"
+                                            break;
+                                        case "Company":
+                                            break;
+                                        default:
+                                            HomepageURL = "login.html"
+                                            break;
+                                    }
+                                    window.location.href = HomepageURL;
+
+
+                                }, 750);
+                            }
+                            console.log(data.field.password_new)
+                            return false;
+                        },
+                        error: function (err) {
+                            console.log(err)
+                            return false;
+                        }
+                    });
+                }
+                return false;
+            })
+        });
     </script>
 </body>
 </html>

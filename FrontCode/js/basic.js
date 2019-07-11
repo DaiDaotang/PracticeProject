@@ -87,8 +87,8 @@ switch (user_authority) {
         break;
 }
 document.getElementById("user_homepage_a").href = HomepageURL;
-document.getElementById("change_info_a").href = ChangeInfoURL;
-document.getElementById("safety_info_a").href = SafetyURL;
+document.getElementById("change_info_a").href = ChangeInfoURL + basic_extra_url;
+document.getElementById("safety_info_a").href = SafetyURL + basic_extra_url;
 document.getElementById("quit_a").href = QuitURL;
 
 //隐藏参数传参
