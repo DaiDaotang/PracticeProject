@@ -45,7 +45,7 @@
             </div>
             <div id="extra_input"></div>
             <div class="layui-form-item">
-                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="change_info" id="change_info" style="font-size:22px; border-radius: 20px; margin-top:50px; margin-left:30px;">确认修改</button>
+                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="change_info_btn" id="change_info_btn" style="font-size:22px; border-radius: 20px; margin-top:50px; margin-left:30px;">确认修改</button>
             </div>
         </form>
     </center>
@@ -76,14 +76,12 @@
         layui.use(['form', 'jquery', 'layer'], function () {
             var form = layui.form
                 , $ = layui.jquery
-                , layer = layui.layer
-                , telephone_patter = /\d{11}/
-                , password_patter = /\S{6,18}/;
+                , layer = layui.layer;
 
             var temp = "";
+
             switch (user_authority) {
                 case "Student":
-                    //获取学校名称
                     $.ajax({
                         type: "POST",
                         url: GetSchoolListURL,
@@ -166,7 +164,6 @@
                     });
                     break;
                 case "Teacher":
-                    //获取企业名称
                     $.ajax({
                         type: "POST",
                         url: GetCompanyListURL,
@@ -179,7 +176,8 @@
                             if (res.isSuccess) {
                                 temp += `
                                             <div class="layui-form-item" id="company-div" style="margin: 0 auto 15px auto; width: 450px; position:relative; right:40px;">
-                                                <label class="layui-form-label">所属企业</label><div class="layui-input-block">
+                                                <label class="layui-form-label">所属企业</label>
+                                                <div class="layui-input-block">
                                                     <select name="company_sort" lay-filter="company_sort" id="company_sort">
                                                         <option value=""></option>`;
                                 for (var i = 0; i < res.resData.length; i++) {
@@ -221,7 +219,6 @@
                     });
                     break;
                 case "School":
-                    //获取学校名称
                     $.ajax({
                         type: "POST",
                         url: GetSchoolListURL,
@@ -234,16 +231,17 @@
                             if (res.isSuccess) {
                                 temp = `
                                         <div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;position:relative; right:40px;">
-                                            <label class="layui-form-label">所属学校</label><div class="layui-input-block">
-                                            <select name="school_sort" lay-filter="school_sort" id="school_sort">
-                                                <option value=""></option>`;
+                                            <label class="layui-form-label">所属学校</label>
+                                            <div class="layui-input-block">
+                                                <select name="school_sort" lay-filter="school_sort" id="school_sort">
+                                                    <option value=""></option>`;
                                 for (var i = 0; i < res.resData.length; i++) {
                                     var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
                                     temp += temptemp;
                                 }
-                                temp += '</select></div></div> ';
-                                document.getElementById('extra_input').innerHTML = temp;
-                                form.render('select')
+                                temp += '</select></div></div>';
+                                document.getElementById('extra_input').innerHTML += temp;
+
                                 $.ajax({
                                     type: "POST",
                                     url: GetSchoolTeacherInfoURL,
@@ -260,6 +258,7 @@
                                             "sex": res.resData.sex,
                                             "school_sort": res.resData.school
                                         })
+                                        form.render('select')
                                     },
                                     error: function (res) {
                                         console.log("error");
@@ -275,21 +274,82 @@
                     });
                     break;
             }
+            form.render('radio')
+            form.render('select')
 
-            //表单初始赋值
-            form.val('signup_info', {
-                "company_name": ""
-            })
-
-            //监听确认修改
             form.on('submit(change_info)', function (data) {
+                console.log("sss")
+                return false;
+            })
+            //监听确认修改
+            form.on('submit(change_info_btn)', function (data) {
                 console.log(data.field)
                 switch (user_authority) {
                     case "Student":
+                        $.ajax({
+                            type: "POST",
+                            url: StudentSignUpURL,
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": "",
+                                "reqParam": {
+                                    "name": data.field.username
+                                    , "sex": data.field.sex
+                                    , "major": data.field.student_major
+                                    , "number": data.field.student_number
+                                    , "grade": data.field.grade
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                sign_up_btn_success(res)
+                            }
+                        });
                         break;
                     case "Teacher":
+                        $.ajax({
+                            type: "POST",
+                            url: CompanyTeacherSignUpURL,
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": "",
+                                "reqParam": {
+                                    "name": data.field.username
+                                    , "sex": data.field.sex
+                                    , "company": data.field.company_sort
+                                    , "isPas": true
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                sign_up_btn_success(res);
+                                return false;
+                            },
+                            error: function (err) {
+                                console.log(err)
+                                return false;
+                            }
+                        });
                         break;
                     case "School":
+                        $.ajax({
+                            type: "POST",
+                            url: SchoolTeacherSighUpURL,
+                            async: true,
+                            data: JSON.stringify({
+                                "reqId": "",
+                                "reqParam": {
+                                    "name": data.field.username
+                                    , "school": data.field.school_sort
+                                    , "sex": data.field.sex
+                                    , "isPas": true
+                                }
+                            }),
+                            dataType: "json",
+                            success: function (res) {
+                                sign_up_btn_success(res)
+                            }
+                        });
                         break;
                 }
                 return false;
