@@ -80,8 +80,9 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                         setTimeout("location.reload()", 500)
                                     }
                                     else {
-                                        layer.msg("还未到时间，不可以发布")
-                                        setTimeout("layer.closeAll()", 1000);
+                                        if(res.message == -1)
+                                        layer.msg("本周周志已被批阅，无法再次提交")
+                                        //setTimeout("layer.closeAll()", 1000);
                                     }
                                 },
                                 error: function (res) {

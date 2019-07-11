@@ -91,6 +91,7 @@
             };
             form.on('select(diary_time)', function (data) {
                 window.localStorage.diary_time = data.value;
+                layer.msg("若本周已提交，将被覆盖；若已被批阅，将提交失败")
             });
             document.getElementById('diary_content').onchange = function () {
                 console.log(document.getElementById('diary_content').value)

@@ -21,6 +21,8 @@ function change_week(obj) {
     last_week_id = "a_" + obj.id;
     last_team_id = ""
     checked_week = obj.id.split("_")[1]
+    document.getElementById("reviewed_dl").innerHTML = "";
+    document.getElementById("not_reviewed_dl").innerHTML = "";
     layui.use('jquery', function () {
         var $ = layui.jquery;
         var t1 = false, t2 = false;
@@ -100,8 +102,9 @@ function change_week(obj) {
         document.getElementById("student_diary_time").innerText = '';
         document.getElementById("student_diary_content").innerText = '';
         document.getElementById("score").value = '';
-        document.getElementById("content").innerText = '';
-        document.getElementById("not_reviewed_dl").innerHTML = "";
+        document.getElementById("teacher_content").innerText = '';
+
+        console.log(document.getElementById("teacher_content").value)
 
         while (t1 || t2);
         layer.msg("加载学生名单成功", { time: 750 })
@@ -140,12 +143,12 @@ function change_diary(obj) {
                     var temp = res.resData[res.resData.length - 1]
                     checked_studetn_diary_id = temp.Id;
                     document.getElementById("student_diary_title").innerText = temp.title;
-                    document.getElementById("student_diary_week").innerText = "第" + (temp.week + 1) + "周";
+                    document.getElementById("student_diary_week").innerText = "第" + (temp.week) + "周";
                     document.getElementById("student_diary_time").innerText = temp.date;
                     document.getElementById("student_diary_content").innerText = temp.content;
                     if (checked_student_sort == "r") {
                         document.getElementById("score").value = temp.score;
-                        document.getElementById("content").innerText = temp.comment;
+                        document.getElementById("teacher_content").innerText = temp.comment;
                     }
                 } else {
                     layer.msg("暂未提交", { time: 750 })
@@ -155,7 +158,7 @@ function change_diary(obj) {
                     document.getElementById("student_diary_time").innerText = '';
                     document.getElementById("student_diary_content").innerText = '';
                     document.getElementById("score").value = '';
-                    document.getElementById("content").innerText = '';
+                    document.getElementById("teacher_content").innerText = "";
                 }
             },
             error: function (res) {
@@ -186,7 +189,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                 "reqParam": {
                     "Id": checked_studetn_diary_id,
                     "score": data.field.score,
-                    "comment": data.field.content
+                    "comment": data.field.teacher_content
                 }
             }),
             dataType: "json",
@@ -202,7 +205,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("student_diary_time").innerText = '';
                         document.getElementById("student_diary_content").innerText = '';
                         document.getElementById("score").value = '';
-                        document.getElementById("content").innerText = '';
+                        document.getElementById("teacher_content").innerText = '';
                     }, 750)
                 }
             },
