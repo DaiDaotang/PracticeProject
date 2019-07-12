@@ -96,13 +96,13 @@
                     var temp_url = "";
                     switch (user_authority) {
                         case "Student":
-                            temp_url = "http://localhost:8080/ModifyStudentServlet";
+                            temp_url = ChangeStudentServletURL;
                             break;
                         case "Teacher":
-                            temp_url = "http://localhost:8080/ModifyCompanyTeacherServlet";
+                            temp_url = ChangeCompanyTeacherServletURL;
                             break;
                         case "School":
-                            temp_url = "http://localhost:8080/ModifySchoolTeacherServlet";
+                            temp_url = ChangeSchoolTeacherServletURL;
                             break;
                     }
                     console.log(temp_url)
