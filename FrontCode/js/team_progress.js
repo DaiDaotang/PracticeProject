@@ -7,7 +7,6 @@ var max = 3
     , week_now = -1
     , week_total = -1
     , work_total_max = -1
-    , work_total_week = -1
     , whole_tab_count = 1;
 
 var checked_task_id = []
@@ -79,8 +78,8 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                     document.getElementById("first").click();
                 },
                 error: function (res) {
-                    //console.log("error");
-                    //console.log(res);
+                    console.log("error");
+                    console.log(res);
                 }
             });
         },
@@ -103,27 +102,11 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 , "reqParam": target_team_id
             }
             , deal: function (res) {
-                //console.log(res)
-                //获取每一周总的工作量
-                if (index > 0) {
-                    work_total_week = 0;
-                    var i = 0;
-                    while (i < res.resData.length) {
-                        if (res.resData[i].taskWeek != index) {
-                            res.resData.splice(i, 1);
-                            continue;
-                        }
-                        work_total_week += res.resData[i].taskAmount;
-                        i++;
-                    }
+                work_total_max = 0;
+                for (var i = 0; i < res.resData.length; i++) {
+                    work_total_max += res.resData[i].taskAmount;
                 }
-                //获取实训总的工作量
-                else {
-                    work_total_max = 0;
-                    for (var i = 0; i < res.resData.length; i++) {
-                        work_total_max += res.resData[i].taskAmount;
-                    }
-                }
+                console.log(work_total_max)
                 return {
                     code: 0
                     , msg: ""
@@ -564,28 +547,39 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
             }),
             dataType: "json",
             success: function (res) {
+                console.log(res)
                 var temp_x = []
-                    , temp_y = [];
+                    , temp_y = []
+                    , last_work_amount = work_total_max;
 
                 if (res.resData.length < 5 && index == 0) {
                     var x = [], y = [], x_t = [], y_t = [];
+                    //为接下来的操作做准备，先将后天传来数据设为临时变量
                     for (var i = 0; i < res.resData.length; i++) {
+                        //计算下几周的工作量
+                        last_work_amount -= res.resData[i].works[0]
                         x.push(res.resData[i].dates);
                         y.push(res.resData[i].works);
                         x[i][0] = "总"
+                        //生成原点
                         if (i == 0) {
                             x_t.push("总");
                             y_t.push(0);
                         }
+                        //生成总工作量的横坐标以及初始的都为0的纵坐标
                         for (var j = 1; j < res.resData[i].dates.length; j++) {
                             x_t.push(res.resData[i].dates[j])
                             y_t.push(0)
                         }
                     }
                     var temp_index = y_t.length - 1
-                        , temp_value = 0;
+                        , temp_value = last_work_amount;//temp_value是当前算的这一周的之后的剩余工作总量
+                    //填充总工作坐标
+                    //倒序累加
                     for (var i = y.length - 1; i >= 0; i--) {
                         for (var j = y[i].length - 1; j >= 0; j--) {
+                            //第i周的第j天的记录
+                            //若是这一周的最后一天且这一天的剩余工作量大于0，则其后所有天的工作量均加上这一数值
                             if (j == y[i].length - 1 && y[i][j] > 0) {
                                 for (var k = temp_index; k < y_t.length; k++) {
                                     y_t[k] += y[i][j];
@@ -605,6 +599,7 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 else {
                     var x = [], y = [], x_t = [], y_t = [];
                     for (var i = 0; i < res.resData.length; i++) {
+                        last_work_amount -= res.resData[i].works[0]
                         x.push(res.resData[i].dates);
                         y.push(res.resData[i].works);
                         x[i][0] = "总"

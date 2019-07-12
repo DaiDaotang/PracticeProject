@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+    <ins class="adsbygoogle" style="display:inline-block;width:970px;height:0" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
 
     <center>
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px; margin-bottom: 50px;">
@@ -294,34 +294,6 @@
             document.getElementById("hd_img_form").action = ChangeHdImgURL + "&id=" + user_id + "&auth=" + user_authority;
             form.render('radio')
             form.render('select')
-
-            upload.render({
-                elem: '#choose_hd_img'
-                , url: ChangeHdImgURL + "&id=" + user_id + "&auth=" + user_authority
-                //, auto: false
-                , bindAction: '#change_info_btn'
-                , before: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
-                        console.log(result)
-                        document.getElementById("target_hd_img").src = result;
-                        //$('#target_hd_img').attr('src', result); //图片链接（base64）
-                    });
-                }
-                , done: function (res) {
-                    //如果上传失败
-                    if (res.code > 0) {
-                        return layer.msg('上传失败');
-                    }
-                    //上传成功
-                    layer.msg("上传成功")
-                    return false;
-                }
-                , error: function () {
-                    //演示失败状态，并实现重传
-                    layer.msg("上传失败")
-                }
-            });
 
             //监听确认修改
             form.on('submit(change_info_btn)', function (data) {
