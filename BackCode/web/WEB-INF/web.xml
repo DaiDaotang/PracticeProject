@@ -605,4 +605,13 @@
         <servlet-name>ModifyCompanyTeacherServlet</servlet-name>
         <url-pattern>/ModifyCompanyTeacherServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetPracticeIsBegunServlet</servlet-name>
+        <servlet-class>com.servlet.GetPracticeIsBegunServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetPracticeIsBegunServlet</servlet-name>
+        <url-pattern>/GetPracticeIsBegunServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
