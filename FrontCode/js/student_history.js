@@ -64,7 +64,7 @@ layui.use(['jquery', 'layer', 'table'], function () {
         var tr = obj.tr; //获得当前行 tr 的DOM对象
 
         if (layEvent === 'detail') { //查看
-            var extra_url = "&target_team_id=" + obj.data.teamId + "&target_pt_id=" + obj.data.practiceId;
+            var extra_url = "&target_team_id=" + obj.data.teamId + "&target_pt_id=" + obj.data.practiceId + "&history=yes";
             window.open(GroupURL + basic_extra_url + extra_url);
         }
     });

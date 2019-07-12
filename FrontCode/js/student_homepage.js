@@ -187,7 +187,6 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         document.getElementById("target_homepage").href = StudentHomepageURL + basic_extra_url + extra_url;
                         document.getElementById("target_diary").href = StudentDiaryURL + basic_extra_url + extra_url;
                         document.getElementById("target_history").href = StudentHistoryURL + basic_extra_url + extra_url;
-                        document.getElementById("target_resume").href = StudentResumeURL + basic_extra_url + extra_url;
                     }
                     //没团队
                     else {

@@ -5,6 +5,7 @@ var user_id = t_param[`user_id`]
     , target_authority = t_param[`target_authority`]
     , target_team_id = parseInt(t_param[`target_team_id`])
     , target_pt_id = parseInt(t_param[`target_pt_id`])
+    , target_history = t_param[`history`]
     , target_team_name = ""
     , target_item_id = -1
     , target_item_name = ""
@@ -20,6 +21,9 @@ var param_member_existed = "";
 
 if (user_authority != "Student") {
     document.getElementById("delTeam").style.display = "none";
+}
+else if(){
+
 }
 
 layui.use(['form', 'table', 'layer', 'jquery'], function () {
@@ -144,7 +148,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 }
             }
 
-            if (user_id != captain_id) {
+            if (user_id != captain_id && user_authority != "Student" || history == "yes") {
                 document.getElementById('addMember').style.display = 'none';
                 document.getElementById('editTeam').style.display = 'none';
                 document.getElementById('delTeam').innerText = "退出队伍";
