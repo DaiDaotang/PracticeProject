@@ -145,7 +145,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 }
             }
 
-            if (user_id != captain_id && user_authority != "Student" || history == "yes") {
+            if (user_id != captain_id && user_authority != "Student" || target_history == "yes") {
                 document.getElementById('addMember').style.display = 'none';
                 document.getElementById('editTeam').style.display = 'none';
                 document.getElementById('delTeam').innerText = "退出队伍";
