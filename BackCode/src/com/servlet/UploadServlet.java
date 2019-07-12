@@ -56,26 +56,26 @@ public class UploadServlet extends HttpServlet {
                         fos.close();
                         UploadDao dao = new UploadDao();
                         switch (auth) {
-                            case "student":
+                            case "Student":
                                 StudentBean studentBean = new StudentBean();
                                 studentBean.setHead(filename);
                                 studentBean.setId(Integer.valueOf(id));
                                 dao.createStudentHead(studentBean);
                                 break;
-                            case "company":
+                            case "Company":
                                 CompanyBean companyBean = new CompanyBean();
                                 companyBean.setHead(filename);
                                 companyBean.setId(Integer.valueOf(id));
                                 dao.createCompanyHead(companyBean);
                                 break;
-                            case "companyTeacher": {
+                            case "Teacher": {
                                 CompanyTeacherBean teacherBean = new CompanyTeacherBean();
                                 teacherBean.setHead(filename);
                                 teacherBean.setId(Integer.valueOf(id));
                                 dao.createCompanyTeacherHead(teacherBean);
                                 break;
                             }
-                            case "schoolTeacher": {
+                            case "School": {
                                 SchoolTeacherBean teacherBean = new SchoolTeacherBean();
                                 teacherBean.setHead(filename);
                                 teacherBean.setId(Integer.valueOf(id));

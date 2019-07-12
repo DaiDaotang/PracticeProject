@@ -25,11 +25,15 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 40px; margin-bottom: 50px;">
             <legend style="font-size:32px;">修改信息</legend>
         </fieldset>
-        <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 40px; width:450px;">
-            <label class="layui-form-label">头像</label>
-            <img id="target_hd_img" style="width:150px; height:150px; border-radius: 75px; border:1px solid black;" />
-            <button class="layui-btn" lay-submit="" lay-filter="choose_hd_img" id="choose_hd_img" style="font-size:18px; border-radius: 20px; margin-left:30px;">选择头像</button>
-        </div>
+        <form name="hd_img_form" action="" method="post" enctype="multipart/form-data" id="hd_img_form">
+            <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 40px; width:450px;">
+                <label class="layui-form-label">头像</label>
+                <img id="target_hd_img" style="width:150px; height:150px; border-radius: 75px; border:1px solid black;" />
+                <input type="file" name="head" onchange="show(this)" style="display:none;">
+                <input type="submit" name="upload_head" value="上传文件" style="display:none;">
+            </div>
+            <input class="layui-btn" type="button" value="上传头像" onclick="document.hd_img_form.head.click()" style="position:relative; left:15px; margin-bottom:10px;">
+        </form>
         <form class="layui-form" action="" lay-filter="change_info" id="change_info">
             <div class="layui-form-item" style="margin: 0 auto 15px auto; position:relative; right: 40px; width:450px;">
                 <label class="layui-form-label">名称</label>
@@ -73,6 +77,16 @@
             , target_id = t_param[`target_id`]
             , target_authority = t_param[`target_authority`];
 
+        function show(f) {
+            var rd = new FileReader();//创建文件读取对象
+            var files = f.files[0];//获取file组件中的文件
+            rd.readAsDataURL(files);//文件读取装换为base64类型
+            rd.onloadend = function (e) {
+                //加载完毕之后获取结果赋值给img
+                document.getElementById("target_hd_img").src = this.result;
+            }
+        }
+
         //form区
         layui.use(['form', 'jquery', 'layer', 'upload'], function () {
             var form = layui.form
@@ -80,7 +94,8 @@
                 , layer = layui.layer
                 , upload = layui.upload;
 
-            var temp = "";
+            var temp = ""
+                , img = "";
 
             switch (user_authority) {
                 case "Student":
@@ -276,21 +291,21 @@
                     });
                     break;
             }
+            document.getElementById("hd_img_form").action = ChangeHdImgURL + "&id=" + user_id + "&auth=" + user_authority;
             form.render('radio')
             form.render('select')
-
-            form.on('submit(change_info_btn)', function (data) {
-                return false;
-            });
 
             upload.render({
                 elem: '#choose_hd_img'
                 , url: ChangeHdImgURL + "&id=" + user_id + "&auth=" + user_authority
-                , auto: false
+                //, auto: false
+                , bindAction: '#change_info_btn'
                 , before: function (obj) {
                     //预读本地文件示例，不支持ie8
                     obj.preview(function (index, file, result) {
-                        $('#target_hd_img').attr('src', result); //图片链接（base64）
+                        console.log(result)
+                        document.getElementById("target_hd_img").src = result;
+                        //$('#target_hd_img').attr('src', result); //图片链接（base64）
                     });
                 }
                 , done: function (res) {
@@ -311,6 +326,7 @@
             //监听确认修改
             form.on('submit(change_info_btn)', function (data) {
                 console.log(data.field)
+                document.hd_img_form.upload_head.click();
                 switch (user_authority) {
                     case "Student":
                         $.ajax({
@@ -382,6 +398,7 @@
                         break;
                 }
                 return false;
+
             });
 
             //success回调函数
