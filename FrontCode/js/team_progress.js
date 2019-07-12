@@ -102,11 +102,26 @@ layui.use(['element', 'jquery', 'table', 'layer'], function () {
                 , "reqParam": target_team_id
             }
             , deal: function (res) {
-                work_total_max = 0;
-                for (var i = 0; i < res.resData.length; i++) {
-                    work_total_max += res.resData[i].taskAmount;
+                var temp_d = res.resData;
+                if (index == "0") {
+                    work_total_max = 0;
+                    for (var i = 0; i < res.resData.length; i++) {
+                        work_total_max += res.resData[i].taskAmount;
+                    }
                 }
-                console.log(work_total_max)
+                else {
+                    for (var i = 0; i < res.resData.length;) {
+                        console.log(i)
+                        //console.log(res.resData[i].taskWeek)
+                        //console.log(index)
+                        if (res.resData[i].taskWeek != index) {
+                            console.log('ss')
+                            temp_d.splice(i, 1)
+                            continue;
+                        }
+                        i++;
+                    }
+                }
                 return {
                     code: 0
                     , msg: ""
