@@ -23,12 +23,11 @@ public class ModifyCompanyTeacherDao {
                 state.setString(1,bean.getPassword());
                 state.setInt(2,bean.getId());
             }else {
-                sql = "UPDATE companyteacher SET teacherPhone = ?,teacherName = ?,teacherSex = ? WHERE teacherId = ?";
+                sql = "UPDATE companyteacher SET teacherName = ?,teacherSex = ? WHERE teacherId = ?";
                 state = conn.prepareStatement(sql);
-                state.setString(1,bean.getTelephone());
-                state.setString(2,bean.getName());
-                state.setString(3,bean.getSex());
-                state.setInt(4,bean.getId());
+                state.setString(1,bean.getName());
+                state.setString(2,bean.getSex());
+                state.setInt(3,bean.getId());
             }
             state.executeUpdate();
             conn.commit();

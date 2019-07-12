@@ -23,15 +23,14 @@ public class ModifyStudentDao {
                 state.setString(1,bean.getPassword());
                 state.setInt(2,bean.getId());
             }else {
-                sql ="UPDATE student SET studentPhone = ?,studentName = ?,studentNumber = ?,studentMajor = ?,studentSex = ?,studentGrade = ? WHERE studentId = ?";
+                sql ="UPDATE student SET studentName = ?,studentNumber = ?,studentMajor = ?,studentSex = ?,studentGrade = ? WHERE studentId = ?";
                 state = conn.prepareStatement(sql);
-                state.setString(1,bean.getTelephone());
-                state.setString(2,bean.getName());
-                state.setString(3,bean.getNumber());
-                state.setString(4,bean.getMajor());
-                state.setString(5,bean.getSex());
-                state.setString(6,bean.getGrade());
-                state.setInt(7,bean.getId());
+                state.setString(1,bean.getName());
+                state.setString(2,bean.getNumber());
+                state.setString(3,bean.getMajor());
+                state.setString(4,bean.getSex());
+                state.setString(5,bean.getGrade());
+                state.setInt(6,bean.getId());
             }
             state.executeUpdate();
             conn.commit();

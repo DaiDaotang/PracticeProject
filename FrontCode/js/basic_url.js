@@ -121,3 +121,7 @@ var HomepageURL = ""
     , GetCompanyServletURL = "http://localhost:8080/GetCompanyInformationServlet"
     , GetAnyUserServlet = ""
     , GetHeadImgURL = "http://localhost:8080/DownloadServlet?head=";
+
+var ChangeStudentServletURL = "http://localhost:8080/ModifyStudentServlet"
+    , ChangeCompanyTeacherServletURL = "http://localhost:8080/ModifyCompanyTeacherServlet"
+    , ChangeSchoolTeacherServletURL = "http://localhost:8080/ModifySchoolTeacherServlet"

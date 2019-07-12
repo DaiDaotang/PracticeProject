@@ -92,14 +92,14 @@
                         dataType: "json",
                         success: function (res) {
                             if (res.isSuccess) {
-                                temp = `
-                                    <div class="layui-form-item" id="school-div" style="margin: 0 auto 15px auto; width: 450px;position:relative; right: 40px; ">
-                                        <label class="layui-form-label">所属学校</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="student_sort" lay-filter="student_sort" id="student_sort" autocomplete="off" placeholder="请输入学校" class="layui-input">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;position:relative; right: 40px; ">
+                                temp = 
+                                    //<div class="layui-form-item" id="school-div" style="margin: 0 auto 15px auto; width: 450px;position:relative; right: 40px; ">
+                                    //    <label class="layui-form-label">所属学校</label>
+                                    //    <div class="layui-input-block">
+                                    //        <input type="text" name="student_sort" lay-filter="student_sort" id="student_sort" autocomplete="off" placeholder="请输入学校" class="layui-input">
+                                    //    </div>
+                                    //</div>
+                                    `<div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;position:relative; right: 40px; ">
                                         <label class="layui-form-label">学号</label>
                                         <div class="layui-input-block">
                                             <input type="text" name="student_number" lay-filter="student_number" id="student_number" autocomplete="off" placeholder="请输入学号" class="layui-input">
@@ -147,7 +147,7 @@
                                             "grade": res.resData.grade,
                                             "student_sort": res.resData.schoolName
                                         })
-                                        document.getElementById("student_sort").disabled = "disabled";
+                                        //document.getElementById("student_sort").disabled = "disabled";
                                         form.render('radio');
                                         form.render('select');
                                     },
@@ -174,19 +174,19 @@
                         dataType: "json",
                         success: function (res) {
                             if (res.isSuccess) {
-                                temp += `
-                                            <div class="layui-form-item" id="company-div" style="margin: 0 auto 15px auto; width: 450px; position:relative; right:40px;">
-                                                <label class="layui-form-label">所属企业</label>
-                                                <div class="layui-input-block">
-                                                    <select name="company_sort" lay-filter="company_sort" id="company_sort">
-                                                        <option value=""></option>`;
-                                for (var i = 0; i < res.resData.length; i++) {
-                                    var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
-                                    temp += temptemp;
-                                }
+                                //temp += `
+                                //            <div class="layui-form-item" id="company-div" style="margin: 0 auto 15px auto; width: 450px; position:relative; right:40px;">
+                                //                <label class="layui-form-label">所属企业</label>
+                                //                <div class="layui-input-block">
+                                //                    <select name="company_sort" lay-filter="company_sort" id="company_sort">
+                                //                        <option value=""></option>`;
+                                //for (var i = 0; i < res.resData.length; i++) {
+                                //    var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
+                                //    temp += temptemp;
+                                //}
 
-                                temp += '</select></div></div> ';
-                                document.getElementById('extra_input').innerHTML = temp;
+                                //temp += '</select></div></div> ';
+                                //document.getElementById('extra_input').innerHTML = temp;
 
                                 //获取信息
                                 $.ajax({
@@ -203,7 +203,7 @@
                                         form.val('change_info', {
                                             "username": res.resData.name,
                                             "sex": res.resData.sex,
-                                            "company_sort": res.resData.company
+                                            //"company_sort": res.resData.company
                                         })
                                     },
                                     error: function (res) {
@@ -229,18 +229,18 @@
                         dataType: "json",
                         success: function (res) {
                             if (res.isSuccess) {
-                                temp = `
-                                        <div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;position:relative; right:40px;">
-                                            <label class="layui-form-label">所属学校</label>
-                                            <div class="layui-input-block">
-                                                <select name="school_sort" lay-filter="school_sort" id="school_sort">
-                                                    <option value=""></option>`;
-                                for (var i = 0; i < res.resData.length; i++) {
-                                    var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
-                                    temp += temptemp;
-                                }
-                                temp += '</select></div></div>';
-                                document.getElementById('extra_input').innerHTML += temp;
+                                //temp = `
+                                //        <div class="layui-form-item" style="margin: 0 auto 15px auto; width: 450px;position:relative; right:40px;">
+                                //            <label class="layui-form-label">所属学校</label>
+                                //            <div class="layui-input-block">
+                                //                <select name="school_sort" lay-filter="school_sort" id="school_sort">
+                                //                    <option value=""></option>`;
+                                //for (var i = 0; i < res.resData.length; i++) {
+                                //    var temptemp = '<option value=' + res.resData[i].id + '>' + res.resData[i].name + '</option>';
+                                //    temp += temptemp;
+                                //}
+                                //temp += '</select></div></div>';
+                                //document.getElementById('extra_input').innerHTML += temp;
 
                                 $.ajax({
                                     type: "POST",
@@ -256,7 +256,7 @@
                                         form.val('change_info', {
                                             "username": res.resData.name,
                                             "sex": res.resData.sex,
-                                            "school_sort": res.resData.school
+                                            //"school_sort": res.resData.school
                                         })
                                         form.render('select')
                                     },
@@ -281,6 +281,7 @@
                 console.log("sss")
                 return false;
             })
+
             //监听确认修改
             form.on('submit(change_info_btn)', function (data) {
                 console.log(data.field)
@@ -288,16 +289,18 @@
                     case "Student":
                         $.ajax({
                             type: "POST",
-                            url: StudentSignUpURL,
+                            url: ChangeStudentServletURL,
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
                                 "reqParam": {
-                                    "name": data.field.username
+                                    "id": user_id
+                                    , "name": data.field.username
                                     , "sex": data.field.sex
                                     , "major": data.field.student_major
                                     , "number": data.field.student_number
                                     , "grade": data.field.grade
+                                    , "isPas": false
                                 }
                             }),
                             dataType: "json",
@@ -309,15 +312,15 @@
                     case "Teacher":
                         $.ajax({
                             type: "POST",
-                            url: CompanyTeacherSignUpURL,
+                            url: ChangeCompanyTeacherServletURL,
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
                                 "reqParam": {
-                                    "name": data.field.username
+                                    "id": user_id
+                                    , "name": data.field.username
                                     , "sex": data.field.sex
-                                    , "company": data.field.company_sort
-                                    , "isPas": true
+                                    , "isPas": false
                                 }
                             }),
                             dataType: "json",
@@ -334,15 +337,15 @@
                     case "School":
                         $.ajax({
                             type: "POST",
-                            url: SchoolTeacherSighUpURL,
+                            url: ChangeSchoolTeacherServletURL,
                             async: true,
                             data: JSON.stringify({
                                 "reqId": "",
                                 "reqParam": {
-                                    "name": data.field.username
-                                    , "school": data.field.school_sort
+                                    "id": user_id
+                                    , "name": data.field.username
                                     , "sex": data.field.sex
-                                    , "isPas": true
+                                    , "isPas": false
                                 }
                             }),
                             dataType: "json",
