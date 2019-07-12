@@ -22,9 +22,6 @@ var param_member_existed = "";
 if (user_authority != "Student") {
     document.getElementById("delTeam").style.display = "none";
 }
-else if(){
-
-}
 
 layui.use(['form', 'table', 'layer', 'jquery'], function () {
     var table = layui.table
