@@ -8,6 +8,10 @@ var target_id = parseInt(t_param[`target_id`])
     , target_school_id = -1
     , target_school_name = "";
 
+var total = document.documentElement.clientHeight;
+var colHeight = total;
+document.getElementById("body_whole").style.height = colHeight + "px";
+
 layui.use(['layer', 'jquery', 'form'], function () {
     var layer = layui.layer
         , $ = layui.jquery
@@ -26,9 +30,11 @@ layui.use(['layer', 'jquery', 'form'], function () {
             console.log(res);
             target_name = res.resData.name
                 , target_gender = res.resData.sex
-                , target_hd_img = res.resData.head ? GetHeadImgURL + target_hd_img : "../../img/defaultHead.jpg"
+                , target_hd_img = res.resData.head ? res.resData.head : ""
                 , target_school_id = res.resData.school
                 , target_school_name = res.resData.schoolName;
+            document.getElementById("target_hd_img").src = (target_hd_img == "" ? "../../img/defaultHead.jpg" : GetHeadImgURL + target_hd_img);
+            document.getElementById("target_hd_img").style.border = "1px solid #6e7474";
 
             document.getElementById("username").innerText = target_name;
             document.getElementById("gender").innerHTML = (target_gender == "男") ? '<i class="layui-icon layui-icon-male" style="height:100px; color: #1E9FFF; font-size:40px; margin-left: 20px;"></i>' : '<i class="layui-icon layui-icon-female" style="height:100px; color: #fd5087; font-size:40px; margin-left: 20px;"></i>'
