@@ -94,7 +94,7 @@
        //变量
         var teacher_id = parseInt(t_param[`user_id`])
             , teacher_authority = t_param[`user_authority`]
-            , teacher_school_id = ""
+            , teacher_school_id = t_param[`user_school_id`]
             , teacher_company_id = "";
 
         //修改默认学校/公司
@@ -112,6 +112,12 @@
             var form = layui.form
                 , $ = layui.jquery
                 , laydate = layui.laydate;
+
+						var basic_extra_url = "?user_id=" + teacher_id + "&user_authority=" + teacher_authority + "&target_id=" + teacher_id + "&target_authority=" + teacher_authority;
+						document.getElementById("target_homepage").href = SchoolTeacherHomepageURL + basic_extra_url;
+						document.getElementById("target_create_pt").href = CreateNewPTURL + basic_extra_url + "&user_school_id=" + teacher_school_id;
+						document.getElementById("target_modify_pt").href = ModifyPTURL + basic_extra_url + "&user_school_id=" + teacher_school_id;
+
 
             //获取学校名称
             $.ajax({
@@ -276,22 +282,16 @@
                 var data_now = new Date()
                     , year_now = data_now.getFullYear()
                     , month_now = data_now.getMonth() + 1
-                    , day_now = data_now.getDay();
-                var strs1 = str1.split("-")
-                var strs2 = str2.split("-");
+                    , day_now = data_now.getDate()
+                    , strs0 = [year_now, month_now, day_now]
+                    , strs1 = str1.split("-")
+                    , strs2 = str2.split("-");
 
-                if (parseInt(strs1[0]) < year_now || parseInt(strs2[0]) < parseInt(strs1[0])) {
-                    return false;
-                } else if (parseInt(strs1[0]) >= year_now || parseInt(strs2[0]) >= parseInt(strs1[0])) {
-                    if (parseInt(strs1[1]) < month_now || parseInt(strs2[1]) < parseInt(strs1[1])) {
-                        return false;
-                    } else if (parseInt(strs1[1]) >= month_now || parseInt(strs2[1]) >= parseInt(strs1[1])) {
-                        if (parseInt(strs1[2]) <= day_now || parseInt(strs2[2]) <= parseInt(strs1[2])) {
-                            return false;
-                        }
-                    }
-                }
-                return true;
+                var d0 = strs0[0] + strs0[1] + strs0[2]
+                    , d1 = strs1[0] + strs1[1] + strs1[2]
+                    , d2 = strs2[0] + strs2[1] + strs2[2];
+
+                return d1 > d0 && d2 > d1;
             }
         });
     </script>

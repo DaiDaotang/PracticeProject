@@ -156,6 +156,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 document.getElementById('delTeam').style.display = "none";
             }
 
+
             table.render(param_member_existed(1));
 
             //监听点击项目

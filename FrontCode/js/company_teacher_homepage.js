@@ -13,9 +13,6 @@ if (user_id == target_id && user_authority == target_authority && user_authority
     isOwner = true;
 }
 
-var total = document.documentElement.clientHeight;
-var colHeight = total;
-document.getElementById("body_whole").style.height = colHeight + "px";
 
 //form区 + 大区
 layui.use(['form', 'jquery', 'layer'], function () {

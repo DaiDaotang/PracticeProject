@@ -8,9 +8,6 @@ var target_id = parseInt(t_param[`target_id`])
     , target_school_id = -1
     , target_school_name = "";
 
-var total = document.documentElement.clientHeight;
-var colHeight = total;
-document.getElementById("body_whole").style.height = colHeight + "px";
 
 layui.use(['layer', 'jquery', 'form'], function () {
     var layer = layui.layer

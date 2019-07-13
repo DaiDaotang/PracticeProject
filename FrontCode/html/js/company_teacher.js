@@ -13,10 +13,6 @@ var user_id = parseInt(t_param[`user_id`])
 //测试变量
 var test_style = "1px solid #000";
 
-var total = document.documentElement.clientHeight;
-var colHeight = total;
-document.getElementById("body_whole").style.height = colHeight + "px";
-
 //form区 + 大区
 layui.use(['form', 'jquery', 'layer'], function () {
     var form = layui.form
