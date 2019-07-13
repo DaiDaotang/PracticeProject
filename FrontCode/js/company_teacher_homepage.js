@@ -120,7 +120,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                                         </div>
                                         <div class="layui-col-md2">
                                             <div class="grid-demo" style="height:auto; margin: 20px 0 20px 20px;">
-                                                <input type='button' class="layui-btn layui-btn-normal" onclick='check_diary(this)' id="check_diary_` + target_pt_id[index] + `_` + res.resData[i].id + `" id="team_process_` + target_pt_id[index] + `_` + res.resData[i].id + `" style="font-size:20px;" value="评阅日志"/>
+                                                <input type='button' class="layui-btn layui-btn-normal" onclick='check_diary(this)' id="check_diary_` + target_pt_id[index] + `_` + res.resData[i].id + `" id="team_process_` + target_pt_id[index] + `_` + res.resData[i].id + `" style="font-size:20px;" value="评阅周志"/>
                                             </div>
                                         </div>
                                         <div class="layui-col-md2">
