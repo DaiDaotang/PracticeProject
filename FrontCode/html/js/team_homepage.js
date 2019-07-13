@@ -145,12 +145,12 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
                 }
             }
 
-            if (user_id != captain_id && user_authority != "Student") {
+            if (user_id != captain_id && user_authority == "Student") {
                 document.getElementById('addMember').style.display = 'none';
                 document.getElementById('editTeam').style.display = 'none';
                 document.getElementById('delTeam').innerText = "退出队伍";
             }
-            else if (target_history == "yes") {
+            else if (target_history == "yes" || user_authority != "Student") {
                 document.getElementById('addMember').style.display = 'none';
                 document.getElementById('editTeam').style.display = 'none';
                 document.getElementById('delTeam').style.display = "none";

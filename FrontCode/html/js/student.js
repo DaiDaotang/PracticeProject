@@ -123,7 +123,8 @@ layui.use(['form', 'jquery', 'layer'], function () {
                             , target_pt_id = res.resData.practiceId;
                     } else {              //没团队
                         target_item_id = -1
-                        document.getElementById("write_diary_btn").style.display = "none";
+                        if (document.getElementById("write_diary_btn"))
+                            document.getElementById("write_diary_btn").style.display = "none";
                     }
 
                     var extra_url = "&target_item_id=" + target_item_id + "&target_pt_id=" + target_pt_id;
