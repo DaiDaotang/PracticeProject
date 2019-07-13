@@ -110,7 +110,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         async: true,
         data: JSON.stringify({
             "reqId": "",
-            "reqParam": user_id
+            "reqParam": target_id
         }),
         dataType: "json",
         success: function (res) {

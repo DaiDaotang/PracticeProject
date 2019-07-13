@@ -5,6 +5,10 @@ var target_name = ""
     , target_company_id = -1
     , target_company_name = "";
 
+var total = document.documentElement.clientHeight;
+var colHeight = total;
+document.getElementById("body_whole").style.height = colHeight + "px";
+
 var param_item_existed = function (res0) {
     return {
         elem: '#pt_table'
@@ -110,7 +114,7 @@ layui.use(['form', 'table', 'layer', 'jquery'], function () {
         async: true,
         data: JSON.stringify({
             "reqId": "",
-            "reqParam": user_id
+            "reqParam": target_id
         }),
         dataType: "json",
         success: function (res) {
