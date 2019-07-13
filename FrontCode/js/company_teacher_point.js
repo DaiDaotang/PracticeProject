@@ -86,7 +86,7 @@ layui.use(['element', 'form', 'jquery', 'laydate', 'table', 'layer'], function (
                                 </fieldset>
                                 <div id="team_tab_member_` + i + `"></div>
                                 <div class="layui-form-item" style="text-align:center;">
-                                    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="upload" id="upload" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-bottom:50px;">Done!</button>
+                                    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="upload" id="upload" style="font-size:26px; border-radius: 20px; margin-top:50px; margin-bottom:50px;">提交分数</button>
                                 </div>
                             </form>
                         </div>`;

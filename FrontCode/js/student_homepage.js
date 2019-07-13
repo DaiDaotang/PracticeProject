@@ -67,7 +67,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                         , target_item_id = -1
                         , target_item_name = "";
 
-                    document.getElementById("group_name").innerText = "暂无";
+                    document.getElementById("group_name").innerText = "点击创建团队";
                     document.getElementById("item_name").innerText = "暂无";
                     if (target_authority == user_authority && target_id == user_id) {
                         document.getElementById("group_a").href = CreateGroupURL + "?user_id=" + user_id + "&user_authority=" + user_authority + "&target_id=" + target_id + "&target_authority=" + target_authority + "&target_pt_id=" + target_pt_id;
@@ -116,7 +116,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     }
                 }
                 else {
-                    layer.msg('签到失败！');
+                    layer.msg('签到失败，22:00-7:00之间不可签到');
                 }
                 console.log(res);
             }
@@ -195,7 +195,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                             , target_item_id = -1
                             , target_item_name = "";
 
-                        document.getElementById("group_name").innerText = "暂无";
+                        document.getElementById("group_name").innerText = "点击创建团队";
                         document.getElementById("item_name").innerText = "暂无";
                         if (target_authority == user_authority && target_id == user_id && target_pt_id != -1) {
                             document.getElementById("group_a").href = CreateGroupURL + basic_extra_url + "&target_pt_id=" + target_pt_id;
@@ -290,7 +290,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
             document.getElementById("school_a").innerText += target_school_name;
             document.getElementById("major").innerText += target_major;
             document.getElementById("grade").innerText += target_grade;
-            document.getElementById("major").href = "https://baike.baidu.com/item/" + major;
+            document.getElementById("major").href = "https://baike.baidu.com/item/" + target_major;
             document.getElementById("school_a").href = "https://baike.baidu.com/item/" + target_school_name;
         },
         error: function (res) {

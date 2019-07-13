@@ -75,7 +75,8 @@
             , user_id = t_param[`user_id`]
             , user_authority = t_param[`user_authority`]
             , target_id = t_param[`target_id`]
-            , target_authority = t_param[`target_authority`];
+            , target_authority = t_param[`target_authority`]
+            , changed_hd_img = false;
 
         function show(f) {
             var rd = new FileReader();//创建文件读取对象
@@ -84,6 +85,7 @@
             rd.onloadend = function (e) {
                 //加载完毕之后获取结果赋值给img
                 document.getElementById("target_hd_img").src = this.result;
+                changed_hd_img = true;
             }
         }
 
@@ -298,7 +300,8 @@
             //监听确认修改
             form.on('submit(change_info_btn)', function (data) {
                 console.log(data.field)
-                document.hd_img_form.upload_head.click();
+                if (changed_hd_img)
+                    document.hd_img_form.upload_head.click();
                 switch (user_authority) {
                     case "Student":
                         $.ajax({

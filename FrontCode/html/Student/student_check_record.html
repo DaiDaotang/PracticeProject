@@ -74,8 +74,9 @@
             , start_t = ""
             , end_t = "";
 
-        layui.use(['element', 'jquery'], function () {
+        layui.use(['element', 'jquery', 'layer'], function () {
             var $ = layui.jquery
+                , layer = layui.layer
                 , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
             $('.site-demo-active').on('click', function () {
@@ -124,6 +125,10 @@
                     console.log(res);
                 }
             });
+
+            if (target_pt_id == -1) {
+                layer.msg("暂未参加实训，暂无签到记录")
+            }
 
             element.on('tab(record)', function (data) {
                 //setTubeChart(data.index);

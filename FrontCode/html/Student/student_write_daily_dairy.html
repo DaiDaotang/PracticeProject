@@ -102,7 +102,7 @@
                 var temp = ""
                     , time = "";
                 console.log(week)
-                for (var i = 1; i < week + 1; i++) 
+                for (var i = 1; i < week; i++) 
                     temp += '<option value=' + i + '>第' + i + '周</option>'
                 document.getElementById('diary_time').innerHTML += temp;
                 form.render('select')

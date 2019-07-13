@@ -45,7 +45,7 @@ layui.use(['form', 'jquery', 'layer'], function () {
                     }
                 }
                 else {
-                    layer.msg('签到失败！');
+                    layer.msg('签到失败，22:00-7:00之间不可签到');
                 }
                 console.log(res);
             }
